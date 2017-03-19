@@ -1,12 +1,11 @@
 import React from 'react';
-import {List} from 'react-onsenui';
 import ArchiveScreen from '../screens/ArchiveScreen';
 import {generateNavigationKey} from '../utils';
 
 const styles = {
 
   parent : {
-    margin : '10px 0px 0px 0px',
+    margin : '15px 0px 0px 0px',
     padding : '0px 10px'
   },
 	item : {
@@ -34,11 +33,12 @@ const TagCloudSinglePost = ({tags,title,navigator}) => {
 
 	return (
     <div style={styles.parent} className="tagCloud">
-      <List 
-  		dataSource = {tags}
-  		renderRow = {(tag) => {  return (<li key={tag} onClick={() => navigator.pushPage({component : ArchiveScreen,term : tag,key : generateNavigationKey(tag)})  } style={styles.item}>{tag}</li> ) }}
-  	   />
-    </div>
+      
+      {tags.map(function(tag){
+        return (<li key={tag} onClick={() => navigator.pushPage({component : ArchiveScreen,term : tag,key : generateNavigationKey(tag)})  } style={styles.item}>{tag}</li> ) 
+      })}
+  		
+  	</div>
 	);
 
 };

@@ -6,7 +6,7 @@ import Chatroom from '../screens/Chatroom';
 const ExpertChatListItem = ({item,navigator}) => {
 
   return (
-          <ListItem onClick={(event) => {navigator.pushPage({component: Chatroom,key : generateNavigationKey(item.post_id),chatroomId : item.post_id}) }}>
+          <div className="card" onClick={(event) => {navigator.pushPage({component: Chatroom,key : generateNavigationKey(item.post_id),chatroomId : item.post_id}) }}>
           <Row>
             
             <Col verticalAlign="center" width="10%">
@@ -24,7 +24,7 @@ const ExpertChatListItem = ({item,navigator}) => {
             }
             
           </Row>
-        </ListItem>
+        </div>
       )
 
 }; 

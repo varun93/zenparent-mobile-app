@@ -75,8 +75,9 @@ class UserApi {
 
   }
 
+
   //cannot be tested now
-  static tokenSignin(token,socialUniqueId,userEmail,loginBy) {
+  static tokenSignin(token,socialUniqueId,userEmail,displayName,imageUrl,loginBy) {
 
     const headers = this.requestHeaders();
     const request = new Request(TOKEN_SIGNIN_ENDPOINT, {

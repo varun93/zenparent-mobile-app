@@ -1,5 +1,26 @@
 import React,{Component} from 'react';
 import {Row,Col} from 'react-onsenui';
+
+
+const styles = {
+  chatFooterWrapper : {
+    display :  "table",
+    width  : "100%"
+  },
+  messageBox : {
+    display : "table-cell",
+    width : "80%"
+  },
+  sendButton : {
+    display : "table-cell",
+    width : "20%",
+    verticalAlign : "middle",
+    textAlign : "center"
+  }
+
+
+}
+
 export default class InputBoxPane extends Component{
 
   constructor(props,context){
@@ -46,16 +67,16 @@ export default class InputBoxPane extends Component{
 
     return (
         <div id="chatroom-footer" className="input-box-pane">
-          <Row>
-            <Col style={{height : "45px",marginRight : "5px"}} verticalAlign="center" width="84%">
+          <div style={styles.chatFooterWrapper}>
+            <div style={styles.messageBox}>
              <textarea value={this.state.message} onChange={this._onChange.bind(this)} onKeyPress={this._onEnter.bind(this)}></textarea>
-            </Col>
+            </div>
 
-            <Col onClick={this._onClick.bind(this)} className="msg-send-btn" verticalAlign="center" width="14%">
+            <div style={styles.sendButton} onClick={this._onClick.bind(this)} className="msg-send-btn">
               <span><ons-icon icon="fa-paper-plane"></ons-icon></span>
-            </Col>
+            </div>
        
-          </Row>
+          </div>
         </div>
       )
   }

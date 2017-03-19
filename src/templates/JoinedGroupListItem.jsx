@@ -6,8 +6,8 @@ import Chatroom from '../screens/Chatroom';
 const JoinedGroupListItem = ({item,navigator}) => {
 
   return (
-        <ListItem onClick={(e) => { navigator.pushPage({component: Chatroom,key : generateNavigationKey(item.post_id), chatroomId : item.post_id})  }}>
-         <div className="card">
+
+         <div onClick={(e) => { navigator.pushPage({component: Chatroom,key : generateNavigationKey(item.post_id), chatroomId : item.post_id})  }} className="card">
           <Row>
             
             <Col verticalAlign="center" width="10%">
@@ -26,7 +26,7 @@ const JoinedGroupListItem = ({item,navigator}) => {
              
           </Row>
           </div>
-        </ListItem>
+
       )
 
 }; 

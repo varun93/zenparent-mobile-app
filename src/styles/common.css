@@ -14,6 +14,11 @@
 	display: none;
 }
 
+
+.chatroom-listing .card:not(:last-child){
+	margin-bottom: 5px;
+}
+
 .card{
 
 	background : #fff;
@@ -29,10 +34,8 @@
 	background-color: #eee !important; 
 }
 
-/* background: transparent !important; */
-
 .list{
-	/*background: #eee !important;	*/
+	background: #eee !important;	
 }
 .list-header{
 	padding: 10px 5px;

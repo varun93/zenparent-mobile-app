@@ -8,7 +8,8 @@ const styles = {
 
   pageContent : {
     margin : '60px 0px',
-    lineHeight : '1.6'
+    lineHeight : '1.6',
+    background : 'white'
   },
   postContent : {
     padding : "0px 10px",
@@ -83,7 +84,7 @@ const SinglePost = ({post,toggleLike,toggleBookmark,navigator}) => {
               <div onClick={() => toggleBookmark(post.id)} style={{margin : "0 25%"}} className="articleBookmark">
                  {post.bookmarked ? <img src="/assets/bookmark-active.svg" /> : <img src="/assets/bookmark-default.svg" />}
               </div>
-              <ons-icon icon="fa-share-alt" style={{fontSize:"32px"}}></ons-icon>
+              <ons-icon size="32px" icon="fa-share-alt"></ons-icon>
             </div>
 
 		</div>

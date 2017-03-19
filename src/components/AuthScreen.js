@@ -26,39 +26,6 @@ export default class AuthScreen extends Component{
 		};
 	}
 
-	_checkUserStatus(){
-		let userEmail = this.state.userEmail;
-		
-		if(validateEmail(this.state.userEmail)){
-      		this.props.checkUserStatus(userEmail);
-    	}
-		else{
-			return;
-		}
-	}
-
-	handleEmailChange(e){
-    	this.setState({userEmail : e.target.value});
-  	}
-
-
-	_onClick(e){
-		this._checkUserStatus.call(this);
-	}
-
-	_onEnter(e){
-		this._checkUserStatus.call(this);
-	}
-
-	handleFacebookLogin(){
-		console.log("Logic of Google login goes here!");
-	}
-
-	handleGoogleLogin(){
-		console.log("Logic of Facebook login goes here!");
-	}
-
-
 	componentWillReceiveProps(nextProps) {
 
 		let status = nextProps.status;
@@ -115,6 +82,120 @@ export default class AuthScreen extends Component{
 
 
 	}
+
+
+
+	_checkUserStatus(){
+		let userEmail = this.state.userEmail;
+		
+		if(validateEmail(this.state.userEmail)){
+      		this.props.checkUserStatus(userEmail);
+    	}
+		else{
+			return;
+		}
+	}
+
+	handleEmailChange(e){
+    	this.setState({userEmail : e.target.value});
+  	}
+
+
+	_onClick(e){
+		this._checkUserStatus.call(this);
+	}
+
+	_onEnter(e){
+		this._checkUserStatus.call(this);
+	}
+
+	handleGoogleLogin(){
+    
+      var classContext = this;
+
+      window.plugins.googleplus.login(
+          {
+            'scopes': '', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
+            'webClientId': '579056634272-j8efs6o3lp2es38ls420hg7movtuccqm.apps.googleusercontent.com', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
+            'offline': true, // optional, but requires the webClientId - if set to true the plugin will also return a serverAuthCode, which can be used to grant offline access to a non-Google server
+          },
+          function (obj) {
+
+             var userEmail = obj.email;
+             var userID = obj.userId;
+             var displayName = obj.displayName;
+             var imageUrl = obj.imageUrl;
+             var token = obj.idToken;
+             var loginBy = 'google';
+              
+             if(userEmail){
+                classContext.tokenSignin(token,userEmail,userID,imageUrl,loginBy,displayName); 
+             }
+             
+             // console.log(JSON.stringify(obj));
+
+             // console.log("===== Google Auth ============");
+             // console.log("Token is : " + token);
+             // console.log("User Id is : " + userID);
+             // console.log("===== End of Google Auth ============");
+
+          },
+          function (msg) {
+            alert('error: ' + msg);
+          }
+      );
+
+  }
+
+
+
+
+  handleFacebookLogin(){
+   
+    var fbLoginSuccess = function (userData)
+    {
+
+      var accessToken = userData.authResponse.accessToken;
+      var userID = userData.authResponse.userID;
+      var classContext = this;
+
+       // console.log("===== Facebook Auth ============");
+       // console.log("Token is : " + accessToken);
+       // console.log("User Id is : " + userID);
+       // console.log("===== End of Facebook Auth ============");
+
+
+      facebookConnectPlugin.api("me/?fields=id,name,email,picture", ["email","public_profile"],
+        function onSuccess (result) {
+
+            var userID = result.id;
+            var userEmail = result.email;
+            var imageUrl = result.picture.data.url;
+            var displayName = result.name;
+            var loginBy = 'facebook';
+            // send the accesstoken, email, user id to the server
+            // console.log(email);
+            // console.log(name);
+            // console.log(imageUrl);
+            if(userEmail){
+                classContext.tokenSignin(token,userEmail,userID,imageUrl,loginBy,displayName); 
+            }
+            
+
+        }, function onError (error) {
+          console.error("Failed: ", error);
+        }
+    );
+  }
+
+    facebookConnectPlugin.login(["public_profile"],
+        fbLoginSuccess,
+         function (error) { alert("" + error) }
+         );
+
+  }
+
+
 
 
 	render(){

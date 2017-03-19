@@ -1,5 +1,5 @@
 import React from 'react';
-import {ListItem,Row,Col,Button} from 'react-onsenui';
+import {Row,Col,Button} from 'react-onsenui';
 import {generateNavigationKey} from '../utils';
 import Chatroom from '../screens/Chatroom';
 
@@ -7,7 +7,7 @@ import Chatroom from '../screens/Chatroom';
 const RecommendedGroupListItem = ({item,navigator,joinChatroom}) => {
 
     return (
-        <ListItem onClick={(event) => { joinChatroom(item.post_id); navigator.pushPage({component: Chatroom,key : generateNavigationKey(item.post_id),chatroomId : item.post_id}); }}>
+        <div className="card" onClick={(event) => { joinChatroom(item.post_id); navigator.pushPage({component: Chatroom,key : generateNavigationKey(item.post_id),chatroomId : item.post_id}); }}>
           <Row>
             
             <Col verticalAlign="center" width="10%">
@@ -24,7 +24,8 @@ const RecommendedGroupListItem = ({item,navigator,joinChatroom}) => {
             </Col>
             
           </Row>
-        </ListItem>
+        </div>
+       
         )
 
 }; 
