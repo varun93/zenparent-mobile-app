@@ -23,4 +23,11 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
+    <plugin name="cordova-plugin-googleplus" spec="~5.1.1">
+        <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.579056634272-j8gr7uulkt9p0qiudp96jhbgapqlmevt" />
+    </plugin>
+    <plugin name="cordova-plugin-facebook4" spec="~1.7.4">
+        <variable name="APP_ID" value="1626499117583779" />
+        <variable name="APP_NAME" value="Zenparent" />
+    </plugin>
 </widget>

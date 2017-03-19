@@ -9,7 +9,34 @@
     "installed_plugins": {
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.zenparent.mobileappp"
+        },
+        "cordova-plugin-googleplus": {
+            "PACKAGE_NAME": "com.zenparent.mobileappp"
+        },
+        "cordova-plugin-facebook4": {
+            "APP_ID": "1626499117583779",
+            "APP_NAME": "Zenparent",
+            "PACKAGE_NAME": "com.zenparent.mobileappp"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "com.zenparent.mobileappp"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.zenparent.mobileappp"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.zenparent.mobileappp"
+        },
+        "cordova-plugin-google-analytics": {
+            "PACKAGE_NAME": "com.zenparent.mobileappp"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.zenparent.mobileappp"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.zenparent.mobileappp"
+        }
+    }
 }
