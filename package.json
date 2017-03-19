@@ -4,7 +4,7 @@
   "description": "Zenparent App",
   "main": "src/index.js",
   "scripts": {
-    "start": "webpack-dev-server --host 0.0.0.0 --progress --content-base www/",
+    "start": "webpack --config webpack.config.js && webpack-dev-server --content-base www/ --inline --hot --port 8000 --history-api-fallback",
     "build": "webpack --config webpack.config.prod.js",
     "deploy": "npm run build && git commit www -m \"Deploy\" && git subtree push --prefix www origin gh-pages",
     "lint": "eslint ."

@@ -42,3 +42,7 @@ jspm_packages
 .DS_Store
 
 stats.json
+
+# Cordova files
+platforms
+plugins
