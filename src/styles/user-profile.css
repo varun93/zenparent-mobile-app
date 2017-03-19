@@ -1,0 +1,96 @@
+.user-profile ons-input{
+	width: 100%;
+	padding: 5px;
+	margin: 10px 0px 10px 0px;
+}
+
+.user-profile .text-input--underbar:disabled,ons-input[disabled]{
+	opacity: 1.0 !important;
+}
+.user-profile .field-label{
+	text-align: left;
+	margin-bottom: 0px;
+	font-size: 16px;
+	font-weight: bold;
+	color: rgb(11, 134, 134);
+}
+
+.user-profile .page__content{
+	padding: 5px !important;
+	background: rgb(238,238,238);
+}
+
+.user-profile .profile-info{
+	background: white;
+	padding: 5px;
+}
+
+.user-profile .profile-info .profile-name{
+	
+	font-weight: bold;
+	color: rgb(11, 134, 134);
+	font-size: 18px;
+	text-align: center;
+
+}
+
+.form-edit{
+	text-align: right;
+}
+
+.btn-edit, .btn-edit:hover, .btn-edit:active {
+
+	border: none;
+	background: #FF547C;
+    color: white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    border-radius: 0px;
+    padding: 5px 25px;
+    font-size: 14px;
+    line-height: 2.5;
+    border: none;
+
+}
+
+.btn-edit img {
+    height: 15px;
+    vertical-align: middle;
+}
+
+.sudoinput, .sudoinput:focus {
+    outline: 0px solid transparent;
+}
+
+.sudoinput {
+    border-bottom: 1px solid #777 !important;
+    padding: 5px 0px;
+}
+
+.sudoinput::after {
+    background-image: url("https://res.cloudinary.com/dooujtlec/image/upload/v1484030059/edit_pink_l23ljx.svg");
+    background-size: cover;
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 15px;
+    height: 15px;
+    content: '';
+    margin-left: 5px;
+}
+
+.save-info{
+
+    color: white;
+    width: 33%;
+    line-height: 1.5;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    background: rgb(132, 116, 159);
+    padding: 10px 25px;
+    border: none;
+    font-size: 16px;
+
+}

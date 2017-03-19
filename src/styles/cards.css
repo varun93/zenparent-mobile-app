@@ -1,0 +1,13 @@
+.page__content{
+  padding: 0px !important;
+}
+
+.article-listing .list__item__center{
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.article-listing .list__item{
+  padding: 0px !important;
+}
+

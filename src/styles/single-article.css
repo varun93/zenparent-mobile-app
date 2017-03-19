@@ -1,0 +1,31 @@
+.article-content p,.article-content li{
+	font-size: 16px;
+    font-family: sans-serif;
+    font-weight: 500;
+}
+
+.article-content img{
+	width: 100%;
+	height: auto;
+}
+
+.article-content h1{
+	font-size: 18px !important;
+}
+
+.single-article .navigation-bar__title{
+	font-size: 14px;
+}
+
+.articleLike,.articleBookmark{
+	padding-top: 5px;
+	display: inline-block;
+}
+
+.single-post .articleLike img,.single-post .articleBookmark img{
+	height: 32px;
+}
+
+.page-content .list{
+	border-bottom: none;
+}

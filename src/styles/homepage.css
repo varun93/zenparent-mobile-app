@@ -1,0 +1,27 @@
+.heading{
+	background: yellow;
+}
+
+
+.homescreen .page__content{
+	padding: 5px !important;
+	background: rgb(238,238,238);
+}
+
+.chatroom-listing .list__item__center{
+	
+	padding-right: 0px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.chatroom-listing list-header{
+
+padding: 0px !important;
+
+}
+
+.chatroom-listing .list__item{
+	margin-bottom: 5px;
+	box-shadow: 10px 10px 5px #eee;
+}

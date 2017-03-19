@@ -1,0 +1,38 @@
+.interestTag{
+	float : left;
+	color : #8675A1;
+	background: white;
+	padding: 8px;
+	margin : 5px;
+	border-radius : 5px;
+	border-radius: 0px;
+}
+
+.tagSelected{
+	background: #FF547C;
+	color: white;
+}
+
+.interestsSelector{
+	position: relative;
+}
+
+.interestsSelector .message{
+	position: absolute;
+	top : 10%;
+}
+
+.interestsSelector .selectionPanel{
+	position: absolute;
+	top : 20%;
+}
+ 
+.interestsSelector .button{
+	background-color: #8675A1 !important;
+}
+
+.interestsSelector .continueButton{
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+}

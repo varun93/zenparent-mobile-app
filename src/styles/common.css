@@ -1,0 +1,60 @@
+.back-button__icon:before {
+    color: #8675A1;
+}
+
+.progress-circular__primary{
+	stroke: #8675A1 !important;
+}
+
+.loading .progress-circular__primary{
+	stroke: yellow !important;
+}
+
+.hide{
+	display: none;
+}
+
+.card{
+
+	background : #fff;
+    position: relative;
+    width : 100%;
+    padding : 5px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+
+}
+
+.page, .page__content{
+	background: #eee !important;
+	background-color: #eee !important; 
+}
+
+/* background: transparent !important; */
+
+.list{
+	/*background: #eee !important;	*/
+}
+.list-header{
+	padding: 10px 5px;
+}
+
+.list-item{
+	padding: 0px !important;
+	margin-bottom: 10px !important;
+}
+
+.list-item__center{
+	padding: 0px !important;
+}
+
+.text-input{
+	width: 100% !important;
+}
+
+ons-input .input{
+	width: 100% !important;
+}
+
+.chatroom .page__content{
+	background-color: #ddd !important;
+}
