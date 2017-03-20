@@ -36,6 +36,7 @@ export const removeCache = (action) => {
         break
 
       case PROFILE_UPDATE : 
+        urls.push(LIST_CHAT_GROUPS_ENDPOINT);
         urls.push(SLOT_POSTS_ENDPOINT);
         break;
   

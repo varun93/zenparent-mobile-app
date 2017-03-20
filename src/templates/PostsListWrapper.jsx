@@ -19,6 +19,10 @@ const PostsListWrapper = ({posts=[],position = 0,title='Stories For You',toggleL
 			)
 	};
 
+	if(posts.length === 0){
+		return null;
+	}
+
 	return (
 		  <List 
                 className="article-listing"

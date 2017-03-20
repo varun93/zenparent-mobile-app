@@ -5,6 +5,7 @@ import {fetchPosts,toggleLikeRequest,toggleBookmarkRequest} from '../actions/blo
 
 class UserFeedsContainer extends Component {
 
+	
 
 	render(){
 		  

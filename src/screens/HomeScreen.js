@@ -37,7 +37,7 @@ export default class Homescreen extends Component{
 		return (
 			<Page key='homescreen'>
 				 <SlotPostsContainer update={this.state.update} navigator={this.props.navigator} />
-				 <InterestsCarousel position='225' navigator={this.props.navigator} />
+				 <InterestsCarousel position='210' navigator={this.props.navigator} />
 				 <UserFeedsContainer update={this.state.update} position='340' section={USER_FEED_RELEVANCE} navigator={this.props.navigator} />
 			</Page>
 			)

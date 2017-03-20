@@ -9,6 +9,10 @@ const ExpertChatListItem = ({item,navigator}) => {
           <div className="card" onClick={(event) => {navigator.pushPage({component: Chatroom,key : generateNavigationKey(item.post_id),chatroomId : item.post_id}) }}>
           <Row>
             
+            <Col width="10%">
+              <img style={{width:"28px",height:"28px",margin:"-5px"}} src="/assets/expert_chat_icon.svg"/>
+            </Col>
+
             <Col verticalAlign="center" width="10%">
               <img style={{ borderRadius : "50%",width:"40px",height:"40px"}} src={item.attachment_url}/>
             </Col>
