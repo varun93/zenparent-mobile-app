@@ -27,7 +27,7 @@ export default class InputBoxPane extends Component{
     super(props,context);
 
     this.state = {
-      message : 'Enter your Message Here'
+      message : ''
     };
 
   }
@@ -69,7 +69,7 @@ export default class InputBoxPane extends Component{
         <div id="chatroom-footer" className="input-box-pane">
           <div style={styles.chatFooterWrapper}>
             <div style={styles.messageBox}>
-             <textarea value={this.state.message} onChange={this._onChange.bind(this)} onKeyPress={this._onEnter.bind(this)}></textarea>
+             <textarea placeholder="Type message" value={this.state.message} onChange={this._onChange.bind(this)} onKeyPress={this._onEnter.bind(this)}></textarea>
             </div>
 
             <div style={styles.sendButton} onClick={this._onClick.bind(this)} className="msg-send-btn">

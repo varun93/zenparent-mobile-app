@@ -62,12 +62,12 @@ export default class PostsList extends Component{
    
 	render(){
 
-		let {toggleLike,title,exhausted,toggleBookmark,posts,contextualPosts,navigator} = this.props;
+		let {toggleLike,title,error,exhausted,toggleBookmark,posts,contextualPosts,navigator} = this.props;
 
 		return (
 		<div ref="postList">
 			<PostsListWrapper title={title} position={this.props.position} toggleLike={toggleLike} toggleBookmark={toggleBookmark} posts={getPosts(contextualPosts,posts)} navigator={navigator} />
-			{exhausted ? '' : 
+			{(exhausted || error) ? '' : 
 			<div style={{textAlign : "center"}} className="infinite-scroll-example_waypoint">
 			 {this._renderWaypoint.call(this)}
 			  <ProgressCircular indeterminate />

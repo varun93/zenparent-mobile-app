@@ -9,11 +9,11 @@ class UserFeedsContainer extends Component {
 	render(){
 		  
 		  let options = {};
-		  let {navigator,loading,exhausted,toggleLike,toggleBookmark,fetchPosts,contextualPosts,posts,section} = this.props;
+		  let {navigator,loading,error,exhausted,toggleLike,toggleBookmark,fetchPosts,contextualPosts,posts,section} = this.props;
 		  options['key'] = section;
 		 
 		  return (
-			<PostsList exhausted={exhausted} loading={loading} update={this.props.update} position={this.props.position} toggleLike={toggleLike} toggleBookmark={toggleBookmark} options={options} navigator={navigator} posts={posts} contextualPosts={contextualPosts} fetchPosts={fetchPosts} />
+			<PostsList error={error} exhausted={exhausted} loading={loading} update={this.props.update} position={this.props.position} toggleLike={toggleLike} toggleBookmark={toggleBookmark} options={options} navigator={navigator} posts={posts} contextualPosts={contextualPosts} fetchPosts={fetchPosts} />
 		 )			
 	}
 
@@ -29,6 +29,7 @@ const mapDispactorToProps = (dispatch) => {
 const mapStateToProps = (state,ownProps) => {
 	return {
 		posts : state.blog.posts.byId,
+		error : state.blog[ownProps.section].error,
 		loading : state.blog[ownProps.section].loading,
 		exhausted : state.blog[ownProps.section].exhausted,
 		contextualPosts : state.blog[ownProps.section].posts

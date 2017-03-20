@@ -2,7 +2,11 @@
 
 
 // api endpoints
-const BASE_URL = 'http://test.zenparent.in/api';
+let BASE_URL = 'http://test.zenparent.in/api';
+
+if (process.env.NODE_ENV === 'production' || (location && location.hostname !== 'localhost')){
+	BASE_URL = 'https://zenparent.in/api';
+}
 
 //general
 export const APP_VERSION = BASE_URL + '/appVersion';

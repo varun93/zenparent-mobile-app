@@ -7,8 +7,8 @@ require('../styles/single-article.css');
 const styles = {
 
   pageContent : {
-    margin : '60px 0px',
-    lineHeight : '1.6',
+    margin : '45px 0px 60px 0px',
+    lineHeight : '1.5',
     background : 'white'
   },
   postContent : {
@@ -16,8 +16,8 @@ const styles = {
     textAlign : "left"
   },
   postTitle : {
-    fontSize:"28px",
-    lineHeight:"1.1",
+    fontSize:"18px",
+    lineHeight:"1.4",
     fontWeight:"bold",
     padding:"10px"
   },
