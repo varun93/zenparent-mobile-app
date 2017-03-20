@@ -43,7 +43,8 @@ const styles = {
 	  	position : 'relative',
 	  	background : '#eeeeee',
 	  	height : '90px',
-	  	marginLeft : '15px'
+	  	marginLeft: '10px',
+        marginTop: '35px'
 	 },
 	 addMoreIcon : {
 	 	position : 'absolute',
