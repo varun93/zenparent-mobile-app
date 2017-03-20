@@ -7604,3 +7604,68 @@ ons-input .input{
 .chatroom .page__content{
 	background-color: #ddd !important;
 }
+
+
+/* Styling of tabs */
+ons-tabbar.main-tabs .ons-icon{
+  width: 35px;
+  height: 70%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-top: 6px;   
+}
+
+
+:checked + .tabbar__button{
+color: #fff;
+}
+
+ons-tab.active{
+	background: #8675A1;
+}
+
+/* Hometab  */
+ons-tab.home-tab .ons-icon{
+ background-image: url('/assets/home-icon-primary.svg');
+}
+
+ons-tab.home-tab.active .ons-icon{
+ background-image: url('/assets/home-icon.svg');
+}
+
+/* Community  */
+ons-tab.community-tab .ons-icon{
+ background-image: url('/assets/community-icon-primary.svg');
+}
+
+ons-tab.community-tab.active .ons-icon{
+ background-image: url('/assets/community-icon.svg');
+}
+
+
+/* Parenting  */
+ons-tab.parenting-tab .ons-icon{
+ background-image: url('/assets/parenting-icon-primary.svg');
+}
+
+ons-tab.parenting-tab.active .ons-icon{
+ background-image: url('/assets/parenting-icon.svg');
+}
+
+ons-tab.user-profile-tab .ons-icon{
+	margin-top: 0px;
+}
+
+/* Tabbar Android */
+.tabbar--material {
+    background-color: #fff;
+ }
+
+.tabbar--material .tabbar__icon + .tabbar__label,.tabbar--material ons-tab .tabbar__icon{
+	color : #8675A1;
+}
+
+.tabbar--material ons-tab.active .tabbar__icon + .tabbar__label,.tabbar--material ons-tab.active .tabbar__icon{
+	color: #fff;
+}
+

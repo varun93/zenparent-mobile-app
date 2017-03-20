@@ -2,6 +2,8 @@ import React,{Component} from 'react';
 import {Page,Toolbar,BackButton,Input} from 'react-onsenui';
 import BookmarkedPostsContainer from '../containers/BookmarkedPostsContainer';
 import AuthScreen from '../screens/AuthScreen';
+import {removeCache} from '../utils/cachedFetch';
+import {PROFILE_UPDATE} from '../constants';
 import {hasUserInfoChanged,convertDateToWords,isFieldEmpty,ucFirstLetter,generateNavigationKey} from '../utils';
 require('../styles/user-profile.css');
 
@@ -84,6 +86,7 @@ export default class UserProfile extends Component{
   updateProfileInfo(){
     let {date,stageOfParenting,displayName} = this.state;
     this.setState({editMode : !this.state.editMode});
+    removeCache(PROFILE_UPDATE);
     this.props.updateUserProfile(date,stageOfParenting,displayName);
   }
 

@@ -25136,9 +25136,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	// TODO : slot posts, posts by author
-
-
 	// api endpoints
 	var BASE_URL = 'http://test.zenparent.in/api';
 
@@ -58919,16 +58916,16 @@
 
 	      return [{
 	        content: _react2.default.createElement(_HomeScreen2.default, { key: 'home-screen', user: this.props.user, navigator: this.props.navigator, title: 'Home' }),
-	        tab: _react2.default.createElement(_reactOnsenui.Tab, { key: 0, label: 'Home', icon: 'md-home' })
+	        tab: _react2.default.createElement(_reactOnsenui.Tab, { key: 0, className: 'tab home-tab', label: 'Home', icon: '' })
 	      }, {
 	        content: _react2.default.createElement(_Community2.default, { key: 'community', user: this.props.user, navigator: this.props.navigator, title: 'Community' }),
-	        tab: _react2.default.createElement(_reactOnsenui.Tab, { key: 1, label: 'Community', icon: 'md-accounts' })
+	        tab: _react2.default.createElement(_reactOnsenui.Tab, { key: 1, className: 'tab community-tab', label: 'Community', icon: '' })
 	      }, {
 	        content: _react2.default.createElement(_Parenting2.default, (_React$createElement = { key: 'parenting', user: this.props.user, navigator: this.props.navigator }, _defineProperty(_React$createElement, 'key', 3), _defineProperty(_React$createElement, 'title', 'Parenting'), _React$createElement)),
-	        tab: _react2.default.createElement(_reactOnsenui.Tab, { key: 2, label: 'Parenting', icon: 'md-male-female' })
+	        tab: _react2.default.createElement(_reactOnsenui.Tab, { key: 2, className: 'tab parenting-tab', label: 'Parenting', icon: '' })
 	      }, {
 	        content: _react2.default.createElement(_UserProfile2.default, { key: 'user-profile', navigator: this.props.navigator, title: 'UserProfile' }),
-	        tab: _react2.default.createElement(_reactOnsenui.Tab, { key: 4, label: 'UserProfile', icon: 'md-account' })
+	        tab: _react2.default.createElement(_reactOnsenui.Tab, { className: 'tab user-profile-tab', key: 4, label: 'UserProfile', icon: 'ion-ios-person-outline' })
 	      }];
 	    }
 	  }, {
@@ -58940,6 +58937,7 @@
 	        _reactOnsenui.Page,
 	        null,
 	        _react2.default.createElement(_reactOnsenui.Tabbar, {
+	          className: 'main-tabs',
 	          index: this.state.index,
 	          initialIndex: 0,
 	          onPreChange: function onPreChange(event) {
@@ -59601,6 +59599,7 @@
 				var _props = this.props,
 				    toggleLike = _props.toggleLike,
 				    title = _props.title,
+				    error = _props.error,
 				    exhausted = _props.exhausted,
 				    toggleBookmark = _props.toggleBookmark,
 				    posts = _props.posts,
@@ -59612,7 +59611,7 @@
 					'div',
 					{ ref: 'postList' },
 					_react2.default.createElement(_PostsListWrapper2.default, { title: title, position: this.props.position, toggleLike: toggleLike, toggleBookmark: toggleBookmark, posts: (0, _utils.getPosts)(contextualPosts, posts), navigator: navigator }),
-					exhausted ? '' : _react2.default.createElement(
+					exhausted || error ? '' : _react2.default.createElement(
 						'div',
 						{ style: { textAlign: "center" }, className: 'infinite-scroll-example_waypoint' },
 						this._renderWaypoint.call(this),
@@ -65865,6 +65864,7 @@
 				var _props = this.props,
 				    navigator = _props.navigator,
 				    loading = _props.loading,
+				    error = _props.error,
 				    exhausted = _props.exhausted,
 				    toggleLike = _props.toggleLike,
 				    toggleBookmark = _props.toggleBookmark,
@@ -65875,7 +65875,7 @@
 
 				options['key'] = section;
 
-				return _react2.default.createElement(_PostsList2.default, { exhausted: exhausted, loading: loading, update: this.props.update, position: this.props.position, toggleLike: toggleLike, toggleBookmark: toggleBookmark, options: options, navigator: navigator, posts: posts, contextualPosts: contextualPosts, fetchPosts: fetchPosts });
+				return _react2.default.createElement(_PostsList2.default, { error: error, exhausted: exhausted, loading: loading, update: this.props.update, position: this.props.position, toggleLike: toggleLike, toggleBookmark: toggleBookmark, options: options, navigator: navigator, posts: posts, contextualPosts: contextualPosts, fetchPosts: fetchPosts });
 			}
 		}]);
 
@@ -65899,6 +65899,7 @@
 	var mapStateToProps = function mapStateToProps(state, ownProps) {
 		return {
 			posts: state.blog.posts.byId,
+			error: state.blog[ownProps.section].error,
 			loading: state.blog[ownProps.section].loading,
 			exhausted: state.blog[ownProps.section].exhausted,
 			contextualPosts: state.blog[ownProps.section].posts
@@ -65984,7 +65985,8 @@
 			position: 'relative',
 			background: '#eeeeee',
 			height: '90px',
-			marginLeft: '15px'
+			marginLeft: '10px',
+			marginTop: '35px'
 		},
 		addMoreIcon: {
 			position: 'absolute',

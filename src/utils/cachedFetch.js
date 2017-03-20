@@ -48,7 +48,6 @@ export const removeCache = (action) => {
   
      }
 
- 
   urls.forEach((url) => {
       let cacheKey = generateCacheKey(url);
       window.localStorage.removeItem(cacheKey)

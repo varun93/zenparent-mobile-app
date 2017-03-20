@@ -1,4 +1,5 @@
 import UserApi from '../api/UserApi';
+import {removeCache} from '../utils/cachedFetch';
 
 export const FORGOT_PASSWORD_REQUEST = 'FORGOT_PASSWORD_REQUEST';
 export const FORGOT_PASSWORD_SUCCESS = 'FORGOT_PASSWORD_SUCCESS';
@@ -38,6 +39,10 @@ export const UPDATE_USER_INFO_FAILURE = 'UPDATE_USER_INFO_FAILURE';
 export const UPDATE_USER_INTERESTS_REQUEST = 'UPDATE_USER_INTERESTS_REQUEST';
 export const UPDATE_USER_INTERESTS_SUCCESS = 'UPDATE_USER_INTERESTS_SUCCESS';
 export const UPDATE_USER_INTERESTS_FAILURE = 'UPDATE_USER_INTERESTS_FAILURE';
+
+
+import {PROFILE_UPDATE,UPDATE_USER_INTERESTS} from '../constants';
+
 
 // user logout actions
 export const LOGOUT_USER = 'LOGOUT_USER';
@@ -133,6 +138,9 @@ export function updateUserInterestsSuccess(interests){
 };
 
 export function updateUserInterestsRequest(){
+  
+  removeCache(UPDATE_USER_INTERESTS);
+
   return {
     type : UPDATE_USER_INTERESTS_REQUEST
   }

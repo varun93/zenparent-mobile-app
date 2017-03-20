@@ -24,6 +24,9 @@ export const REQUEST_CHATROOMS = 'REQUEST_CHATROOMS';
 export const RECEIVED_CHATROOMS = 'RECEIVED_CHATROOMS';
 export const ERROR_FETCHING_CHATROOMS = 'ERROR_FETCHING_CHATROOMS';
 
+import {removeCache} from '../utils/cachedFetch';
+import {GROUP_JOIN_UNJOIN} from '../constants';
+
 
 export function setActiveChatRoom(chatroomId){
 	return {
@@ -150,6 +153,9 @@ export function sendMessage(message,payloadType,chatroomId){
 export function joinChatroom(chatroomId){
 
 	return (dispatch,state) => {
+			
+		//clear the cache
+		removeCache(GROUP_JOIN_UNJOIN);
 		
 		ChatroomApi.joinChatroom(chatroomId).then(function(response){
   			// console.log(response);
@@ -167,9 +173,11 @@ export function joinChatroom(chatroomId){
 export function leaveChatroom(chatroomId){
 
 	return (dispatch,state) => {
-		// dispatch(requestPost());
+
+		//clear the cache
+		removeCache(GROUP_JOIN_UNJOIN);
 		ChatroomApi.leaveChatroom(chatroomId).then(function(response){
-  			// console.log(response);
+  		
   			let chatroomId = response.data.group_id;
   			dispatch(leaveChatroomSuccess(chatroomId));
      	
@@ -185,12 +193,10 @@ export function fetchChatroomMessages(chatroomId,messageId,direction){
 	return (dispatch,state) => {
 		dispatch(requestChatroomMessages(chatroomId));
 		ChatroomApi.listMessages(chatroomId,messageId,direction).then(function(response){
-  			// console.log(response.messages);
-  			// console.log(response.group_id);
+
   			let chatroomId = response.data.group_id;
   			let messages = response.data.messages;
-  			console.log(messages);
-			dispatch(receivedChatroomMessages(chatroomId,messages));
+  			dispatch(receivedChatroomMessages(chatroomId,messages));
      	}).catch((err) => {
       		dispatch(errorReceivingChatroomMessages(chatroomId));
       	});
@@ -204,7 +210,6 @@ export function fetchChatrooms(){
 	return (dispatch,state) => {
 		dispatch(requestChatrooms());
 		ChatroomApi.listChatrooms().then(function(response){
-  				// console.log(response.data);
   				dispatch(receivedChatrooms(response.data));
      	}).catch((err) => {
       		dispatch(errorReceivingChatrooms());
