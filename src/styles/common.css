@@ -14,7 +14,6 @@
 	display: none;
 }
 
-
 .chatroom-listing .card:not(:last-child){
 	margin-bottom: 5px;
 }
@@ -34,11 +33,19 @@
 	background-color: #eee !important; 
 }
 
+.list-header--material {
+     background: #eee; 
+     padding: 15px 0px;
+}
+
 .list{
-	background: #eee !important;	
+	background: #eee !important;
+	margin-bottom: 5px;	
+	overflow: inherit !important;
 }
 .list-header{
-	padding: 10px 5px;
+	font-size: 15px !important;
+	padding: 10px 0px 0px !important;
 }
 
 .list-item{

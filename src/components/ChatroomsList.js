@@ -44,7 +44,7 @@ export default class ChatroomList extends Component{
 			)	
 		}
 		
-		return(<div></div>)
+		return null;
 		 
 	}
 
