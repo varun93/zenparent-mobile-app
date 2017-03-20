@@ -133,3 +133,16 @@ ons-tab.user-profile-tab .ons-icon{
 	color: #fff;
 }
 
+
+/* Input styling  */
+
+.text-input--material__label {
+    left: 10px !important;
+    top: 10px !important; 
+}
+
+/* Tabbar */
+
+.toolbar--material{
+	background-color: #fff !important;
+}
