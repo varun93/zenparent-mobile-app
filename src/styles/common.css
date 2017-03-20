@@ -78,6 +78,8 @@ ons-tabbar.main-tabs .ons-icon{
   background-repeat: no-repeat;
   margin-top: 6px;   
 }
+
+
 :checked + .tabbar__button{
 color: #fff;
 }
@@ -117,3 +119,17 @@ ons-tab.parenting-tab.active .ons-icon{
 ons-tab.user-profile-tab .ons-icon{
 	margin-top: 0px;
 }
+
+/* Tabbar Android */
+.tabbar--material {
+    background-color: #fff;
+ }
+
+.tabbar--material .tabbar__icon + .tabbar__label,.tabbar--material ons-tab .tabbar__icon{
+	color : #8675A1;
+}
+
+.tabbar--material ons-tab.active .tabbar__icon + .tabbar__label,.tabbar--material ons-tab.active .tabbar__icon{
+	color: #fff;
+}
+
