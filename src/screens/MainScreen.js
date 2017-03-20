@@ -25,20 +25,20 @@ class MainScreen extends Component {
     return [
         {
           content: <HomeScreen key='home-screen' user={this.props.user} navigator={this.props.navigator} title='Home' />,
-          tab: <Tab key={0} label='Home' icon='md-home' />
+          tab: <Tab key={0} className="tab home-tab" label='Home' icon='' />
         },
         {
           content: <Community  key='community' user={this.props.user} navigator={this.props.navigator} title='Community' />,
-          tab: <Tab key={1} label='Community' icon='md-accounts' />
+          tab: <Tab key={1} className="tab community-tab" label='Community' icon='' />
         },
         {
           content: <Parenting key='parenting' user={this.props.user} navigator={this.props.navigator} key={3} title='Parenting' />,
-          tab: <Tab key={2} label='Parenting' icon='md-male-female' />
+          tab: <Tab key={2}  className="tab parenting-tab" label='Parenting' icon='' />
         },
         {
           content: <UserProfile key='user-profile' navigator={this.props.navigator} title='UserProfile' />,
-          tab: <Tab key={4} label='UserProfile' icon='md-account' />
-        },
+          tab: <Tab className="tab user-profile-tab" key={4} label='UserProfile' icon='ion-ios-person-outline' />
+        }
         
       
       ];
@@ -51,6 +51,7 @@ class MainScreen extends Component {
           return (
             <Page>
               <Tabbar 
+              className="main-tabs"
               index={this.state.index}
               initialIndex={0}
               onPreChange = {(event) => {

@@ -1,6 +1,3 @@
-// TODO : slot posts, posts by author
-
-
 // api endpoints
 let BASE_URL = 'http://test.zenparent.in/api';
 

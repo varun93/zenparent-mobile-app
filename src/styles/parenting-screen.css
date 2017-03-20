@@ -6,14 +6,27 @@ ons-tabbar.parenting-tabs  .active{
 	top: 0px !important;
 }
 
-ons-tabbar.parenting-tabs .tab-bar__button{
 
-	color: rgb(132,116,159) !important;
+/* End of new Styles */
+:checked + .tabbar__button {
+    color: white;
+    background-color: #8675A1;
+    box-shadow: none;
+    border-top: none;
 }
 
-ons-tabbar.parenting-tabs :checked + .tab-bar__button{
-	color: white !important;
+
+div.nav-image.active > svg path {
+    fill: #fff !important;
 }
+
+div.nav-image > svg path {
+    fill: #8675A1 !important;
+}
+
+/* New Styles */
+
+
 
 ons-tabbar.parenting-tabs .ons-icon{
   width: 35px;
@@ -24,9 +37,7 @@ ons-tabbar.parenting-tabs .ons-icon{
 
 }
 
-ons-tabbar.parenting-tabs tab-bar--top__button,ons-tabbar.parenting-tabs tab-bar__button{
-	border-right: 1px solid rgb(132,116,159) !important;
-}
+
 
 /* Styles for placing icons for tabs in absence of md,fa,ion  */
 /*ons-tab.you .ons-icon{

@@ -1,0 +1,15 @@
+:checked + .tabbar__button {
+    color: white;
+    background-color: #8675A1;
+    box-shadow: none;
+    border-top: none;
+}
+
+
+div.nav-image.active > svg path {
+    fill: #fff !important;
+}
+
+div.nav-image > svg path {
+    fill: #8675A1 !important;
+}
