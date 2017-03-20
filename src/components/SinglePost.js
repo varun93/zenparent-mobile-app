@@ -48,7 +48,32 @@ const styles = {
 };
 
 const SinglePost = ({post,toggleLike,toggleBookmark,navigator}) => {
-	return (
+
+  const sharePost = () => {
+        // this is the complete list of currently supported params you can pass to the plugin (all optional)
+        var options = {
+          message: 'Share this', // not supported on some apps (Facebook, Instagram)
+          subject: post.post_title, // fi. for email
+          files: ['', ''], // an array of filenames either locally or remotely
+          url: post.permalink,
+          chooserTitle: post.post_title // Android only, you can override the default share sheet title
+        }
+
+        var onSuccess = function(result) {
+          // console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
+          // console.log("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false)
+        }
+
+        var onError = function(msg) {
+          // console.log("Sharing failed with message: " + msg);
+        }
+
+        window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
+
+  };
+
+
+  return (
 		
 		 <div style={styles.pageContent} className="single-post page-content">
               
@@ -84,7 +109,7 @@ const SinglePost = ({post,toggleLike,toggleBookmark,navigator}) => {
               <div onClick={() => toggleBookmark(post.id)} style={{margin : "0 25%"}} className="articleBookmark">
                  {post.bookmarked ? <img src="/assets/bookmark-active.svg" /> : <img src="/assets/bookmark-default.svg" />}
               </div>
-              <ons-icon size="32px" icon="fa-share-alt"></ons-icon>
+              <ons-icon onClick={() => sharePost()} size="32px" icon="fa-share-alt"></ons-icon>
             </div>
 
 		</div>
