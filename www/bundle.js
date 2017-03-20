@@ -24529,7 +24529,7 @@
 
 	  }, {
 	    key: 'tokenSignin',
-	    value: function tokenSignin(token, socialUniqueId, userEmail, loginBy) {
+	    value: function tokenSignin(token, socialUniqueId, userEmail, displayName, imageUrl, loginBy) {
 
 	      var headers = this.requestHeaders();
 	      var request = new Request(_constants.TOKEN_SIGNIN_ENDPOINT, {
@@ -61625,7 +61625,8 @@
 
 	  pageContent: {
 	    margin: '60px 0px',
-	    lineHeight: '1.6'
+	    lineHeight: '1.6',
+	    background: 'white'
 	  },
 	  postContent: {
 	    padding: "0px 10px",
@@ -61724,7 +61725,7 @@
 	          }, style: { margin: "0 25%" }, className: 'articleBookmark' },
 	        post.bookmarked ? _react2.default.createElement('img', { src: '/assets/bookmark-active.svg' }) : _react2.default.createElement('img', { src: '/assets/bookmark-default.svg' })
 	      ),
-	      _react2.default.createElement('ons-icon', { icon: 'fa-share-alt', style: { fontSize: "32px" } })
+	      _react2.default.createElement('ons-icon', { size: '32px', icon: 'fa-share-alt' })
 	    )
 	  );
 	};
@@ -61747,8 +61748,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactOnsenui = __webpack_require__(228);
-
 	var _ArchiveScreen = __webpack_require__(264);
 
 	var _ArchiveScreen2 = _interopRequireDefault(_ArchiveScreen);
@@ -61762,7 +61761,7 @@
 	var styles = {
 
 	  parent: {
-	    margin: '10px 0px 0px 0px',
+	    margin: '15px 0px 0px 0px',
 	    padding: '0px 10px'
 	  },
 	  item: (_item = {
@@ -61786,17 +61785,14 @@
 	  return _react2.default.createElement(
 	    'div',
 	    { style: styles.parent, className: 'tagCloud' },
-	    _react2.default.createElement(_reactOnsenui.List, {
-	      dataSource: tags,
-	      renderRow: function renderRow(tag) {
-	        return _react2.default.createElement(
-	          'li',
-	          { key: tag, onClick: function onClick() {
-	              return navigator.pushPage({ component: _ArchiveScreen2.default, term: tag, key: (0, _utils.generateNavigationKey)(tag) });
-	            }, style: styles.item },
-	          tag
-	        );
-	      }
+	    tags.map(function (tag) {
+	      return _react2.default.createElement(
+	        'li',
+	        { key: tag, onClick: function onClick() {
+	            return navigator.pushPage({ component: _ArchiveScreen2.default, term: tag, key: (0, _utils.generateNavigationKey)(tag) });
+	          }, style: styles.item },
+	        tag
+	      );
 	    })
 	  );
 	};
@@ -64023,42 +64019,6 @@
 		}
 
 		_createClass(AuthScreen, [{
-			key: '_checkUserStatus',
-			value: function _checkUserStatus() {
-				var userEmail = this.state.userEmail;
-
-				if ((0, _utils.validateEmail)(this.state.userEmail)) {
-					this.props.checkUserStatus(userEmail);
-				} else {
-					return;
-				}
-			}
-		}, {
-			key: 'handleEmailChange',
-			value: function handleEmailChange(e) {
-				this.setState({ userEmail: e.target.value });
-			}
-		}, {
-			key: '_onClick',
-			value: function _onClick(e) {
-				this._checkUserStatus.call(this);
-			}
-		}, {
-			key: '_onEnter',
-			value: function _onEnter(e) {
-				this._checkUserStatus.call(this);
-			}
-		}, {
-			key: 'handleFacebookLogin',
-			value: function handleFacebookLogin() {
-				console.log("Logic of Google login goes here!");
-			}
-		}, {
-			key: 'handleGoogleLogin',
-			value: function handleGoogleLogin() {
-				console.log("Logic of Facebook login goes here!");
-			}
-		}, {
 			key: 'componentWillReceiveProps',
 			value: function componentWillReceiveProps(nextProps) {
 
@@ -64106,6 +64066,103 @@
 				props['key'] = key;
 				var route = Object.assign({}, { component: component }, { props: props });
 				nextProps.navigator.pushPage(route);
+			}
+		}, {
+			key: '_checkUserStatus',
+			value: function _checkUserStatus() {
+				var userEmail = this.state.userEmail;
+
+				if ((0, _utils.validateEmail)(this.state.userEmail)) {
+					this.props.checkUserStatus(userEmail);
+				} else {
+					return;
+				}
+			}
+		}, {
+			key: 'handleEmailChange',
+			value: function handleEmailChange(e) {
+				this.setState({ userEmail: e.target.value });
+			}
+		}, {
+			key: '_onClick',
+			value: function _onClick(e) {
+				this._checkUserStatus.call(this);
+			}
+		}, {
+			key: '_onEnter',
+			value: function _onEnter(e) {
+				this._checkUserStatus.call(this);
+			}
+		}, {
+			key: 'handleGoogleLogin',
+			value: function handleGoogleLogin() {
+
+				var classContext = this;
+
+				window.plugins.googleplus.login({
+					'scopes': '', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
+					'webClientId': '579056634272-j8efs6o3lp2es38ls420hg7movtuccqm.apps.googleusercontent.com', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
+					'offline': true }, function (obj) {
+
+					var userEmail = obj.email;
+					var userID = obj.userId;
+					var displayName = obj.displayName;
+					var imageUrl = obj.imageUrl;
+					var token = obj.idToken;
+					var loginBy = 'google';
+
+					if (userEmail) {
+						classContext.tokenSignin(token, userEmail, userID, imageUrl, loginBy, displayName);
+					}
+
+					// console.log(JSON.stringify(obj));
+
+					// console.log("===== Google Auth ============");
+					// console.log("Token is : " + token);
+					// console.log("User Id is : " + userID);
+					// console.log("===== End of Google Auth ============");
+				}, function (msg) {
+					alert('error: ' + msg);
+				});
+			}
+		}, {
+			key: 'handleFacebookLogin',
+			value: function handleFacebookLogin() {
+
+				var fbLoginSuccess = function fbLoginSuccess(userData) {
+
+					var accessToken = userData.authResponse.accessToken;
+					var userID = userData.authResponse.userID;
+					var classContext = this;
+
+					// console.log("===== Facebook Auth ============");
+					// console.log("Token is : " + accessToken);
+					// console.log("User Id is : " + userID);
+					// console.log("===== End of Facebook Auth ============");
+
+
+					facebookConnectPlugin.api("me/?fields=id,name,email,picture", ["email", "public_profile"], function onSuccess(result) {
+
+						var userID = result.id;
+						var userEmail = result.email;
+						var imageUrl = result.picture.data.url;
+						var displayName = result.name;
+						var loginBy = 'facebook';
+						// send the accesstoken, email, user id to the server
+						// console.log(email);
+						// console.log(name);
+						// console.log(imageUrl);
+						if (userEmail) {
+							classContext.tokenSignin(token, userEmail, userID, imageUrl, loginBy, displayName);
+						}
+					}, function onError(error) {
+						console.error("Failed: ", error);
+					});
+				};
+
+				facebookConnectPlugin.login(["public_profile"], fbLoginSuccess, function (error) {
+					alert("" + error);
+				});
 			}
 		}, {
 			key: 'render',
@@ -66566,7 +66623,7 @@
 						renderHeader: this.renderHeader.bind(this) });
 				}
 
-				return _react2.default.createElement('div', null);
+				return null;
 			}
 		}]);
 
@@ -66610,8 +66667,8 @@
 
 
 	  return _react2.default.createElement(
-	    _reactOnsenui.ListItem,
-	    { onClick: function onClick(event) {
+	    'div',
+	    { className: 'card', onClick: function onClick(event) {
 	        joinChatroom(item.post_id);navigator.pushPage({ component: _Chatroom2.default, key: (0, _utils.generateNavigationKey)(item.post_id), chatroomId: item.post_id });
 	      } },
 	    _react2.default.createElement(
@@ -66624,14 +66681,14 @@
 	      ),
 	      _react2.default.createElement(
 	        _reactOnsenui.Col,
-	        { style: { padding: "10px 0px 0px 30px" }, width: '65%' },
+	        { style: { padding: "0px 0px 0px 20px" }, width: '65%' },
 	        _react2.default.createElement(
-	          'p',
+	          'div',
 	          { style: { whiteSpace: "nowrap", overflow: "hidden", fontWeight: "bold", color: "rgb(21,138,138)", marginBottom: "2px" } },
 	          item.post_title
 	        ),
 	        _react2.default.createElement(
-	          'p',
+	          'div',
 	          { style: { whiteSpace: "nowrap", overflow: "hidden" } },
 	          item.post_excerpt
 	        )
@@ -66640,7 +66697,7 @@
 	        _reactOnsenui.Col,
 	        (_React$createElement = { verticalAlign: 'center', style: { position: "relative", height: "60px", background: "rgb(132,116,159)", color: "white", fontWeight: "bold", textAlign: "center" } }, _defineProperty(_React$createElement, 'verticalAlign', 'center'), _defineProperty(_React$createElement, 'width', '25%'), _React$createElement),
 	        _react2.default.createElement(
-	          'p',
+	          'div',
 	          { style: { position: "absolute", left: "30%", top: "35%", fontSize: "18px" } },
 	          'Join'
 	        )
@@ -71829,6 +71886,24 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var styles = {
+	  chatFooterWrapper: {
+	    display: "table",
+	    width: "100%"
+	  },
+	  messageBox: {
+	    display: "table-cell",
+	    width: "80%"
+	  },
+	  sendButton: {
+	    display: "table-cell",
+	    width: "20%",
+	    verticalAlign: "middle",
+	    textAlign: "center"
+	  }
+
+	};
+
 	var InputBoxPane = function (_Component) {
 	  _inherits(InputBoxPane, _Component);
 
@@ -71885,16 +71960,16 @@
 	        'div',
 	        { id: 'chatroom-footer', className: 'input-box-pane' },
 	        _react2.default.createElement(
-	          _reactOnsenui.Row,
-	          null,
+	          'div',
+	          { style: styles.chatFooterWrapper },
 	          _react2.default.createElement(
-	            _reactOnsenui.Col,
-	            { style: { height: "45px", marginRight: "5px" }, verticalAlign: 'center', width: '84%' },
+	            'div',
+	            { style: styles.messageBox },
 	            _react2.default.createElement('textarea', { value: this.state.message, onChange: this._onChange.bind(this), onKeyPress: this._onEnter.bind(this) })
 	          ),
 	          _react2.default.createElement(
-	            _reactOnsenui.Col,
-	            { onClick: this._onClick.bind(this), className: 'msg-send-btn', verticalAlign: 'center', width: '14%' },
+	            'div',
+	            { style: styles.sendButton, onClick: this._onClick.bind(this), className: 'msg-send-btn' },
 	            _react2.default.createElement(
 	              'span',
 	              null,
@@ -71941,45 +72016,41 @@
 
 
 	  return _react2.default.createElement(
-	    _reactOnsenui.ListItem,
+	    'div',
 	    { onClick: function onClick(e) {
 	        navigator.pushPage({ component: _Chatroom2.default, key: (0, _utils.generateNavigationKey)(item.post_id), chatroomId: item.post_id });
-	      } },
+	      }, className: 'card' },
 	    _react2.default.createElement(
-	      'div',
-	      { className: 'card' },
+	      _reactOnsenui.Row,
+	      null,
 	      _react2.default.createElement(
-	        _reactOnsenui.Row,
-	        null,
+	        _reactOnsenui.Col,
+	        { verticalAlign: 'center', width: '10%' },
+	        _react2.default.createElement('img', { style: { borderRadius: "50%", width: "40px", height: "40px" }, src: item.attachment_url })
+	      ),
+	      _react2.default.createElement(
+	        _reactOnsenui.Col,
+	        { style: { padding: "0px 0px 0px 20px" }, width: '65%' },
 	        _react2.default.createElement(
-	          _reactOnsenui.Col,
-	          { verticalAlign: 'center', width: '10%' },
-	          _react2.default.createElement('img', { style: { borderRadius: "50%", width: "40px", height: "40px" }, src: item.attachment_url })
+	          'div',
+	          { style: { whiteSpace: "nowrap", overflow: "hidden", fontWeight: "bold", color: "rgb(21,138,138)", marginBottom: "2px" } },
+	          item.post_title
 	        ),
 	        _react2.default.createElement(
-	          _reactOnsenui.Col,
-	          { style: { padding: "10px 0px 0px 30px" }, width: '65%' },
-	          _react2.default.createElement(
-	            'p',
-	            { style: { whiteSpace: "nowrap", overflow: "hidden", fontWeight: "bold", color: "rgb(21,138,138)", marginBottom: "2px" } },
-	            item.post_title
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            { style: { whiteSpace: "nowrap", overflow: "hidden" } },
-	            item.post_excerpt
-	          )
-	        ),
-	        parseInt(item.unread_messages_count) ? _react2.default.createElement(
-	          _reactOnsenui.Col,
-	          { style: { padding: "10px 0px 10px 0px" }, verticalAlign: 'center', width: '25%' },
-	          _react2.default.createElement(
-	            'p',
-	            { style: { padding: "4px", marginRight: "10px", fontSize: "12px", float: "right", color: "white", width: "24px", height: "24px", fontWeight: "bold", textAlign: "center", borderRadius: "50%", background: "rgb(132,116,159)" } },
-	            item.unread_messages_count
-	          )
-	        ) : ''
-	      )
+	          'div',
+	          { style: { whiteSpace: "nowrap", overflow: "hidden" } },
+	          item.post_excerpt
+	        )
+	      ),
+	      parseInt(item.unread_messages_count) ? _react2.default.createElement(
+	        _reactOnsenui.Col,
+	        { style: { padding: "10px 0px 10px 0px" }, verticalAlign: 'center', width: '25%' },
+	        _react2.default.createElement(
+	          'div',
+	          { style: { padding: "4px", marginRight: "10px", fontSize: "12px", float: "right", color: "white", width: "24px", height: "24px", fontWeight: "bold", textAlign: "center", borderRadius: "50%", background: "rgb(132,116,159)" } },
+	          item.unread_messages_count
+	        )
+	      ) : ''
 	    )
 	  );
 	};
@@ -72016,8 +72087,8 @@
 
 
 	  return _react2.default.createElement(
-	    _reactOnsenui.ListItem,
-	    { onClick: function onClick(event) {
+	    'div',
+	    { className: 'card', onClick: function onClick(event) {
 	        navigator.pushPage({ component: _Chatroom2.default, key: (0, _utils.generateNavigationKey)(item.post_id), chatroomId: item.post_id });
 	      } },
 	    _react2.default.createElement(
@@ -72030,14 +72101,14 @@
 	      ),
 	      _react2.default.createElement(
 	        _reactOnsenui.Col,
-	        { style: { padding: "10px 0px 0px 30px" }, width: '65%' },
+	        { style: { padding: "0px 0px 0px 20px" }, width: '65%' },
 	        _react2.default.createElement(
-	          'p',
+	          'div',
 	          { style: { whiteSpace: "nowrap", overflow: "hidden", fontWeight: "bold", color: "rgb(21,138,138)", marginBottom: "2px" } },
 	          item.post_title
 	        ),
 	        _react2.default.createElement(
-	          'p',
+	          'div',
 	          { style: { whiteSpace: "nowrap", overflow: "hidden" } },
 	          item.post_excerpt
 	        )
@@ -72046,7 +72117,7 @@
 	        _reactOnsenui.Col,
 	        { style: { padding: "10px 0px 10px 0px" }, verticalAlign: 'center', width: '25%' },
 	        _react2.default.createElement(
-	          'p',
+	          'div',
 	          { style: { padding: "4px", marginRight: "10px", fontSize: "12px", float: "right", color: "white", width: "24px", height: "24px", fontWeight: "bold", textAlign: "center", borderRadius: "50%", background: "rgb(132,116,159)" } },
 	          item.unread_messages_count
 	        )
