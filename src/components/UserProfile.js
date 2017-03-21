@@ -86,7 +86,7 @@ export default class UserProfile extends Component{
   updateProfileInfo(){
     let {date,stageOfParenting,displayName} = this.state;
     this.setState({editMode : !this.state.editMode});
-    removeCache(PROFILE_UPDATE);
+    // removeCache(PROFILE_UPDATE);
     this.props.updateUserProfile(date,stageOfParenting,displayName);
   }
 

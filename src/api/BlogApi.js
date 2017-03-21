@@ -25,7 +25,7 @@ class BlogApi {
       seconds : 60*60*24
     };
     
-    return cachedFetch(FETCH_INTERESTS_ENDPOINT,options).then(r => {
+    return fetch(FETCH_INTERESTS_ENDPOINT,options).then(r => {
       return r.json()
     }).catch(error => {
       return error
@@ -64,7 +64,7 @@ class BlogApi {
       seconds : 60*60*12
     };
     
-    return cachedFetch(POPULAR_POSTS_ENDPOINT,options).then(r => {
+    return fetch(POPULAR_POSTS_ENDPOINT,options).then(r => {
       return r.json()
     }).catch(error => {
       return error
@@ -82,7 +82,7 @@ class BlogApi {
       seconds : 60*60*12
     };
     
-    return cachedFetch(EDITORIAL_POSTS_ENDPOINT,options).then(r => {
+    return fetch(EDITORIAL_POSTS_ENDPOINT,options).then(r => {
       return r.json()
     }).catch(error => {
       return error
@@ -140,7 +140,7 @@ class BlogApi {
       seconds : 60*60*12
     };
     
-    return cachedFetch(SLOT_POSTS_ENDPOINT,options).then(r => {
+    return fetch(SLOT_POSTS_ENDPOINT,options).then(r => {
       return r.json()
     }).catch(error => {
       return error

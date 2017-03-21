@@ -38,7 +38,7 @@ class ChatroomApi {
       seconds : 60*60*12
     };
     
-    return cachedFetch(LIST_CHAT_GROUPS_ENDPOINT,options).then(r => {
+    return fetch(LIST_CHAT_GROUPS_ENDPOINT,options).then(r => {
       return r.json()
     }).catch(error => {
       return error

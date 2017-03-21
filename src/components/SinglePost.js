@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Row,Col} from 'react-onsenui';
+import {Row,Col,BottomToolbar} from 'react-onsenui';
 import TagCloudSinglePost from '../templates/TagCloudSinglePost';
 import RelatedPostsContainer from '../containers/RelatedPostsContainer';
 require('../styles/single-article.css');
@@ -26,7 +26,7 @@ const styles = {
     padding : "0px 10px"
   },
   postAuthor : {
-    padding:"10px",
+    paddingLeft:"15px",
     fontWeight:"500"
   },
   featuredImage : {
@@ -86,7 +86,7 @@ const SinglePost = ({post,toggleLike,toggleBookmark,navigator}) => {
                     <img src="https://res.cloudinary.com/dooujtlec/image/upload/v1483939473/zen-140x140_nfbynw.jpg" style={{borderRadius:"50%",height:"40px",width:"40px"}} />                    
                 </Col>
                 <Col style={styles.postAuthor} verticalAlign="center">
-                  <p>{post.author}</p>
+                  {post.author}
                 </Col>
             </Row>
               

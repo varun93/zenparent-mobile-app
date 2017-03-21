@@ -139,7 +139,7 @@ export function updateUserInterestsSuccess(interests){
 
 export function updateUserInterestsRequest(){
   
-  removeCache(UPDATE_USER_INTERESTS);
+  // removeCache(UPDATE_USER_INTERESTS);
 
   return {
     type : UPDATE_USER_INTERESTS_REQUEST

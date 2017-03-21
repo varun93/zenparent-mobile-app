@@ -12,16 +12,18 @@ export default class App extends React.Component {
      
      super(context,props);
      
-     this.props.appInit(APP_VERSION);
-     
      document.addEventListener('deviceready', this.onDeviceReady, false);
      // document.addEventListener('onCleverTapProfileSync', this.onCleverTapProfileSync, false);
-     document.addEventListener('onCleverTapProfileDidInitialize', this.onCleverTapProfileDidInitialize, false);
+     // document.addEventListener('onCleverTapProfileDidInitialize', this.onCleverTapProfileDidInitialize, false);
      // document.addEventListener('onCleverTapInAppNotificationDismissed', this.onCleverTapInAppNotificationDismissed, false);
      // deeplink handler
      // document.addEventListener('onDeepLink', this.onDeepLink, false);
      //push notification handler
      document.addEventListener('onPushNotification', this.onPushNotification, false);
+  }
+
+  componentWillMount(){
+     this.props.appInit(APP_VERSION);
   }
 
   onDeviceReady(){
