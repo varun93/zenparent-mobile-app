@@ -5,12 +5,6 @@ import MainScreen from '../screens/MainScreen';
 import {generateNavigationKey} from '../utils';
 require('../styles/interests.css');
 
-const styles = {
-	continueButton : {
-
-	}
-};
-
 export default class UserInterestsSelector extends Component {
 
 	constructor(props,context){
@@ -29,7 +23,7 @@ export default class UserInterestsSelector extends Component {
   	}
 
 
-	componentWillUpdate(nextProps){
+	componentWillReceiveProps(nextProps){
 
 		if(this.props.updateStatus == nextProps.updateStatus){
 			return;
@@ -65,7 +59,7 @@ export default class UserInterestsSelector extends Component {
 	renderInterest(interest){
 
 		return (
-			<div style={styles.interestTag} key={interest.term} onClick={this._toggleInterest.bind(this,interest.term)} className={interest.isSelected ? 'interestTag tagSelected' : 'interestTag' }>{interest.label}</div>
+			<div key={interest.term} onClick={this._toggleInterest.bind(this,interest.term)} className={interest.isSelected ? 'interestTag tagSelected' : 'interestTag' }>{interest.label}</div>
 		)
 
 	}
@@ -87,7 +81,7 @@ export default class UserInterestsSelector extends Component {
         	</Dialog>
 
 		   	 <div className="message" style={{fontWeight : "bold",textAlign : "center"}}> 
-		   	 	Help us personalize your feed!!
+		   	 	Help us personalize your feed!
 		   	 </div>
 			 <div className="selectionPanel">
 			 { this.props.interests.terms.map(function(interest){
