@@ -28,51 +28,53 @@ export default class AuthScreen extends Component{
 
 	componentWillReceiveProps(nextProps) {
 
-		let status = nextProps.status;
-		let component = SignupScreen;
-		let allowedStatus = ['registered','new-user'];
-		let key = 'signup-screen';
+		
+		let component = null;
+		let key = '';
 		let props = {};
+		let allowedStatus = ['registered','new-user','token-signin-success'];
+		let status = nextProps.status;
 		
-		
-		if(allowedStatus.indexOf(status) === -1 || this.props.authenticated || (this.props.status == status) ||  status == 'anonymous'){
+		if(allowedStatus.indexOf(status) === -1 || this.props.authenticated ||  status == 'anonymous' && (this.props.status !== status)){
 			return;
 		}
 
-		if(status == 'registered'){
-			let authenticated = nextProps.authenticated;
+		const authenticated = nextProps.authenticated;
 			
-			if(authenticated){
+		if(authenticated){
 				
-				let userInfo = nextProps.userInfo;
-				let date = userInfo.date.trim();
-				let stageOfParenting = userInfo.stageOfParenting.trim();
-				let interests = userInfo.interests;
-				let profileComplete  = date.length && stageOfParenting.length && interests.length; 
+			let userInfo = nextProps.userInfo;
+			let stageOfParenting = userInfo.stageOfParenting.trim();
+			let interests = userInfo.interests;
+			let profileComplete  = stageOfParenting.length && interests.length ? true : false; 
 				
-				if(profileComplete){
-					component = MainScreen;
-					key = 'main-screen';
+			if(profileComplete){
+				component = MainScreen;
+				key = 'main-screen';
+			}
+			else{
+				if(!stageOfParenting.length){
+					component = SignupScreen;
+					key = 'signup-screen';
+					props['showPasswordField'] = false;
 				}
-				else{
-					if(!date.length || !stageOfParenting.length){
-						component = LoginScreen;
-						key = 'login-screen';
-					}
-					else if(!interests.length){
-						component = UserInterestsSelector;
-						key = 'user-interests-selector-screen';
-					}
+				else if(!interests.length){
+					component = UserInterestsSelector;
+					key = 'user-interests-selector-screen';
 				}
-
 			}
 
-			else{
+		}
+		else{
+			if(status == 'registered'){
+				component = SignupScreen;
+				key = 'signup-screen';
+			}
+			if(status == 'new-user'){
 				component = LoginScreen;
 				key = 'login-screen';
-				props['showPasswordField'] = true;
 			}
-		
+
 		}
 		
 		key = generateNavigationKey(key);
@@ -127,17 +129,16 @@ export default class AuthScreen extends Component{
              var imageUrl = obj.imageUrl;
              var token = obj.idToken;
              var loginBy = 'google';
+     
               
              if(userEmail){
-                classContext.tokenSignin(token,userEmail,userID,imageUrl,loginBy,displayName); 
+                classContext.tokenSignin(token,userID,userEmail,displayName,imageUrl,loginBy); 
              }
-             
-             // console.log(JSON.stringify(obj));
-
-             // console.log("===== Google Auth ============");
-             // console.log("Token is : " + token);
-             // console.log("User Id is : " + userID);
-             // console.log("===== End of Google Auth ============");
+         
+             console.log("===== Google Auth ============");
+             console.log("Token is : " + token);
+             console.log("User Id is : " + userID);
+             console.log("===== End of Google Auth ============");
 
           },
           function (msg) {
@@ -159,10 +160,10 @@ export default class AuthScreen extends Component{
       var userID = userData.authResponse.userID;
       var classContext = this;
 
-       // console.log("===== Facebook Auth ============");
-       // console.log("Token is : " + accessToken);
-       // console.log("User Id is : " + userID);
-       // console.log("===== End of Facebook Auth ============");
+       console.log("===== Facebook Auth ============");
+       console.log("Token is : " + accessToken);
+       console.log("User Id is : " + userID);
+       console.log("===== End of Facebook Auth ============");
 
 
       facebookConnectPlugin.api("me/?fields=id,name,email,picture", ["email","public_profile"],
@@ -174,11 +175,11 @@ export default class AuthScreen extends Component{
             var displayName = result.name;
             var loginBy = 'facebook';
             // send the accesstoken, email, user id to the server
-            // console.log(email);
-            // console.log(name);
-            // console.log(imageUrl);
+            console.log(email);
+            console.log(name);
+            console.log(imageUrl);
             if(userEmail){
-                classContext.tokenSignin(token,userEmail,userID,imageUrl,loginBy,displayName); 
+                 classContext.tokenSignin(accesstoken,userID,userEmail,displayName,imageUrl,loginBy); 
             }
             
 
