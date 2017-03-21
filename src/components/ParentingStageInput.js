@@ -61,7 +61,7 @@ export default class ParentingStageInput extends Component{
 
 		return (
 			<Page key="parenting-stage-input-screen" className="parenting-stage-input-screen">
-				<Toolbar navigator={navigator} />
+				<Toolbar navigator={this.props.navigator} />
 				<div className="parenting-stage-input-container">
 
 					<span style={{color:"#8675A1",fontSize:"13px"}}>Due Date/Your Child's Birthday</span>
@@ -74,7 +74,7 @@ export default class ParentingStageInput extends Component{
 		          	/>
 
 			        <button className={`loginBtn emailBtn ${loading ? 'loading' : ''} `} onClick={this._onClick.bind(this)}>
-			            {loading ? <ProgressCircular indeterminate/> :  `Signup` } 
+			            {loading ? <ProgressCircular indeterminate/> :  `Continue` } 
 			        </button>
 	
 				</div>

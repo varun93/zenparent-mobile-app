@@ -69,12 +69,17 @@
   padding: 20px !important;
 }
 
-.parenting-stage-input-screen > div,.forgot-password-screen .forgot-password-container,.signup-screen .signup-container,.login-screen .login-container{
+.parenting-stage-input-screen .parenting-stage-input-container{
+    position: relative;
+    margin-top: 65%;
+}
+
+.forgot-password-screen .forgot-password-container,.signup-screen .signup-container,.login-screen .login-container{
     position: relative;
     margin-top: 50%;
 }
 
-.parenting-stage-input-screen > div > button,.forgot-password-container > button,.signup-container > button,.login-container > button{
+.parenting-stage-input-container  > button,.forgot-password-container > button,.signup-container > button,.login-container > button{
     width: 100%;
     text-align: center;
     color: white;
@@ -85,7 +90,11 @@
     border-radius : 0px;
     font-weight: 500;
 }
-    
+
+.parenting-stage-input-container  > button{
+  padding : 5px; 
+}  
+
 
 /* alerts */
 .alert {
