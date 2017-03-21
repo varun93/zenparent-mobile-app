@@ -162,7 +162,7 @@ export default class UserProfile extends Component{
            !this.state.editMode ?
             <div className="form-edit">
             <button onClick={() => this.setState({editMode : !this.state.editMode }) } className="btn-edit">
-              <img src="/assets/edit_white_goedgh.svg" />
+              <img src="/assets/edit_white_goedgh.png" />
                 EDIT
              </button>
             </div> 

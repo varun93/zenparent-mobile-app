@@ -43,6 +43,12 @@ jspm_packages
 
 stats.json
 
+#dist files
+www/*.css
+www/*.js
+www/*.map
+
+
 # Cordova files
 platforms
 plugins

@@ -38,6 +38,10 @@
      padding: 15px 0px;
 }
 
+.card .articleLike img,.card .articleBookmark img{
+	height: 24px !important;
+}
+
 .list{
 	background: #eee !important;
 	margin-bottom: 5px;	
@@ -90,30 +94,30 @@ ons-tab.active{
 
 /* Hometab  */
 ons-tab.home-tab .ons-icon{
- background-image: url('/assets/home-icon-primary.svg');
+ background-image: url('/assets/home-icon-primary.png');
 }
 
 ons-tab.home-tab.active .ons-icon{
- background-image: url('/assets/home-icon.svg');
+ background-image: url('/assets/home-icon.png');
 }
 
 /* Community  */
 ons-tab.community-tab .ons-icon{
- background-image: url('/assets/community-icon-primary.svg');
+ background-image: url('/assets/community-icon-primary.png');
 }
 
 ons-tab.community-tab.active .ons-icon{
- background-image: url('/assets/community-icon.svg');
+ background-image: url('/assets/community-icon.png');
 }
 
 
 /* Parenting  */
 ons-tab.parenting-tab .ons-icon{
- background-image: url('/assets/parenting-icon-primary.svg');
+ background-image: url('/assets/parenting-icon-primary.png');
 }
 
 ons-tab.parenting-tab.active .ons-icon{
- background-image: url('/assets/parenting-icon.svg');
+ background-image: url('/assets/parenting-icon.png');
 }
 
 ons-tab.user-profile-tab .ons-icon{

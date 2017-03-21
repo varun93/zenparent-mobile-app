@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 import {Page,Button,ProgressCircular} from 'react-onsenui';
 import Toolbar from '../templates/Toolbar';
 //the screens
-import {validateEmail,generateNavigationKey} from '../utils';
+import {validateEmail} from '../utils';
+import getNextRoute from '../utils/getNextRoute';
 import MainScreen from '../screens/MainScreen';
 import CustomInput from './CustomInput';
 import LoginScreen from '../screens/LoginScreen';
@@ -28,59 +29,17 @@ export default class AuthScreen extends Component{
 
 	componentWillReceiveProps(nextProps) {
 
-		let status = nextProps.status;
-		let component = SignupScreen;
-		let allowedStatus = ['registered','new-user'];
-		let key = 'signup-screen';
-		let props = {};
+		let component = null;
+		let user = nextProps.user;
+		let allowedStatus = ['registered','new-user','token-signin-success'];
+		let status = user.status;
 		
-		
-		if(allowedStatus.indexOf(status) === -1 || this.props.authenticated || (this.props.status == status) ||  status == 'anonymous'){
+		if(allowedStatus.indexOf(status) === -1 || this.props.user.authenticated ||  status == 'anonymous' || (this.props.user.status == status)){
 			return;
 		}
 
-		if(status == 'registered'){
-			let authenticated = nextProps.authenticated;
-			
-			if(authenticated){
-				
-				let userInfo = nextProps.userInfo;
-				let date = userInfo.date.trim();
-				let stageOfParenting = userInfo.stageOfParenting.trim();
-				let interests = userInfo.interests;
-				let profileComplete  = date.length && stageOfParenting.length && interests.length; 
-				
-				if(profileComplete){
-					component = MainScreen;
-					key = 'main-screen';
-				}
-				else{
-					if(!date.length || !stageOfParenting.length){
-						component = LoginScreen;
-						key = 'login-screen';
-					}
-					else if(!interests.length){
-						component = UserInterestsSelector;
-						key = 'user-interests-selector-screen';
-					}
-				}
-
-			}
-
-			else{
-				component = LoginScreen;
-				key = 'login-screen';
-				props['showPasswordField'] = true;
-			}
-		
-		}
-		
-		key = generateNavigationKey(key);
-		props['key'] = key;
-		let route = Object.assign({},{component},{props});
+		let route = getNextRoute(user);
 		nextProps.navigator.pushPage(route);
-
-
 	}
 
 
@@ -100,7 +59,6 @@ export default class AuthScreen extends Component{
     	this.setState({userEmail : e.target.value});
   	}
 
-
 	_onClick(e){
 		this._checkUserStatus.call(this);
 	}
@@ -111,9 +69,9 @@ export default class AuthScreen extends Component{
 
 	handleGoogleLogin(){
     
-      var classContext = this;
-
-      window.plugins.googleplus.login(
+       var classContext = this;
+    
+       window.plugins.googleplus.login(
           {
             'scopes': '', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
             'webClientId': '579056634272-j8efs6o3lp2es38ls420hg7movtuccqm.apps.googleusercontent.com', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
@@ -127,17 +85,15 @@ export default class AuthScreen extends Component{
              var imageUrl = obj.imageUrl;
              var token = obj.idToken;
              var loginBy = 'google';
-              
+     
              if(userEmail){
-                classContext.tokenSignin(token,userEmail,userID,imageUrl,loginBy,displayName); 
+                classContext.props.tokenSignin(token,userID,userEmail,displayName,imageUrl,loginBy); 
              }
-             
-             // console.log(JSON.stringify(obj));
-
-             // console.log("===== Google Auth ============");
-             // console.log("Token is : " + token);
-             // console.log("User Id is : " + userID);
-             // console.log("===== End of Google Auth ============");
+         
+             console.log("===== Google Auth ============");
+             console.log("Token is : " + token);
+             console.log("User Id is : " + userID);
+             console.log("===== End of Google Auth ============");
 
           },
           function (msg) {
@@ -146,12 +102,9 @@ export default class AuthScreen extends Component{
       );
 
   }
-
-
-
-
+  
   handleFacebookLogin(){
-   
+   	
     var fbLoginSuccess = function (userData)
     {
 
@@ -159,10 +112,10 @@ export default class AuthScreen extends Component{
       var userID = userData.authResponse.userID;
       var classContext = this;
 
-       // console.log("===== Facebook Auth ============");
-       // console.log("Token is : " + accessToken);
-       // console.log("User Id is : " + userID);
-       // console.log("===== End of Facebook Auth ============");
+       console.log("===== Facebook Auth ============");
+       console.log("Token is : " + accessToken);
+       console.log("User Id is : " + userID);
+       console.log("===== End of Facebook Auth ============");
 
 
       facebookConnectPlugin.api("me/?fields=id,name,email,picture", ["email","public_profile"],
@@ -174,11 +127,11 @@ export default class AuthScreen extends Component{
             var displayName = result.name;
             var loginBy = 'facebook';
             // send the accesstoken, email, user id to the server
-            // console.log(email);
-            // console.log(name);
-            // console.log(imageUrl);
+            console.log(email);
+            console.log(name);
+            console.log(imageUrl);
             if(userEmail){
-                classContext.tokenSignin(token,userEmail,userID,imageUrl,loginBy,displayName); 
+                 classContext.props.tokenSignin(accesstoken,userID,userEmail,displayName,imageUrl,loginBy); 
             }
             
 

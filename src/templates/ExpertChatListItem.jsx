@@ -10,10 +10,10 @@ const ExpertChatListItem = ({item,navigator}) => {
           <Row>
             
             <Col width="10%">
-              <img style={{width:"28px",height:"28px",margin:"-5px"}} src="/assets/expert_chat_icon.svg"/>
+              <img style={{width:"28px",height:"28px",margin:"-5px"}} src="/assets/expert_chat_icon.png"/>
             </Col>
 
-            <Col verticalAlign="center" width="10%">
+            <Col verticalAlign="center" width="10%">  
               <img style={{ borderRadius : "50%",width:"40px",height:"40px"}} src={item.attachment_url}/>
             </Col>
 

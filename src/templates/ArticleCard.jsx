@@ -6,8 +6,6 @@ import TagCloudArticleCard from '../templates/TagCloudArticleCard';
 import {generateNavigationKey} from '../utils';
 import LazyLoad from 'react-lazy-load';
 
-require('../styles/cards.css');
-
 const styles = {
   cardItem : {
     background : "#fff",
@@ -95,7 +93,7 @@ const ArticleCard = ({post,toggleLike,toggleBookmark,navigator}) => {
     <div style={styles.cardHeader} onClick={() => articleClick()} className="card-header">
 
       <div style={styles.imageBlock} className="img-section">
-        <LazyLoad height={imageHeight}>
+        <LazyLoad height={imageHeight} offset={100}>
           <img style={styles.image} src={post.attachment_url} />
         </LazyLoad>
       </div>  
@@ -119,11 +117,11 @@ const ArticleCard = ({post,toggleLike,toggleBookmark,navigator}) => {
     <div style={styles.articleLikesBookmarksSection} className="likes-bookmarks">
 
       <div onClick={() => toggleLike(post.id)} style={styles.articleLike} className="articleLike">
-          {post.liked ? <img src="/assets/like-active.svg" /> : <img src="/assets/like-default.svg" />}
+          {post.liked ? <img src="/assets/like-active.png" /> : <img src="/assets/like-default.png" />}
       </div>
                      
       <div onClick={() => toggleBookmark(post.id)} style={styles.articleBookmark} className="articleBookmark">
-          {post.bookmarked ? <img src="/assets/bookmark-active.svg" /> : <img src="/assets/bookmark-default.svg" />}
+          {post.bookmarked ? <img src="/assets/bookmark-active.png" /> : <img src="/assets/bookmark-default.png" />}
       </div>
 
     </div>

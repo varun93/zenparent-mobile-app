@@ -104,10 +104,10 @@ const SinglePost = ({post,toggleLike,toggleBookmark,navigator}) => {
 
 		        <div style={styles.footer} className="page-footer">
               <div onClick={() => toggleLike(post.id)}  className="articleLike">
-                  {post.liked ? <img src="/assets/like-active.svg" /> : <img src="/assets/like-default.svg" />}
+                  {post.liked ? <img src="/assets/like-active.png" /> : <img src="/assets/like-default.png" />}
               </div>
               <div onClick={() => toggleBookmark(post.id)} style={{margin : "0 25%"}} className="articleBookmark">
-                 {post.bookmarked ? <img src="/assets/bookmark-active.svg" /> : <img src="/assets/bookmark-default.svg" />}
+                 {post.bookmarked ? <img src="/assets/bookmark-active.png" /> : <img src="/assets/bookmark-default.png" />}
               </div>
               <ons-icon onClick={() => sharePost()} size="32px" icon="fa-share-alt"></ons-icon>
             </div>

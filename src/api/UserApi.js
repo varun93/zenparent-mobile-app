@@ -83,9 +83,8 @@ class UserApi {
     const request = new Request(TOKEN_SIGNIN_ENDPOINT, {
       method: 'POST',
       headers: headers, 
-      body: prepareFormData({social_unique_id : socialUniqueId,token : token,user_email : userEmail,login_by : loginBy})
+      body: prepareFormData({token:token,user_email : userEmail,display_name : displayName,image_url : imageUrl,social_unique_id : socialUniqueId,login_by : loginBy})
     });
-
 
     return fetch(request).then(response => {
       return response.json();

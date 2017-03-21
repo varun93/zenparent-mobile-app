@@ -331,7 +331,6 @@ export function updateUserProfile(date,stageOfParenting,displayName){
           dispatch(updateUserProfileRequest());
 
           UserApi.updateUserProfile(date,stageOfParenting,displayName).then(function(response){
-              console.log(response);
               let user = response.data.user;
               dispatch(updateUserProfileSuccess(user));  
             
@@ -358,13 +357,13 @@ export function updateUserInterests(interests) {
       }
 };
 
-export function tokenSignin(accessToken,socialUniqueId,userEmail,loginBy) {
+export function tokenSignin(accessToken,socialUniqueId,userEmail,displayName,imageUrl,loginBy) {
     
       return (dispatch,state) => {
           
           dispatch(tokenSigninUserRequest());
 
-          UserApi.tokenSignin(accessToken,socialUniqueId,userEmail,loginBy).then(function(response){
+          UserApi.tokenSignin(accessToken,socialUniqueId,userEmail,displayName,imageUrl,loginBy).then(function(response){
             
               let success = response.success;
               let user = response.data.user;
@@ -418,7 +417,7 @@ export function login(userEmail, userPassword) {
           dispatch(loginUserRequest());
 
           UserApi.login(userEmail,userPassword).then(function(response){
-                      // console.log(response);
+              
               let success = response.success;
               let user = response.data.user;
               let token = response.data.token;
