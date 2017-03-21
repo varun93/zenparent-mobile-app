@@ -4,6 +4,7 @@
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
+
     <author email="dev@cordova.apache.org" href="http://cordova.io">
         Apache Cordova Team
     </author>
@@ -31,7 +32,18 @@
                 <!-- add more query scheme strings -->
             </array>
         </config-file>
+        <!-- App Icons  -->
+        <icon src="www/icon120.png" />
+        <!-- Splash Screen -->
+        <splash src="www/zp_splash.png"/>
     </platform>
+    <platform name="android">
+        <!-- App Icons -->
+        <icon src="www/icon120.png" />
+        <!-- Spash Screen -->
+        <splash src="www/zp_splash.png"/>
+    </platform> 
+
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-googleplus" spec="~5.1.1">
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.579056634272-j8gr7uulkt9p0qiudp96jhbgapqlmevt" />
