@@ -2,7 +2,8 @@ import React,{Component} from 'react';
 import {Page,Input,ProgressCircular} from 'react-onsenui';
 import Toolbar from '../templates/Toolbar';
 import CustomInput from './CustomInput';
-import {isFieldEmpty,generateNavigationKey} from '../utils';
+import {isFieldEmpty} from '../utils';
+import getNextRoute from '../utils/getNextRoute';
 import UserInterestsSelector from '../screens/UserInterestsSelector';
 import MainScreen from '../screens/MainScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
@@ -62,20 +63,7 @@ export default class LoginScreen extends Component{
 			return;
 		}
 
-		let component = MainScreen;
-		let key = 'main-screen';
-		let props = {};
-		let interests = user.userInfo.interests; 
-
-		if(!interests.length){
-			component = UserInterestsSelector;
-			key = 'user-interests-selector-screen';
-		}
-		
-		let navigationKey = generateNavigationKey(key);
-		props['key'] = navigationKey;
-
-		let route = Object.assign({},{component},{props});
+		let route = getNextRoute(user);
 		nextProps.navigator.pushPage(route);
 
 	}

@@ -4,7 +4,7 @@ import CustomInput from './CustomInput';
 import {isFieldEmpty} from '../utils';
 import Toolbar from '../templates/Toolbar';
 import UserInterestsSelector from '../screens/UserInterestsSelector';
-import {generateNavigationKey} from '../utils';
+import getNextRoute from '../utils/getNextRoute';
 
 export default class SignupScreen extends Component{
 
@@ -30,11 +30,7 @@ export default class SignupScreen extends Component{
 			return;
 		}
 		
-		let component = UserInterestsSelector;
-		let props = {};
-		let navigationKey = generateNavigationKey(`user-interests-selector-screen${user.userInfo['id']}`);
-		props['key'] = navigationKey;
-		let route = Object.assign({},{component},{props});
+		let route = getNextRoute(user);
 		nextProps.navigator.pushPage(route);
 	}
 

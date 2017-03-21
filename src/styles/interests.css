@@ -20,6 +20,9 @@
 .interestsSelector .message{
 	position: absolute;
 	top : 10%;
+	text-align: center;
+	width: 100%;
+	color: #8675A1 !important;
 }
 
 .interestsSelector .selectionPanel{
@@ -34,5 +37,6 @@
 .interestsSelector .continueButton{
 	position: fixed;
 	bottom: 0px;
+	left : 0px;
 	width: 100%;
 }

@@ -23935,9 +23935,13 @@
 	exports.signup = signup;
 	exports.login = login;
 
-	var _UserApi = __webpack_require__(222);
+	var _UserApi = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../api/UserApi\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	var _UserApi2 = _interopRequireDefault(_UserApi);
+
+	var _cachedFetch = __webpack_require__(223);
+
+	var _constants = __webpack_require__(226);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24069,6 +24073,9 @@
 	};
 
 	function updateUserInterestsRequest() {
+
+	  (0, _cachedFetch.removeCache)(_constants.UPDATE_USER_INTERESTS);
+
 	  return {
 	    type: UPDATE_USER_INTERESTS_REQUEST
 	  };
@@ -24266,7 +24273,7 @@
 	  };
 	};
 
-	function tokenSignin(accessToken, socialUniqueId, userEmail, loginBy) {
+	function tokenSignin(accessToken, socialUniqueId, userEmail, displayName, $imageUrl, loginBy) {
 
 	  return function (dispatch, state) {
 
@@ -24338,7 +24345,8 @@
 	};
 
 /***/ },
-/* 222 */
+/* 222 */,
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24346,200 +24354,131 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.removeCache = undefined;
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var _isomorphicFetch = __webpack_require__(223);
+	var _isomorphicFetch = __webpack_require__(224);
 
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
-
-	var _utils = __webpack_require__(225);
 
 	var _constants = __webpack_require__(226);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var generateCacheKey = function generateCacheKey(s) {
+	  var hash = 0;
+	  if (s.length == 0) return hash;
+	  for (var i = 0; i < s.length; i++) {
+	    var char = s.charCodeAt(i);
+	    hash = (hash << 5) - hash + char;
+	    hash = hash & hash; // Convert to 32bit integer
+	  }
+	  return hash;
+	};
 
-	var UserApi = function () {
-	  function UserApi() {
-	    _classCallCheck(this, UserApi);
+	/**
+	  => Update user interests => Get Interests Endpoint
+	  => Update user profile   =>  Slot posts
+	  => On Likes and Bookmarks => remove editorials,popular posts,slot posts,bookmarked posts
+	  =>   
+	**/
+
+	var removeCache = exports.removeCache = function removeCache(action) {
+
+	  var urls = [];
+
+	  switch (action) {
+
+	    case _constants.GROUP_JOIN_UNJOIN:
+	      urls.push(_constants.LIST_CHAT_GROUPS_ENDPOINT);
+	      break;
+
+	    case _constants.UPDATE_USER_INTERESTS:
+	      urls.push(_constants.FETCH_INTERESTS_ENDPOINT);
+	      break;
+
+	    case _constants.PROFILE_UPDATE:
+	      urls.push(_constants.LIST_CHAT_GROUPS_ENDPOINT);
+	      urls.push(_constants.SLOT_POSTS_ENDPOINT);
+	      break;
+
+	    case _constants.LIKED_BOOKMARKED:
+	      urls.push(_constants.BOOKMARKED_POSTS_ENDPOINT);
+	      urls.push(_constants.POPULAR_POSTS_ENDPOINT);
+	      urls.push(_constants.EDITORIAL_POSTS_ENDPOINT);
+	      urls.push(_constants.SLOT_POSTS_ENDPOINT);
+	      break;
+
 	  }
 
-	  _createClass(UserApi, null, [{
-	    key: 'requestHeaders',
-	    value: function requestHeaders() {
-	      return { 'AUTHORIZATION': 'Bearer ' + localStorage.jwt };
+	  urls.forEach(function (url) {
+	    var cacheKey = generateCacheKey(url);
+	    window.localStorage.removeItem(cacheKey);
+	    window.localStorage.removeItem(cacheKey + ':ts');
+	  });
+	};
+
+	//include headers
+	var cachedFetch = function cachedFetch(url, options) {
+
+	  var expiry = 5 * 60; // 5 min default
+	  if (typeof options === 'number') {
+	    expiry = options;
+	    options = undefined;
+	  } else if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
+	    // I hope you didn't set it to 0 seconds
+	    expiry = options.seconds || expiry;
+	  }
+	  // Use the URL as the cache key to sessionStorage
+	  var cacheKey = generateCacheKey(url);
+	  var cached = localStorage.getItem(cacheKey);
+	  var whenCached = localStorage.getItem(cacheKey + ':ts');
+	  if (cached !== null && whenCached !== null) {
+	    // it was in sessionStorage! Yay!
+	    // Even though 'whenCached' is a string, this operation
+	    // works because the minus sign converts the
+	    // string to an integer and it will work.
+	    var age = (Date.now() - whenCached) / 1000;
+	    if (age < expiry) {
+	      var response = new Response(new Blob([cached]));
+	      return Promise.resolve(response);
+	    } else {
+	      // We need to clean up this old key
+	      window.localStorage.removeItem(cacheKey);
+	      window.localStorage.removeItem(cacheKey + ':ts');
 	    }
-	  }, {
-	    key: 'appInit',
-	    value: function appInit(app_version) {
+	  }
 
-	      var headers = this.requestHeaders();
+	  return (0, _isomorphicFetch2.default)(url, options).then(function (response) {
+	    // let's only store in cache if the content-type is
+	    // JSON or something non-binary
+	    if (response.status === 200) {
 
-	      var request = new Request(_constants.APP_INIT_ENDPOINT, {
-	        method: 'POST',
-	        headers: headers,
-	        body: (0, _utils.prepareFormData)({ app_version: app_version })
-	      });
-
-	      return (0, _isomorphicFetch2.default)(request).then(function (response) {
-	        return response.json();
-	      }).catch(function (error) {
-	        return error;
-	      });
-	    }
-
-	    //tested
-
-	  }, {
-	    key: 'requestUserStatus',
-	    value: function requestUserStatus(userEmail) {
-
-	      var request = new Request(_constants.EMAIL_SIGNIN_ENDPOINT, {
-	        method: 'POST',
-	        body: (0, _utils.prepareFormData)({ user_email: userEmail })
-	      });
-
-	      return (0, _isomorphicFetch2.default)(request).then(function (response) {
-	        return response.json();
-	      }).catch(function (error) {
-	        return error;
-	      });
-	    }
-
-	    //tested
-
-	  }, {
-	    key: 'login',
-	    value: function login(userEmail, userPassword) {
-
-	      var request = new Request(_constants.LOGIN_ENDPOINT, {
-	        method: 'POST',
-	        body: (0, _utils.prepareFormData)({ user_email: userEmail, user_password: userPassword })
-	      });
-
-	      return (0, _isomorphicFetch2.default)(request).then(function (response) {
-	        return response.json();
-	      }).catch(function (error) {
-	        return error;
+	      response.clone().text().then(function (content) {
+	        localStorage.setItem(cacheKey, content);
+	        localStorage.setItem(cacheKey + ':ts', Date.now());
 	      });
 	    }
-
-	    //
-
-	  }, {
-	    key: 'signup',
-	    value: function signup(userEmail, userPassword, date) {
-
-	      var request = new Request(_constants.SIGNUP_ENDPOINT, {
-	        method: 'POST',
-	        body: (0, _utils.prepareFormData)({ user_email: userEmail, user_password: userPassword, date: date })
-	      });
-
-	      return (0, _isomorphicFetch2.default)(request).then(function (response) {
-	        return response.json();
-	      }).catch(function (error) {
-	        return error;
-	      });
-	    }
-
-	    //cannot be tested now
-
-	  }, {
-	    key: 'tokenSignin',
-	    value: function tokenSignin(token, socialUniqueId, userEmail, displayName, imageUrl, loginBy) {
-
-	      var headers = this.requestHeaders();
-	      var request = new Request(_constants.TOKEN_SIGNIN_ENDPOINT, {
-	        method: 'POST',
-	        headers: headers,
-	        body: (0, _utils.prepareFormData)({ social_unique_id: socialUniqueId, token: token, user_email: userEmail, login_by: loginBy })
-	      });
-
-	      return (0, _isomorphicFetch2.default)(request).then(function (response) {
-	        return response.json();
-	      }).catch(function (error) {
-	        return error;
-	      });
-	    }
-
-	    //tested
-
-	  }, {
-	    key: 'updateUserInterests',
-	    value: function updateUserInterests(interests) {
-
-	      var headers = this.requestHeaders();
-	      var request = new Request(_constants.UPDATE_USER_INTERESTS_ENDPOINT, {
-	        method: 'POST',
-	        headers: headers,
-	        body: (0, _utils.prepareFormData)({ interests: interests })
-	      });
-
-	      return (0, _isomorphicFetch2.default)(request).then(function (response) {
-	        return response.json();
-	      }).catch(function (error) {
-	        return error;
-	      });
-	    }
-	  }, {
-	    key: 'forgotPassword',
-	    value: function forgotPassword(userEmail) {
-
-	      var request = new Request(_constants.FORGOT_PASSWORD_ENDPOINT, {
-	        method: 'POST',
-	        body: (0, _utils.prepareFormData)({ user_email: userEmail })
-	      });
-
-	      return (0, _isomorphicFetch2.default)(request).then(function (response) {
-	        return response.json();
-	      }).catch(function (error) {
-	        return error;
-	      });
-	    }
-
-	    // tested
-
-	  }, {
-	    key: 'updateUserProfile',
-	    value: function updateUserProfile(date, stageOfParenting, displayName) {
-
-	      var headers = this.requestHeaders();
-
-	      var request = new Request(_constants.UPDATE_USER_PROFILE_ENDPOINT, {
-	        method: 'POST',
-	        headers: headers,
-	        body: (0, _utils.prepareFormData)({ date: date, stage_of_parenting: stageOfParenting, display_name: displayName })
-	      });
-
-	      return (0, _isomorphicFetch2.default)(request).then(function (response) {
-	        return response.json();
-	      }).catch(function (error) {
-	        return error;
-	      });
-	    }
-	  }]);
-
-	  return UserApi;
-	}();
-
-	exports.default = UserApi;
+	    return response;
+	  });
+	};
+	exports.default = cachedFetch;
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// the whatwg-fetch polyfill installs the fetch() function
 	// on the global object (window or self)
 	//
 	// Return that as the export for use in Webpack, Browserify etc.
-	__webpack_require__(224);
+	__webpack_require__(225);
 	module.exports = self.fetch.bind(self);
 
 
 /***/ },
-/* 224 */
+/* 225 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -25006,128 +24945,6 @@
 
 
 /***/ },
-/* 225 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	var getRequestUrl = exports.getRequestUrl = function getRequestUrl(url, params) {
-
-		var esc = encodeURIComponent;
-		var query = Object.keys(params).map(function (k) {
-			return esc(k) + '=' + esc(params[k]);
-		}).join('&');
-
-		return url + "?" + query;
-	};
-
-	var prepareFormData = exports.prepareFormData = function prepareFormData(params) {
-
-		var formData = new FormData();
-		for (var k in params) {
-			formData.append(k, params[k]);
-		}
-		return formData;
-	};
-
-	// ----- business logic to fetch the post(s) ----------------
-	var getPost = exports.getPost = function getPost(postId, posts) {
-		return posts[postId];
-	};
-
-	var getPosts = exports.getPosts = function getPosts() {
-		var postIds = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-		var posts = arguments[1];
-
-		return postIds.map(function (postId) {
-			return posts[postId];
-		});
-	};
-
-	// ------ business logic to fetch the chatroom(s) -----------
-	var getChatrooms = exports.getChatrooms = function getChatrooms(chatIds, chatRooms) {
-
-		return chatIds.map(function (id) {
-			return chatRooms[id];
-		});
-	};
-
-	var getChatroom = exports.getChatroom = function getChatroom(chatroomId, chatRooms) {
-		return chatRooms[chatroomId];
-	};
-
-	// ---- few string utils ------------
-
-	var ucFirstLetter = exports.ucFirstLetter = function ucFirstLetter(interest) {
-		return interest.split(/\W/).map(function (term) {
-			return term[0].toUpperCase() + term.slice(1);
-		}).join(' ');
-	};
-
-	// ----- generate a random key for navigator --------
-	var generateNavigationKey = exports.generateNavigationKey = function generateNavigationKey(id) {
-
-		var key = Math.random();
-		key = Math.floor(key * 100000);
-		key = key.toString();
-		return key + id;
-	};
-
-	// ----- validations -----------
-	var isFieldEmpty = exports.isFieldEmpty = function isFieldEmpty(value) {
-		return value === null || value === undefined || value.length === 0 || !value;
-	};
-
-	var validateEmail = exports.validateEmail = function validateEmail(value) {
-		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		return re.test(value);
-	};
-
-	// -------- Convert date to words ------------
-	var convertDateToWords = exports.convertDateToWords = function convertDateToWords(date) {
-		var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-		if (date === null || date === undefined || date.trim().length == 0) {
-			return '';
-		}
-
-		var splitCharacter = '-';
-
-		if (date.indexOf('/') !== -1) {
-			splitCharacter = '/';
-		}
-
-		return date.split(splitCharacter).map(function (datePart, index) {
-
-			if (index == 0 || index == 2) {
-				return datePart;
-			}
-			if (index == 1) {
-				datePart = parseInt(datePart) - 1;
-				return monthNames[datePart];
-			}
-		}).reverse().join(' ');
-	};
-
-	//--- has user info changed
-
-	var hasUserInfoChanged = exports.hasUserInfoChanged = function hasUserInfoChanged(currentUserInfo, nextUserInfo) {
-
-		var currentStageOfParenting = currentUserInfo.stage_of_parenting;
-		var nextStageOfParenting = nextUserInfo.stage_of_parenting;
-
-		if (currentStageOfParenting !== nextStageOfParenting) {
-			return true;
-		}
-
-		var dateKey = currentStageOfParenting == 'parent' ? 'dob' : 'due_date';
-		return currentUserInfo[dateKey] !== nextUserInfo[dateKey];
-	};
-
-/***/ },
 /* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -25217,9 +25034,9 @@
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
-	var _MainScreen = __webpack_require__(232);
+	var _MainScreen = __webpack_require__(233);
 
 	var _MainScreen2 = _interopRequireDefault(_MainScreen);
 
@@ -25243,16 +25060,70 @@
 	var App = function (_React$Component) {
 	  _inherits(App, _React$Component);
 
-	  function App() {
+	  function App(context, props) {
 	    _classCallCheck(this, App);
 
-	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, context, props));
+
+	    _this.props.appInit(_constants2.default);
+
+	    document.addEventListener('deviceready', _this.onDeviceReady, false);
+	    // document.addEventListener('onCleverTapProfileSync', this.onCleverTapProfileSync, false);
+	    document.addEventListener('onCleverTapProfileDidInitialize', _this.onCleverTapProfileDidInitialize, false);
+	    // document.addEventListener('onCleverTapInAppNotificationDismissed', this.onCleverTapInAppNotificationDismissed, false);
+	    // deeplink handler
+	    // document.addEventListener('onDeepLink', this.onDeepLink, false);
+	    //push notification handler
+	    document.addEventListener('onPushNotification', _this.onPushNotification, false);
+	    return _this;
 	  }
 
 	  _createClass(App, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      this.props.appInit(_constants2.default);
+	    key: 'onDeviceReady',
+	    value: function onDeviceReady() {
+	      CleverTap.notifyDeviceReady();
+	      CleverTap.registerPush();
+	      CleverTap.enablePersonalization();
+	    }
+	  }, {
+	    key: 'onCleverTapProfileSync',
+	    value: function onCleverTapProfileSync(e) {
+	      console.log(e.updates);
+	    }
+	  }, {
+	    key: 'onCleverTapProfileDidInitialize',
+	    value: function onCleverTapProfileDidInitialize(e) {
+
+	      CleverTap.profileSet({ "Email": "varun@i2india.in", "Identity": "1854" });
+	      CleverTap.recordEventWithName("varun");
+	      // CleverTap.recordEventWithNameAndProps("boo", {"bar":"zoo"});
+	      console.log(e.CleverTapID);
+	    }
+	  }, {
+	    key: 'onCleverTapInAppNotificationDismissed',
+	    value: function onCleverTapInAppNotificationDismissed(e) {
+	      console.log(e.extras);
+	      console.log(e.actionExtras);
+	    }
+
+	    // deep link handling
+
+	  }, {
+	    key: 'onDeepLink',
+	    value: function onDeepLink(e) {
+	      console.log(e.deeplink);
+	    }
+
+	    // push notification payload handling
+
+	  }, {
+	    key: 'onPushNotification',
+	    value: function onPushNotification(e) {
+
+	      //capture the intent of the push notification
+	      //if single article then open the view of a single article
+	      // alert(e.notification);
+	      console.log(e.notification);
 	    }
 
 	    //replace this with props
@@ -58847,6 +58718,128 @@
 
 /***/ },
 /* 232 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	var getRequestUrl = exports.getRequestUrl = function getRequestUrl(url, params) {
+
+		var esc = encodeURIComponent;
+		var query = Object.keys(params).map(function (k) {
+			return esc(k) + '=' + esc(params[k]);
+		}).join('&');
+
+		return url + "?" + query;
+	};
+
+	var prepareFormData = exports.prepareFormData = function prepareFormData(params) {
+
+		var formData = new FormData();
+		for (var k in params) {
+			formData.append(k, params[k]);
+		}
+		return formData;
+	};
+
+	// ----- business logic to fetch the post(s) ----------------
+	var getPost = exports.getPost = function getPost(postId, posts) {
+		return posts[postId];
+	};
+
+	var getPosts = exports.getPosts = function getPosts() {
+		var postIds = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+		var posts = arguments[1];
+
+		return postIds.map(function (postId) {
+			return posts[postId];
+		});
+	};
+
+	// ------ business logic to fetch the chatroom(s) -----------
+	var getChatrooms = exports.getChatrooms = function getChatrooms(chatIds, chatRooms) {
+
+		return chatIds.map(function (id) {
+			return chatRooms[id];
+		});
+	};
+
+	var getChatroom = exports.getChatroom = function getChatroom(chatroomId, chatRooms) {
+		return chatRooms[chatroomId];
+	};
+
+	// ---- few string utils ------------
+
+	var ucFirstLetter = exports.ucFirstLetter = function ucFirstLetter(interest) {
+		return interest.split(/\W/).map(function (term) {
+			return term[0].toUpperCase() + term.slice(1);
+		}).join(' ');
+	};
+
+	// ----- generate a random key for navigator --------
+	var generateNavigationKey = exports.generateNavigationKey = function generateNavigationKey(id) {
+
+		var key = Math.random();
+		key = Math.floor(key * 100000);
+		key = key.toString();
+		return key + id;
+	};
+
+	// ----- validations -----------
+	var isFieldEmpty = exports.isFieldEmpty = function isFieldEmpty(value) {
+		return value === null || value === undefined || value.length === 0 || !value;
+	};
+
+	var validateEmail = exports.validateEmail = function validateEmail(value) {
+		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(value);
+	};
+
+	// -------- Convert date to words ------------
+	var convertDateToWords = exports.convertDateToWords = function convertDateToWords(date) {
+		var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+		if (date === null || date === undefined || date.trim().length == 0) {
+			return '';
+		}
+
+		var splitCharacter = '-';
+
+		if (date.indexOf('/') !== -1) {
+			splitCharacter = '/';
+		}
+
+		return date.split(splitCharacter).map(function (datePart, index) {
+
+			if (index == 0 || index == 2) {
+				return datePart;
+			}
+			if (index == 1) {
+				datePart = parseInt(datePart) - 1;
+				return monthNames[datePart];
+			}
+		}).reverse().join(' ');
+	};
+
+	//--- has user info changed
+
+	var hasUserInfoChanged = exports.hasUserInfoChanged = function hasUserInfoChanged(currentUserInfo, nextUserInfo) {
+
+		var currentStageOfParenting = currentUserInfo.stage_of_parenting;
+		var nextStageOfParenting = nextUserInfo.stage_of_parenting;
+
+		if (currentStageOfParenting !== nextStageOfParenting) {
+			return true;
+		}
+
+		var dateKey = currentStageOfParenting == 'parent' ? 'dob' : 'due_date';
+		return currentUserInfo[dateKey] !== nextUserInfo[dateKey];
+	};
+
+/***/ },
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58869,7 +58862,7 @@
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _UserProfile = __webpack_require__(233);
+	var _UserProfile = __webpack_require__(234);
 
 	var _UserProfile2 = _interopRequireDefault(_UserProfile);
 
@@ -58963,7 +58956,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(MainScreen);
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58978,7 +58971,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _UserProfileContainer = __webpack_require__(234);
+	var _UserProfileContainer = __webpack_require__(235);
 
 	var _UserProfileContainer2 = _interopRequireDefault(_UserProfileContainer);
 
@@ -59013,7 +59006,7 @@
 	exports.default = UserProfile;
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59026,7 +59019,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _UserProfile = __webpack_require__(235);
+	var _UserProfile = __webpack_require__(236);
 
 	var _UserProfile2 = _interopRequireDefault(_UserProfile);
 
@@ -59062,7 +59055,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispactorToProps)(_UserProfile2.default);
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59079,7 +59072,7 @@
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _BookmarkedPostsContainer = __webpack_require__(236);
+	var _BookmarkedPostsContainer = __webpack_require__(237);
 
 	var _BookmarkedPostsContainer2 = _interopRequireDefault(_BookmarkedPostsContainer);
 
@@ -59087,7 +59080,11 @@
 
 	var _AuthScreen2 = _interopRequireDefault(_AuthScreen);
 
-	var _utils = __webpack_require__(225);
+	var _cachedFetch = __webpack_require__(223);
+
+	var _constants = __webpack_require__(226);
+
+	var _utils = __webpack_require__(232);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -59186,6 +59183,7 @@
 	          displayName = _state.displayName;
 
 	      this.setState({ editMode: !this.state.editMode });
+	      (0, _cachedFetch.removeCache)(_constants.PROFILE_UPDATE);
 	      this.props.updateUserProfile(date, stageOfParenting, displayName);
 	    }
 	  }, {
@@ -59291,7 +59289,7 @@
 	                { onClick: function onClick() {
 	                    return _this2.setState({ editMode: !_this2.state.editMode });
 	                  }, className: 'btn-edit' },
-	                _react2.default.createElement('img', { src: '/assets/edit_white_goedgh.svg' }),
+	                _react2.default.createElement('img', { src: '/assets/edit_white_goedgh.png' }),
 	                'EDIT'
 	              )
 	            ) : '',
@@ -59409,7 +59407,7 @@
 	exports.default = UserProfile;
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59426,7 +59424,7 @@
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _PostsList = __webpack_require__(237);
+	var _PostsList = __webpack_require__(238);
 
 	var _PostsList2 = _interopRequireDefault(_PostsList);
 
@@ -59500,7 +59498,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispactorToProps)(BookmarkedPostsContainer);
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59517,15 +59515,15 @@
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _reactWaypoint = __webpack_require__(238);
+	var _reactWaypoint = __webpack_require__(239);
 
 	var _reactWaypoint2 = _interopRequireDefault(_reactWaypoint);
 
-	var _PostsListWrapper = __webpack_require__(254);
+	var _PostsListWrapper = __webpack_require__(255);
 
 	var _PostsListWrapper2 = _interopRequireDefault(_PostsListWrapper);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	var _blogActions = __webpack_require__(266);
 
@@ -59627,7 +59625,7 @@
 	exports.default = PostsList;
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59638,33 +59636,33 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _consolidatedEvents = __webpack_require__(239);
+	var _consolidatedEvents = __webpack_require__(240);
 
 	var _react = __webpack_require__(3);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _computeOffsetPixels = __webpack_require__(245);
+	var _computeOffsetPixels = __webpack_require__(246);
 
 	var _computeOffsetPixels2 = _interopRequireDefault(_computeOffsetPixels);
 
-	var _constants = __webpack_require__(248);
+	var _constants = __webpack_require__(249);
 
 	var _constants2 = _interopRequireDefault(_constants);
 
-	var _debugLog = __webpack_require__(249);
+	var _debugLog = __webpack_require__(250);
 
 	var _debugLog2 = _interopRequireDefault(_debugLog);
 
-	var _ensureChildrenIsSingleDOMElement = __webpack_require__(250);
+	var _ensureChildrenIsSingleDOMElement = __webpack_require__(251);
 
 	var _ensureChildrenIsSingleDOMElement2 = _interopRequireDefault(_ensureChildrenIsSingleDOMElement);
 
-	var _getCurrentPosition = __webpack_require__(252);
+	var _getCurrentPosition = __webpack_require__(253);
 
 	var _getCurrentPosition2 = _interopRequireDefault(_getCurrentPosition);
 
-	var _resolveScrollableAncestorProp = __webpack_require__(253);
+	var _resolveScrollableAncestorProp = __webpack_require__(254);
 
 	var _resolveScrollableAncestorProp2 = _interopRequireDefault(_resolveScrollableAncestorProp);
 
@@ -60013,7 +60011,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	Object.defineProperty(exports, "__esModule", {
@@ -60023,11 +60021,11 @@
 	exports.addEventListener = addEventListener;
 	exports.removeEventListener = removeEventListener;
 
-	var _normalizeEventOptions = __webpack_require__(240);
+	var _normalizeEventOptions = __webpack_require__(241);
 
 	var _normalizeEventOptions2 = _interopRequireDefault(_normalizeEventOptions);
 
-	var _TargetEventHandlers = __webpack_require__(243);
+	var _TargetEventHandlers = __webpack_require__(244);
 
 	var _TargetEventHandlers2 = _interopRequireDefault(_TargetEventHandlers);
 
@@ -60060,7 +60058,7 @@
 	}
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	Object.defineProperty(exports, "__esModule", {
@@ -60068,7 +60066,7 @@
 	});
 	exports['default'] = normalizeEventOptions;
 
-	var _canUsePassiveEventListeners = __webpack_require__(241);
+	var _canUsePassiveEventListeners = __webpack_require__(242);
 
 	var _canUsePassiveEventListeners2 = _interopRequireDefault(_canUsePassiveEventListeners);
 
@@ -60091,7 +60089,7 @@
 	}
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	Object.defineProperty(exports, "__esModule", {
@@ -60099,7 +60097,7 @@
 	});
 	exports['default'] = canUsePassiveEventListeners;
 
-	var _canUseDOM = __webpack_require__(242);
+	var _canUseDOM = __webpack_require__(243);
 
 	var _canUseDOM2 = _interopRequireDefault(_canUseDOM);
 
@@ -60141,7 +60139,7 @@
 	}
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports) {
 
 	Object.defineProperty(exports, "__esModule", {
@@ -60152,7 +60150,7 @@
 	exports['default'] = CAN_USE_DOM;
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	Object.defineProperty(exports, "__esModule", {
@@ -60161,7 +60159,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _eventOptionsKey = __webpack_require__(244);
+	var _eventOptionsKey = __webpack_require__(245);
 
 	var _eventOptionsKey2 = _interopRequireDefault(_eventOptionsKey);
 
@@ -60282,7 +60280,7 @@
 	exports['default'] = TargetEventHandlers;
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports) {
 
 	Object.defineProperty(exports, "__esModule", {
@@ -60320,7 +60318,7 @@
 	}
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60330,11 +60328,11 @@
 	});
 	exports.default = computeOffsetPixels;
 
-	var _parseOffsetAsPercentage = __webpack_require__(246);
+	var _parseOffsetAsPercentage = __webpack_require__(247);
 
 	var _parseOffsetAsPercentage2 = _interopRequireDefault(_parseOffsetAsPercentage);
 
-	var _parseOffsetAsPixels = __webpack_require__(247);
+	var _parseOffsetAsPixels = __webpack_require__(248);
 
 	var _parseOffsetAsPixels2 = _interopRequireDefault(_parseOffsetAsPixels);
 
@@ -60360,7 +60358,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 246 */
+/* 247 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -60389,7 +60387,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 247 */
+/* 248 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -60421,7 +60419,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 248 */
+/* 249 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -60438,7 +60436,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 249 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60455,7 +60453,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 250 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60469,7 +60467,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _isDOMElement = __webpack_require__(251);
+	var _isDOMElement = __webpack_require__(252);
 
 	var _isDOMElement2 = _interopRequireDefault(_isDOMElement);
 
@@ -60493,7 +60491,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 251 */
+/* 252 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -60515,7 +60513,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 252 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60525,7 +60523,7 @@
 	});
 	exports.default = getCurrentPosition;
 
-	var _constants = __webpack_require__(248);
+	var _constants = __webpack_require__(249);
 
 	var _constants2 = _interopRequireDefault(_constants);
 
@@ -60571,7 +60569,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 253 */
+/* 254 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -60594,7 +60592,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 254 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60609,7 +60607,7 @@
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _ArticleCard = __webpack_require__(255);
+	var _ArticleCard = __webpack_require__(256);
 
 	var _ArticleCard2 = _interopRequireDefault(_ArticleCard);
 
@@ -60648,6 +60646,10 @@
 			);
 		};
 
+		if (posts.length === 0) {
+			return null;
+		}
+
 		return _react2.default.createElement(_reactOnsenui.List, {
 			className: 'article-listing',
 			dataSource: posts,
@@ -60667,7 +60669,7 @@
 	exports.default = PostsListWrapper;
 
 /***/ },
-/* 255 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60682,9 +60684,9 @@
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _imageDimensions = __webpack_require__(256);
+	var _imageDimensions = __webpack_require__(257);
 
-	var _SinglePost = __webpack_require__(257);
+	var _SinglePost = __webpack_require__(258);
 
 	var _SinglePost2 = _interopRequireDefault(_SinglePost);
 
@@ -60692,7 +60694,7 @@
 
 	var _TagCloudArticleCard2 = _interopRequireDefault(_TagCloudArticleCard);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	var _reactLazyLoad = __webpack_require__(273);
 
@@ -60833,14 +60835,14 @@
 	          { onClick: function onClick() {
 	              return toggleLike(post.id);
 	            }, style: styles.articleLike, className: 'articleLike' },
-	          post.liked ? _react2.default.createElement('img', { src: '/assets/like-active.svg' }) : _react2.default.createElement('img', { src: '/assets/like-default.svg' })
+	          post.liked ? _react2.default.createElement('img', { src: '/assets/like-active.png' }) : _react2.default.createElement('img', { src: '/assets/like-default.png' })
 	        ),
 	        _react2.default.createElement(
 	          'div',
 	          { onClick: function onClick() {
 	              return toggleBookmark(post.id);
 	            }, style: styles.articleBookmark, className: 'articleBookmark' },
-	          post.bookmarked ? _react2.default.createElement('img', { src: '/assets/bookmark-active.svg' }) : _react2.default.createElement('img', { src: '/assets/bookmark-default.svg' })
+	          post.bookmarked ? _react2.default.createElement('img', { src: '/assets/bookmark-active.png' }) : _react2.default.createElement('img', { src: '/assets/bookmark-default.png' })
 	        )
 	      )
 	    )
@@ -60850,7 +60852,7 @@
 	exports.default = ArticleCard;
 
 /***/ },
-/* 256 */
+/* 257 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -60880,7 +60882,7 @@
 	exports.imageHeight = imageHeight;
 
 /***/ },
-/* 257 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60895,13 +60897,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Toolbar = __webpack_require__(258);
+	var _Toolbar = __webpack_require__(259);
 
 	var _Toolbar2 = _interopRequireDefault(_Toolbar);
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _SinglePostContainer = __webpack_require__(259);
+	var _SinglePostContainer = __webpack_require__(260);
 
 	var _SinglePostContainer2 = _interopRequireDefault(_SinglePostContainer);
 
@@ -60940,7 +60942,7 @@
 	exports.default = SinglePost;
 
 /***/ },
-/* 258 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60983,7 +60985,7 @@
 	exports.default = ToolbarWrapper;
 
 /***/ },
-/* 259 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61000,7 +61002,7 @@
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _BlogApi = __webpack_require__(260);
+	var _BlogApi = __webpack_require__(261);
 
 	var _BlogApi2 = _interopRequireDefault(_BlogApi);
 
@@ -61010,7 +61012,7 @@
 
 	var _blogActions = __webpack_require__(266);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -61096,7 +61098,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispactorToProps)(SinglePostContainer);
 
 /***/ },
-/* 260 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61107,13 +61109,13 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _isomorphicFetch = __webpack_require__(223);
+	var _isomorphicFetch = __webpack_require__(224);
 
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
-	var _cachedFetch = __webpack_require__(261);
+	var _cachedFetch = __webpack_require__(223);
 
 	var _cachedFetch2 = _interopRequireDefault(_cachedFetch);
 
@@ -61395,125 +61397,6 @@
 	exports.default = BlogApi;
 
 /***/ },
-/* 261 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.removeCache = undefined;
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-	var _isomorphicFetch = __webpack_require__(223);
-
-	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
-
-	var _constants = __webpack_require__(226);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var generateCacheKey = function generateCacheKey(s) {
-	  var hash = 0;
-	  if (s.length == 0) return hash;
-	  for (var i = 0; i < s.length; i++) {
-	    var char = s.charCodeAt(i);
-	    hash = (hash << 5) - hash + char;
-	    hash = hash & hash; // Convert to 32bit integer
-	  }
-	  return hash;
-	};
-
-	/**
-	  => Update user interests => Get Interests Endpoint
-	  => Update user profile   =>  Slot posts
-	  => On Likes and Bookmarks => remove editorials,popular posts,slot posts,bookmarked posts
-	  =>   
-	**/
-
-	var removeCache = exports.removeCache = function removeCache(action) {
-
-	  var urls = [];
-
-	  switch (action) {
-
-	    case _constants.GROUP_JOIN_UNJOIN:
-	      urls.push(_constants.LIST_CHAT_GROUPS_ENDPOINT);
-	      break;
-
-	    case _constants.UPDATE_USER_INTERESTS:
-	      urls.push(_constants.FETCH_INTERESTS_ENDPOINT);
-	      break;
-
-	    case _constants.PROFILE_UPDATE:
-	      urls.push(_constants.SLOT_POSTS_ENDPOINT);
-	      break;
-
-	    case _constants.LIKED_BOOKMARKED:
-	      urls.push(_constants.BOOKMARKED_POSTS_ENDPOINT);
-	      urls.push(_constants.POPULAR_POSTS_ENDPOINT);
-	      urls.push(_constants.EDITORIAL_POSTS_ENDPOINT);
-	      urls.push(_constants.SLOT_POSTS_ENDPOINT);
-	      break;
-
-	  }
-
-	  urls.forEach(function (url) {
-	    var cacheKey = generateCacheKey(url);
-	    window.localStorage.removeItem(cacheKey);
-	    window.localStorage.removeItem(cacheKey + ':ts');
-	  });
-	};
-
-	//include headers
-	var cachedFetch = function cachedFetch(url, options) {
-
-	  var expiry = 5 * 60; // 5 min default
-	  if (typeof options === 'number') {
-	    expiry = options;
-	    options = undefined;
-	  } else if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
-	    // I hope you didn't set it to 0 seconds
-	    expiry = options.seconds || expiry;
-	  }
-	  // Use the URL as the cache key to sessionStorage
-	  var cacheKey = generateCacheKey(url);
-	  var cached = localStorage.getItem(cacheKey);
-	  var whenCached = localStorage.getItem(cacheKey + ':ts');
-	  if (cached !== null && whenCached !== null) {
-	    // it was in sessionStorage! Yay!
-	    // Even though 'whenCached' is a string, this operation
-	    // works because the minus sign converts the
-	    // string to an integer and it will work.
-	    var age = (Date.now() - whenCached) / 1000;
-	    if (age < expiry) {
-	      var response = new Response(new Blob([cached]));
-	      return Promise.resolve(response);
-	    } else {
-	      // We need to clean up this old key
-	      window.localStorage.removeItem(cacheKey);
-	      window.localStorage.removeItem(cacheKey + ':ts');
-	    }
-	  }
-
-	  return (0, _isomorphicFetch2.default)(url, options).then(function (response) {
-	    // let's only store in cache if the content-type is
-	    // JSON or something non-binary
-	    if (response.status === 200) {
-
-	      response.clone().text().then(function (content) {
-	        localStorage.setItem(cacheKey, content);
-	        localStorage.setItem(cacheKey + ':ts', Date.now());
-	      });
-	    }
-	    return response;
-	  });
-	};
-	exports.default = cachedFetch;
-
-/***/ },
 /* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -61590,6 +61473,29 @@
 	      toggleBookmark = _ref.toggleBookmark,
 	      navigator = _ref.navigator;
 
+
+	  var sharePost = function sharePost() {
+	    // this is the complete list of currently supported params you can pass to the plugin (all optional)
+	    var options = {
+	      message: 'Share this', // not supported on some apps (Facebook, Instagram)
+	      subject: post.post_title, // fi. for email
+	      files: ['', ''], // an array of filenames either locally or remotely
+	      url: post.permalink,
+	      chooserTitle: post.post_title // Android only, you can override the default share sheet title
+	    };
+
+	    var onSuccess = function onSuccess(result) {
+	      // console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
+	      // console.log("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false)
+	    };
+
+	    var onError = function onError(msg) {
+	      // console.log("Sharing failed with message: " + msg);
+	    };
+
+	    window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
+	  };
+
 	  return _react2.default.createElement(
 	    'div',
 	    { style: styles.pageContent, className: 'single-post page-content' },
@@ -61636,16 +61542,18 @@
 	        { onClick: function onClick() {
 	            return toggleLike(post.id);
 	          }, className: 'articleLike' },
-	        post.liked ? _react2.default.createElement('img', { src: '/assets/like-active.svg' }) : _react2.default.createElement('img', { src: '/assets/like-default.svg' })
+	        post.liked ? _react2.default.createElement('img', { src: '/assets/like-active.png' }) : _react2.default.createElement('img', { src: '/assets/like-default.png' })
 	      ),
 	      _react2.default.createElement(
 	        'div',
 	        { onClick: function onClick() {
 	            return toggleBookmark(post.id);
 	          }, style: { margin: "0 25%" }, className: 'articleBookmark' },
-	        post.bookmarked ? _react2.default.createElement('img', { src: '/assets/bookmark-active.svg' }) : _react2.default.createElement('img', { src: '/assets/bookmark-default.svg' })
+	        post.bookmarked ? _react2.default.createElement('img', { src: '/assets/bookmark-active.png' }) : _react2.default.createElement('img', { src: '/assets/bookmark-default.png' })
 	      ),
-	      _react2.default.createElement('ons-icon', { size: '32px', icon: 'fa-share-alt' })
+	      _react2.default.createElement('ons-icon', { onClick: function onClick() {
+	          return sharePost();
+	        }, size: '32px', icon: 'fa-share-alt' })
 	    )
 	  );
 	};
@@ -61672,7 +61580,7 @@
 
 	var _ArchiveScreen2 = _interopRequireDefault(_ArchiveScreen);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -61737,7 +61645,7 @@
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _Toolbar = __webpack_require__(258);
+	var _Toolbar = __webpack_require__(259);
 
 	var _Toolbar2 = _interopRequireDefault(_Toolbar);
 
@@ -61803,7 +61711,7 @@
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _PostsList = __webpack_require__(237);
+	var _PostsList = __webpack_require__(238);
 
 	var _PostsList2 = _interopRequireDefault(_PostsList);
 
@@ -61944,7 +61852,7 @@
 	exports.fetchPopularPosts = fetchPopularPosts;
 	exports.fetchEditorialPosts = fetchEditorialPosts;
 
-	var _BlogApi = __webpack_require__(260);
+	var _BlogApi = __webpack_require__(261);
 
 	var _BlogApi2 = _interopRequireDefault(_BlogApi);
 
@@ -62453,11 +62361,11 @@
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _PostsListWrapper = __webpack_require__(254);
+	var _PostsListWrapper = __webpack_require__(255);
 
 	var _PostsListWrapper2 = _interopRequireDefault(_PostsListWrapper);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -62533,7 +62441,7 @@
 
 	var _ArchiveScreen2 = _interopRequireDefault(_ArchiveScreen);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -63884,13 +63792,13 @@
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _Toolbar = __webpack_require__(258);
+	var _Toolbar = __webpack_require__(259);
 
 	var _Toolbar2 = _interopRequireDefault(_Toolbar);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
-	var _MainScreen = __webpack_require__(232);
+	var _MainScreen = __webpack_require__(233);
 
 	var _MainScreen2 = _interopRequireDefault(_MainScreen);
 
@@ -63942,43 +63850,46 @@
 			key: 'componentWillReceiveProps',
 			value: function componentWillReceiveProps(nextProps) {
 
-				var status = nextProps.status;
-				var component = _SignupScreen2.default;
-				var allowedStatus = ['registered', 'new-user'];
-				var key = 'signup-screen';
+				var component = null;
+				var key = '';
 				var props = {};
+				var allowedStatus = ['registered', 'new-user', 'token-signin-success'];
+				var status = nextProps.status;
 
-				if (allowedStatus.indexOf(status) === -1 || this.props.authenticated || this.props.status == status || status == 'anonymous') {
+				if (allowedStatus.indexOf(status) === -1 || this.props.authenticated || status == 'anonymous' && this.props.status !== status) {
 					return;
 				}
 
-				if (status == 'registered') {
-					var authenticated = nextProps.authenticated;
+				var authenticated = nextProps.authenticated;
 
-					if (authenticated) {
+				if (authenticated) {
 
-						var userInfo = nextProps.userInfo;
-						var date = userInfo.date.trim();
-						var stageOfParenting = userInfo.stageOfParenting.trim();
-						var interests = userInfo.interests;
-						var profileComplete = date.length && stageOfParenting.length && interests.length;
+					var userInfo = nextProps.userInfo;
+					var stageOfParenting = userInfo.stageOfParenting.trim();
+					var interests = userInfo.interests;
+					var profileComplete = stageOfParenting.length && interests.length ? true : false;
 
-						if (profileComplete) {
-							component = _MainScreen2.default;
-							key = 'main-screen';
-						} else {
-							if (!date.length || !stageOfParenting.length) {
-								component = _LoginScreen2.default;
-								key = 'login-screen';
-							} else if (!interests.length) {
-								component = _UserInterestsSelector2.default;
-								key = 'user-interests-selector-screen';
-							}
-						}
+					if (profileComplete) {
+						component = _MainScreen2.default;
+						key = 'main-screen';
 					} else {
+						if (!stageOfParenting.length) {
+							component = _SignupScreen2.default;
+							key = 'signup-screen';
+							props['showPasswordField'] = false;
+						} else if (!interests.length) {
+							component = _UserInterestsSelector2.default;
+							key = 'user-interests-selector-screen';
+						}
+					}
+				} else {
+					if (status == 'registered') {
+						component = _SignupScreen2.default;
+						key = 'signup-screen';
+					}
+					if (status == 'new-user') {
 						component = _LoginScreen2.default;
 						key = 'login-screen';
-						props['showPasswordField'] = true;
 					}
 				}
 
@@ -64032,15 +63943,13 @@
 					var loginBy = 'google';
 
 					if (userEmail) {
-						classContext.tokenSignin(token, userEmail, userID, imageUrl, loginBy, displayName);
+						classContext.tokenSignin(token, userID, userEmail, displayName, imageUrl, loginBy);
 					}
 
-					// console.log(JSON.stringify(obj));
-
-					// console.log("===== Google Auth ============");
-					// console.log("Token is : " + token);
-					// console.log("User Id is : " + userID);
-					// console.log("===== End of Google Auth ============");
+					console.log("===== Google Auth ============");
+					console.log("Token is : " + token);
+					console.log("User Id is : " + userID);
+					console.log("===== End of Google Auth ============");
 				}, function (msg) {
 					alert('error: ' + msg);
 				});
@@ -64055,11 +63964,10 @@
 					var userID = userData.authResponse.userID;
 					var classContext = this;
 
-					// console.log("===== Facebook Auth ============");
-					// console.log("Token is : " + accessToken);
-					// console.log("User Id is : " + userID);
-					// console.log("===== End of Facebook Auth ============");
-
+					console.log("===== Facebook Auth ============");
+					console.log("Token is : " + accessToken);
+					console.log("User Id is : " + userID);
+					console.log("===== End of Facebook Auth ============");
 
 					facebookConnectPlugin.api("me/?fields=id,name,email,picture", ["email", "public_profile"], function onSuccess(result) {
 
@@ -64069,11 +63977,11 @@
 						var displayName = result.name;
 						var loginBy = 'facebook';
 						// send the accesstoken, email, user id to the server
-						// console.log(email);
-						// console.log(name);
-						// console.log(imageUrl);
+						console.log(email);
+						console.log(name);
+						console.log(imageUrl);
 						if (userEmail) {
-							classContext.tokenSignin(token, userEmail, userID, imageUrl, loginBy, displayName);
+							classContext.tokenSignin(accesstoken, userID, userEmail, displayName, imageUrl, loginBy);
 						}
 					}, function onError(error) {
 						console.error("Failed: ", error);
@@ -64185,7 +64093,7 @@
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	var _classnames = __webpack_require__(286);
 
@@ -64491,7 +64399,7 @@
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _Toolbar = __webpack_require__(258);
+	var _Toolbar = __webpack_require__(259);
 
 	var _Toolbar2 = _interopRequireDefault(_Toolbar);
 
@@ -64499,13 +64407,13 @@
 
 	var _CustomInput2 = _interopRequireDefault(_CustomInput);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	var _UserInterestsSelector = __webpack_require__(292);
 
 	var _UserInterestsSelector2 = _interopRequireDefault(_UserInterestsSelector);
 
-	var _MainScreen = __webpack_require__(232);
+	var _MainScreen = __webpack_require__(233);
 
 	var _MainScreen2 = _interopRequireDefault(_MainScreen);
 
@@ -64782,9 +64690,9 @@
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
-	var _MainScreen = __webpack_require__(232);
+	var _MainScreen = __webpack_require__(233);
 
 	var _MainScreen2 = _interopRequireDefault(_MainScreen);
 
@@ -64958,7 +64866,7 @@
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _Toolbar = __webpack_require__(258);
+	var _Toolbar = __webpack_require__(259);
 
 	var _Toolbar2 = _interopRequireDefault(_Toolbar);
 
@@ -65060,7 +64968,7 @@
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _Toolbar = __webpack_require__(258);
+	var _Toolbar = __webpack_require__(259);
 
 	var _Toolbar2 = _interopRequireDefault(_Toolbar);
 
@@ -65068,7 +64976,7 @@
 
 	var _CustomInput2 = _interopRequireDefault(_CustomInput);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -65276,9 +65184,9 @@
 
 	var _CustomInput2 = _interopRequireDefault(_CustomInput);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
-	var _Toolbar = __webpack_require__(258);
+	var _Toolbar = __webpack_require__(259);
 
 	var _Toolbar2 = _interopRequireDefault(_Toolbar);
 
@@ -65457,7 +65365,7 @@
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	var _AuthScreen = __webpack_require__(282);
 
@@ -65530,7 +65438,7 @@
 					_reactOnsenui.Page,
 					{ key: 'homescreen' },
 					_react2.default.createElement(_SlotPostsContainer2.default, { update: this.state.update, navigator: this.props.navigator }),
-					_react2.default.createElement(_InterestsCarousel2.default, { position: '225', navigator: this.props.navigator }),
+					_react2.default.createElement(_InterestsCarousel2.default, { position: '210', navigator: this.props.navigator }),
 					_react2.default.createElement(_UserFeedsContainer2.default, { update: this.state.update, position: '340', section: _blogActions.USER_FEED_RELEVANCE, navigator: this.props.navigator })
 				);
 			}
@@ -65559,13 +65467,13 @@
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _PostsListWrapper = __webpack_require__(254);
+	var _PostsListWrapper = __webpack_require__(255);
 
 	var _PostsListWrapper2 = _interopRequireDefault(_PostsListWrapper);
 
 	var _blogActions = __webpack_require__(266);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	var _CarouselLoader = __webpack_require__(309);
 
@@ -65700,11 +65608,11 @@
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _SinglePost = __webpack_require__(257);
+	var _SinglePost = __webpack_require__(258);
 
 	var _SinglePost2 = _interopRequireDefault(_SinglePost);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -65833,7 +65741,7 @@
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _PostsList = __webpack_require__(237);
+	var _PostsList = __webpack_require__(238);
 
 	var _PostsList2 = _interopRequireDefault(_PostsList);
 
@@ -65930,7 +65838,7 @@
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	var _ArchiveScreen = __webpack_require__(264);
 
@@ -66122,7 +66030,7 @@
 
 	var _PostsCarousel2 = _interopRequireDefault(_PostsCarousel);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	var _CarouselLoader = __webpack_require__(309);
 
@@ -66223,7 +66131,7 @@
 
 	var _CarouselLoader2 = _interopRequireDefault(_CarouselLoader);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	var _blogActions = __webpack_require__(266);
 
@@ -66315,7 +66223,7 @@
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	var _ChatroomListContainer = __webpack_require__(316);
 
@@ -66385,7 +66293,7 @@
 
 	var _constants = __webpack_require__(226);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -66571,7 +66479,7 @@
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	var _Chatroom = __webpack_require__(319);
 
@@ -66667,7 +66575,7 @@
 
 	var _ChatroomApi2 = _interopRequireDefault(_ChatroomApi);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	var _chatActions = __webpack_require__(329);
 
@@ -66963,7 +66871,7 @@
 
 	var _constants = __webpack_require__(226);
 
-	var _reactWaypoint = __webpack_require__(238);
+	var _reactWaypoint = __webpack_require__(239);
 
 	var _reactWaypoint2 = _interopRequireDefault(_reactWaypoint);
 
@@ -71357,6 +71265,10 @@
 
 	var _ChatroomApi2 = _interopRequireDefault(_ChatroomApi);
 
+	var _cachedFetch = __webpack_require__(223);
+
+	var _constants = __webpack_require__(226);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	//send new message
@@ -71499,6 +71411,9 @@
 
 		return function (dispatch, state) {
 
+			//clear the cache
+			(0, _cachedFetch.removeCache)(_constants.GROUP_JOIN_UNJOIN);
+
 			_ChatroomApi2.default.joinChatroom(chatroomId).then(function (response) {
 				// console.log(response);
 				var chatroomId = response.data.group_id;
@@ -71513,9 +71428,11 @@
 	function leaveChatroom(chatroomId) {
 
 		return function (dispatch, state) {
-			// dispatch(requestPost());
+
+			//clear the cache
+			(0, _cachedFetch.removeCache)(_constants.GROUP_JOIN_UNJOIN);
 			_ChatroomApi2.default.leaveChatroom(chatroomId).then(function (response) {
-				// console.log(response);
+
 				var chatroomId = response.data.group_id;
 				dispatch(leaveChatroomSuccess(chatroomId));
 			}).catch(function (err) {
@@ -71530,11 +71447,9 @@
 		return function (dispatch, state) {
 			dispatch(requestChatroomMessages(chatroomId));
 			_ChatroomApi2.default.listMessages(chatroomId, messageId, direction).then(function (response) {
-				// console.log(response.messages);
-				// console.log(response.group_id);
+
 				var chatroomId = response.data.group_id;
 				var messages = response.data.messages;
-				console.log(messages);
 				dispatch(receivedChatroomMessages(chatroomId, messages));
 			}).catch(function (err) {
 				dispatch(errorReceivingChatroomMessages(chatroomId));
@@ -71548,7 +71463,6 @@
 		return function (dispatch, state) {
 			dispatch(requestChatrooms());
 			_ChatroomApi2.default.listChatrooms().then(function (response) {
-				// console.log(response.data);
 				dispatch(receivedChatrooms(response.data));
 			}).catch(function (err) {
 				dispatch(errorReceivingChatrooms());
@@ -71568,15 +71482,15 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _isomorphicFetch = __webpack_require__(223);
+	var _isomorphicFetch = __webpack_require__(224);
 
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
-	var _cachedFetch = __webpack_require__(261);
+	var _cachedFetch = __webpack_require__(223);
 
 	var _cachedFetch2 = _interopRequireDefault(_cachedFetch);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	var _constants = __webpack_require__(226);
 
@@ -71925,7 +71839,7 @@
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	var _Chatroom = __webpack_require__(319);
 
@@ -71996,7 +71910,7 @@
 
 	var _reactOnsenui = __webpack_require__(228);
 
-	var _utils = __webpack_require__(225);
+	var _utils = __webpack_require__(232);
 
 	var _Chatroom = __webpack_require__(319);
 
@@ -72017,6 +71931,11 @@
 	    _react2.default.createElement(
 	      _reactOnsenui.Row,
 	      null,
+	      _react2.default.createElement(
+	        _reactOnsenui.Col,
+	        { width: '10%' },
+	        _react2.default.createElement('img', { style: { width: "28px", height: "28px", margin: "-5px" }, src: '/assets/expert_chat_icon.png' })
+	      ),
 	      _react2.default.createElement(
 	        _reactOnsenui.Col,
 	        { verticalAlign: 'center', width: '10%' },

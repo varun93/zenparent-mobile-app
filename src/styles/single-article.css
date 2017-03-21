@@ -23,7 +23,7 @@
 }
 
 .single-post .articleLike img,.single-post .articleBookmark img{
-	height: 32px;
+	height: 28px !important;
 }
 
 .page-content .list{

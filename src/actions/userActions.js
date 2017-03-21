@@ -358,7 +358,7 @@ export function updateUserInterests(interests) {
       }
 };
 
-export function tokenSignin(accessToken,socialUniqueId,userEmail,loginBy) {
+export function tokenSignin(accessToken,socialUniqueId,userEmail,displayName,$imageUrl,loginBy) {
     
       return (dispatch,state) => {
           

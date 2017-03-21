@@ -24,7 +24,6 @@
 .loginBtn--facebook {
   background-color: #4C69BA !important;
   background-image: linear-gradient(#4C69BA, #3B55A0);
-  /*font-family: "Helvetica neue", Helvetica Neue, Helvetica, Arial, sans-serif;*/
   text-shadow: 0 -1px 0 #354C8C;
 }
 
@@ -65,17 +64,17 @@
 
 
 /* Signup Login styles */
-.forgot-password-screen .page__content,.signup-screen .page__content,.login-screen .page__content{
+.parenting-stage-input-screen  .page_content,.forgot-password-screen .page__content,.signup-screen .page__content,.login-screen .page__content{
   background: rgb(238,238,238) !important;
   padding: 20px !important;
 }
 
-.forgot-password-screen .forgot-password-container,.signup-screen .signup-container,.login-screen .login-container{
+.parenting-stage-input-screen > div,.forgot-password-screen .forgot-password-container,.signup-screen .signup-container,.login-screen .login-container{
     position: relative;
     margin-top: 50%;
 }
 
-.forgot-password-container > button,.signup-container > button,.login-container > button{
+.parenting-stage-input-screen > div > button,.forgot-password-container > button,.signup-container > button,.login-container > button{
     width: 100%;
     text-align: center;
     color: white;
@@ -88,7 +87,7 @@
 }
     
 
-/* error alerts */
+/* alerts */
 .alert {
     padding: 15px;
     margin-bottom: 20px;

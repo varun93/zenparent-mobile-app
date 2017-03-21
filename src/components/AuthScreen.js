@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 import {Page,Button,ProgressCircular} from 'react-onsenui';
 import Toolbar from '../templates/Toolbar';
 //the screens
-import {validateEmail,generateNavigationKey} from '../utils';
+import {validateEmail} from '../utils';
+import getNextRoute from '../utils/getNextRoute';
 import MainScreen from '../screens/MainScreen';
 import CustomInput from './CustomInput';
 import LoginScreen from '../screens/LoginScreen';
@@ -28,61 +29,17 @@ export default class AuthScreen extends Component{
 
 	componentWillReceiveProps(nextProps) {
 
-		
 		let component = null;
-		let key = '';
-		let props = {};
+		let user = nextProps.user;
 		let allowedStatus = ['registered','new-user','token-signin-success'];
-		let status = nextProps.status;
+		let status = user.status;
 		
-		if(allowedStatus.indexOf(status) === -1 || this.props.authenticated ||  status == 'anonymous' && (this.props.status !== status)){
+		if(allowedStatus.indexOf(status) === -1 || this.props.user.authenticated ||  status == 'anonymous' || (this.props.user.status == status)){
 			return;
 		}
 
-		const authenticated = nextProps.authenticated;
-			
-		if(authenticated){
-				
-			let userInfo = nextProps.userInfo;
-			let stageOfParenting = userInfo.stageOfParenting.trim();
-			let interests = userInfo.interests;
-			let profileComplete  = stageOfParenting.length && interests.length ? true : false; 
-				
-			if(profileComplete){
-				component = MainScreen;
-				key = 'main-screen';
-			}
-			else{
-				if(!stageOfParenting.length){
-					component = SignupScreen;
-					key = 'signup-screen';
-					props['showPasswordField'] = false;
-				}
-				else if(!interests.length){
-					component = UserInterestsSelector;
-					key = 'user-interests-selector-screen';
-				}
-			}
-
-		}
-		else{
-			if(status == 'registered'){
-				component = SignupScreen;
-				key = 'signup-screen';
-			}
-			if(status == 'new-user'){
-				component = LoginScreen;
-				key = 'login-screen';
-			}
-
-		}
-		
-		key = generateNavigationKey(key);
-		props['key'] = key;
-		let route = Object.assign({},{component},{props});
+		let route = getNextRoute(user);
 		nextProps.navigator.pushPage(route);
-
-
 	}
 
 
@@ -101,7 +58,6 @@ export default class AuthScreen extends Component{
 	handleEmailChange(e){
     	this.setState({userEmail : e.target.value});
   	}
-
 
 	_onClick(e){
 		this._checkUserStatus.call(this);
@@ -130,7 +86,6 @@ export default class AuthScreen extends Component{
              var token = obj.idToken;
              var loginBy = 'google';
      
-              
              if(userEmail){
                 classContext.tokenSignin(token,userID,userEmail,displayName,imageUrl,loginBy); 
              }

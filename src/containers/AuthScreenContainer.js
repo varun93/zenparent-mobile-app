@@ -8,10 +8,7 @@ import {connect} from 'react-redux';
 const mapStateToProps = (state,ownProps) => {
 
 	return {
-		autheticated : state.user.autheticated,
-		status : state.user.status,
-		loading : state.user.loading,
-		userInfo : state.user.userInfo,
+		user : state.user,
 		navigator : ownProps.navigator
 	}
 

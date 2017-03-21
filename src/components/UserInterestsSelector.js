@@ -87,7 +87,7 @@ export default class UserInterestsSelector extends Component {
         	</Dialog>
 
 		   	 <div className="message" style={{fontWeight : "bold",textAlign : "center"}}> 
-		   	 	Please select the topics of your interest so that we can serve you right!!
+		   	 	Help us personalize your feed!!
 		   	 </div>
 			 <div className="selectionPanel">
 			 { this.props.interests.terms.map(function(interest){
