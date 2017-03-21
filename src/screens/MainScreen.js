@@ -37,7 +37,7 @@ class MainScreen extends Component {
         },
         {
           content: <UserProfile key='user-profile' navigator={this.props.navigator} title='UserProfile' />,
-          tab: <Tab className="tab user-profile-tab" key={4} label='UserProfile' icon='ion-ios-person-outline' />
+          tab: <Tab className="tab user-profile-tab" key={4} label='UserProfile' icon='' />
         }
         
       

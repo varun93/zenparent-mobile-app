@@ -120,9 +120,16 @@ ons-tab.parenting-tab.active .ons-icon{
  background-image: url('assets/parenting-icon.svg');
 }
 
+/* User Profile */
+
 ons-tab.user-profile-tab .ons-icon{
-	margin-top: 0px;
+ background-image: url('assets/user-profile-icon-primary.svg');
 }
+
+ons-tab.user-profile-tab.active .ons-icon{
+ background-image: url('assets/user-profile-icon.svg');
+
+
 
 /* Tabbar Android */
 .tabbar--material {
