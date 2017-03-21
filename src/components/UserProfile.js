@@ -4,6 +4,7 @@ import BookmarkedPostsContainer from '../containers/BookmarkedPostsContainer';
 import AuthScreen from '../screens/AuthScreen';
 import {removeCache} from '../utils/cachedFetch';
 import {PROFILE_UPDATE} from '../constants';
+import {assetsBase} from '../constants';
 import {hasUserInfoChanged,convertDateToWords,isFieldEmpty,ucFirstLetter,generateNavigationKey} from '../utils';
 require('../styles/user-profile.css');
 
@@ -162,7 +163,7 @@ export default class UserProfile extends Component{
            !this.state.editMode ?
             <div className="form-edit">
             <button onClick={() => this.setState({editMode : !this.state.editMode }) } className="btn-edit">
-              <img src="/assets/edit_white_goedgh.png" />
+              <img src={`${assetsBase()}edit_white_goedgh.svg`} />
                 EDIT
              </button>
             </div> 

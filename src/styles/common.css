@@ -39,7 +39,7 @@
 }
 
 .card .articleLike img,.card .articleBookmark img{
-	height: 24px !important;
+	height: 28px !important;
 }
 
 .list{
@@ -94,30 +94,30 @@ ons-tab.active{
 
 /* Hometab  */
 ons-tab.home-tab .ons-icon{
- background-image: url('/assets/home-icon-primary.png');
+ background-image: url('assets/home-icon-primary.svg');
 }
 
 ons-tab.home-tab.active .ons-icon{
- background-image: url('/assets/home-icon.png');
+ background-image: url('assets/home-icon.svg');
 }
 
 /* Community  */
 ons-tab.community-tab .ons-icon{
- background-image: url('/assets/community-icon-primary.png');
+ background-image: url('assets/community-icon-primary.svg');
 }
 
 ons-tab.community-tab.active .ons-icon{
- background-image: url('/assets/community-icon.png');
+ background-image: url('assets/community-icon.svg');
 }
 
 
 /* Parenting  */
 ons-tab.parenting-tab .ons-icon{
- background-image: url('/assets/parenting-icon-primary.png');
+ background-image: url('assets/parenting-icon-primary.svg');
 }
 
 ons-tab.parenting-tab.active .ons-icon{
- background-image: url('/assets/parenting-icon.png');
+ background-image: url('assets/parenting-icon.svg');
 }
 
 ons-tab.user-profile-tab .ons-icon{

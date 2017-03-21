@@ -5,6 +5,9 @@ import SinglePost from '../screens/SinglePost';
 import TagCloudArticleCard from '../templates/TagCloudArticleCard';
 import {generateNavigationKey} from '../utils';
 import LazyLoad from 'react-lazy-load';
+import {assetsBase} from '../constants';
+
+const prefix = assetsBase();
 
 const styles = {
   cardItem : {
@@ -116,12 +119,12 @@ const ArticleCard = ({post,toggleLike,toggleBookmark,navigator}) => {
 
     <div style={styles.articleLikesBookmarksSection} className="likes-bookmarks">
 
-      <div onClick={() => toggleLike(post.id)} style={styles.articleLike} className="articleLike">
-          {post.liked ? <img src="/assets/like-active.png" /> : <img src="/assets/like-default.png" />}
+      <div onClick={() => toggleLike(post.id)}  style={styles.articleLike} className="articleLike">
+        {post.liked ? <img src={`${prefix}like-active.svg`}/> : <img src={`${prefix}like-default.svg`} />}
       </div>
-                     
+      
       <div onClick={() => toggleBookmark(post.id)} style={styles.articleBookmark} className="articleBookmark">
-          {post.bookmarked ? <img src="/assets/bookmark-active.png" /> : <img src="/assets/bookmark-default.png" />}
+        {post.bookmarked ? <img src={`${prefix}bookmark-active.svg`} /> : <img src={`${prefix}bookmark-default.svg`} />}
       </div>
 
     </div>

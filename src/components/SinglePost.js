@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import {Row,Col,BottomToolbar} from 'react-onsenui';
 import TagCloudSinglePost from '../templates/TagCloudSinglePost';
 import RelatedPostsContainer from '../containers/RelatedPostsContainer';
+import {assetsBase} from '../constants';
 require('../styles/single-article.css');
+
+const prefix = assetsBase();
 
 const styles = {
 
@@ -46,6 +49,7 @@ const styles = {
   }
 
 };
+
 
 const SinglePost = ({post,toggleLike,toggleBookmark,navigator}) => {
 
@@ -104,12 +108,12 @@ const SinglePost = ({post,toggleLike,toggleBookmark,navigator}) => {
 
 		        <div style={styles.footer} className="page-footer">
               <div onClick={() => toggleLike(post.id)}  className="articleLike">
-                  {post.liked ? <img src="/assets/like-active.png" /> : <img src="/assets/like-default.png" />}
+                  {post.liked ? <img src={`${prefix}like-active.svg`}/> : <img src={`${prefix}like-default.svg`} />}
               </div>
               <div onClick={() => toggleBookmark(post.id)} style={{margin : "0 25%"}} className="articleBookmark">
-                 {post.bookmarked ? <img src="/assets/bookmark-active.png" /> : <img src="/assets/bookmark-default.png" />}
+                 {post.bookmarked ? <img src={`${prefix}bookmark-active.svg`} /> : <img src={`${prefix}bookmark-default.svg`} />}
               </div>
-              <ons-icon onClick={() => sharePost()} size="32px" icon="fa-share-alt"></ons-icon>
+              <ons-icon onClick={() => sharePost()} size="30px" icon="fa-share-alt"></ons-icon>
             </div>
 
 		</div>

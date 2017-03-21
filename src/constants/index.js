@@ -5,6 +5,16 @@ if (process.env.NODE_ENV === 'production' || (location && location.hostname !== 
 	BASE_URL = 'https://zenparent.in/api';
 }
 
+export const assetsBase = () => {
+if (process.env.NODE_ENV === 'production' || (location && location.hostname !== 'localhost')){
+	return 'assets/';
+}
+else{
+	return '/assets/';
+ }
+
+};
+
 //general
 export const APP_VERSION = BASE_URL + '/appVersion';
 

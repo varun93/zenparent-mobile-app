@@ -2,6 +2,8 @@ import React from 'react';
 import {ListItem,Row,Col,Button} from 'react-onsenui';
 import {generateNavigationKey} from '../utils';
 import Chatroom from '../screens/Chatroom';
+import {assetsBase} from '../constants';
+
 
 const ExpertChatListItem = ({item,navigator}) => {
 
@@ -10,7 +12,7 @@ const ExpertChatListItem = ({item,navigator}) => {
           <Row>
             
             <Col width="10%">
-              <img style={{width:"28px",height:"28px",margin:"-5px"}} src="/assets/expert_chat_icon.png"/>
+              <img style={{width:"28px",height:"28px",margin:"-5px"}} src={`${assetsBase()}expert_chat_icon.svg`}/>
             </Col>
 
             <Col verticalAlign="center" width="10%">  
