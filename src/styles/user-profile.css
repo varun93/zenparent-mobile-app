@@ -1,7 +1,5 @@
 .user-profile ons-input{
-	width: 100%;
 	padding: 5px;
-	margin: 10px 0px 10px 0px;
 }
 
 .user-profile .text-input--underbar:disabled,ons-input[disabled]{
@@ -52,6 +50,11 @@
     border: none;
 
 }
+
+.user-profile ons-input input{
+    padding: 0px !important;    
+}
+ 
 
 .btn-edit img {
     height: 15px;

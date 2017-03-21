@@ -25,7 +25,9 @@ const styles = {
   },
   stageOfParentingSelect : {
     padding: "10px 0px 10px",
-    width: "100%"
+    width: "100%",
+    fontSize : "14px",
+    fontWeight : "bold"
   }
 };
 

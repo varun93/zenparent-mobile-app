@@ -18,11 +18,14 @@ class ChatroomListContainer extends Component {
 	}
 
 	render(){
+
+		  let {loading,navigator,joinedGroups,expertGroups,recommendedGroups,joinChatroom} = this.props;
+
 		  return (
 		  	<div>
-				<ChatroomsList title="Joined Groups" type={JOINED_GROUPS} navigator={this.props.navigator} groups={this.props.joinedGroups} />
-				<ChatroomsList title="Recommended Groups" joinChatroom={this.props.joinChatroom} type={RECOMMENDED_GROUPS} navigator={this.props.navigator} groups={this.props.recommendedGroups} />
-				<ChatroomsList title="Expert Chat" type={EXPERT_CHAT} navigator={this.props.navigator} groups={this.props.expertGroups} />
+				<ChatroomsList title="Joined Groups" type={JOINED_GROUPS} navigator={navigator} groups={joinedGroups} />
+				<ChatroomsList title="Recommended Groups" joinChatroom={joinChatroom} type={RECOMMENDED_GROUPS} navigator={navigator} groups={recommendedGroups} />
+				<ChatroomsList title="Expert Chat" type={EXPERT_CHAT} navigator={navigator} groups={expertGroups} />
 			</div>
 		 )
 	}
@@ -37,6 +40,7 @@ const mapDispactorToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
 	return {
+		loading  : state.chat.chatRooms.loading,
 		chatRooms :  state.chat.chatRooms.byId,
 		expertGroups : getChatrooms(state.chat.expertChats,state.chat.chatRooms.byId),
 		recommendedGroups : getChatrooms(state.chat.recommendedGroups,state.chat.chatRooms.byId),

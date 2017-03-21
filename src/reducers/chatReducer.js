@@ -48,7 +48,9 @@ const populateChatrooms = (chatrooms,state) => {
 	
 	return Object.assign({},state,{ 
 		chatRooms : {
-			byId : mergedChatrooms
+			byId : mergedChatrooms,
+			loading : false,
+			error : null
 		}},
 		{expertChats : expertGroups},
 		{joinedGroups},

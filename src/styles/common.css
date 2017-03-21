@@ -68,10 +68,15 @@
 ons-input .input{
 	width: 100% !important;
 }
+.text-input {
+    color: #212121;
+}
 
 .chatroom .page__content{
 	background-color: #ddd !important;
 }
+
+
 
 
 /* Styling of tabs */
@@ -88,7 +93,16 @@ ons-tabbar.main-tabs .ons-icon{
 color: #fff;
 }
 
-ons-tab.active{
+ons-tabbar.main-tabs .tabbar__button {
+    color: #8675A1;
+}
+
+ons-tabbar.main-tabs ons-tab.active .tabbar__button{
+	color: #fff;
+}
+
+
+ons-tabbar.main-tabs ons-tab.active{
 	background: #8675A1;
 }
 
@@ -128,7 +142,7 @@ ons-tab.user-profile-tab .ons-icon{
 
 ons-tab.user-profile-tab.active .ons-icon{
  background-image: url('assets/user-profile-icon.svg');
-
+}
 
 
 /* Tabbar Android */
@@ -144,6 +158,17 @@ ons-tab.user-profile-tab.active .ons-icon{
 	color: #fff;
 }
 
+
+/* Toolbar Android */
+
+.toolbar--material__center{
+	font-size: 16px;
+	color: rgb(132,116,159) !important;
+}
+
+.toolbar--material__right{
+	color: black;
+}
 
 /* Input styling  */
 

@@ -67,7 +67,7 @@ export default class UserInterestsSelector extends Component {
 	render(){
 		
 		return (
-		   <Page className="interestsSelector">
+		   <Page style={{overflowY : "scroll",height : "90vh"}} className="interestsSelector">
 		   	<Dialog
           		isOpen={this.state.dialogShown}
           		isCancelable={true}
@@ -89,7 +89,7 @@ export default class UserInterestsSelector extends Component {
 			 },this)}
 			 </div>
 			 <div className="continueButton">
-			 	<Button onClick={this._submitTags.bind(this)} modifier='large'>Continue</Button>
+			 	<button onClick={this._submitTags.bind(this)}>Continue</button>
 			 </div>
 		   </Page>
 		)

@@ -29,7 +29,7 @@ const styles = {
     padding : "0px 10px"
   },
   postAuthor : {
-    paddingLeft:"15px",
+    paddingLeft:"10px",
     fontWeight:"500"
   },
   featuredImage : {

@@ -12,14 +12,14 @@ const ExpertChatListItem = ({item,navigator}) => {
           <Row>
             
             <Col width="10%">
-              <img style={{width:"28px",height:"28px",margin:"-5px"}} src={`${assetsBase()}expert_chat_icon.svg`}/>
+              <img style={{width:"28px",height:"28px",margin:"-6px"}} src={`${assetsBase()}expert_chat_icon.svg`}/>
             </Col>
 
             <Col verticalAlign="center" width="10%">  
               <img style={{ borderRadius : "50%",width:"40px",height:"40px"}} src={item.attachment_url}/>
             </Col>
 
-            <Col style={{padding: "6px 0px 0px 20px"}} width="65%">
+            <Col style={{padding: "0px 0px 0px 20px"}} width="65%">
               <div style={{whiteSpace:"nowrap",overflow:"hidden",fontWeight:"bold",color:"rgb(21,138,138)",marginBottom:"2px"}}>{item.post_title}</div>
               <div style={{whiteSpace:"nowrap",overflow:"hidden"}}>{item.post_excerpt}</div>
             </Col>

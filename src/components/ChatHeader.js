@@ -7,7 +7,7 @@ const styles = {
 
 	container : {
 		position : "fixed",
-		top : "50px",
+		top : "9%",
 		right :"0px",
 		minWidth : "160px",
 		textAlign : "center",

@@ -29,6 +29,9 @@ export default class MessageList extends Component {
 
   componentDidMount(){
 
+    //fetch chatroom messages, intially load the messages 
+    this.props.fetchChatroomMessages(this.props.chatroomId,0,'>');
+
     this.chatroom.bind('pusher:subscription_succeeded',() =>  {this.props.fetchChatroomMessages(this.props.chatroomId,0,'>')}, this);
       this.chatroom.bind('new_message', function(data){
         this.props.newMessage(this.props.chatroomId,data);
