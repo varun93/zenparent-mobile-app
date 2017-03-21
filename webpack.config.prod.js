@@ -2,7 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 var autoprefixer = require('autoprefixer');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-
+var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -52,6 +52,7 @@ module.exports = {
             compress: { warnings: false },
             minimize: true
         }),
+    new OptimizeCssAssetsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production')
