@@ -90,11 +90,6 @@ export default class AuthScreen extends Component{
                 classContext.props.tokenSignin(token,userID,userEmail,displayName,imageUrl,loginBy); 
              }
          
-             console.log("===== Google Auth ============");
-             console.log("Token is : " + token);
-             console.log("User Id is : " + userID);
-             console.log("===== End of Google Auth ============");
-
           },
           function (msg) {
             alert('error: ' + msg);
@@ -105,19 +100,14 @@ export default class AuthScreen extends Component{
   
   handleFacebookLogin(){
    	
+   	var classContext = this;
+
     var fbLoginSuccess = function (userData)
     {
 
       var accessToken = userData.authResponse.accessToken;
       var userID = userData.authResponse.userID;
-      var classContext = this;
-
-       console.log("===== Facebook Auth ============");
-       console.log("Token is : " + accessToken);
-       console.log("User Id is : " + userID);
-       console.log("===== End of Facebook Auth ============");
-
-
+   
       facebookConnectPlugin.api("me/?fields=id,name,email,picture", ["email","public_profile"],
         function onSuccess (result) {
 
@@ -126,12 +116,9 @@ export default class AuthScreen extends Component{
             var imageUrl = result.picture.data.url;
             var displayName = result.name;
             var loginBy = 'facebook';
-            // send the accesstoken, email, user id to the server
-            console.log(email);
-            console.log(name);
-            console.log(imageUrl);
+          
             if(userEmail){
-                 classContext.props.tokenSignin(accesstoken,userID,userEmail,displayName,imageUrl,loginBy); 
+                 classContext.props.tokenSignin(accessToken,userID,userEmail,displayName,imageUrl,loginBy); 
             }
             
 
@@ -147,9 +134,6 @@ export default class AuthScreen extends Component{
          );
 
   }
-
-
-
 
 	render(){
 
