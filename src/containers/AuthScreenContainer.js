@@ -1,9 +1,7 @@
 import React,{Component} from 'react';
 import AuthScreen from '../components/AuthScreen';
-import {checkUserStatus} from '../actions/userActions';
+import {checkUserStatus,tokenSignin} from '../actions/userActions';
 import {connect} from 'react-redux';
-
-
 
 const mapStateToProps = (state,ownProps) => {
 
@@ -16,7 +14,8 @@ const mapStateToProps = (state,ownProps) => {
 
 const mapDispactorToProps = (dispatch) => { 
 	return {
-		 checkUserStatus : (userEmail) => dispatch(checkUserStatus(userEmail))
+		 checkUserStatus : (userEmail) => dispatch(checkUserStatus(userEmail)),
+		 tokenSignin : (accessToken,socialUniqueId,userEmail,displayName,imageUrl,loginBy) => dispatch(tokenSignin(accessToken,socialUniqueId,userEmail,displayName,imageUrl,loginBy))
 }};
 
 export default connect(mapStateToProps,mapDispactorToProps)(AuthScreen)

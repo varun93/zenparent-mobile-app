@@ -69,9 +69,9 @@ export default class AuthScreen extends Component{
 
 	handleGoogleLogin(){
     
-      var classContext = this;
-
-      window.plugins.googleplus.login(
+       var classContext = this;
+    
+       window.plugins.googleplus.login(
           {
             'scopes': '', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
             'webClientId': '579056634272-j8efs6o3lp2es38ls420hg7movtuccqm.apps.googleusercontent.com', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
@@ -87,7 +87,7 @@ export default class AuthScreen extends Component{
              var loginBy = 'google';
      
              if(userEmail){
-                classContext.tokenSignin(token,userID,userEmail,displayName,imageUrl,loginBy); 
+                classContext.props.tokenSignin(token,userID,userEmail,displayName,imageUrl,loginBy); 
              }
          
              console.log("===== Google Auth ============");
@@ -102,12 +102,9 @@ export default class AuthScreen extends Component{
       );
 
   }
-
-
-
-
+  
   handleFacebookLogin(){
-   
+   	
     var fbLoginSuccess = function (userData)
     {
 
@@ -134,7 +131,7 @@ export default class AuthScreen extends Component{
             console.log(name);
             console.log(imageUrl);
             if(userEmail){
-                 classContext.tokenSignin(accesstoken,userID,userEmail,displayName,imageUrl,loginBy); 
+                 classContext.props.tokenSignin(accesstoken,userID,userEmail,displayName,imageUrl,loginBy); 
             }
             
 
