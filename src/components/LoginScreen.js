@@ -56,10 +56,11 @@ export default class LoginScreen extends Component{
 	componentWillReceiveProps(nextProps) {
 
 		const user = nextProps.user;
+		const status = user.status;
 		const authenticated = user.authenticated;
 		const allowedStatus = ['login-success'];
 
-		if(!authenticated || this.props.user.status == nextProps.user.status){
+		if(!authenticated || allowedStatus.indexOf(status) === -1  || this.props.user.status == status){
 			return;
 		}
 

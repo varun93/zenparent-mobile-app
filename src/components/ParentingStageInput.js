@@ -1,8 +1,9 @@
 import React,{Component} from 'react';
 import {Page,Input,ProgressCircular} from 'react-onsenui';
+import Toolbar from '../templates/Toolbar';
 import CustomInput from './CustomInput';
 import {isFieldEmpty,generateNavigationKey} from '../utils';
-import {getNextRoute} from '../utils/getNextRoute';
+import getNextRoute from '../utils/getNextRoute';
 
 export default class ParentingStageInput extends Component{
 
@@ -26,7 +27,7 @@ export default class ParentingStageInput extends Component{
 		let date = this.state.date || '';
 		
 		if(!isFieldEmpty(date)){
-      		this.props.updateParentingStage(date);
+      		this.props.updateUserProfile(date,'','');
     	}
 		else{
 			return;
@@ -39,9 +40,12 @@ export default class ParentingStageInput extends Component{
 
 		const user = nextProps.user;
 		const authenticated = user.authenticated;
-		const allowedStatus = ['parenting-stage-updated'];
+		const allowedStatus = ['user-profile-updated'];
 
 		if(!authenticated || this.props.user.status == nextProps.user.status){
+			return;
+		}
+		if(this.props.user.userInfo.stage_of_parenting && this.props.user.userInfo.stage_of_parenting.length > 0){
 			return;
 		}
 

@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import ParentingStageInput from '../components/ParentingStageInput';
-import {updateParentingStage} from '../actions/userActions';
+import {updateUserProfile} from '../actions/userActions';
 import {connect} from 'react-redux';
 
 const mapStateToProps = (state,ownProps) => {
@@ -14,7 +14,7 @@ const mapStateToProps = (state,ownProps) => {
 
 const mapDispactorToProps = (dispatch) => { 
 	return {
-		 updateParentingStage : (date) => dispatch(updateParentingStage(date))
+		updateUserProfile : (date,stageOfParenting,displayName) => dispatch(updateUserProfile(date,stageOfParenting,displayName))
 }};
 
 export default connect(mapStateToProps,mapDispactorToProps)(ParentingStageInput)
