@@ -39,7 +39,7 @@ export default class UserProfile extends Component{
   
     this.state = {
       editMode : 0,
-      profileImage : 'https://placehold.it/100x100',
+      profileImage : '',
       displayName : '',
       stageOfParenting : '',
       date : ''
@@ -58,7 +58,11 @@ export default class UserProfile extends Component{
       this.props.syncFeed();
     }
 
-    let userInfo = nextProps.user.userInfo;
+  }
+
+  toggleEdit(){
+
+    let userInfo = this.props.user.userInfo;
 
     let stageOfParenting = userInfo.stage_of_parenting;
     let displayName = userInfo.first_name;
@@ -72,9 +76,8 @@ export default class UserProfile extends Component{
       date = userInfo.due_date;
     } 
 
-    this.setState({displayName : displayName,stageOfParenting : stageOfParenting,date : date,profileImage : profileImage});
+    this.setState({editMode : !this.state.editMode,displayName : displayName,stageOfParenting : stageOfParenting,date : date,profileImage : profileImage});
   }
-
   
   getImage() {
       navigator.camera.getPicture(this.uploadPhoto, function(message) {
@@ -91,16 +94,15 @@ export default class UserProfile extends Component{
 
     // make sure the all the fields are field 
 
-    console.log(this.state.date);
-    console.log(this.state.stageOfParenting);
-    console.log(this.state.displayName)
+    // console.log(this.state.date);
+    // console.log(this.state.stageOfParenting);
+    // console.log(this.state.displayName)
 
-    console.log("Is date empty " + isFieldEmpty(date).toString());
-    console.log("Is name empty " + isFieldEmpty(displayName).toString());
-    console.log("Is stageOfParenting empty " + isFieldEmpty(stageOfParenting).toString());
+    // console.log("Is date empty " + isFieldEmpty(date).toString());
+    // console.log("Is name empty " + isFieldEmpty(displayName).toString());
+    // console.log("Is stageOfParenting empty " + isFieldEmpty(stageOfParenting).toString());
 
     if(isFieldEmpty(stageOfParenting) || isFieldEmpty(date) || isFieldEmpty(displayName) || !validateDate(date)){
-      console.log("Am I here!!");
       return;
     }
     
@@ -155,13 +157,11 @@ export default class UserProfile extends Component{
 
     const {user} = this.props;
     const authenticated = user.authenticated;
-    let {stageOfParenting,displayName,date,profileImage} = this.state;
-
-    if(!this.state.editMode && authenticated && isFieldEmpty(stageOfParenting) && isFieldEmpty(date) || isFieldEmpty(displayName)){
-      stageOfParenting =  stageOfParenting || (authenticated ? user.userInfo.stage_of_parenting : '');
-      displayName = displayName ||  (authenticated ? user.userInfo.first_name : '');
-      date = date || (authenticated ? (stageOfParenting == 'parent' ? user.userInfo.dob : user.userInfo.due_date) : '');
-   }
+ 
+    let stageOfParenting = (authenticated ? user.userInfo.stage_of_parenting : '');
+    let displayName = (authenticated ? user.userInfo.first_name : '');
+    let date = (authenticated ? (stageOfParenting == 'parent' ? user.userInfo.dob : user.userInfo.due_date) : '');
+    let profileImage = (authenticated ? user.userInfo.user_avatar : 'https://placehold.it/100x100' );
    
     return (
     <Page className="user-profile">
@@ -184,7 +184,7 @@ export default class UserProfile extends Component{
           {
            !this.state.editMode ?
             <div className="form-edit">
-            <button onClick={() => this.setState({editMode : !this.state.editMode }) } className="btn-edit">
+            <button onClick={this.toggleEdit.bind(this)} className="btn-edit">
               <img src={`${assetsBase()}edit_white_goedgh.svg`} />
                 EDIT
              </button>
@@ -209,7 +209,7 @@ export default class UserProfile extends Component{
                     onChange={this._onDisplayNameChanged.bind(this)}
                     modifier="underbar"
                     type="text"
-                    value={displayName}
+                    value={this.state.displayName}
                     className="user-name"
                     float />
                 </p>
@@ -223,7 +223,7 @@ export default class UserProfile extends Component{
                !this.state.editMode ? 
                <p>{stageOfParenting}</p> : 
                <p>
-                <select value={stageOfParenting}  onChange={this._onStageOfParentingChanged.bind(this)} style={styles.stageOfParentingSelect}>
+                <select value={this.state.stageOfParenting}  onChange={this._onStageOfParentingChanged.bind(this)} style={styles.stageOfParentingSelect}>
                   <option value="parent">Parent</option>
                   <option value="pregnant">Pregnant</option>
                  </select>
@@ -244,7 +244,7 @@ export default class UserProfile extends Component{
                     type="date"
                     modifier="underbar"
                     className="date"
-                    value={date}
+                    value={this.state.date}
                     float />
                 </p>
               }
