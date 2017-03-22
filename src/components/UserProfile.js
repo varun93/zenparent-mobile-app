@@ -5,7 +5,7 @@ import AuthScreen from '../screens/AuthScreen';
 import {removeCache} from '../utils/cachedFetch';
 import {PROFILE_UPDATE} from '../constants';
 import {assetsBase} from '../constants';
-import {hasUserInfoChanged,convertDateToWords,isFieldEmpty,ucFirstLetter,generateNavigationKey} from '../utils';
+import {hasUserInfoChanged,convertDateToWords,isFieldEmpty,ucFirstLetter,generateNavigationKey,validateDate} from '../utils';
 require('../styles/user-profile.css');
 
 // move the rest to utils
@@ -41,7 +41,8 @@ export default class UserProfile extends Component{
       editMode : 0,
       profileImage : 'https://placehold.it/100x100',
       displayName : '',
-      stageOfParenting : ''
+      stageOfParenting : '',
+      date : ''
     }
 
   }
@@ -72,7 +73,6 @@ export default class UserProfile extends Component{
     } 
 
     this.setState({displayName : displayName,stageOfParenting : stageOfParenting,date : date,profileImage : profileImage});
-  
   }
 
   
@@ -88,9 +88,29 @@ export default class UserProfile extends Component{
 
   updateProfileInfo(){
     let {date,stageOfParenting,displayName} = this.state;
+
+    // make sure the all the fields are field 
+
+    console.log(this.state.date);
+    console.log(this.state.stageOfParenting);
+    console.log(this.state.displayName)
+
+    console.log("Is date empty " + isFieldEmpty(date).toString());
+    console.log("Is name empty " + isFieldEmpty(displayName).toString());
+    console.log("Is stageOfParenting empty " + isFieldEmpty(stageOfParenting).toString());
+
+    if(isFieldEmpty(stageOfParenting) || isFieldEmpty(date) || isFieldEmpty(displayName) || !validateDate(date)){
+      console.log("Am I here!!");
+      return;
+    }
+    
+    //change to edit mode
     this.setState({editMode : !this.state.editMode});
-    // removeCache(PROFILE_UPDATE);
+    //remove any user profile related info
+    removeCache(PROFILE_UPDATE);
+    // finally make the request
     this.props.updateUserProfile(date,stageOfParenting,displayName);
+
   }
 
   uploadPhoto(imageURI) {

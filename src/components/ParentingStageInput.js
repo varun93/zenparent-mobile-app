@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import {Page,Input,ProgressCircular} from 'react-onsenui';
 import Toolbar from '../templates/Toolbar';
 import CustomInput from './CustomInput';
-import {isFieldEmpty,generateNavigationKey} from '../utils';
+import {isFieldEmpty,generateNavigationKey,validateDate} from '../utils';
 import getNextRoute from '../utils/getNextRoute';
 
 export default class ParentingStageInput extends Component{
@@ -69,8 +69,9 @@ export default class ParentingStageInput extends Component{
 			             type="date"
 			             onChange = {this._handleDateChange.bind(this)}
 			             disabled = {false}
-			             emptyMessage="Date required"
-			             errorMessage="Date required"
+			             validate = {validateDate}
+			             emptyMessage="Date is invalid"
+			             errorMessage="Date is invalid"
 		          	/>
 
 			        <button className={`loginBtn emailBtn ${loading ? 'loading' : ''} `} onClick={this._onClick.bind(this)}>

@@ -49,6 +49,18 @@
         <icon src="res/ios/AppIcon.appiconset/Icon-App-72x72@2x.png" width="144" height="144" />
         <icon src="res/ios/AppIcon.appiconset/Icon-App-76x76@1x.png" width="76" height="76" />
         <icon src="res/ios/AppIcon.appiconset/Icon-App-76x76@2x.png" width="152" height="152" />
+
+        <!-- Spash Screens -->
+        <splash src="res/ios/Splash/320-x-480.png" width="320" height="480"/>
+        <splash src="res/ios/Splash/640-x-960.png" width="640" height="960"/>
+        <splash src="res/ios/Splash/768-x-1024.png" width="768" height="1024"/>
+        <splash src="res/ios/Splash/1536-x-2048.png" width="1536" height="2048"/>
+        <splash src="res/ios/Splash/1024-x-768.png" width="1024" height="768"/>
+        <splash src="res/ios/Splash/2048-x-1536.png" width="2048" height="1536"/>
+        <splash src="res/ios/Splash/640-x-1136.png" width="640" height="1136"/>
+        <splash src="res/ios/Splash/750-x-1334.png" width="750" height="1334"/>
+        <splash src="res/ios/Splash/1242-x-2208.png" width="1242" height="2208"/>
+        <splash src="res/ios/Splash/2208-x-1242.png" width="2208" height="1242"/>
         
     </platform>
     

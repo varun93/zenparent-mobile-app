@@ -73,6 +73,26 @@ export const validateEmail = (value) => {
     return re.test(value);
 };
 
+export const validateDate = (date) => {
+
+	if(isFieldEmpty(date)) {
+		return false;
+	}
+
+	date = new Date(date).getTime();
+	let currentDate = new Date().getTime();
+	let isValid = true;
+	let diffInDays = Math.abs(currentDate - date)/(1000*3600*24);
+
+
+	//this is for due date
+	if(date > currentDate){
+		isValid = diffInDays < 280 ?  true : false;
+	}
+	
+	return isValid;
+};
+
 // -------- Convert date to words ------------
 export const convertDateToWords = (date) => {
 	let monthNames = [ "January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];

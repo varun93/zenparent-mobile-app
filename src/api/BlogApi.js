@@ -137,10 +137,10 @@ class BlogApi {
     const options = {
       method: 'GET',
       headers: headers,
-      seconds : 60*60*12
+      seconds : 60*60*24
     };
     
-    return fetch(SLOT_POSTS_ENDPOINT,options).then(r => {
+    return cachedFetch(SLOT_POSTS_ENDPOINT,options).then(r => {
       return r.json()
     }).catch(error => {
       return error

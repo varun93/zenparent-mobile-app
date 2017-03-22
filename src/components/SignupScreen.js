@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {Page,Input,ProgressCircular} from 'react-onsenui';
 import CustomInput from './CustomInput';
-import {isFieldEmpty} from '../utils';
+import {isFieldEmpty,validateDate} from '../utils';
 import Toolbar from '../templates/Toolbar';
 import UserInterestsSelector from '../screens/UserInterestsSelector';
 import getNextRoute from '../utils/getNextRoute';
@@ -54,7 +54,7 @@ export default class SignupScreen extends Component{
 		let userPassword = this.state.userPassword;
 		let date = this.state.date || '';
 		
-		if(this.validatePassword(userPassword) && !isFieldEmpty(date)){
+		if(this.validatePassword(userPassword) && validateDate(date)){
       		this.props.signup(userEmail,userPassword,date);
     	}
 		else{
@@ -99,8 +99,9 @@ export default class SignupScreen extends Component{
 			             type="date"
 			             onChange = {this._handleDateChange.bind(this)}
 			             disabled = {false}
-			             emptyMessage="Date required"
-			             errorMessage="Date required"
+			             validate = {validateDate}
+			             emptyMessage="Date is Invalid"
+			             errorMessage="Date is Invalid"
 		          	/>
 
 			        <button className={`loginBtn emailBtn ${loading ? 'loading' : ''} `} onClick={this._onClick.bind(this)}>
