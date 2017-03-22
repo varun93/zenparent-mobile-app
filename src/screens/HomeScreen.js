@@ -20,7 +20,7 @@ export default class Homescreen extends Component{
 
 	componentDidUpdate(){
 		if(!this.props.user.authenticated){
-			this.props.navigator.pushPage({component : AuthScreen,key : generateNavigationKey('auth-screen')});
+			this.props.navigator.resetPage({component : AuthScreen,key : generateNavigationKey('auth-screen')});
     	}
 	}
 
