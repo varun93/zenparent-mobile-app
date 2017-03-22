@@ -5,7 +5,7 @@
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
 
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
+    <author email="1hvarun@gmail.com" href="http://cordova.io">
         Apache Cordova Team
     </author>
     <content src="index.html" />
@@ -16,9 +16,32 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    
+     <!-- Few App preferencea -->
+    <preference name="Orientation" value="landscape" />
+
+    <preference name="SplashScreen" value="screen" />
+
+    <!-- IOS Preference -->
+    <preference name="BackupWebStorage" value="local"/>
+
+    <!-- Enable storage on Android  -->
+    <preference name="InAppBrowserStorageEnabled" value="true"/>
+
+    <!-- End of preferences  -->
+
     <platform name="android">
         <allow-intent href="market:*" />
+           <!-- App Icons  -->
+        <icon src="res/android/ldpi/ic_launcher.png" density="ldpi" />
+        <icon src="res/android/mdpi/ic_launcher.png" density="mdpi" />
+        <icon src="res/android/hdpi/ic_launcher.png" density="hdpi" />
+        <icon src="res/android/xhdpi/ic_launcher.png" density="xhdpi" />
+        <icon src="res/android/xxhdpi/ic_launcher.png" density="xxhdpi" />
+        <icon src="res/android/xxxhdpi/ic_launcher.png" density="xxxhdpi" />
     </platform>
+
+   
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
@@ -63,17 +86,7 @@
         <splash src="res/ios/Splash/2208-x-1242.png" width="2208" height="1242"/>
         
     </platform>
-    
-    <!-- End of Ios settings -->
-    <platform name="android">
-       <!-- App Icons  -->
-        <icon src="res/android/ldpi/ic_launcher.png" density="ldpi" />
-        <icon src="res/android/mdpi/ic_launcher.png" density="mdpi" />
-        <icon src="res/android/hdpi/ic_launcher.png" density="hdpi" />
-        <icon src="res/android/xhdpi/ic_launcher.png" density="xhdpi" />
-        <icon src="res/android/xxhdpi/ic_launcher.png" density="xxhdpi" />
-        <icon src="res/android/xxxhdpi/ic_launcher.png" density="xxxhdpi" />
-    </platform> 
+   
 
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-googleplus" spec="~5.1.1">
