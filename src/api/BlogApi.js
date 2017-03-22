@@ -25,7 +25,7 @@ class BlogApi {
       seconds : 60*60*24
     };
     
-    return fetch(FETCH_INTERESTS_ENDPOINT,options).then(r => {
+    return cachedFetch(FETCH_INTERESTS_ENDPOINT,options).then(r => {
       return r.json()
     }).catch(error => {
       return error
@@ -61,10 +61,10 @@ class BlogApi {
     const options = {
       method: 'GET',
       headers: headers,
-      seconds : 60*60*12
+      seconds : 60*60*24
     };
     
-    return fetch(POPULAR_POSTS_ENDPOINT,options).then(r => {
+    return cachedFetch(POPULAR_POSTS_ENDPOINT,options).then(r => {
       return r.json()
     }).catch(error => {
       return error
@@ -79,10 +79,10 @@ class BlogApi {
     const options = {
       method: 'GET',
       headers: headers,
-      seconds : 60*60*12
+      seconds : 60*60*24
     };
     
-    return fetch(EDITORIAL_POSTS_ENDPOINT,options).then(r => {
+    return cachedFetch(EDITORIAL_POSTS_ENDPOINT,options).then(r => {
       return r.json()
     }).catch(error => {
       return error

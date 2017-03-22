@@ -63,6 +63,8 @@
 
 .text-input{
 	width: 100% !important;
+	min-width: 100% !important;
+	margin: 0 auto;
 }
 
 ons-input .input{

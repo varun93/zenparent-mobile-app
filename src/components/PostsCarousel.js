@@ -16,10 +16,10 @@ const styles = {
 	},
 	articleTitle : {
 		  position: 'absolute',
-	      bottom: '60px',
-	      width : '100%',
+	      bottom: '65px',
+	      width : '95%',
 	      color : 'white',
-	      fontSize : "14px",
+	      fontSize : "13px",
 	      fontWeight : "600",
 	      textAlign : "center",
 	      lineHeight : "1.2"
@@ -66,7 +66,7 @@ export default class PostsCarousel extends Component{
 
 		return(
 			<div>
-				<p style={{position:'absolute',top : `${position}px`,left : '15px',fontWeight:'bold',color : 'rgb(255, 84, 124)'}}>{this.props.title}</p>	
+				<p style={{position:'absolute',top : `${position}px`,left : '10px',fontWeight:'bold',color : 'rgb(255, 84, 124)'}}>{this.props.title}</p>	
 				<Carousel style={{top : `${position+30}px`,height : '150px'}} ref="carousel" direction="horizontal" itemWidth="220px" initialIndex="0" overscrollable fullscreen swipeable>
 					{this.props.posts.map(this.renderCarouselItem.bind(this))}
 				</Carousel>

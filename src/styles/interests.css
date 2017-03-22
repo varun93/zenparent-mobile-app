@@ -31,18 +31,14 @@
 }
  
 .interestsSelector button{
-	background-color: #8675A1 !important;
+    background-color: #8675A1 !important;
     width: 100%;
     padding: 15px;
     color: white;
+    position: fixed;
+    bottom: 0px;
     font-weight: bold;
+    left: 0px;
     font-size: 16px;
-	border: none !important;
-}
-
-.interestsSelector .continueButton{
-	position: fixed;
-	bottom: 0px;
-	left : 0px;
-	width: 100%;
+    border: none !important;
 }

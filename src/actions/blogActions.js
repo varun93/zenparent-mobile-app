@@ -332,7 +332,13 @@ export function syncFeed(){
 // --------------------------- redux thunk -----------------------------------
 export function fetchInterests(){
 
-	return (dispatch,state) => {
+	return (dispatch,getState) => {
+
+		// return if already requested
+		const state = getState();
+		if(state.blog.interests.loading){
+			return;
+		}
 
 		dispatch(requestInterests());
 		BlogApi.fetchInterests().then((response) => {

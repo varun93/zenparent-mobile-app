@@ -27,7 +27,7 @@ const styles = {
 	    lineHeight : "1.2"
 	},
 	overlay : {
-	    width: '90%',
+	    width: '85%',
 	    position: 'absolute',
 	    bottom: '0',
 	    height:"90px",
@@ -102,7 +102,7 @@ class InterestsCarousel extends Component{
 
 		return(
 			<div>
-				<p style={{position:'absolute',top : `${position}px`,left : '15px',fontWeight:'bold',color : 'rgb(255, 84, 124)'}}>Explore</p>
+				<p style={{position:'absolute',top : `${position}px`,left : '10px',fontWeight:'bold',color : 'rgb(255, 84, 124)'}}>Explore</p>
 				<Carousel style={{top : `${position+30}px`,height : '90px' }} ref="carousel" direction="horizontal" itemWidth="120px" initialIndex="0" overscrollable fullscreen swipeable>
 					{this.props.interests.terms.filter((interest) => interest.isSelected).concat({term:'last'}).map(this.renderCarouselItem.bind(this))}
 				</Carousel>

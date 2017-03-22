@@ -155,7 +155,7 @@ export function joinChatroom(chatroomId){
 	return (dispatch,state) => {
 			
 		//clear the cache
-		// removeCache(GROUP_JOIN_UNJOIN);
+		removeCache(GROUP_JOIN_UNJOIN);
 		
 		ChatroomApi.joinChatroom(chatroomId).then(function(response){
   			// console.log(response);
@@ -175,7 +175,7 @@ export function leaveChatroom(chatroomId){
 	return (dispatch,state) => {
 
 		//clear the cache
-		// removeCache(GROUP_JOIN_UNJOIN);
+		removeCache(GROUP_JOIN_UNJOIN);
 		ChatroomApi.leaveChatroom(chatroomId).then(function(response){
   		
   			let chatroomId = response.data.group_id;

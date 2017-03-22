@@ -3,6 +3,7 @@ import {Page,Dialog,Button,BottomToolbar} from 'react-onsenui';
 import {ucFirstLetter} from '../utils';
 import MainScreen from '../screens/MainScreen';
 import {generateNavigationKey} from '../utils';
+import {platform} from 'onsenui';
 require('../styles/interests.css');
 
 export default class UserInterestsSelector extends Component {
@@ -67,7 +68,7 @@ export default class UserInterestsSelector extends Component {
 	render(){
 		
 		return (
-		   <Page style={{overflowY : "scroll",height : "90vh"}} className="interestsSelector">
+		   <Page style={{overflowY : "scroll",height : "90vh"}} key="userInterestsSelector" className="interestsSelector">
 		   	<Dialog
           		isOpen={this.state.dialogShown}
           		isCancelable={true}

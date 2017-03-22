@@ -35,10 +35,10 @@ class ChatroomApi {
     const options = {
       method: 'GET',
       headers: headers,
-      seconds : 60*60*12
+      seconds : 60*60*24
     };
     
-    return fetch(LIST_CHAT_GROUPS_ENDPOINT,options).then(r => {
+    return cachedFetch(LIST_CHAT_GROUPS_ENDPOINT,options).then(r => {
       return r.json()
     }).catch(error => {
       return error

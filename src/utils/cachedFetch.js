@@ -37,7 +37,7 @@ export const removeCache = (action) => {
 
       case PROFILE_UPDATE : 
         urls.push(LIST_CHAT_GROUPS_ENDPOINT);
-        urls.push(SLOT_POSTS_ENDPOINT);
+        // urls.push(SLOT_POSTS_ENDPOINT);
         break;
   
       case LIKED_BOOKMARKED : 
@@ -95,9 +95,14 @@ const cachedFetch = (url, options) => {
     // JSON or something non-binary
     if (response.status === 200) {
      
-        response.clone().text().then(content => {
-          localStorage.setItem(cacheKey, content)
-          localStorage.setItem(cacheKey+':ts', Date.now())
+        response.clone().json().then(content => {
+          const status = content.success;
+          
+          if(status == true){
+            content = JSON.stringify(content);
+            localStorage.setItem(cacheKey, content)
+            localStorage.setItem(cacheKey+':ts', Date.now())  
+          }
         })
     }
     return response
