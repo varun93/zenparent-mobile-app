@@ -17,8 +17,6 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     
-     <!-- Few App preferencea -->
-    <preference name="Orientation" value="landscape" />
 
     <preference name="SplashScreen" value="screen" />
 
