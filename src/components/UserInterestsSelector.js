@@ -68,7 +68,7 @@ export default class UserInterestsSelector extends Component {
 	render(){
 		
 		return (
-		   <Page style={{overflowY : "scroll",height : "90vh"}} key="userInterestsSelector" className="interestsSelector">
+		   <Page key="userInterestsSelector" className="interestsSelector">
 		   	<Dialog
           		isOpen={this.state.dialogShown}
           		isCancelable={true}
@@ -84,7 +84,7 @@ export default class UserInterestsSelector extends Component {
 		   	 <div className="message" style={{fontWeight : "bold",textAlign : "center"}}> 
 		   	 	Help us personalize your feed!
 		   	 </div>
-			 <div className="selectionPanel">
+			 <div style={{overflowY : "scroll",height : "100vh"}} className="selectionPanel">
 			 { this.props.interests.terms.map(function(interest){
 			 		return this.renderInterest.call(this,interest)
 			 },this)}
