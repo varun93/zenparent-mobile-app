@@ -63,9 +63,14 @@
 
 .text-input{
 	width: 100% !important;
-	min-width: 100% !important;
-	margin: 0 auto;
+	min-width: 95% !important;
 }
+
+ons-input .text-input[type="date"]{
+	/*-webkit-appearance : none;*/
+	/*-moz-appearance : none;*/
+}
+
 
 ons-input .input{
 	width: 100% !important;
