@@ -115,8 +115,8 @@ export default class LoginScreen extends Component{
 						Forgot Password?
 					</p>
 
-					<button className={`${loading ? 'loading' : ''} `} onClick={this._onClick.bind(this)}>
-			            {loading ? <ProgressCircular indeterminate/> :  `Login` } 
+					<button onClick={this._onClick.bind(this)}>
+			            {loading ? <ProgressCircular className="loading" indeterminate/> :  `Login` } 
 			        </button>
 
 				</div>

@@ -74,8 +74,8 @@ export default class ParentingStageInput extends Component{
 			             errorMessage="Date is invalid"
 		          	/>
 
-			        <button className={`loginBtn emailBtn ${loading ? 'loading' : ''} `} onClick={this._onClick.bind(this)}>
-			            {loading ? <ProgressCircular indeterminate/> :  `Continue` } 
+			        <button className={`loginBtn emailBtn `} onClick={this._onClick.bind(this)}>
+			            {loading ? <ProgressCircular className="loading" indeterminate/> :  `Continue` } 
 			        </button>
 	
 				</div>

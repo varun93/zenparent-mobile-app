@@ -104,8 +104,8 @@ export default class SignupScreen extends Component{
 			             errorMessage="Date is Invalid"
 		          	/>
 
-			        <button className={`loginBtn emailBtn ${loading ? 'loading' : ''} `} onClick={this._onClick.bind(this)}>
-			            {loading ? <ProgressCircular indeterminate/> :  `Signup` } 
+			        <button className={`loginBtn emailBtn`} onClick={this._onClick.bind(this)}>
+			            {loading ? <ProgressCircular className="loading" indeterminate/> :  `Signup` } 
 			        </button>
 	
 				</div>

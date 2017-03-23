@@ -6,7 +6,7 @@
 	stroke: #8675A1 !important;
 }
 
-.loading .progress-circular__primary,.loading..progress-circular__secondary{
+.loading .progress-circular__primary,.loading .progress-circular__secondary{
 	stroke: yellow !important;
 }
 

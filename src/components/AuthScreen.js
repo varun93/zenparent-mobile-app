@@ -19,7 +19,7 @@ const styles = {
 	loaderWrapper : {
 		position : "fixed",
 		top : "45%",
-		left : "50%"
+		left : "45%"
 	},
 	loaderText : {
 		marginLeft: "-8px",
@@ -176,8 +176,8 @@ export default class AuthScreen extends Component{
           				 />
 			            
 			            <p>
-			              <button className={`loginBtn emailBtn ${loading ? 'loading' : ''} `} onClick={this._onClick.bind(this)}>
-			                 {loading ? <ProgressCircular indeterminate/> :  `Continue with Email` } 
+			              <button className={`loginBtn emailBtn`} onClick={this._onClick.bind(this)}>
+			                 {loading ? <ProgressCircular className="loading" indeterminate/> :  `Continue with Email` } 
 			              </button>
 			            </p>
 			            

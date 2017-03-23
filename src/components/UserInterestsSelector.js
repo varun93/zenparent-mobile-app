@@ -93,7 +93,7 @@ export default class UserInterestsSelector extends Component {
 			 </div>
 			 <div className="continueButton">
 			 	<button onClick={this._submitTags.bind(this)}>
-			 	  {loading ? <ProgressCircular indeterminate/> :  `Continue` } 
+			 	  {loading ? <ProgressCircular className="loading" indeterminate/> :  `Continue` } 
 			 	</button>
 			 </div>
 		   </Page>
