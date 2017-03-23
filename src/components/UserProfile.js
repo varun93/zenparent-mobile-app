@@ -58,6 +58,8 @@ export default class UserProfile extends Component{
       this.props.syncFeed();
     }
 
+    // change the image here
+
   }
 
   toggleEdit(){
@@ -78,11 +80,47 @@ export default class UserProfile extends Component{
 
     this.setState({editMode : !this.state.editMode,displayName : displayName,stageOfParenting : stageOfParenting,date : date,profileImage : profileImage});
   }
+
+
+    uploadPhoto(imageURI) {
+ 
+       // document.getElementById("profileImage").src = imageURI;
+
+       //
+       var options = new FileUploadOptions();
+       options.fileKey = "user_avatar";
+       options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+       options.mimeType = "image/jpeg";
+       
+       // post params
+       var params = new Object();
+       params.action = "add";
+
+       // add authorization header
+       var headers = {'authorization': `Bearer ${localStorage.jwt}`};
+
+       // set headers
+       options.headers = headers;
+      // set params
+       options.params = params;
+       options.chunkedMode = false;
+                                                                                                                           
+       var ft = new FileTransfer();
+       ft.upload(imageURI, "https://zenparent.in/api/uploadProfilePic", function(result){
+          console.log(JSON.stringify(result));
+       }, function(error){
+          console.log(JSON.stringify(error));
+       }, options);
+ 
+ }
   
   getImage() {
-      navigator.camera.getPicture(this.uploadPhoto, function(message) {
+
+     let classContext = this;
+
+      navigator.camera.getPicture(classContext.uploadPhoto, function(message) {
       alert('get picture failed');
-    },{
+     },{
       quality: 100,
       destinationType: navigator.camera.DestinationType.FILE_URI,
       sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
@@ -90,17 +128,8 @@ export default class UserProfile extends Component{
   }
 
   updateProfileInfo(){
+
     let {date,stageOfParenting,displayName} = this.state;
-
-    // make sure the all the fields are field 
-
-    // console.log(this.state.date);
-    // console.log(this.state.stageOfParenting);
-    // console.log(this.state.displayName)
-
-    // console.log("Is date empty " + isFieldEmpty(date).toString());
-    // console.log("Is name empty " + isFieldEmpty(displayName).toString());
-    // console.log("Is stageOfParenting empty " + isFieldEmpty(stageOfParenting).toString());
 
     if(isFieldEmpty(stageOfParenting) || isFieldEmpty(date) || isFieldEmpty(displayName) || !validateDate(date)){
       return;
@@ -114,28 +143,6 @@ export default class UserProfile extends Component{
     this.props.updateUserProfile(date,stageOfParenting,displayName);
 
   }
-
-  uploadPhoto(imageURI) {
- 
-       document.getElementById("profileImage").src = imageURI;
-       var options = new FileUploadOptions();
-       options.fileKey = "file";
-       options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
-       options.mimeType = "image/jpeg";
-       var params = new Object();
-       params.value1 = "test";
-       params.value2 = "param";
-       options.params = params;
-       options.chunkedMode = false;
-                                                                                                                           
-       var ft = new FileTransfer();
-       ft.upload(imageURI, "http://192.168.3.46/phonegap_uploads/upload.php", function(result){
-          console.log(JSON.stringify(result));
-       }, function(error){
-          console.log(JSON.stringify(error));
-       }, options);
- 
- }
 
   logout(){
     this.props.logout();
@@ -172,8 +179,8 @@ export default class UserProfile extends Component{
           <p style={styles.logoutButton}>LOGOUT</p>
         </div>
         
-        <div className="profile-image-wrap">
-            <img style={styles.profileImage} src={profileImage} className="profile-image" />
+        <div onClick={this.getImage.bind(this)} className="profile-image-wrap">
+            <img id="profileImage" style={styles.profileImage} src={profileImage} className="profile-image" />
         </div>
 
         <div className="profile-name">

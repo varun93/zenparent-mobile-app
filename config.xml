@@ -4,7 +4,6 @@
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
-
     <author email="1hvarun@gmail.com" href="http://cordova.io">
         Apache Cordova Team
     </author>
@@ -16,80 +15,57 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    
-
     <preference name="SplashScreen" value="screen" />
-
-    <!-- IOS Preference -->
-    <preference name="BackupWebStorage" value="local"/>
-
-    <!-- Enable storage on Android  -->
-    <preference name="InAppBrowserStorageEnabled" value="true"/>
-
-    <!-- End of preferences  -->
-
+    <preference name="BackupWebStorage" value="local" />
+    <preference name="InAppBrowserStorageEnabled" value="true" />
     <platform name="android">
         <allow-intent href="market:*" />
-           <!-- App Icons  -->
-        <icon src="res/android/ldpi/ic_launcher.png" density="ldpi" />
-        <icon src="res/android/mdpi/ic_launcher.png" density="mdpi" />
-        <icon src="res/android/hdpi/ic_launcher.png" density="hdpi" />
-        <icon src="res/android/xhdpi/ic_launcher.png" density="xhdpi" />
-        <icon src="res/android/xxhdpi/ic_launcher.png" density="xxhdpi" />
-        <icon src="res/android/xxxhdpi/ic_launcher.png" density="xxxhdpi" />
+        <icon density="ldpi" src="res/android/ldpi/ic_launcher.png" />
+        <icon density="mdpi" src="res/android/mdpi/ic_launcher.png" />
+        <icon density="hdpi" src="res/android/hdpi/ic_launcher.png" />
+        <icon density="xhdpi" src="res/android/xhdpi/ic_launcher.png" />
+        <icon density="xxhdpi" src="res/android/xxhdpi/ic_launcher.png" />
+        <icon density="xxxhdpi" src="res/android/xxxhdpi/ic_launcher.png" />
     </platform>
-
-   
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
-        <config-file platform="ios" target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+        <config-file parent="LSApplicationQueriesSchemes" platform="ios" target="*-Info.plist">
             <array>
                 <string>whatsapp</string>
                 <string>fbapi</string>
                 <string>fb-messenger-api</string>
                 <string>fbauth2</string>
                 <string>fbshareextension</string>
-                <!-- add more query scheme strings -->
             </array>
         </config-file>
-
-        <!-- App Icons  -->
-        <icon src="res/ios/AppIcon.appiconset/Icon-App-29x29@1x.png" width="29" height="29" />
-        <icon src="res/ios/AppIcon.appiconset/Icon-App-29x29@2x.png" width="58" height="58" />
-        <icon src="res/ios/AppIcon.appiconset/Icon-App-40x40@1x.png" width="40" height="40" />
-        <icon src="res/ios/AppIcon.appiconset/Icon-App-40x40@2x.png" width="80" height="80" />
-        <icon src="res/ios/AppIcon.appiconset/Icon-Small-50x50@1x.png" width="50" height="50" />
-        <icon src="res/ios/AppIcon.appiconset/Icon-Small-50x50@2x.png" width="100" height="100" />
-        <icon src="res/ios/AppIcon.appiconset/Icon-App-57x57@1x.png" width="57" height="57" />
-        <icon src="res/ios/AppIcon.appiconset/Icon-App-57x57@2x.png" width="114" height="114" />
-        <icon src="res/ios/AppIcon.appiconset/Icon-App-60x60@1x.png" width="60" height="60" />
-        <icon src="res/ios/AppIcon.appiconset/Icon-App-60x60@2x.png" width="120" height="120" />
-        <icon src="res/ios/AppIcon.appiconset/Icon-App-60x60@3x.png" width="180" height="180" />
-        <icon src="res/ios/AppIcon.appiconset/Icon-App-72x72@1x.png" width="72" height="72" />
-        <icon src="res/ios/AppIcon.appiconset/Icon-App-72x72@2x.png" width="144" height="144" />
-        <icon src="res/ios/AppIcon.appiconset/Icon-App-76x76@1x.png" width="76" height="76" />
-        <icon src="res/ios/AppIcon.appiconset/Icon-App-76x76@2x.png" width="152" height="152" />
-
-        <!-- Spash Screens -->
-        <splash src="res/ios/Splash/320-x-480.png" width="320" height="480"/>
-        <splash src="res/ios/Splash/640-x-960.png" width="640" height="960"/>
-        <splash src="res/ios/Splash/768-x-1024.png" width="768" height="1024"/>
-        <splash src="res/ios/Splash/1536-x-2048.png" width="1536" height="2048"/>
-        <splash src="res/ios/Splash/1024-x-768.png" width="1024" height="768"/>
-        <splash src="res/ios/Splash/2048-x-1536.png" width="2048" height="1536"/>
-        <splash src="res/ios/Splash/640-x-1136.png" width="640" height="1136"/>
-        <splash src="res/ios/Splash/750-x-1334.png" width="750" height="1334"/>
-        <splash src="res/ios/Splash/1242-x-2208.png" width="1242" height="2208"/>
-        <splash src="res/ios/Splash/2208-x-1242.png" width="2208" height="1242"/>
-        
+        <icon height="29" src="res/ios/AppIcon.appiconset/Icon-App-29x29@1x.png" width="29" />
+        <icon height="58" src="res/ios/AppIcon.appiconset/Icon-App-29x29@2x.png" width="58" />
+        <icon height="40" src="res/ios/AppIcon.appiconset/Icon-App-40x40@1x.png" width="40" />
+        <icon height="80" src="res/ios/AppIcon.appiconset/Icon-App-40x40@2x.png" width="80" />
+        <icon height="50" src="res/ios/AppIcon.appiconset/Icon-Small-50x50@1x.png" width="50" />
+        <icon height="100" src="res/ios/AppIcon.appiconset/Icon-Small-50x50@2x.png" width="100" />
+        <icon height="57" src="res/ios/AppIcon.appiconset/Icon-App-57x57@1x.png" width="57" />
+        <icon height="114" src="res/ios/AppIcon.appiconset/Icon-App-57x57@2x.png" width="114" />
+        <icon height="60" src="res/ios/AppIcon.appiconset/Icon-App-60x60@1x.png" width="60" />
+        <icon height="120" src="res/ios/AppIcon.appiconset/Icon-App-60x60@2x.png" width="120" />
+        <icon height="180" src="res/ios/AppIcon.appiconset/Icon-App-60x60@3x.png" width="180" />
+        <icon height="72" src="res/ios/AppIcon.appiconset/Icon-App-72x72@1x.png" width="72" />
+        <icon height="144" src="res/ios/AppIcon.appiconset/Icon-App-72x72@2x.png" width="144" />
+        <icon height="76" src="res/ios/AppIcon.appiconset/Icon-App-76x76@1x.png" width="76" />
+        <icon height="152" src="res/ios/AppIcon.appiconset/Icon-App-76x76@2x.png" width="152" />
+        <splash height="480" src="res/ios/Splash/320-x-480.png" width="320" />
+        <splash height="960" src="res/ios/Splash/640-x-960.png" width="640" />
+        <splash height="1024" src="res/ios/Splash/768-x-1024.png" width="768" />
+        <splash height="2048" src="res/ios/Splash/1536-x-2048.png" width="1536" />
+        <splash height="768" src="res/ios/Splash/1024-x-768.png" width="1024" />
+        <splash height="1536" src="res/ios/Splash/2048-x-1536.png" width="2048" />
+        <splash height="1136" src="res/ios/Splash/640-x-1136.png" width="640" />
+        <splash height="1334" src="res/ios/Splash/750-x-1334.png" width="750" />
+        <splash height="2208" src="res/ios/Splash/1242-x-2208.png" width="1242" />
+        <splash height="1242" src="res/ios/Splash/2208-x-1242.png" width="2208" />
     </platform>
-   
-
     <plugin name="cordova-plugin-whitelist" spec="1" />
-    <plugin name="cordova-plugin-googleplus" spec="~5.1.1">
-        <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.579056634272-j8gr7uulkt9p0qiudp96jhbgapqlmevt" />
-    </plugin>
     <plugin name="cordova-plugin-facebook4" spec="~1.7.4">
         <variable name="APP_ID" value="1626499117583779" />
         <variable name="APP_NAME" value="Zenparent" />
@@ -98,6 +74,8 @@
     <plugin name="cordova-plugin-file-transfer" spec="~1.6.2" />
     <plugin name="cordova-plugin-camera" spec="~2.4.0" />
     <plugin name="cordova-plugin-google-analytics" spec="~1.7.5" />
-    <engine name="ios" spec="~4.3.1" />
     <engine name="browser" spec="~4.1.0" />
+    <plugin name="cordova-plugin-googleplus" spec="https://github.com/EddyVerbruggen/cordova-plugin-googleplus">
+        <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.579056634272-4fu49kha3i961ajn1ht0s4f55dd33ljq" />
+    </plugin>
 </widget>

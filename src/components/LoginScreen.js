@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import {Page,Input,ProgressCircular} from 'react-onsenui';
 import Toolbar from '../templates/Toolbar';
 import CustomInput from './CustomInput';
-import {isFieldEmpty} from '../utils';
+import {isFieldEmpty,generateNavigationKey} from '../utils';
 import getNextRoute from '../utils/getNextRoute';
 import UserInterestsSelector from '../screens/UserInterestsSelector';
 import MainScreen from '../screens/MainScreen';

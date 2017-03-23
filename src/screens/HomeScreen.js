@@ -25,6 +25,7 @@ export default class Homescreen extends Component{
 	}
 
 	componentWillReceiveProps(nextProps){
+
 		if(this.props.user.authenticated){
 			const nextUserInfo = nextProps.user.userInfo;
 			const currentUserInfo = this.props.user.userInfo;
