@@ -20,7 +20,7 @@ const JoinedGroupListItem = ({item,navigator}) => {
             </Col>
             {
             parseInt(item.unread_messages_count) ?   <Col style={{padding: "10px 0px 10px 0px"}} verticalAlign="center" width="25%">
-              <div style={{padding:"4px",marginRight : "10px",fontSize : "12px",float:"right",color:"white",width :"24px",height :"24px",fontWeight:"bold",textAlign:"center",borderRadius:"50%",background:"rgb(132,116,159)"}}>{item.unread_messages_count}</div>
+              <div style={{padding:"5px 10px",marginRight : "10px",fontSize : "13px",float:"right",color:"white",fontWeight:"bold",borderRadius:"50%",background : "rgb(21, 138, 138)"}}>{item.unread_messages_count}</div>
             </Col> : ''
             }
              

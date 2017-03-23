@@ -14,7 +14,7 @@ export default class App extends React.Component {
      
      document.addEventListener('deviceready', this.onDeviceReady, false);
      // document.addEventListener('onCleverTapProfileSync', this.onCleverTapProfileSync, false);
-     // document.addEventListener('onCleverTapProfileDidInitialize', this.onCleverTapProfileDidInitialize, false);
+     document.addEventListener('onCleverTapProfileDidInitialize', this.onCleverTapProfileDidInitialize, false);
      // document.addEventListener('onCleverTapInAppNotificationDismissed', this.onCleverTapInAppNotificationDismissed, false);
      // deeplink handler
      // document.addEventListener('onDeepLink', this.onDeepLink, false);
@@ -38,10 +38,10 @@ export default class App extends React.Component {
     
   onCleverTapProfileDidInitialize(e) {
         
-        CleverTap.profileSet({"Email" : "varun@i2india.in","Identity":"1854"});
-        CleverTap.recordEventWithName("varun");
+        CleverTap.profileSet({"Email" : "varun@i2india.in","Identity":"23032017"});
+        // CleverTap.recordEventWithName("varun");
         // CleverTap.recordEventWithNameAndProps("boo", {"bar":"zoo"});
-        console.log(e.CleverTapID);
+        console.log("Clevertap ID is " + e.CleverTapID);
     }
     
   onCleverTapInAppNotificationDismissed(e){
