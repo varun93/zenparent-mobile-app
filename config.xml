@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.zenparent.mobileappp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.zenparent.mobileapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Zenparent</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -78,4 +78,5 @@
     <plugin name="cordova-plugin-googleplus" spec="https://github.com/EddyVerbruggen/cordova-plugin-googleplus">
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.579056634272-4fu49kha3i961ajn1ht0s4f55dd33ljq" />
     </plugin>
+    <engine name="android" spec="~6.1.2" />
 </widget>
