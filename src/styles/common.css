@@ -2,11 +2,11 @@
     color: #8675A1;
 }
 
-.progress-circular__primary{
+.progress-circular__primary,.progress-circular__secondary{
 	stroke: #8675A1 !important;
 }
 
-.loading .progress-circular__primary{
+.loading .progress-circular__primary,.loading..progress-circular__secondary{
 	stroke: yellow !important;
 }
 

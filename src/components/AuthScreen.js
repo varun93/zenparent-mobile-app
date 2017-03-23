@@ -14,6 +14,20 @@ import UserInterestsSelector from '../screens/UserInterestsSelector';
 // css imports
 require('../styles/auth.css');
 
+const styles = {
+
+	loaderWrapper : {
+		position : "fixed",
+		top : "45%",
+		left : "50%"
+	},
+	loaderText : {
+		marginLeft: "-8px",
+    	color: "rebeccapurple",
+        fontSize: "14px"
+	}
+
+};
 
 export default class AuthScreen extends Component{
 
@@ -137,11 +151,18 @@ export default class AuthScreen extends Component{
 
 	render(){
 
-		const loading = this.props.loading;
-
+		const loading = this.props.user.loading;
+	
 		return(
 			  <Page className="signupPage">
-					<div id="footer">
+
+			   {loading ? 
+			   	<div style={styles.loaderWrapper}> 
+				  		<ProgressCircular  indeterminate />
+				   		<div style={styles.loaderText}>Loading ...</div>
+				</div> 
+			       :
+			    <div id="footer">
 			          <div style={{textAlign: 'center'}}>
 			             <CustomInput
 				             type='text'
@@ -183,8 +204,9 @@ export default class AuthScreen extends Component{
 			                </button>
 			            </div>
 			          </div>
-			      </Page>
 
+				}
+			  	</Page>
 			)
 	}
 

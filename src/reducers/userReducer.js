@@ -21,7 +21,7 @@ const updateUserInfoWithToken = (user,token,status,state) => {
 
 const updateUserInterests = (interests,state) => {
     let userInfo = Object.assign({},state.userInfo,{interests : interests});
-    return Object.assign({},state,{ userInfo :  userInfo},{status : 'interests-updated'});
+    return Object.assign({},state,{ userInfo :  userInfo},{status : 'interests-updated',loading : false});
 };
 
 let userReducer = (user = INITIAL_STATE, action) => {

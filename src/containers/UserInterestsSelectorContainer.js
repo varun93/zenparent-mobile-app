@@ -15,6 +15,7 @@ const mapDispactorToProps = (dispatch) => {
 const mapStateToProps = (state,ownProps) => {
 	return {
 		updateStatus : state.user.status,
+		loading : state.user.loading,
 		interests : state.blog.interests,
 		navigator : ownProps.navigator
 }};

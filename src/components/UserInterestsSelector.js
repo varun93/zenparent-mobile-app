@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Page,Dialog,Button,BottomToolbar} from 'react-onsenui';
+import {Page,Dialog,Button,ProgressCircular,BottomToolbar} from 'react-onsenui';
 import {ucFirstLetter} from '../utils';
 import MainScreen from '../screens/MainScreen';
 import {generateNavigationKey} from '../utils';
@@ -67,6 +67,8 @@ export default class UserInterestsSelector extends Component {
 
 	render(){
 		
+		const {interests,loading} = this.props;
+
 		return (
 		   <Page key="userInterestsSelector" className="interestsSelector">
 		   	<Dialog
@@ -85,12 +87,14 @@ export default class UserInterestsSelector extends Component {
 		   	 	Help us personalize your feed!
 		   	 </div>
 			 <div style={{overflowY : "scroll",height : "100vh"}} className="selectionPanel">
-			 { this.props.interests.terms.map(function(interest){
+			 {interests.terms.map(function(interest){
 			 		return this.renderInterest.call(this,interest)
 			 },this)}
 			 </div>
 			 <div className="continueButton">
-			 	<button onClick={this._submitTags.bind(this)}>Continue</button>
+			 	<button onClick={this._submitTags.bind(this)}>
+			 	  {loading ? <ProgressCircular indeterminate/> :  `Continue` } 
+			 	</button>
 			 </div>
 		   </Page>
 		)
