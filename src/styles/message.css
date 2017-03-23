@@ -41,13 +41,10 @@ div.message > div.message-box {
 
 
 /* Styling for self sent message  */
-/*.self .message{
+.message.self {
  float : right; 
  }
 
-.self .user-avatar{
-  display : none;
-}
-.self .message-author{
+/*.message.self  .message-author{
   display: none;
 }*/

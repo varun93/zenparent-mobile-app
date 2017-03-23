@@ -1,12 +1,14 @@
 // api endpoints
 let BASE_URL = 'http://test.zenparent.in/api';
 
-if (process.env.NODE_ENV === 'production' || (location && location.hostname !== 'localhost')){
+const environment = process.env.NODE_ENV;
+
+if(environment == 'production'){
 	BASE_URL = 'https://zenparent.in/api';
 }
 
 export const assetsBase = () => {
-if (process.env.NODE_ENV === 'production' || (location && location.hostname !== 'localhost')){
+if (environment == 'production'){
 	return 'assets/';
 }
 else{
@@ -71,4 +73,8 @@ export const JOINED_GROUPS = 'JOINED_GROUPS';
 export const EXPERT_CHAT = 'EXPERT_CHAT';
 
 // --------------- app keys -------------------
-export const PUSHER_APP_KEY = 'c9349fca0eab96c42440';
+let PUSHER_APP_KEY = 'c9349fca0eab96c42440';
+if(environment == 'production'){
+	PUSHER_APP_KEY = 'd2a1f36e08f60f5cbd98';	
+}
+export {PUSHER_APP_KEY};
