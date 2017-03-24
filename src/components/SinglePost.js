@@ -10,9 +10,11 @@ const prefix = assetsBase();
 const styles = {
 
   pageContent : {
-    margin : '45px 0px 60px 0px',
+    margin : '55px 0px 45px 0px',
     lineHeight : '1.5',
-    background : 'white'
+    background : 'white',
+    overflowY : 'scroll',
+    height : '100vh'
   },
   postContent : {
     padding : "0px 10px",
@@ -106,7 +108,7 @@ const SinglePost = ({post,toggleLike,toggleBookmark,navigator}) => {
 		          {post.relatedPosts && post.relatedPosts.length && <RelatedPostsContainer toggleLike={toggleLike} toggleBookmark={toggleBookmark}  relatedPosts={post.relatedPosts} navigator={navigator} /> }
 		        </div>
 
-		        <div style={styles.footer} className="page-footer">
+		        <BottomToolbar style={styles.footer} className="page-footer">
               <div onClick={() => toggleLike(post.id)}  className="articleLike">
                   {post.liked ? <img src={`${prefix}like-active.svg`}/> : <img src={`${prefix}like-default.svg`} />}
               </div>
@@ -114,7 +116,7 @@ const SinglePost = ({post,toggleLike,toggleBookmark,navigator}) => {
                  {post.bookmarked ? <img src={`${prefix}bookmark-active.svg`} /> : <img src={`${prefix}bookmark-default.svg`} />}
               </div>
               <ons-icon onClick={() => sharePost()} size="30px" icon="fa-share-alt"></ons-icon>
-            </div>
+            </BottomToolbar>
 
 		</div>
 	)
