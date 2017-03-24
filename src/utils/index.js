@@ -121,18 +121,26 @@ export const convertDateToWords = (date) => {
 };
 
 
+
 //--- has user info changed
 
 export const hasUserInfoChanged = (currentUserInfo,nextUserInfo) => {
 
 	const currentStageOfParenting = currentUserInfo.stage_of_parenting;
 	const nextStageOfParenting  = nextUserInfo.stage_of_parenting;
+	const currentUserInterests  = currentUserInfo.interests;
+	const nextUserInterests = nextUserInfo.interests;
+	const interestsSame = (currentUserInterests.length == nextUserInterests.length) && currentUserInterests.every(function(element, index) {
+    	return element === nextUserInterests[index]; 
+	});
 		
 	if(currentStageOfParenting !== nextStageOfParenting){
 		return true;
 	}
 
 	const dateKey = currentStageOfParenting == 'parent' ? 'dob' : 'due_date';
-	return currentUserInfo[dateKey] !== nextUserInfo[dateKey];
+
+	return (currentUserInfo[dateKey] !== nextUserInfo[dateKey]) || (!interestsSame);
+
 };
 

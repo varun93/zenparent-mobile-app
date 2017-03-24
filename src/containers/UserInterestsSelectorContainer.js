@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import UserInterestsSelector from '../components/UserInterestsSelector';
 import {updateUserInterests} from '../actions/userActions';
-import {fetchInterests,toggleInterest} from '../actions/blogActions';
+import {fetchInterests,toggleInterest,syncFeed} from '../actions/blogActions';
 import {connect} from 'react-redux';
 
 
@@ -9,7 +9,9 @@ const mapDispactorToProps = (dispatch) => {
 	return {
 		fetchInterests : () => dispatch(fetchInterests()),
 		updateUserInterests : (interests) => dispatch(updateUserInterests(interests)),
-		toggleInterest : (term) => dispatch(toggleInterest(term))
+		toggleInterest : (term) => dispatch(toggleInterest(term)),
+		syncFeed : () => dispatch(syncFeed())
+
 }};
 
 const mapStateToProps = (state,ownProps) => {

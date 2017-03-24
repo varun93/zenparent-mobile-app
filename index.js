@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import initialState from './src/constants/initialState';
 require('es6-promise').polyfill();
+require('es6-object-assign').polyfill();
 
 // main app screen
 import App from './src/screens/App'
