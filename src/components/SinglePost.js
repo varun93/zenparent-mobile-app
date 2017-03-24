@@ -10,11 +10,9 @@ const prefix = assetsBase();
 const styles = {
 
   pageContent : {
-    margin : '55px 0px 45px 0px',
+    margin : '50px 0px',
     lineHeight : '1.5',
-    background : 'white',
-    overflowY : 'scroll',
-    height : '100vh'
+    background : 'white'
   },
   postContent : {
     padding : "0px 10px",
@@ -38,7 +36,6 @@ const styles = {
     textAlign : "center"
   },
   footer : {
-    height : "50px",
     left : "0px",
     padding:"0px 10px",
     background:"white",
