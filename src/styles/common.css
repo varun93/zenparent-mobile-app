@@ -189,3 +189,8 @@ ons-tab.user-profile-tab.active .ons-icon{
 .toolbar--material{
 	background-color: #fff !important;
 }
+
+/*  Fix top bar and bottom bar */
+ons-toolbar,ons-bottom-toolbar{
+	position: fixed !important; 
+}

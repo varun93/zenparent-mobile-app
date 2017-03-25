@@ -8,11 +8,11 @@ if(screenWidth < 340){
 }
 else if(screenWidth >= 340 && screenWidth < 380){
   imageWidth = 150;
-  imageHeight = 90;
+  imageHeight = 110;
 }
 else if(screenWidth >= 380 && screenWidth < 600){
   imageWidth = 164;
-  imageHeight = 90; 
+  imageHeight = 110; 
 }
 else{
   imageWidth = 300

@@ -13,7 +13,7 @@ export default class App extends React.Component {
      super(context,props);
      
      document.addEventListener('deviceready', this.onDeviceReady, false);
-     // document.addEventListener('onCleverTapProfileSync', this.onCleverTapProfileSync, false);
+     document.addEventListener('onCleverTapProfileSync', this.onCleverTapProfileSync, false);
      document.addEventListener('onCleverTapProfileDidInitialize', this.onCleverTapProfileDidInitialize, false);
      // document.addEventListener('onCleverTapInAppNotificationDismissed', this.onCleverTapInAppNotificationDismissed, false);
      // deeplink handler
