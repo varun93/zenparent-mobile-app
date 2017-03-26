@@ -1,5 +1,5 @@
 import ChatroomApi from '../api/ChatroomApi';
-import {ChatroomAnalytics} from '../utils/ClevertapAnalytics';
+import {ChatroomAnalytics} from '../utils/Analytics';
 import {removeCache} from '../utils/cachedFetch';
 import {GROUP_JOIN_UNJOIN,CHATROOM_VISITED,JOINED_CHATROOM,LEFT_CHATROOM,MESSAGE_SENT} from '../constants';
 

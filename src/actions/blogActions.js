@@ -1,5 +1,5 @@
 import BlogApi from '../api/BlogApi';
-import {BlogAnalytics} from '../utils/BlogAnalytics';
+import {BlogAnalytics} from '../utils/Analytics';
 import {POST_LIKED,POST_BOOKMARKED,SCREEN_VIEWED,POST_SHARED} from '../constants';
 
 

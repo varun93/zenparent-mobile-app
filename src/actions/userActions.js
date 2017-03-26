@@ -1,6 +1,6 @@
 import UserApi from '../api/UserApi';
 import {removeCache} from '../utils/cachedFetch';
-import {UserAnalytics} from '../utils/ClevertapAnalytics';
+import {UserAnalytics} from '../utils/Analytics';
 import {PROFILE_UPDATE,UPDATE_USER_INTERESTS,
 USER_SIGNUP,USER_LOGIN,USER_PROFILE_SYNC,USER_PROFILE_UPDATED,USER_INTERESTS_UPDATED,USER_LOGOUT} from '../constants';
 

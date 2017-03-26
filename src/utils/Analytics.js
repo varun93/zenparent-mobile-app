@@ -21,6 +21,9 @@ export const BlogAnalytics = (event,postId,state) => {
 				CleverTap.recordEventWithNameAndProps("Post Bookmarked", {"post":title});
 				break;
 			case SCREEN_VIEWED : 
+				//ga tracking
+				window.ga.trackView(title);
+				// clevertap tracking
 				CleverTap.recordEventWithNameAndProps("Screen Viewed", {"post":title});
 				break;
 			case POST_SHARED : 
