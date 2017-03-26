@@ -78,3 +78,24 @@ if(environment == 'production'){
 	PUSHER_APP_KEY = 'd2a1f36e08f60f5cbd98';	
 }
 export {PUSHER_APP_KEY};
+
+
+// event action
+export const POST_LIKED = 'POST_LIKED';
+export const POST_BOOKMARKED = 'POST_BOOKMARKED';
+export const SCREEN_VIEWED = 'SCREEN_VIEWED';
+export const POST_SHARED = 'POST_SHARED';
+export const CHATROOM_VISITED = 'CHATROOM_VISITED';
+export const JOINED_CHATROOM = 'JOINED_CHATROOM';
+export const LEFT_CHATROOM = 'LEFT_CHATROOM';
+export const MESSAGE_SENT = 'MESSAGE_SENT';
+export const USER_SIGNUP = 'USER_SIGNUP';
+export const USER_LOGIN = 'USER_LOGIN';
+export const USER_PROFILE_SYNC = 'USER_PROFILE_SYNC';
+export const USER_PROFILE_UPDATED = 'USER_PROFILE_UPDATED';
+export const USER_INTERESTS_UPDATED = 'USER_PROFILE_UPDATED';
+export const USER_LOGOUT = 'USER_LOGOUT';
+
+// GA TRACKING CODE
+export const GA_TRACKING_CODE = 'UA-56979549-3';
+

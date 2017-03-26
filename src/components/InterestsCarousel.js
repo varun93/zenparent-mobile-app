@@ -1,9 +1,10 @@
 import React,{Component} from 'react';
-import {Carousel,CarouselItem,ProgressBar} from 'react-onsenui';
+import {Carousel,CarouselItem} from 'react-onsenui';
 import {fetchInterests} from '../actions/blogActions';
 import {connect} from 'react-redux';
 import {generateNavigationKey} from '../utils';
 import ArchiveScreen from '../screens/ArchiveScreen';
+import CarouselLoader from '../templates/CarouselLoader';
 import UserInterestsSelector from '../screens/UserInterestsSelector';
 
 const styles = {
@@ -61,7 +62,7 @@ class InterestsCarousel extends Component{
 
 	renderCarouselItem(interest){
 		if(interest.term == 'last'){
-			let navigationKey = generateNavigationKey(`user-interests-selector-screen`);
+			let navigationKey = generateNavigationKey('user-interests-selector-screen');
 			return(
 				<CarouselItem key={interest.term} onClick={() => this.props.navigator.resetPage({component : UserInterestsSelector, key : navigationKey}) }>
 					<div style={styles.addMore}>
@@ -96,7 +97,7 @@ class InterestsCarousel extends Component{
 
 		if(this.props.interests.loading){
 			return (
-				<ProgressBar indeterminate />
+				<CarouselLoader />
 				)
 		}
 

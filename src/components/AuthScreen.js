@@ -48,7 +48,7 @@ export default class AuthScreen extends Component{
 		let allowedStatus = ['registered','new-user','token-signin-success'];
 		let status = user.status;
 		
-		if(allowedStatus.indexOf(status) === -1 || this.props.user.authenticated ||  status == 'anonymous' || (this.props.user.status == status)){
+		if(allowedStatus.indexOf(status) === -1 || this.props.user.authenticated || (this.props.user.status == status)){
 			return;
 		}
 

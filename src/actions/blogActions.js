@@ -1,4 +1,7 @@
 import BlogApi from '../api/BlogApi';
+import {BlogAnalytics} from '../utils/BlogAnalytics';
+import {POST_LIKED,POST_BOOKMARKED,SCREEN_VIEWED,POST_SHARED} from '../constants';
+
 
 // fetch homepage posts
 export const REQUEST_USER_FEED_RELEVANCE = 'REQUEST_USER_FEED_RELEVANCE';
@@ -219,7 +222,17 @@ export function requestSinglePost(postId){
 };
 
 
-export function receivedSinglePost(postId,postContent,relatedPosts){
+export function receivedSinglePost(postId,postContent,relatedPosts,state){
+
+	// record screen viewed event
+	try {
+  	 BlogAnalytics(SCREEN_VIEWED,postId,state); // generates an exception
+	}
+	catch (e) {
+   	// statements to handle any exceptions
+   	console.log(e); // pass exception object to error handler
+	}
+	
 
 	return {
 		type : RECEIVED_SINGLE_POST,
@@ -241,7 +254,16 @@ export function errorReceivingSinglePost(postId){
 //---------------------------- LIKE AND BOOKMARK POSTS -----------------------------------
 
 //Like
-export function toggleLike(postId){
+export function toggleLike(postId,state){
+
+	// toggle treated as a +ve event, makes no difference to analytics as long it is measuring user engagement
+	try {
+  	 BlogAnalytics(POST_LIKED,postId,state); // generates an exception
+	}
+	catch (e) {
+   	// statements to handle any exceptions
+   	console.log(e); // pass exception object to error handler
+	}
 
 	return {
 		type : TOGGLE_LIKE,
@@ -266,7 +288,17 @@ export function likePostFailure(postId){
 
 
 //Bookmark
-export function toggleBookmark(postId){
+export function toggleBookmark(postId,state){
+	
+	// toggle treated as a +ve event, makes no difference to analytics as long it is measuring user engagement
+	try {
+  	 BlogAnalytics(POST_BOOKMARKED,postId,state); // generates an exception
+	}
+	catch (e) {
+   	// statements to handle any exceptions
+   	console.log(e); // pass exception object to error handler
+	}
+
 	return {
 		type : TOGGLE_BOOKMARK,
 		postId
@@ -356,7 +388,7 @@ export function toggleLikeRequest(id){
 	return (dispatch,getState) => {
 		let state = getState();
 		
-		dispatch(toggleLike(id));
+		dispatch(toggleLike(id,state));
 		
 		let request = null;
 
@@ -380,7 +412,7 @@ export function toggleBookmarkRequest(id){
 	return (dispatch,getState) => {
 		let state = getState();
 
-		dispatch(toggleBookmark(id));
+		dispatch(toggleBookmark(id,state));
 
 		let request = null;
 		let operation = '+';
@@ -396,7 +428,7 @@ export function toggleBookmarkRequest(id){
 		dispatch(updateBookmarkedList(id,operation));
 
 		request.then((response) => {
-			console.log(response);
+			// console.log(response);
 		}).catch((err) =>{
 			//handle the error appropriately
 		});
@@ -407,14 +439,15 @@ export function toggleBookmarkRequest(id){
 
 export function fetchSinglePost(id){
 
-	return (dispatch,state) => {
+	return (dispatch,getState) => {
 		dispatch(requestSinglePost(id));
 
 		BlogApi.fetchSinglePost(id).then(function(response){
   				let postContent = response.data.postContent;
   				let relatedPosts = response.data.relatedPosts;
-  				dispatch(receivedSinglePost(id,postContent,relatedPosts));
-     	}).catch((err) => {
+  				dispatch(receivedSinglePost(id,postContent,relatedPosts,getState()));
+  	
+  			}).catch((err) => {
       		dispatch(errorReceivingSinglePost(id));
       	});
 	}

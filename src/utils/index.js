@@ -130,7 +130,8 @@ export const hasUserInfoChanged = (currentUserInfo,nextUserInfo) => {
 	const nextStageOfParenting  = nextUserInfo.stage_of_parenting;
 	const currentUserInterests  = currentUserInfo.interests;
 	const nextUserInterests = nextUserInfo.interests;
-	const interestsSame = (currentUserInterests.length == nextUserInterests.length) && currentUserInterests.every(function(element, index) {
+	
+	const interestsSame = (!isFieldEmpty(currentUserInterests) && !isFieldEmpty(nextUserInterests)) && (currentUserInterests.length == nextUserInterests.length) && currentUserInterests.every(function(element, index) {
     	return element === nextUserInterests[index]; 
 	});
 		

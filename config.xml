@@ -26,20 +26,18 @@
         <icon density="xhdpi" src="res/android/xhdpi/ic_launcher.png" />
         <icon density="xxhdpi" src="res/android/xxhdpi/ic_launcher.png" />
         <icon density="xxxhdpi" src="res/android/xxxhdpi/ic_launcher.png" />
-
-        <splash src="res/ios/Splash/1024-x-768.png" density="land-hdpi"/>
-        <splash src="res/ios/Splash/1024-x-768.png" density="land-ldpi"/>
-        <splash src="res/ios/Splash/1024-x-768.png" density="land-mdpi"/>
-        <splash src="res/ios/Splash/1024-x-768.png" density="land-xhdpi"/>
-        <splash src="res/ios/Splash/1024-x-768.png" density="land-xhdpi"/>
-        <splash src="res/ios/Splash/1024-x-768.png" density="land-xhdpi"/>
-        <splash src="res/ios/Splash/320-x-480.png" density="port-hdpi"/>
-        <splash src="res/ios/Splash/320-x-480.png" density="port-ldpi"/>
-        <splash src="res/ios/Splash/320-x-480.png" density="port-mdpi"/>
-        <splash src="res/ios/Splash/320-x-480.png" density="port-xhdpi"/>
-        <splash src="res/ios/Splash/320-x-480.png" density="port-xxhdpi"/>
-        <splash src="res/ios/Splash/320-x-480.png" density="port-xxxhdpi"/>
-
+        <splash density="land-hdpi" src="res/ios/Splash/1024-x-768.png" />
+        <splash density="land-ldpi" src="res/ios/Splash/1024-x-768.png" />
+        <splash density="land-mdpi" src="res/ios/Splash/1024-x-768.png" />
+        <splash density="land-xhdpi" src="res/ios/Splash/1024-x-768.png" />
+        <splash density="land-xhdpi" src="res/ios/Splash/1024-x-768.png" />
+        <splash density="land-xhdpi" src="res/ios/Splash/1024-x-768.png" />
+        <splash density="port-hdpi" src="res/ios/Splash/320-x-480.png" />
+        <splash density="port-ldpi" src="res/ios/Splash/320-x-480.png" />
+        <splash density="port-mdpi" src="res/ios/Splash/320-x-480.png" />
+        <splash density="port-xhdpi" src="res/ios/Splash/320-x-480.png" />
+        <splash density="port-xxhdpi" src="res/ios/Splash/320-x-480.png" />
+        <splash density="port-xxxhdpi" src="res/ios/Splash/320-x-480.png" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -93,9 +91,5 @@
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.579056634272-4fu49kha3i961ajn1ht0s4f55dd33ljq" />
     </plugin>
     <engine name="android" spec="~6.1.2" />
-    <plugin name="com.clevertap.cordova.CleverTapPlugin" spec="https://github.com/CleverTap/clevertap-cordova.git">
-        <variable name="CLEVERTAP_ACCOUNT_ID" value="RK6-ZR8-W74Z" />
-        <variable name="CLEVERTAP_TOKEN" value="b21-632" />
-        <variable name="GCM_PROJECT_NUMBER" value="579056634272" />
-    </plugin>
+    <hook src="scripts/build.sh" type="before_prepare" />
 </widget>

@@ -1,4 +1,7 @@
 import ChatroomApi from '../api/ChatroomApi';
+import {ChatroomAnalytics} from '../utils/ClevertapAnalytics';
+import {removeCache} from '../utils/cachedFetch';
+import {GROUP_JOIN_UNJOIN,CHATROOM_VISITED,JOINED_CHATROOM,LEFT_CHATROOM,MESSAGE_SENT} from '../constants';
 
 //send new message
 export const NEW_MESSAGE = 'NEW_MESSAGE';
@@ -24,8 +27,6 @@ export const REQUEST_CHATROOMS = 'REQUEST_CHATROOMS';
 export const RECEIVED_CHATROOMS = 'RECEIVED_CHATROOMS';
 export const ERROR_FETCHING_CHATROOMS = 'ERROR_FETCHING_CHATROOMS';
 
-import {removeCache} from '../utils/cachedFetch';
-import {GROUP_JOIN_UNJOIN} from '../constants';
 
 
 export function setActiveChatRoom(chatroomId){
@@ -91,7 +92,16 @@ export function sendMessageRequest(chatroomId){
 	};
 };
 
-export function sendMessageSuccess(chatroomId){
+export function sendMessageSuccess(chatroomId,state){
+	
+  	try {
+  	 ChatroomAnalytics(MESSAGE_SENT,chatroomId,state); // generates an exception
+	}
+	catch (e) {
+   	// statements to handle any exceptions
+   	console.log(e); // pass exception object to error handler
+	}
+	
 	return {
 		type : SEND_MESSAGE_SUCCESS,
 		chatroomId 
@@ -118,14 +128,32 @@ export function newMessage(chatroomId,message){
 };
 
 // ----------------------- Join Group and leave group ------------------------
-export function joinChatroomSuccess(chatroomId){
+export function joinChatroomSuccess(chatroomId,state){
+	
+	try {
+  	 ChatroomAnalytics(JOINED_CHATROOM,chatroomId,state); // generates an exception
+	}
+	catch (e) {
+   	// statements to handle any exceptions
+   	console.log(e); // pass exception object to error handler
+	}
+
 	return {
 		type : JOIN_CHATROOM,
 		chatroomId
 	}
 };
 
-export function leaveChatroomSuccess(chatroomId){
+export function leaveChatroomSuccess(chatroomId,state){
+	
+	try {
+  	 ChatroomAnalytics(LEFT_CHATROOM,chatroomId,state); // generates an exception
+	}
+	catch (e) {
+   	// statements to handle any exceptions
+   	console.log(e); // pass exception object to error handler
+	}
+
 	return {
 		type : LEAVE_CHATROOM,
 		chatroomId
@@ -135,12 +163,12 @@ export function leaveChatroomSuccess(chatroomId){
 
 export function sendMessage(message,payloadType,chatroomId){
 	
-	return (dispatch,state) => {
+	return (dispatch,getState) => {
 		dispatch(sendMessageRequest(chatroomId));
 		
 		ChatroomApi.sendMessage(message,payloadType,chatroomId).then((response) => {
 		if(response.success){
-			dispatch(sendMessageSuccess(chatroomId));
+			dispatch(sendMessageSuccess(chatroomId,getState()));
 		}
 	}).catch( (err) => {
 			dispatch(sendMessageFailure(chatroomId));
@@ -152,7 +180,7 @@ export function sendMessage(message,payloadType,chatroomId){
 
 export function joinChatroom(chatroomId){
 
-	return (dispatch,state) => {
+	return (dispatch,getState) => {
 			
 		//clear the cache
 		removeCache(GROUP_JOIN_UNJOIN);
@@ -160,7 +188,7 @@ export function joinChatroom(chatroomId){
 		ChatroomApi.joinChatroom(chatroomId).then(function(response){
   			// console.log(response);
   			let chatroomId = response.data.group_id;
-  			dispatch(joinChatroomSuccess(chatroomId));
+  			dispatch(joinChatroomSuccess(chatroomId,getState()));
      	
      	}).catch((err) => {
       		// dispatch(errorReceivingPost());//
@@ -172,14 +200,14 @@ export function joinChatroom(chatroomId){
 //------- leave chatroom request -------- //
 export function leaveChatroom(chatroomId){
 
-	return (dispatch,state) => {
+	return (dispatch,getState) => {
 
 		//clear the cache
 		removeCache(GROUP_JOIN_UNJOIN);
 		ChatroomApi.leaveChatroom(chatroomId).then(function(response){
   		
   			let chatroomId = response.data.group_id;
-  			dispatch(leaveChatroomSuccess(chatroomId));
+  			dispatch(leaveChatroomSuccess(chatroomId,getState()));
      	
      	}).catch((err) => {
       		// dispatch(errorReceivingPost());

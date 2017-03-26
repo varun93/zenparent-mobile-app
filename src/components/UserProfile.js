@@ -39,6 +39,7 @@ export default class UserProfile extends Component{
   
     this.state = {
       editMode : 0,
+      showDateField : 0,
       profileImage : '',
       displayName : '',
       stageOfParenting : '',
@@ -246,14 +247,24 @@ export default class UserProfile extends Component{
                !this.state.editMode ?  
                 <p>{convertDateToWords(date)}</p> : 
                 <p>
+                {this.state.showDateField ?
+
                   <Input
                     onChange={this._onDateChanged.bind(this)}
                     type="date"
+                    onBlur = {() => this.setState({showDateField : false})}
                     modifier="underbar"
                     className="date"
-                    value={this.state.date}
-                    float />
-                </p>
+                    value={this.state.date} /> :
+
+                    <Input
+                      type="text"
+                      onFocus={() => this.setState({showDateField : true})}
+                      modifier="underbar"
+                      value={this.state.date} />
+                }
+                  
+                  </p>
               }
             </div>
 

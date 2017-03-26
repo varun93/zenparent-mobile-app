@@ -1,66 +1,65 @@
-import React from 'react';
+import React,{Component} from 'react';
 import {Navigator} from 'react-onsenui';
 import {generateNavigationKey} from '../utils';
 import MainScreen from '../screens/MainScreen';
 import AuthScreen from '../screens/AuthScreen';
-import APP_VERSION from '../constants';
+import {APP_VERSION,GA_TRACKING_CODE} from '../constants';
 
-// check for for the token, if not present make a request
-export default class App extends React.Component {
+export default class App extends Component {
   
    constructor(context,props){
      
      super(context,props);
+
+     // check the status
+     props.appInit(APP_VERSION);
      
      document.addEventListener('deviceready', this.onDeviceReady, false);
-     document.addEventListener('onCleverTapProfileSync', this.onCleverTapProfileSync, false);
-     document.addEventListener('onCleverTapProfileDidInitialize', this.onCleverTapProfileDidInitialize, false);
+
      // document.addEventListener('onCleverTapInAppNotificationDismissed', this.onCleverTapInAppNotificationDismissed, false);
      // deeplink handler
-     // document.addEventListener('onDeepLink', this.onDeepLink, false);
+     document.addEventListener('onDeepLink', this.onDeepLink, false);
      //push notification handler
      document.addEventListener('onPushNotification', this.onPushNotification, false);
   }
 
-  componentWillMount(){
-     this.props.appInit(APP_VERSION);
-  }
 
   onDeviceReady(){
-    CleverTap.notifyDeviceReady();
-    CleverTap.registerPush();
-    CleverTap.enablePersonalization();
+
+
+    try{
+      window.ga.startTrackerWithId(GA_TRACKING_CODE);
+    }
+    catch(e){
+      console.log(e);//handle errors
+    }
+    
+    try{
+      CleverTap.notifyDeviceReady();  
+      CleverTap.registerPush();
+      CleverTap.enablePersonalization();  
+    }
+    catch(e){
+      console.log(e);//handle errors
+    }
+    
   }
 
-  onCleverTapProfileSync(e) {
-        console.log(e.updates);
-    }
-    
-  onCleverTapProfileDidInitialize(e) {
-        
-        CleverTap.profileSet({"Email" : "varun@i2india.in","Identity":"23032017"});
-        // CleverTap.recordEventWithName("varun");
-        // CleverTap.recordEventWithNameAndProps("boo", {"bar":"zoo"});
-        console.log("Clevertap ID is " + e.CleverTapID);
-    }
-    
   onCleverTapInAppNotificationDismissed(e){
         console.log(e.extras);
         console.log(e.actionExtras);
-    }
+  }
     
     // deep link handling
     onDeepLink(e) {
-        console.log(e.deeplink);
+        console.log("In deeplink");
+        console.log(JSON.stringify(e.deeplink));
     }
     
     // push notification payload handling
     onPushNotification(e) {
-        
-        //capture the intent of the push notification
-        //if single article then open the view of a single article
-        // alert(e.notification);
-        console.log(e.notification);
+        console.log("In Push Notifcation Screen");
+        console.log(JSON.stringify(e.notification));
   }
   
   //replace this with props

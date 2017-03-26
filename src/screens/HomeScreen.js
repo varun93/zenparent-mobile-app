@@ -16,6 +16,8 @@ export default class Homescreen extends Component{
 		this.state = {
 			update : false
 		};
+
+		document.addEventListener('onCleverTapProfileDidInitialize', this.onCleverTapProfileDidInitialize, false);
 	}
 
 	componentDidUpdate(){
@@ -23,6 +25,7 @@ export default class Homescreen extends Component{
 			this.props.navigator.resetPage({component : AuthScreen,key : generateNavigationKey('auth-screen')});
     	}
 	}
+
 
 	componentWillReceiveProps(nextProps){
 

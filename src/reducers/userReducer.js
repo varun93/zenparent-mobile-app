@@ -48,7 +48,7 @@ let userReducer = (user = INITIAL_STATE, action) => {
     case SIGNUP_USER_SUCCESS :
     return updateUserInfoWithToken(action.user,action.token,'signup-success',user);
     case SIGNUP_USER_FAILURE :
-    return Object.assign({},user,{authenticated : false,error: action.message, loading: false});
+    return Object.assign({},user,{authenticated : false,status:'signup-error',error: action.message, loading: false});
 
 
     //login related reducers

@@ -1,5 +1,8 @@
 import UserApi from '../api/UserApi';
 import {removeCache} from '../utils/cachedFetch';
+import {UserAnalytics} from '../utils/ClevertapAnalytics';
+import {PROFILE_UPDATE,UPDATE_USER_INTERESTS,
+USER_SIGNUP,USER_LOGIN,USER_PROFILE_SYNC,USER_PROFILE_UPDATED,USER_INTERESTS_UPDATED,USER_LOGOUT} from '../constants';
 
 export const FORGOT_PASSWORD_REQUEST = 'FORGOT_PASSWORD_REQUEST';
 export const FORGOT_PASSWORD_SUCCESS = 'FORGOT_PASSWORD_SUCCESS';
@@ -41,7 +44,6 @@ export const UPDATE_USER_INTERESTS_SUCCESS = 'UPDATE_USER_INTERESTS_SUCCESS';
 export const UPDATE_USER_INTERESTS_FAILURE = 'UPDATE_USER_INTERESTS_FAILURE';
 
 
-import {PROFILE_UPDATE,UPDATE_USER_INTERESTS} from '../constants';
 
 
 // user logout actions
@@ -81,6 +83,15 @@ export function loginUserRequest() {
 
 export function signupUserSuccess(user,token) {
   window.localStorage.setItem('jwt', token);//this is impotn
+    
+  try {
+     UserAnalytics(USER_SIGNUP,user); // generates an exception
+  }
+  catch (e) {
+    // statements to handle any exceptions
+    console.log(e); // pass exception object to error handler
+  }
+
   return {
     type: SIGNUP_USER_SUCCESS,
     user,
@@ -131,6 +142,15 @@ export function tokenSigninUserRequest() {
 
 //--------------- User Interests Actions -----------------------------
 export function updateUserInterestsSuccess(interests){
+ 
+
+   try{
+      UserAnalytics(USER_INTERESTS_UPDATED);  
+    }
+    catch(e){
+      console.log(e);
+    }
+
   return {
     type : UPDATE_USER_INTERESTS_SUCCESS,
     interests
@@ -155,6 +175,15 @@ export function updateUserInterestsFailure(){
 
 //--------------- User Info Update Actions -----------------------------
 export function updateUserProfileSuccess(user){
+  
+  try {
+     UserAnalytics(USER_PROFILE_UPDATED,user); // generates an exception
+  }
+  catch (e) {
+    // statements to handle any exceptions
+    console.log(e); // pass exception object to error handler
+  }
+
   return {
     type : UPDATE_USER_INFO_SUCCESS,
     user
@@ -213,6 +242,18 @@ export function appInitRequestSuccess(forceUpdate,appVersionNumber,user){
 
   if('id' in user && user.id) authenticated = true;
 
+  if(authenticated){
+
+    try {
+       UserAnalytics(USER_PROFILE_SYNC,user); // generates an exception
+    }
+    catch (e) {
+      // statements to handle any exceptions
+      console.log(e); // pass exception object to error handler
+    }
+
+  }
+  
   return {
     type : APP_INIT_REQUEST_SUCCESS,
     forceUpdate,
@@ -256,7 +297,15 @@ export function forgotPasswordFailure(){
 // -------------- logout related actions --------------
 export function logout() {
     delete window.localStorage.jwt;
+
+    try{
+      UserAnalytics(USER_LOGOUT);  
+    }
+    catch(e){
+      console.log(e);
+    }
     
+
     return {
         type: LOGOUT_USER
     }

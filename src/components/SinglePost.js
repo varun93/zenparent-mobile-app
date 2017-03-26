@@ -75,7 +75,6 @@ const SinglePost = ({post,toggleLike,toggleBookmark,navigator}) => {
 
   };
 
-
   return (
 		
 		 <div style={styles.pageContent} className="single-post page-content">
