@@ -46,6 +46,7 @@ class MainScreen extends Component {
     
   }
 
+    // set analytics
     render() {
       
           return (

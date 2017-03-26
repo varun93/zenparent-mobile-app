@@ -278,10 +278,10 @@ let blogReducer = (blog=INITIAL_STATE,action) => {
 
 		// like post, TODO : as of now dont do anything
 		case POST_LIKE_SUCCESS : 
-			break;
+			return blog;
 		//bookmark post
 		case POST_BOOKMARK_SUCCESS : 
-			break;
+			return blog;
 
 		default : return blog;
 	}

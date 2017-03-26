@@ -12,7 +12,7 @@ export default class App extends Component {
      super(context,props);
 
      // check the status
-     props.appInit(APP_VERSION);
+     this.props.appInit(APP_VERSION);
      
      document.addEventListener('deviceready', this.onDeviceReady, false);
 
@@ -29,12 +29,6 @@ export default class App extends Component {
 
     try{
       window.ga.startTrackerWithId(GA_TRACKING_CODE);
-    }
-    catch(e){
-      console.log(e);//handle errors
-    }
-    
-    try{
       CleverTap.notifyDeviceReady();  
       CleverTap.registerPush();
       CleverTap.enablePersonalization();  
@@ -43,6 +37,7 @@ export default class App extends Component {
       console.log(e);//handle errors
     }
     
+ 
   }
 
   onCleverTapInAppNotificationDismissed(e){
@@ -80,7 +75,7 @@ export default class App extends Component {
   render() {
     let component = AuthScreen;
     let key = 'auth-screen';
-   
+    
     if(window.localStorage.jwt){
       component = MainScreen;
       key = 'main-screen';

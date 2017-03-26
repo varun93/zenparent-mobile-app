@@ -31,13 +31,14 @@ export const REQUEST_SINGLE_POST = 'REQUEST_SINGLE_POST';
 export const ERROR_FETCHING_SINGLE_POST = 'ERROR_FETCHING_SINGLE_POST';
 
 //post like requests
-export const TOGGLE_LIKE = 'POST_LIKE_REQUEST';
-export const POST_LIKE_FAILURE = 'POST_LIKE_FAILURE';
+export const TOGGLE_LIKE = 'TOGGLE_LIKE';
 export const POST_LIKE_SUCCESS = 'POST_LIKE_SUCCESS';
+export const POST_LIKE_FAILURE = 'POST_LIKE_FAILURE';
+
 
 //post bookmark requests
-export const TOGGLE_BOOKMARK = 'POST_BOOKMARK_SUCCESS';
-export const POST_BOOKMARK_REQUEST = 'POST_BOOKMARK_REQUEST';
+export const TOGGLE_BOOKMARK = 'TOGGLE_BOOKMARK';
+export const POST_BOOKMARK_SUCCESS = 'POST_BOOKMARK_SUCCESS';
 export const POST_BOOKMARK_FAILURE = 'POST_BOOKMARK_FAILURE';
 
 //fetch interests
@@ -254,8 +255,17 @@ export function errorReceivingSinglePost(postId){
 //---------------------------- LIKE AND BOOKMARK POSTS -----------------------------------
 
 //Like
-export function toggleLike(postId,state){
+export function toggleLike(postId){
 
+	return {
+		type : TOGGLE_LIKE,
+		postId
+	};
+
+};
+
+export function likePostSuccess(postId,state){
+	
 	// toggle treated as a +ve event, makes no difference to analytics as long it is measuring user engagement
 	try {
   	 BlogAnalytics(POST_LIKED,postId,state); // generates an exception
@@ -265,14 +275,7 @@ export function toggleLike(postId,state){
    	console.log(e); // pass exception object to error handler
 	}
 
-	return {
-		type : TOGGLE_LIKE,
-		postId
-	};
-
-};
-
-export function likePostSuccess(postId){
+	//now create an action
 	return {
 		type : POST_LIKE_SUCCESS,
 		postId
@@ -288,7 +291,15 @@ export function likePostFailure(postId){
 
 
 //Bookmark
-export function toggleBookmark(postId,state){
+export function toggleBookmark(postId){
+
+	return {
+		type : TOGGLE_BOOKMARK,
+		postId
+	};
+};
+
+export function bookmarkPostSuccess(postId,state){
 	
 	// toggle treated as a +ve event, makes no difference to analytics as long it is measuring user engagement
 	try {
@@ -299,13 +310,6 @@ export function toggleBookmark(postId,state){
    	console.log(e); // pass exception object to error handler
 	}
 
-	return {
-		type : TOGGLE_BOOKMARK,
-		postId
-	};
-};
-
-export function bookmarkPostSuccess(postId){
 	return {
 		type : POST_BOOKMARK_SUCCESS,
 		postId
@@ -388,7 +392,7 @@ export function toggleLikeRequest(id){
 	return (dispatch,getState) => {
 		let state = getState();
 		
-		dispatch(toggleLike(id,state));
+		dispatch(toggleLike(id));
 		
 		let request = null;
 
@@ -400,7 +404,7 @@ export function toggleLikeRequest(id){
 		}
 
 		request.then(function(response){
-  				// console.log(response);
+			dispatch(likePostSuccess(id,getState()));
   		}).catch((err) => {
       		// dispatch(errorReceivingPost());
       	});
@@ -412,7 +416,7 @@ export function toggleBookmarkRequest(id){
 	return (dispatch,getState) => {
 		let state = getState();
 
-		dispatch(toggleBookmark(id,state));
+		dispatch(toggleBookmark(id));
 
 		let request = null;
 		let operation = '+';
@@ -428,7 +432,7 @@ export function toggleBookmarkRequest(id){
 		dispatch(updateBookmarkedList(id,operation));
 
 		request.then((response) => {
-			// console.log(response);
+			dispatch(bookmarkPostSuccess(id,getState()));
 		}).catch((err) =>{
 			//handle the error appropriately
 		});

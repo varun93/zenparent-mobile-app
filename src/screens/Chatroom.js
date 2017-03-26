@@ -7,11 +7,20 @@ import InputBoxPaneContainer from '../containers/InputBoxPaneContainer';
 import ChatroomApi from '../api/ChatroomApi';
 import {getChatroom} from '../utils';
 import {leaveChatroom} from '../actions/chatActions';
+import {ChatroomAnalytics} from '../utils/Analytics';
+import {CHATROOM_VISITED} from '../constants';
 
 class Chatroom extends Component{
 
 	constructor(props,context){
 		super(props,context);
+		try{
+			ChatroomAnalytics(CHATROOM_VISITED,this.props.chatroomId,this.props.title);
+		}
+		catch(e){
+			console.log(e);
+		}
+
 	}
 
 	componentDidMount(){

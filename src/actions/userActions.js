@@ -43,9 +43,6 @@ export const UPDATE_USER_INTERESTS_REQUEST = 'UPDATE_USER_INTERESTS_REQUEST';
 export const UPDATE_USER_INTERESTS_SUCCESS = 'UPDATE_USER_INTERESTS_SUCCESS';
 export const UPDATE_USER_INTERESTS_FAILURE = 'UPDATE_USER_INTERESTS_FAILURE';
 
-
-
-
 // user logout actions
 export const LOGOUT_USER = 'LOGOUT_USER';
 
@@ -55,6 +52,15 @@ export function loginUserSuccess(user,token) {
   
   window.localStorage.setItem('jwt', token);
   
+  try {
+     UserAnalytics(USER_LOGIN,user); // generates an exception
+  }
+  catch (e) {
+    // statements to handle any exceptions
+    console.log(e); // pass exception object to error handler
+  }
+
+
   return {
     type: LOGIN_USER_SUCCESS,
     user,
