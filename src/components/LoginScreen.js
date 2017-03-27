@@ -72,7 +72,7 @@ export default class LoginScreen extends Component{
 	render(){
 		
 		const {user} = this.props;
-		const userEmail = user.userInfo.user_email || '';
+		const userEmail = user.userInfo ? user.userInfo.user_email : '';
 		const error = user.error || '';
 		const loading = user.loading;
 
@@ -83,7 +83,7 @@ export default class LoginScreen extends Component{
 				<div className="login-container">
 
 					{
-					error.trim().length ? 
+					error ? 
 					<div style={styles.errorDiv} className="alert alert-danger">
 						Incorrect Username or Password
 					</div> : ''

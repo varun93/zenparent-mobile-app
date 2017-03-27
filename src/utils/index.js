@@ -148,6 +148,8 @@ export const convertDateToWords = (date) => {
 
 export const hasUserInfoChanged = (currentUserInfo,nextUserInfo) => {
 
+	if(isFieldEmpty(currentUserInfo) || isFieldEmpty(nextUserInfo)) return false;
+
 	const currentStageOfParenting = currentUserInfo.stage_of_parenting;
 	const nextStageOfParenting  = nextUserInfo.stage_of_parenting;
 	const currentUserInterests  = currentUserInfo.interests;

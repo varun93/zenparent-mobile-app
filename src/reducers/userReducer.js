@@ -9,7 +9,7 @@ UPDATE_USER_INTERESTS_REQUEST,UPDATE_USER_INTERESTS_FAILURE,UPDATE_USER_INTEREST
 LOGOUT_USER} from '../actions/userActions';
 import {loadState} from '../utils/localStorage';
 
-const persistedState = loadState() || {};
+const persistedState = loadState() || {forceUpdate : false,authenticated : false,userInfo : null,loading : false,error : false};
 const INITIAL_STATE = persistedState;
 
 const updateUserInfo = (user,state) => {
@@ -100,7 +100,7 @@ let userReducer = (user = INITIAL_STATE, action) => {
 
     //logout user 
     case LOGOUT_USER:
-    return INITIAL_STATE;
+    return {forceUpdate : false,authenticated : false,userInfo : null,loading : false,error : false};
 
     default: return user;
  

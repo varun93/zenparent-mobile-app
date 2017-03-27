@@ -297,6 +297,7 @@ export function forgotPasswordFailure(){
 
 // -------------- logout related actions --------------
 export function logout() {
+    delete window.localStorage.state;
     delete window.localStorage.jwt;
 
     try{
