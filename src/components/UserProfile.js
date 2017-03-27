@@ -165,12 +165,14 @@ export default class UserProfile extends Component{
 
     const {user} = this.props;
     const authenticated = user.authenticated;
- 
-    let stageOfParenting = (authenticated ? user.userInfo.stage_of_parenting : '');
-    let displayName = (authenticated ? user.userInfo.first_name : '');
-    let date = (authenticated ? (stageOfParenting == 'parent' ? user.userInfo.dob : user.userInfo.due_date) : '');
+    const editMode = this.state.editMode;
+   
+    let stageOfParenting = editMode ? this.state.stageOfParenting : (authenticated ? user.userInfo.stage_of_parenting : '');
+    let displayName = editMode ? this.state.displayName : (authenticated ? user.userInfo.first_name : '');
+    let date = editMode ? this.state.date : (authenticated ? (stageOfParenting == 'parent' ? user.userInfo.dob : user.userInfo.due_date) : '');
     let profileImage = (authenticated ? user.userInfo.user_avatar : 'https://placehold.it/100x100' );
    
+
     return (
     <Page className="user-profile">
 
@@ -188,9 +190,9 @@ export default class UserProfile extends Component{
           <p>{displayName}</p>
         </div>
 
-        <div style={!this.editMode ?  {padding: "0px 25px"} : {padding: "0px"}} className="profile-form">
+        <div style={{padding: "0px 25px"}} className="profile-form">
           {
-           !this.state.editMode ?
+           !editMode ?
             <div className="form-edit">
             <button onClick={this.toggleEdit.bind(this)} className="btn-edit">
               <img src={`${assetsBase()}edit_white_goedgh.svg`} />
@@ -210,14 +212,14 @@ export default class UserProfile extends Component{
             <div className="display-name">
               <p className="field-label">Name</p>
               {
-               !this.state.editMode ? 
+               !editMode ? 
                <p>{displayName}</p>  : 
                 <p>
                   <Input
                     onChange={this._onDisplayNameChanged.bind(this)}
                     modifier="underbar"
                     type="text"
-                    value={this.state.displayName}
+                    value={displayName}
                     className="user-name"
                     float />
                 </p>
@@ -228,10 +230,10 @@ export default class UserProfile extends Component{
             <div className="parenting-stage">
              <p className="field-label">Parenting Stage</p>
               {
-               !this.state.editMode ? 
+               !editMode ? 
                <p>{stageOfParenting}</p> : 
                <p>
-                <select value={this.state.stageOfParenting}  onChange={this._onStageOfParentingChanged.bind(this)} style={styles.stageOfParentingSelect}>
+                <select value={stageOfParenting}  onChange={this._onStageOfParentingChanged.bind(this)} style={styles.stageOfParentingSelect}>
                   <option value="parent">Parent</option>
                   <option value="pregnant">Pregnant</option>
                  </select>
@@ -261,7 +263,7 @@ export default class UserProfile extends Component{
                       type="text"
                       onFocus={() => this.setState({showDateField : true})}
                       modifier="underbar"
-                      value={this.state.date} />
+                      value={date} />
                 }
                   
                   </p>

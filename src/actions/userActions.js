@@ -310,7 +310,9 @@ export function logout() {
     catch(e){
       console.log(e);
     }
-    
+   
+    // cache removed 
+    removeCache(USER_LOGOUT);
 
     return {
         type: LOGOUT_USER

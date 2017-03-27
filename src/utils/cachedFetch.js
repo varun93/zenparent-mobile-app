@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import {GROUP_JOIN_UNJOIN,PROFILE_UPDATE,LIKED_BOOKMARKED,UPDATE_USER_INTERESTS,
 SLOT_POSTS_ENDPOINT,EDITORIAL_POSTS_ENDPOINT,POPULAR_POSTS_ENDPOINT,
-BOOKMARKED_POSTS_ENDPOINT,FETCH_INTERESTS_ENDPOINT,LIST_CHAT_GROUPS_ENDPOINT} from '../constants';
+BOOKMARKED_POSTS_ENDPOINT,FETCH_INTERESTS_ENDPOINT,LIST_CHAT_GROUPS_ENDPOINT,USER_LOGOUT} from '../constants';
 
 const generateCacheKey = (s) => {
   let hash = 0;
@@ -46,7 +46,14 @@ export const removeCache = (action) => {
         urls.push(EDITORIAL_POSTS_ENDPOINT);
         urls.push(SLOT_POSTS_ENDPOINT);
         break;
-  
+    
+      case USER_LOGOUT : 
+        urls.push(FETCH_INTERESTS_ENDPOINT);
+        urls.push(SLOT_POSTS_ENDPOINT);
+        urls.push(LIST_CHAT_GROUPS_ENDPOINT);
+        break;
+
+
      }
 
   urls.forEach((url) => {
