@@ -11,9 +11,6 @@ export default class App extends Component {
      
      super(context,props);
 
-     // check the status
-     this.props.appInit(APP_VERSION);
-     
      document.addEventListener('deviceready', this.onDeviceReady, false);
 
      // document.addEventListener('onCleverTapInAppNotificationDismissed', this.onCleverTapInAppNotificationDismissed, false);
@@ -24,8 +21,12 @@ export default class App extends Component {
   }
 
 
-  onDeviceReady(){
+  componentWillMount(){
+     // check the status
+     this.props.appInit(APP_VERSION);
+  }
 
+  onDeviceReady(){
 
     try{
       window.ga.startTrackerWithId(GA_TRACKING_CODE);

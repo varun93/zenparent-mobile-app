@@ -1,5 +1,4 @@
-// const environment = process.env.NODE_ENV;
-const environment = "production";
+const environment = process.env.NODE_ENV;
 
 import {POST_LIKED,POST_BOOKMARKED,SCREEN_VIEWED,POST_SHARED,
 	CHATROOM_VISITED,JOINED_CHATROOM,LEFT_CHATROOM,MESSAGE_SENT,
