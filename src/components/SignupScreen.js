@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Page,Input,ProgressCircular} from 'react-onsenui';
+import {Page,Input,ProgressCircular,Icon} from 'react-onsenui';
 import CustomInput from './CustomInput';
 import {isFieldEmpty,validateDate} from '../utils';
 import Toolbar from '../templates/Toolbar';
@@ -105,7 +105,7 @@ export default class SignupScreen extends Component{
 		          	/>
 
 			        <button className={`loginBtn emailBtn`} onClick={this._onClick.bind(this)}>
-			            {loading ? <ProgressCircular className="loading" indeterminate/> :  `Signup` } 
+			            {loading ? <Icon style={{color: 'white'}} size={28} spin icon='md-spinner'/> :  `Signup` } 
 			        </button>
 	
 				</div>

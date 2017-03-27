@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Page,Input,ProgressCircular} from 'react-onsenui';
+import {Page,Input,ProgressCircular,Icon} from 'react-onsenui';
 import Toolbar from '../templates/Toolbar';
 import CustomInput from './CustomInput';
 import {isFieldEmpty,generateNavigationKey} from '../utils';
@@ -116,7 +116,7 @@ export default class LoginScreen extends Component{
 					</p>
 
 					<button onClick={this._onClick.bind(this)}>
-			            {loading ? <ProgressCircular className="loading" indeterminate/> :  `Login` } 
+			            {loading ? <Icon style={{color: 'white'}} size={28} spin icon='md-spinner'/> :  `Login` } 
 			        </button>
 
 				</div>
@@ -125,3 +125,5 @@ export default class LoginScreen extends Component{
 		);
 	}
 }
+
+// ion-load-c

@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Page,Toolbar,BackButton,Input} from 'react-onsenui';
+import {Page,Toolbar,BackButton,Input,Icon} from 'react-onsenui';
 import BookmarkedPostsContainer from '../containers/BookmarkedPostsContainer';
 import AuthScreen from '../screens/AuthScreen';
 import {removeCache} from '../utils/cachedFetch';
@@ -166,7 +166,8 @@ export default class UserProfile extends Component{
     const {user} = this.props;
     const authenticated = user.authenticated;
     const editMode = this.state.editMode;
-   
+    const loading = user.loading;
+
     let stageOfParenting = editMode ? this.state.stageOfParenting : (authenticated ? user.userInfo.stage_of_parenting : '');
     let displayName = editMode ? this.state.displayName : (authenticated ? user.userInfo.first_name : '');
     let date = editMode ? this.state.date : (authenticated ? (stageOfParenting == 'parent' ? user.userInfo.dob : user.userInfo.due_date) : '');
@@ -273,7 +274,9 @@ export default class UserProfile extends Component{
             {
               this.state.editMode ?  
               <p>
-                <button onClick={this.updateProfileInfo.bind(this)} className="save-info">Save</button>
+                <button onClick={this.updateProfileInfo.bind(this)} className="save-info">
+                {loading ? <Icon style={{color: 'white'}} size={28} spin icon='md-spinner'/> : `Save`}
+                </button>
               </p> :
               ''
             }

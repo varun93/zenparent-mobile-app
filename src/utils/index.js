@@ -31,8 +31,6 @@ export const getPosts = (postIds=[],posts) => {
 };
 
 
-
-
 // ------ business logic to fetch the chatroom(s) -----------
 export const getChatrooms = (chatIds,chatRooms) => {
 

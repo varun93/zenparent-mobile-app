@@ -1,9 +1,10 @@
 import React,{Component} from 'react';
-import {Page,Dialog,Button,ProgressCircular,BottomToolbar} from 'react-onsenui';
+import {Page,Dialog,Button,ProgressCircular,BottomToolbar,Icon} from 'react-onsenui';
 import {ucFirstLetter} from '../utils';
 import MainScreen from '../screens/MainScreen';
 import {generateNavigationKey} from '../utils';
 import {platform} from 'onsenui';
+import {v4} from 'node-uuid';
 require('../styles/interests.css');
 
 export default class UserInterestsSelector extends Component {
@@ -64,7 +65,7 @@ export default class UserInterestsSelector extends Component {
 	renderInterest(interest){
 
 		return (
-			<div key={interest.term} onClick={this._toggleInterest.bind(this,interest.term)} className={interest.isSelected ? 'interestTag tagSelected' : 'interestTag' }>{interest.label}</div>
+			<div key={v4()} onClick={this._toggleInterest.bind(this,interest.term)} className={interest.isSelected ? 'interestTag tagSelected' : 'interestTag' }>{interest.label}</div>
 		)
 
 	}
@@ -97,7 +98,7 @@ export default class UserInterestsSelector extends Component {
 			 </div>
 			 <div className="continueButton">
 			 	<button onClick={this._submitTags.bind(this)}>
-			 	  {loading ? <ProgressCircular className="loading" indeterminate/> :  `Continue` } 
+			 	  {loading ? <Icon style={{color: 'white'}} size={28} spin icon='md-spinner'/> :  `Continue` } 
 			 	</button>
 			 </div>
 		   </Page>

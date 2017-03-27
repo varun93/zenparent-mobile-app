@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Page,Input} from 'react-onsenui';
+import {Page,Input,Icon} from 'react-onsenui';
 import Toolbar from '../templates/Toolbar';
 import CustomInput from './CustomInput';
 import {isFieldEmpty,validateEmail} from '../utils';
@@ -75,7 +75,7 @@ export default class ForgotPasswordScreen extends Component{
 					</p>
 
 		           	<button onClick={this._onClick.bind(this)}>
-					  Submit
+					 {loading ?  <Icon style={{color: 'white'}} size={28} spin icon='md-spinner'/> : `Submit` }
 					</button>
 				</div>
 
