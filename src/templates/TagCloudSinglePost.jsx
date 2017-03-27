@@ -6,7 +6,7 @@ const styles = {
 
   parent : {
     margin : '15px 0px 0px 0px',
-    padding : '0px 10px'
+    padding : '10px'
   },
 	item : {
 		  display: 'inline-block',

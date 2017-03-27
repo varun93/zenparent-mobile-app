@@ -248,18 +248,13 @@ export function appInitRequestSuccess(forceUpdate,appVersionNumber,user){
 
   if('id' in user && user.id) authenticated = true;
 
-  if(authenticated){
-
-    try {
-       UserAnalytics(USER_PROFILE_SYNC,user); // generates an exception
+  try {
+      UserAnalytics(USER_PROFILE_SYNC,user); // generates an exception
     }
     catch (e) {
-      // statements to handle any exceptions
       console.log(e); // pass exception object to error handler
     }
 
-  }
-  
   return {
     type : APP_INIT_REQUEST_SUCCESS,
     forceUpdate,

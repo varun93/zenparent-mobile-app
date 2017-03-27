@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
+import throttle from 'lodash/throttle';
+import {saveState} from './src/utils/localStorage';
 import initialState from './src/constants/initialState';
 require('es6-promise').polyfill();
 require('es6-object-assign').polyfill();
@@ -15,7 +17,12 @@ require('onsenui/css/onsenui.css');
 require('onsenui/css/onsen-css-components.css');
 require('styles/common.css');
 
-let store = configureStore(initialState)
+let store = configureStore(initialState);
+
+store.subscribe(throttle(() =>{
+	saveState(store.getState().user);
+},1000));
+
 const rootElement = document.getElementById('app');
 
 ReactDOM.render(

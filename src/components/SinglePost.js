@@ -35,6 +35,13 @@ const styles = {
   featuredImage : {
     textAlign : "center"
   },
+  shareIcon : {
+    display : "inline-block"
+  },
+  shareIconImage : {
+    width : "24px",
+    height : "24px"
+  },
   footer : {
     left : "0px",
     padding:"0px 10px",
@@ -111,7 +118,9 @@ const SinglePost = ({post,toggleLike,toggleBookmark,navigator}) => {
               <div onClick={() => toggleBookmark(post.id)} style={{margin : "0 25%"}} className="articleBookmark">
                  {post.bookmarked ? <img src={`${prefix}bookmark-active.svg`} /> : <img src={`${prefix}bookmark-default.svg`} />}
               </div>
-              <ons-icon onClick={() => sharePost()} size="30px" icon="fa-share-alt"></ons-icon>
+              <div style={styles.shareIcon} onClick={() => sharePost()}>
+                <img style={styles.shareIconImage} src={`${prefix}share-icon.svg`} />
+              </div>
             </BottomToolbar>
 
 		</div>

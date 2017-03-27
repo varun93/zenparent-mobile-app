@@ -80,13 +80,16 @@ export const UserAnalytics = (event,user) => {
 		if(user){
 			const cleverTapUserObj =  {
 				Identity : user.id,
+				Email : user.user_email,
 				StageOfParenting : user.stage_of_parenting,
 				DueDate : user.due_date,
 				DateOfBirth : user.dob, 
 				LanguagePreference : user.language_preference,
 				SignupCompletionLevel : 'done',
-				user_activated : user.user_activated,
-				interests : user.interests.join(' | ') 
+				user_activated : user.is_user_activated,
+				interests : user.interests.join(' | '),
+				'MSG-email' : true,
+				'MSG-push' :  true  
 			};	
 			// set profile info
 			// console.log(cleverTapUserObj);
@@ -104,6 +107,7 @@ export const UserAnalytics = (event,user) => {
 				CleverTap.recordEventWithName("Login");
 				break;
 			case USER_PROFILE_SYNC: 
+				CleverTap.recordEventWithName("User Profile Sync");
 				break;
 			case USER_PROFILE_UPDATED : 
 				// console.log("User Profile Updated");

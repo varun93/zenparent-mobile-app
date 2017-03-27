@@ -25,7 +25,7 @@ class MainScreen extends Component {
     return [
         {
           content: <HomeScreen key='home-screen' user={this.props.user} navigator={this.props.navigator} title='Home' />,
-          tab: <Tab key={0} className="tab home-tab" label='Home' icon='' />
+          tab: <Tab key={0} className="tab home-tab" label='You' icon='' />
         },
         {
           content: <Community  key='community' user={this.props.user} navigator={this.props.navigator} title='Community' />,

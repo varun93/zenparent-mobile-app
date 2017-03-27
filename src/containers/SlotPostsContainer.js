@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import PostsListWrapper from '../templates/PostsListWrapper';
 import {fetchSlotPosts,toggleLike,toggleBookmark,HOMEPAGE_SLOT_POSTS} from '../actions/blogActions';
-import {getPosts} from '../utils';
+import {getPosts,hompepageTitle} from '../utils';
 import CarouselLoader from '../templates/CarouselLoader';
 import PostsCarousel from '../components/PostsCarousel';
 
@@ -21,6 +21,7 @@ class SlotPostsContainer extends Component{
 	render(){
 
 		let posts = [];
+		let title = '';
 		
 		if(this.props.slotPosts.loading){
 			return (
@@ -31,9 +32,10 @@ class SlotPostsContainer extends Component{
 			posts = getPosts(this.props.slotPosts.posts,this.props.posts);
 		}
 		
+
 		return (
 			<div>
-				<PostsCarousel title="Your Stories" toggleLike={this.props.toggleLike} toggleBookmark={this.props.toggleBookmark} position="5" posts={posts} navigator={this.props.navigator} />
+				<PostsCarousel title={hompepageTitle(this.props.user)} toggleLike={this.props.toggleLike} toggleBookmark={this.props.toggleBookmark} position="5" posts={posts} navigator={this.props.navigator} />
 			</div>
 		);
 
@@ -45,6 +47,7 @@ class SlotPostsContainer extends Component{
 
 const mapStateToProps = (state) => {
 	return {
+		user : state.user.userInfo,
 		posts  : state.blog.posts.byId,
 		slotPosts : state.blog[HOMEPAGE_SLOT_POSTS]
 	};

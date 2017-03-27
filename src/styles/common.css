@@ -1,3 +1,13 @@
+@font-face {
+    font-family: TimesNewRoman;
+    src: url(/assets/Times-New-Roman.tff);
+}
+
+body,body p,body div{
+	font-family: TimesNewRoman !important;
+}
+
+
 .back-button__icon:before {
     color: #8675A1;
 }
@@ -39,7 +49,7 @@
 }
 
 .card .articleLike img,.card .articleBookmark img{
-	height: 28px !important;
+	height: 20px !important;
 }
 
 .list{
@@ -50,6 +60,7 @@
 .list-header{
 	font-size: 15px !important;
 	padding: 10px 0px 0px !important;
+	text-transform: initial !important;
 }
 
 .list-item{
@@ -191,6 +202,6 @@ ons-tab.user-profile-tab.active .ons-icon{
 }
 
 /*  Fix top bar and bottom bar */
-ons-toolbar,ons-bottom-toolbar{
+ons-bottom-toolbar{
 	position: fixed !important; 
 }

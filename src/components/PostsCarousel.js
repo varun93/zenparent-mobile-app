@@ -25,7 +25,7 @@ const styles = {
 	      lineHeight : "1.2"
 	},
 	overlay : {
-	    width: '90%',
+	    width: '89.5%',
 	    position: 'absolute',
 	    bottom: '0',
 	    height:"150px",
@@ -67,7 +67,7 @@ export default class PostsCarousel extends Component{
 		return(
 			<div>
 				<p style={{position:'absolute',top : `${position}px`,left : '10px',fontWeight:'bold',color : 'rgb(255, 84, 124)'}}>{this.props.title}</p>	
-				<Carousel style={{top : `${position+30}px`,height : '150px'}} ref="carousel" direction="horizontal" itemWidth="220px" initialIndex="0" autoScroll overscrollable fullscreen swipeable>
+				<Carousel style={{top : `${position+30}px`,height : '150px'}} ref="carousel" direction="horizontal" itemWidth="48%" initialIndex="0" autoScroll overscrollable fullscreen swipeable>
 					{this.props.posts.map(this.renderCarouselItem.bind(this))}
 				</Carousel>
 			</div>

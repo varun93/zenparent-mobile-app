@@ -24,7 +24,7 @@ class PopularPostsContainer extends Component{
 		
 		return (
 			<div>
-				<PostsCarousel position="210" title="Popular Posts" toggleLike={this.props.toggleLike} toggleBookmark={this.props.toggleBookmark}  posts={posts} navigator={this.props.navigator} />
+				<PostsCarousel position="210" title="Top Posts" toggleLike={this.props.toggleLike} toggleBookmark={this.props.toggleBookmark}  posts={posts} navigator={this.props.navigator} />
 			</div>
 		);
 

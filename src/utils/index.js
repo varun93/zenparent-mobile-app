@@ -93,6 +93,28 @@ export const validateDate = (date) => {
 	return isValid;
 };
 
+//get homepage title
+export const hompepageTitle = (user) => {
+
+
+	if(isFieldEmpty(user)){
+		return null;
+	}
+
+	const stageOfParenting = user.stage_of_parenting;
+	let title = '';
+	if(stageOfParenting == 'parent'){
+		title = 'Your Child : Month ' + user.kids_age_in_months;
+	}
+	if(stageOfParenting == 'pregnant'){
+		title = 'Your Pregnancy : Week ' + user.week_number;
+	}
+
+	return title;
+
+};
+
+
 // -------- Convert date to words ------------
 export const convertDateToWords = (date) => {
 	let monthNames = [ "January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];

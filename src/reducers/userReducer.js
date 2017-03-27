@@ -7,9 +7,10 @@ CHECK_USER_STATUS_REQUEST,USER_STATUS_RECIEVED,ERROR_FETCHING_USER_STATUS,
 UPDATE_USER_INFO_REQUEST,UPDATE_USER_INFO_SUCCESS,UPDATE_USER_INFO_FAILURE,
 UPDATE_USER_INTERESTS_REQUEST,UPDATE_USER_INTERESTS_FAILURE,UPDATE_USER_INTERESTS_SUCCESS,
 LOGOUT_USER} from '../actions/userActions';
+import {loadState} from '../utils/localStorage';
 
-
-const INITIAL_STATE = {forgotPassword:{status : '',message : ''},forceUpdate : false,authenticated : false,userInfo: {}, status : 'anonymous',error:null, loading: false,token : null};
+const persistedState = loadState() || {};
+const INITIAL_STATE = persistedState;
 
 const updateUserInfo = (user,state) => {
     return Object.assign({},state,{authenticated : true,status :'user-profile-updated',userInfo : user,loading : false,error : false});
@@ -29,7 +30,7 @@ let userReducer = (user = INITIAL_STATE, action) => {
   switch (action.type) {
    
     case APP_INIT_REQUEST : 
-    return Object.assign({},user,{forceUpdate : false,authenticated : false,userInfo : null,error : false,loading : true});
+    return Object.assign({},user,{loading : true});
     case APP_INIT_REQUEST_SUCCESS : 
     return updateUserInfoWithToken(action.user,action.token,'logged-in',user);
     case APP_INIT_REQUEST_FAILURE : 

@@ -79,7 +79,15 @@ const cachedFetch = (url, options) => {
   }
   // Use the URL as the cache key to sessionStorage
   let cacheKey = generateCacheKey(url);
-  let cached = localStorage.getItem(cacheKey)
+  let cached = null;
+
+  try{
+    cached = localStorage.getItem(cacheKey);  
+  }
+  catch(e){
+    cached = null;
+  }
+  
   let whenCached = localStorage.getItem(cacheKey + ':ts')
   if (cached !== null && whenCached !== null) {
     // it was in sessionStorage! Yay!
@@ -107,8 +115,16 @@ const cachedFetch = (url, options) => {
           
           if(status == true){
             content = JSON.stringify(content);
-            localStorage.setItem(cacheKey, content)
-            localStorage.setItem(cacheKey+':ts', Date.now())  
+
+            try{
+              localStorage.setItem(cacheKey, content);
+              localStorage.setItem(cacheKey+':ts', Date.now());
+            }
+            catch(e){
+              console.log(e);
+            }
+
+              
           }
         })
     }

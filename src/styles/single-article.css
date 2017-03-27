@@ -1,7 +1,7 @@
-.article-content p,.article-content li{
-	font-size: 16px;
-    font-family: sans-serif;
-    font-weight: 500;
+.single-post p,.single-post li{
+	font-size: 16px !important;
+	line-height: 1.5 !important;
+	font-family: TimesNewRoman !important;
 }
 
 .article-content img{
@@ -9,8 +9,9 @@
 	height: auto;
 }
 
-.article-content h1{
+.article-content h1,.article-content h2{
 	font-size: 18px !important;
+
 }
 
 .single-article .navigation-bar__title{

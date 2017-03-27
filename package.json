@@ -53,6 +53,7 @@
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
-    "es6-object-assign": "^1.1.0"
+    "es6-object-assign": "^1.1.0",
+    "lodash": "^4.17.4"
   }
 }

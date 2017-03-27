@@ -1,5 +1,6 @@
-export const initialState = {
+export let initialState = {
 	'user' : {},
 	'blog' : {},
 	'chat' : {}
 };
+
