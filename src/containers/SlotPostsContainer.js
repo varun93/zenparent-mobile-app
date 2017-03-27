@@ -35,7 +35,7 @@ class SlotPostsContainer extends Component{
 
 		return (
 			<div>
-				<PostsCarousel title={hompepageTitle(this.props.user)} toggleLike={this.props.toggleLike} toggleBookmark={this.props.toggleBookmark} position="5" posts={posts} navigator={this.props.navigator} />
+				<PostsCarousel title={hompepageTitle(this.props.user)} toggleLike={this.props.toggleLike} toggleBookmark={this.props.toggleBookmark} position={this.props.position} posts={posts} navigator={this.props.navigator} />
 			</div>
 		);
 

@@ -3,6 +3,7 @@ import {Page} from 'react-onsenui';
 import {hasUserInfoChanged,generateNavigationKey} from '../utils';
 import getNextRoute from '../utils/getNextRoute'; 
 import AuthScreen from '../screens/AuthScreen';
+import ProgressInfo from '../templates/ProgressInfo';
 import SlotPostsContainer from '../containers/SlotPostsContainer';
 import UserFeedsContainer from '../containers/UserFeedsContainer';
 import InterestsCarousel from '../components/InterestsCarousel';
@@ -41,9 +42,10 @@ export default class Homescreen extends Component{
 	render(){
 		return (
 			<Page key='homescreen'>
-				 <SlotPostsContainer update={this.state.update} navigator={this.props.navigator} />
-				 <InterestsCarousel position='210' navigator={this.props.navigator} />
-				 <UserFeedsContainer title='Stories Just for You' update={this.state.update} position='340' section={USER_FEED_RELEVANCE} navigator={this.props.navigator} />
+				 <ProgressInfo user={this.props.user.userInfo} />
+				 <SlotPostsContainer position='120' update={this.state.update} navigator={this.props.navigator} />
+				 <InterestsCarousel position='330' navigator={this.props.navigator} />
+				 <UserFeedsContainer title='Stories Just for You' update={this.state.update} position='365' section={USER_FEED_RELEVANCE} navigator={this.props.navigator} />
 			</Page>
 			)
 	}

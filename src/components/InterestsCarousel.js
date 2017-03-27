@@ -104,7 +104,7 @@ class InterestsCarousel extends Component{
 		return(
 			<div>
 				<p style={{position:'absolute',top : `${position}px`,left : '10px',fontWeight:'bold',color : 'rgb(255, 84, 124)'}}>Your Interests</p>
-				<Carousel style={{top : `${position+30}px`,height : '90px' }} ref="carousel" direction="horizontal" itemWidth="120px" initialIndex="0" autoScroll overscrollable fullscreen swipeable>
+				<Carousel style={{top : `${position+30}px`,height : '90px' }} ref="carousel" direction="horizontal" itemWidth="32%" initialIndex="0" autoScroll overscrollable fullscreen swipeable>
 					{this.props.interests.terms.filter((interest) => interest.isSelected).concat({term:'last'}).map(this.renderCarouselItem.bind(this))}
 				</Carousel>
 			</div>

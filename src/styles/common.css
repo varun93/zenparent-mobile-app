@@ -61,6 +61,8 @@ body,body p,body div{
 	font-size: 15px !important;
 	padding: 10px 0px 0px !important;
 	text-transform: initial !important;
+	background-image: none !important;
+    background-image: none !important;
 }
 
 .list-item{
@@ -205,3 +207,4 @@ ons-tab.user-profile-tab.active .ons-icon{
 ons-bottom-toolbar{
 	position: fixed !important; 
 }
+
