@@ -24,7 +24,7 @@ class EditorialPostsContainer extends Component{
 		
 		return (
 			<div>
-				<PostsCarousel position="5" title="From The Editor" toggleLike={this.props.toggleLike} toggleBookmark={this.props.toggleBookmark} position="0px" posts={posts} navigator={this.props.navigator} />
+				<PostsCarousel position={this.props.position} title="From The Editor" toggleLike={this.props.toggleLike} toggleBookmark={this.props.toggleBookmark} position="0px" posts={posts} navigator={this.props.navigator} />
 			</div>
 		);
 

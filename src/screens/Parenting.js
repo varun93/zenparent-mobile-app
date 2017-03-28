@@ -12,10 +12,10 @@ export default class ParentingScreen extends Component{
   render(){
     return (
       <Page key='parenting-screen'>
-         <EditorialPostsContainer navigator={this.props.navigator} />
-         <PopularPostsContainer navigator={this.props.navigator} />
-         <InterestsCarousel position='420' navigator={this.props.navigator} />
-         <UserFeedsContainer title='Latest Stories of Your Interest' position='550' section={USER_FEED_TIME} navigator={this.props.navigator} />
+         <EditorialPostsContainer position='10' navigator={this.props.navigator} />
+         <PopularPostsContainer position='210'  navigator={this.props.navigator} />
+         <InterestsCarousel position='425' navigator={this.props.navigator} />
+         <UserFeedsContainer title='Latest Stories of Your Interest' position='545' section={USER_FEED_TIME} navigator={this.props.navigator} />
       </Page>
       )
   }

@@ -42,7 +42,7 @@ const mergePosts = (posts,state) => {
 
 //update the master list
 //then update the references to the master list
-const updatePostsList = (posts,key,state) => {
+const updatePostsList = (posts=[],key,state) => {
 
   let mergedPosts = mergePosts(posts,state);
   let existingPosts = state[key].posts || [];
@@ -65,7 +65,7 @@ const requestArchivePosts = (term,key,state) => {
 	return Object.assign({},state,{[key] : Object.assign({},state[ARCHIVE_POSTS],{[term] : Object.assign({},existingTerm,{loading : true,error : false})})});
 };
 
-const receivedArchivePosts = (posts,term,key,state) => {
+const receivedArchivePosts = (posts=[],term,key,state) => {
 
 	let mergedPosts = mergePosts(posts,state);
 	
@@ -164,8 +164,6 @@ const toggleInterests = (term,state) => {
 const updateBookmarkedList = (postId,operation,state) => {
 
 	let updatedList = [];
-
-	console.log(operation);
 
 	if(operation == '-'){
 		updatedList = state[BOOKMARKED_POSTS].posts.filter(function(post){

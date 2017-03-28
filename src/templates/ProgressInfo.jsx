@@ -14,7 +14,7 @@ const styles = {
 	  textAlign : "center",
 	  verticalAlign : "middle",
 	  display : "table-cell",
-	  padding : "18px"
+	  padding : "15px"
 	},
 	message : {
 		width : "75%",
