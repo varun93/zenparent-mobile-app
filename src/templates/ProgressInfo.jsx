@@ -4,33 +4,33 @@ const styles = {
 	
 	wrapper : {
 		width : "100%",
-		textAlign : "center"
+		display : "table",
+		background : "white"
 	},
 	container : {
-	  width : "85px",
-	  height : "85px",
+	  width : "25%",
 	  background : "rgb(132,116,159)",
 	  color : "white",
-	  margin  : "0 auto",
-	  position : "relative",
-	  borderRadius : "50%"
-	},
-	label : {
-	   position : "absolute", 
-	   top : "40%",
-	   left : "24%",
-	   fontSize: "14px",
-   	   fontWeight: "bold"
+	  textAlign : "center",
+	  verticalAlign : "middle",
+	  display : "table-cell",
+	  padding : "18px"
 	},
 	message : {
-		fontSize : "14px"	
+		width : "75%",
+		fontSize : "16px",
+		textAlign : "center",
+	  	verticalAlign : "middle",
+		margin : "5px 0px !important",
+		display : "table-cell"	
 	}
-
 };
-
 
 const ProgressInfo =  ({user}) => {
 
+	if(user === undefined || user == null){
+		return null;
+	}
 
 	const message = () => {
 
@@ -65,11 +65,11 @@ const ProgressInfo =  ({user}) => {
 	return (
 		<div style={styles.wrapper}>
 			<div style={styles.container}>
-	  			<div style={styles.label}>
-	    			{messages.blockOne}
-				</div>
+				{messages.blockOne}
 			</div>
-			<p style={styles.message}>{messages.blockTwo}</p>
+			<div style={styles.message}>
+				{messages.blockTwo}
+			</div>
 		</div>
 	)
 };

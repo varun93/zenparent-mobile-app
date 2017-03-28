@@ -1,12 +1,11 @@
 @font-face {
-    font-family: TimesNewRoman;
-    src: url(/assets/Times-New-Roman.tff);
+    /*font-family: TimesNewRoman;*/
+    src: url('/assets/Times-New-Roman.tff');
 }
 
 body,body p,body div{
-	font-family: TimesNewRoman !important;
+	font-family: TimesNewRoman,-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
 }
-
 
 .back-button__icon:before {
     color: #8675A1;
@@ -49,7 +48,7 @@ body,body p,body div{
 }
 
 .card .articleLike img,.card .articleBookmark img{
-	height: 20px !important;
+	height: 22px !important;
 }
 
 .list{
@@ -204,7 +203,7 @@ ons-tab.user-profile-tab.active .ons-icon{
 }
 
 /*  Fix top bar and bottom bar */
-ons-bottom-toolbar{
+ons-toolbar,ons-bottom-toolbar{
 	position: fixed !important; 
 }
 

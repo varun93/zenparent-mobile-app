@@ -146,6 +146,7 @@ export default class UserProfile extends Component{
   }
 
   logout(){
+    this.props.navigator.resetPage({component : AuthScreen,key : generateNavigationKey('auth-screen')});
     this.props.logout();
   }
 

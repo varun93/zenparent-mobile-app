@@ -4,12 +4,12 @@
 	font-family: TimesNewRoman !important;
 }
 
-.article-content img{
+.article-content img,.article-content iframe{
 	width: 100%;
 	height: auto;
 }
 
-.article-content h1,.article-content h2{
+.article-content h1,.article-content h2,.article-content h3{
 	font-size: 18px !important;
 
 }

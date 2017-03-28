@@ -94,18 +94,22 @@ export const validateDate = (date) => {
 //get homepage title
 export const hompepageTitle = (user) => {
 
+	let title = '';
 
 	if(isFieldEmpty(user)){
-		return null;
+		return title;
 	}
 
 	const stageOfParenting = user.stage_of_parenting;
-	let title = '';
+	
 	if(stageOfParenting == 'parent'){
-		title = 'Your Child : Month ' + user.kids_age_in_months;
+		const months = user.kids_age_in_months;
+		const years = user.kids_age_in_years;
+		title = (months < 24) ? `Your Child : Month ${months}` : `Your Child : Years ${years}`;	
 	}
+
 	if(stageOfParenting == 'pregnant'){
-		title = 'Your Pregnancy : Week ' + user.week_number;
+		title = `Your Pregnancy : Week ${user.week_number}`;
 	}
 
 	return title;

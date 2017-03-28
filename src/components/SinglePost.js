@@ -51,7 +51,8 @@ const styles = {
     width:"100%",
     textAlign:"center",
     position:"fixed",
-    bottom:"0px"
+    bottom:"0px",
+    borderTop : "1px solid gray"
   }
 
 };

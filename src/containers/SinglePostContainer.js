@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import {ProgressCircular} from 'react-onsenui';
 import {connect} from 'react-redux';
 import BlogApi from '../api/BlogApi';
 import SinglePost from '../components/SinglePost';
@@ -30,7 +31,7 @@ class SinglePostContainer extends Component {
 	render(){
 
 		if(this.props.activePost.loading){
-			return (<p>Loading ...</p>);
+			return (<ProgressCircular style={{top: "45%", position : "fixed",left: "45%"}} indeterminate/>);
 		}
 		if(this.props.error){
 			return (<p>Error Occurred ... </p>);

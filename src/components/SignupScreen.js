@@ -73,7 +73,6 @@ export default class SignupScreen extends Component{
 
 		return (
 			<Page key="signup-screen" className="signup-screen">
-				<Toolbar navigator={navigator} />
 				<div className="signup-container">
 
 					<p>

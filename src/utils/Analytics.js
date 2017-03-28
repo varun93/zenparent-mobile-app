@@ -10,8 +10,13 @@ export const BlogAnalytics = (event,postId,state) => {
 	
 	if(environment == 'production'){
 
+
+		if(CleverTap === undefined || CleverTap === null || window.ga === null || window.ga === undefined){
+			return;
+		}
+
 		//substring to limit the number of characters
-		const title = state.blog.posts.byId[postId].title.substr(0,100);
+		const title = (typeof state == 'object') ? state.blog.posts.byId[postId].title.substr(0,100) : state;
 	
 		switch(event){
 			case POST_LIKED : 
@@ -76,6 +81,9 @@ export const UserAnalytics = (event,user) => {
 	
 	if(environment == 'production'){
 
+		if(CleverTap === undefined || CleverTap === null){
+			return;
+		}
 
 		if(user){
 			const cleverTapUserObj =  {
@@ -95,7 +103,7 @@ export const UserAnalytics = (event,user) => {
 			// console.log(cleverTapUserObj);
 			CleverTap.profileSet(cleverTapUserObj);
 		}
-		
+
 
        	switch(event){
 			case USER_SIGNUP : 

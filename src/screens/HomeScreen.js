@@ -22,12 +22,6 @@ export default class Homescreen extends Component{
 
 	}
 
-	componentDidUpdate(){
-		if(!this.props.user.authenticated){
-			this.props.navigator.resetPage({component : AuthScreen,key : generateNavigationKey('auth-screen')});
-    	}
-    }
-
 
 	componentWillReceiveProps(nextProps){
 
@@ -43,9 +37,9 @@ export default class Homescreen extends Component{
 		return (
 			<Page key='homescreen'>
 				 <ProgressInfo user={this.props.user.userInfo} />
-				 <SlotPostsContainer position='120' update={this.state.update} navigator={this.props.navigator} />
-				 <InterestsCarousel position='330' navigator={this.props.navigator} />
-				 <UserFeedsContainer title='Stories Just for You' update={this.state.update} position='365' section={USER_FEED_RELEVANCE} navigator={this.props.navigator} />
+				 <SlotPostsContainer position='75' update={this.state.update} navigator={this.props.navigator} />
+				 <InterestsCarousel position='270' navigator={this.props.navigator} />
+				 <UserFeedsContainer title='Stories Just for You' update={this.state.update} position='325' section={USER_FEED_RELEVANCE} navigator={this.props.navigator} />
 			</Page>
 			)
 	}

@@ -78,8 +78,7 @@ export default class LoginScreen extends Component{
 
 		return (
 			<Page key="login-screen" className="login-screen">
-				<Toolbar navigator={this.props.navigator} /> 
-
+				
 				<div className="login-container">
 
 					{

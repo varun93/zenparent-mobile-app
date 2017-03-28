@@ -62,7 +62,7 @@ const styles = {
     marginBottom : '10px'
   },
   postTitle : {
-   fontSize : "16px",
+   fontSize : "14px",
    fontWeight : "bold",
    lineHeight:"1.3",
    letterSpacing: "-.02em!important",
