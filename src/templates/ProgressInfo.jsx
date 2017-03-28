@@ -41,8 +41,13 @@ const ProgressInfo =  ({user}) => {
 
 			const months = user.kids_age_in_months;
 			const years = Math.floor(months/12);
+			const weeks = user.kids_age_in_weeks;
 
-			if(months < 24){
+			if(months == 0){
+				blockOne = `Week ${weeks}`;
+				blockTwo = `Hey ${user.first_name}, your child is ${weeks} ${weeks > 1 ? `weeks` : `week`} old.`;
+			}
+			else if(months < 24){
 				blockOne = `Month ${months}`;
 				blockTwo = `Hey ${user.first_name}, your child is ${months} ${months > 1 ? `months` : `month`} old.`;
 			}

@@ -3,6 +3,8 @@ import {Navigator} from 'react-onsenui';
 import {generateNavigationKey} from '../utils';
 import MainScreen from '../screens/MainScreen';
 import AuthScreen from '../screens/AuthScreen';
+import {loadState} from '../utils/localStorage';
+import getNextRoute from '../utils/getNextRoute';
 import {APP_VERSION,GA_TRACKING_CODE} from '../constants';
 
 export default class App extends Component {
@@ -10,8 +12,6 @@ export default class App extends Component {
    constructor(context,props){
      
      super(context,props);
-
-     document.addEventListener('deviceready', this.onDeviceReady, false);
 
      // document.addEventListener('onCleverTapInAppNotificationDismissed', this.onCleverTapInAppNotificationDismissed, false);
      // deeplink handler
@@ -30,16 +30,12 @@ export default class App extends Component {
 
     try{
       window.ga.startTrackerWithId(GA_TRACKING_CODE);
-      CleverTap.notifyDeviceReady();  
-      CleverTap.registerPush();
-      CleverTap.enablePersonalization();  
     }
     catch(e){
       console.log(e);//handle errors
     }
     
- 
-  }
+ }
 
   onCleverTapInAppNotificationDismissed(e){
         console.log(e.extras);
@@ -48,14 +44,14 @@ export default class App extends Component {
     
     // deep link handling
     onDeepLink(e) {
-        console.log("In deeplink");
-        console.log(JSON.stringify(e.deeplink));
+        // console.log("In deeplink");
+        // console.log(JSON.stringify(e.deeplink));
     }
     
     // push notification payload handling
     onPushNotification(e) {
-        console.log("In Push Notifcation Screen");
-        console.log(JSON.stringify(e.notification));
+        // console.log("In Push Notifcation Screen");
+        // console.log(JSON.stringify(e.notification));
   }
   
   //replace this with props
@@ -78,8 +74,20 @@ export default class App extends Component {
     let key = 'auth-screen';
     
     if(window.localStorage.jwt){
-      component = MainScreen;
-      key = 'main-screen';
+  
+      let user = loadState();
+   
+      if(user && user.authenticated){
+        let route = getNextRoute(user);
+        console.log(route);
+        component = route.component;
+        key = 'nextRoute';
+      }
+      else{
+        component = MainScreen;
+        key = 'main-screen';  
+      }
+      
     }
     
     key = generateNavigationKey(key);

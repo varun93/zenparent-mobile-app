@@ -48,19 +48,20 @@ export default class ForgotPasswordScreen extends Component{
 		const userEmail = user.userInfo.user_email || '';
 		const loading = user.loading;
 		const forgotPassword = user.forgotPassword;
+		const message = forgotPassword ? forgotPassword.message : '';
 
 		return (
 				
 				<div className="forgot-password-container">
 					
 				   <div style={styles.errorDiv}>
-					{forgotPassword.message ? 
+					{message.length ? 
 						forgotPassword.status ? 
 						<div className='alert alert-danger'>
-							{forgotPassword.message}
+							{message}
 						</div> :
 						<div className='alert alert-success'>
-							{forgotPassword.message}
+							{message}
 						</div>
 						 : 
 						''

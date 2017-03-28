@@ -106,7 +106,9 @@ export const hompepageTitle = (user) => {
 	if(stageOfParenting == 'parent'){
 		const months = user.kids_age_in_months;
 		const years = user.kids_age_in_years;
-		title = (months < 24) ? `Your Child : Month ${months}` : `Your Child : Years ${years}`;	
+		const weeks = user.kids_age_in_weeks;
+
+		title =  (months == 0) ? `Your Child : Week ${weeks}` : (months < 24) ? `Your Child : Month ${months}` : `Your Child : Years ${years}`;	
 	}
 
 	if(stageOfParenting == 'pregnant'){

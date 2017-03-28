@@ -106,7 +106,7 @@ export default class AuthScreen extends Component{
          
           },
           function (msg) {
-            alert('error: ' + msg);
+            alert("Someting went wrong");
           }
       );
 
@@ -144,7 +144,8 @@ export default class AuthScreen extends Component{
 
     facebookConnectPlugin.login(["public_profile"],
         fbLoginSuccess,
-         function (error) { alert("" + error) }
+         function (error) { alert("Something went wrong"); 
+        }
          );
 
   }

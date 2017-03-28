@@ -36,6 +36,11 @@ export default class UserInterestsSelector extends Component {
 			let navigationKey = generateNavigationKey('main-screen-reset');
 			nextProps.navigator.pushPage({component : MainScreen,key : navigationKey});
 		}
+		
+		if(nextProps.interests.error){
+			this.props.fetchInterests();
+		}
+	
 	}
 
 	_submitTags(){	

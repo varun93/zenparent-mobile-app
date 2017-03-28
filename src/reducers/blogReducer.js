@@ -254,7 +254,7 @@ let blogReducer = (blog=INITIAL_STATE,action) => {
 		case RECEIVED_INTERESTS : 
 			return Object.assign({},blog, {interests : Object.assign({},blog.interests,{terms : action.interests,loading : false, error : false})});
 		case ERROR_FETCHING_INTERESTS :
-			return Object.assign({},blog, {interests : [],loading : false, error : true});
+			return Object.assign({},blog, {interests : Object.assign({},blog.interests,{terms : [],loading : false, error : true})});
 
 		case UPDATE_BOOKMARKED_LIST : 
 			return updateBookmarkedList(action.postId,action.operation,blog);

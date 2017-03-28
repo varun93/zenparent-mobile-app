@@ -42,9 +42,9 @@ export default class Homescreen extends Component{
 		return (
 			<Page key='homescreen'>
 				 <ProgressInfo user={this.props.user.userInfo} />
-				 <SlotPostsContainer position='90' update={this.state.update} navigator={this.props.navigator} />
+				 <SlotPostsContainer position='88' update={this.state.update} navigator={this.props.navigator} />
 				 <InterestsCarousel position='295' navigator={this.props.navigator} />
-				 <UserFeedsContainer active={this.props.active} title='Stories Just for You' update={this.state.update} position='360' section={USER_FEED_RELEVANCE} navigator={this.props.navigator} />
+				 <UserFeedsContainer active={this.props.active} title='Stories Just for You' update={this.state.update} position='370' section={USER_FEED_RELEVANCE} navigator={this.props.navigator} />
 			</Page>
 			)
 	}

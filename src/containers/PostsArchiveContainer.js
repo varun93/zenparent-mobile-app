@@ -12,7 +12,7 @@ class PostsArchiveContainer extends Component{
 		  options['key'] = ARCHIVE_POSTS;
 
 		  return (
-			<PostsList loading={loading} exhausted={exhausted} toggleLike={toggleLike} toggleBookmark={toggleBookmark} options={options} navigator={navigator} posts={posts} contextualPosts={contextualPosts} fetchArchivePosts={fetchArchivePosts} />
+			<PostsList active={true} loading={loading} exhausted={exhausted} toggleLike={toggleLike} toggleBookmark={toggleBookmark} options={options} navigator={navigator} posts={posts} contextualPosts={contextualPosts} fetchArchivePosts={fetchArchivePosts} />
 		 )			
 	}
 

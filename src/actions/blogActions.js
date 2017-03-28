@@ -381,6 +381,7 @@ export function fetchInterests(){
 			let interests = response.data.interests;
 			dispatch(fetchInterestsSuccess(interests));
 		}).catch((error) => {
+			// fetchInterests();
 			dispatch(fetchInterestsFailure());
 		});
 
