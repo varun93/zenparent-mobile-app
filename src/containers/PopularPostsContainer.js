@@ -7,8 +7,28 @@ import {toggleLike,toggleBookmark,fetchPopularPosts,POPULAR_POSTS} from '../acti
 
 class PopularPostsContainer extends Component{
 
-	componentDidMount(){
-		this.props.fetchPopularPosts(POPULAR_POSTS);
+	constructor(props,context){
+		super(props,context);
+		this.state = {
+			loaded : false
+		};
+	}
+
+
+	// componentDidMount(){
+	// 	// this.props.fetchPopularPosts(POPULAR_POSTS);
+	// }
+
+	componentWillReceiveProps(nextProps){
+
+		const loaded = this.state.loaded;
+		const active = nextProps.active;
+
+		if(!loaded && active){
+			 this.props.fetchPopularPosts(POPULAR_POSTS);
+			 this.setState({loaded : true});
+		}
+
 	}
 
 	render(){

@@ -12,8 +12,8 @@ export default class ParentingScreen extends Component{
   render(){
     return (
       <Page key='parenting-screen'>
-         <EditorialPostsContainer position='10' navigator={this.props.navigator} />
-         <PopularPostsContainer position='210'  navigator={this.props.navigator} />
+         <EditorialPostsContainer active={this.props.active} position='10' navigator={this.props.navigator} />
+         <PopularPostsContainer active={this.props.active} position='210'  navigator={this.props.navigator} />
          <InterestsCarousel position='425' navigator={this.props.navigator} />
          <UserFeedsContainer active={this.props.active} title='Latest Stories of Your Interest' position='545' section={USER_FEED_TIME} navigator={this.props.navigator} />
       </Page>
