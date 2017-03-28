@@ -44,7 +44,7 @@ const ProgressInfo =  ({user}) => {
 
 			if(months < 24){
 				blockOne = `Month ${months}`;
-				blockTwo = `Hey ${user.first_name}, your child is ${months > 1 ? `months` : `month`} old.`;
+				blockTwo = `Hey ${user.first_name}, your child is ${months} ${months > 1 ? `months` : `month`} old.`;
 			}
 			else{
 				blockOne = `Year ${years}`;

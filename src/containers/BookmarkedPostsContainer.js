@@ -7,12 +7,12 @@ class BookmarkedPostsContainer extends Component{
 
 	render(){
 		  let options = {};
-		  let {navigator,loading,exhausted,term,toggleLike,toggleBookmark,fetchBookmarkedPosts,contextualPosts,posts} = this.props;
+		  let {navigator,loading,active,exhausted,term,toggleLike,toggleBookmark,fetchBookmarkedPosts,contextualPosts,posts} = this.props;
 		  options['term'] = term;
 		  options['key'] = BOOKMARKED_POSTS;
 
 		  return (
-			<PostsList loading={loading}  exhausted={exhausted} title='Saved Posts' toggleLike={toggleLike} toggleBookmark={toggleBookmark} options={options} navigator={navigator} posts={posts} contextualPosts={contextualPosts} fetchBookmarkedPosts={fetchBookmarkedPosts} />
+			<PostsList loading={loading} active={active} exhausted={exhausted} title='Saved Posts' toggleLike={toggleLike} toggleBookmark={toggleBookmark} options={options} navigator={navigator} posts={posts} contextualPosts={contextualPosts} fetchBookmarkedPosts={fetchBookmarkedPosts} />
 		 )			
 	}
 

@@ -27,6 +27,11 @@ body,body p,body div{
 	margin-bottom: 5px;
 }
 
+
+ons-carousel{
+	overflow-y: hidden !important;
+}
+
 .card{
 
 	background : #fff;

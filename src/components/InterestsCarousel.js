@@ -93,6 +93,8 @@ class InterestsCarousel extends Component{
 	render(){
 
 		let position = this.props.position || 0;
+		let terms = this.props.interests.terms || [];
+
 		position = parseInt(position);
 
 		if(this.props.interests.loading){
@@ -101,11 +103,13 @@ class InterestsCarousel extends Component{
 				)
 		}
 
+
+
 		return(
 			<div>
-				<p style={{position:'absolute',top : `${position}px`,left : '10px',fontWeight:'bold',color : 'rgb(255, 84, 124)'}}>Your Interests</p>
+				<p style={{position:'absolute',top : `${position}px`,left : '5px',fontWeight:'bold',color : 'rgb(255, 84, 124)'}}>Your Interests</p>
 				<Carousel style={{top : `${position+30}px`,height : '90px' }} ref="carousel" direction="horizontal" itemWidth="32%" initialIndex="0" autoScroll overscrollable fullscreen swipeable>
-					{this.props.interests.terms.filter((interest) => interest.isSelected).concat({term:'last'}).map(this.renderCarouselItem.bind(this))}
+					{terms.filter((interest) => interest.isSelected).concat({term:'last'}).map(this.renderCarouselItem.bind(this))}
 				</Carousel>
 			</div>
 		)

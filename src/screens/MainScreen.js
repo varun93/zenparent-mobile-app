@@ -21,7 +21,13 @@ class MainScreen extends Component {
     }
 
     componentDidMount(){
-      this.recordScreenViews(0);
+      try{
+        this.recordScreenViews(0);  
+      }
+      catch(e){
+        //handle errors
+      }
+      
     }
 
     recordScreenViews(index){
@@ -42,7 +48,13 @@ class MainScreen extends Component {
           break;
       }
 
-      BlogAnalytics(SCREEN_VIEWED,null,screen);
+      try{
+        BlogAnalytics(SCREEN_VIEWED,null,screen);
+      }
+      catch(e){
+        //handle the error
+      }
+     
 
     }
 
@@ -50,7 +62,7 @@ class MainScreen extends Component {
     
       return [
           {
-            content: <HomeScreen key='home-screen' user={this.props.user} navigator={this.props.navigator} title='Home' />,
+            content: <HomeScreen active={this.state.index == 0}  key='home-screen' user={this.props.user} navigator={this.props.navigator} title='Home' />,
             tab: <Tab key={0} className="tab home-tab" label='You' icon='' />
           },
           {
@@ -58,12 +70,12 @@ class MainScreen extends Component {
             tab: <Tab key={1} className="tab community-tab" label='Community' icon='' />
           },
           {
-            content: <Parenting key='parenting' user={this.props.user} navigator={this.props.navigator} key={3} title='Parenting' />,
+            content: <Parenting key='parenting' active={this.state.index == 2} user={this.props.user} navigator={this.props.navigator} key={3} title='Parenting' />,
             tab: <Tab key={2}  className="tab parenting-tab" label='Parenting' icon='' />
           },
           {
-            content: <UserProfile key='user-profile' navigator={this.props.navigator} title='UserProfile' />,
-            tab: <Tab className="tab user-profile-tab" key={4} label='UserProfile' icon='' />
+            content: <UserProfile key='user-profile' active={this.state.index == 3} navigator={this.props.navigator} title='UserProfile' />,
+            tab: <Tab className="tab user-profile-tab" key={3} label='UserProfile' icon='' />
           }
           
         

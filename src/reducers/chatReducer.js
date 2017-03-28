@@ -33,19 +33,24 @@ const mergeChatrooms = (chatrooms,state) => {
 const populateChatrooms = (chatrooms,state) => {
 
 	let mergedChatrooms = mergeChatrooms(chatrooms,state);
+	let recommendedGroups = [],joinedGroups = [], expertGroups = [];
 
-	let recommendedGroups = chatrooms.recommended_groups.map(function(chatroom){
-		return parseInt(chatroom.post_id);
-	});
+	if(chatrooms){
 
-	let joinedGroups = chatrooms.joined_groups.map(function(chatroom){
-		return parseInt(chatroom.post_id);
-	});
+		recommendedGroups =  chatrooms.recommended_groups.map(function(chatroom){
+			return parseInt(chatroom.post_id);
+		});
 
-	let expertGroups = chatrooms.expert_groups.map(function(chatroom){
-		return parseInt(chatroom.post_id);
-	});
-	
+		joinedGroups = chatrooms.joined_groups.map(function(chatroom){
+			return parseInt(chatroom.post_id);
+		});
+
+		expertGroups = chatrooms.expert_groups.map(function(chatroom){
+			return parseInt(chatroom.post_id);
+		});
+
+	}
+
 	return Object.assign({},state,{ 
 		chatRooms : {
 			byId : mergedChatrooms,

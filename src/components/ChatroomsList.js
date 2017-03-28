@@ -34,23 +34,14 @@ export default class ChatroomList extends Component{
 
 		let {groups} = this.props;
 
-		if(groups.length)
-		{
-			groups = groups.filter(function(group){
-				return (group.post_title && group.post_title.trim().length > 0);
-			});
-
-			return (
+		return (
 			<List className="chatroom-listing" 
 		 		style={{borderBottom: "none"}}  
 		 		dataSource={groups} 
 				renderRow={this.renderGroupItem.bind(this)}  
 		 		renderHeader={this.renderHeader.bind(this)}  />
 			)	
-		}
-		
-		return null;
-		 
+	
 	}
 
 

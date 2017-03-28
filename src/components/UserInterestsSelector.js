@@ -73,6 +73,7 @@ export default class UserInterestsSelector extends Component {
 	render(){
 		
 		const {interests,loading} = this.props;
+		const terms = interests.terms === undefined ? [] : interests.terms;
 
 		return (
 		   <Page key="userInterestsSelector" className="interestsSelector">
@@ -92,7 +93,7 @@ export default class UserInterestsSelector extends Component {
 		   	 	Help us personalize your feed!
 		   	 </div>
 			 <div style={{overflowY : "scroll",height : "100vh"}} className="selectionPanel">
-			 {interests.terms.map(function(interest){
+			 {terms.map(function(interest){
 			 		return this.renderInterest.call(this,interest)
 			 },this)}
 			 </div>

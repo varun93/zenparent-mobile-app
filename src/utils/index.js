@@ -32,15 +32,16 @@ export const getPosts = (postIds=[],posts) => {
 
 
 // ------ business logic to fetch the chatroom(s) -----------
-export const getChatrooms = (chatIds,chatRooms) => {
+export const getChatrooms = (chatIds=[],chatRooms={}) => {
 
 	return chatIds.map(function(id){
-		return chatRooms[id];
+		if(id in chatRooms) return chatRooms[id];
+		else return {};
 	});
 
 };
 
-export const getChatroom = (chatroomId,chatRooms) => {
+export const getChatroom = (chatroomId,chatRooms={}) => {
 	return chatRooms[chatroomId];
 };
 

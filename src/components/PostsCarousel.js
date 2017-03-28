@@ -66,7 +66,7 @@ export default class PostsCarousel extends Component{
 
 		return(
 			<div>
-				<p style={{position:'absolute',top : `${position}px`,left : '10px',fontWeight:'bold',color : 'rgb(255, 84, 124)'}}>{this.props.title}</p>	
+				<p style={{position:'absolute',top : `${position}px`,left : '5px',fontWeight:'bold',color : 'rgb(255, 84, 124)'}}>{this.props.title}</p>	
 				<Carousel style={{top : `${position+30}px`,height : '150px'}} ref="carousel" direction="horizontal" itemWidth="48%" initialIndex="0" autoScroll overscrollable fullscreen swipeable>
 					{this.props.posts.map(this.renderCarouselItem.bind(this))}
 				</Carousel>

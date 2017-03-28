@@ -146,12 +146,13 @@ export default class UserProfile extends Component{
   }
 
   logout(){
+    // 
     this.props.navigator.resetPage({component : AuthScreen,key : generateNavigationKey('auth-screen')});
     this.props.logout();
   }
 
   _onStageOfParentingChanged(e){
-   this.setState({stageOfParenting : e.target.value});
+    this.setState({stageOfParenting : e.target.value});
   }
 
   _onDisplayNameChanged(e){
@@ -289,7 +290,7 @@ export default class UserProfile extends Component{
       </div>
 
       <div className="saved-articles">
-       <BookmarkedPostsContainer  navigator={this.props.navigator} />
+       <BookmarkedPostsContainer active={this.props.active} navigator={this.props.navigator} />
       </div>
 
     </Page>

@@ -15,7 +15,7 @@ export default class ParentingScreen extends Component{
          <EditorialPostsContainer position='10' navigator={this.props.navigator} />
          <PopularPostsContainer position='210'  navigator={this.props.navigator} />
          <InterestsCarousel position='425' navigator={this.props.navigator} />
-         <UserFeedsContainer title='Latest Stories of Your Interest' position='545' section={USER_FEED_TIME} navigator={this.props.navigator} />
+         <UserFeedsContainer active={this.props.active} title='Latest Stories of Your Interest' position='545' section={USER_FEED_TIME} navigator={this.props.navigator} />
       </Page>
       )
   }

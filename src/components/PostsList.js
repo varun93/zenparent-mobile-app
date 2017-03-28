@@ -19,7 +19,7 @@ export default class PostsList extends Component{
 	}
 
 	componentDidMount(){
-		 this._loadMoreItems.call(this);
+		 // this._loadMoreItems.call(this);
 	}
 
 	componentWillReceiveProps(nextProps){
@@ -54,7 +54,7 @@ export default class PostsList extends Component{
 	
 
 	_renderWaypoint() {
-	 if(!this.props.loading){
+	 if(!this.props.loading && this.props.active){
 	 	 return (<Waypoint onEnter={this._loadMoreItems.bind(this)} /> );
 	 }
     }

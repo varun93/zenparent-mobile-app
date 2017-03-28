@@ -6,7 +6,7 @@ export default class UserProfile extends Component{
   render(){
 
     return (
-        <UserProfileContainer navigator={this.props.navigator} />
+        <UserProfileContainer active={this.props.active} navigator={this.props.navigator} />
       )
   }
 

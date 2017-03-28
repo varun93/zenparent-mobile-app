@@ -10,11 +10,11 @@ class UserFeedsContainer extends Component {
 	render(){
 		  
 		  let options = {};
-		  let {navigator,loading,title,error,exhausted,toggleLike,toggleBookmark,fetchPosts,contextualPosts,posts,section} = this.props;
+		  let {navigator,loading,title,active,error,exhausted,toggleLike,toggleBookmark,fetchPosts,contextualPosts,posts,section} = this.props;
 		  options['key'] = section;
 		 
 		  return (
-			<PostsList title={title} error={error} exhausted={exhausted} loading={loading} update={this.props.update} position={this.props.position} toggleLike={toggleLike} toggleBookmark={toggleBookmark} options={options} navigator={navigator} posts={posts} contextualPosts={contextualPosts} fetchPosts={fetchPosts} />
+			<PostsList active={active} title={title} error={error} exhausted={exhausted} loading={loading} update={this.props.update} position={this.props.position} toggleLike={toggleLike} toggleBookmark={toggleBookmark} options={options} navigator={navigator} posts={posts} contextualPosts={contextualPosts} fetchPosts={fetchPosts} />
 		 )			
 	}
 
