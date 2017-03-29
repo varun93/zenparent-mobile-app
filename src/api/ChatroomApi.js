@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+import fetch from 'fetch-retry';
 import cachedFetch from '../utils/cachedFetch';
 import {getRequestUrl,prepareFormData} from '../utils';
 import {SEND_CHAT_MESSAGE_ENDPOINT,LIST_CHAT_MESSAGES_ENDPOINT,LIST_CHAT_GROUPS_ENDPOINT,GET_GROUP_INFO_ENDPOINT,
@@ -35,7 +35,9 @@ class ChatroomApi {
     const options = {
       method: 'GET',
       headers: headers,
-      seconds : 60*60*24
+      seconds : 60*60*24,
+      retries: 5,
+      retryDelay: 1000
     };
     
     return cachedFetch(LIST_CHAT_GROUPS_ENDPOINT,options).then(r => {

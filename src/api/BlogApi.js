@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch'
+import fetch from 'fetch-retry';
 import {getRequestUrl,prepareFormData} from '../utils'
 import cachedFetch from '../utils/cachedFetch';
 import {SINGLE_POST_ENDPOINT,POSTS_ENDPOINT,TERM_ARCHIVES_ENDPOINT,POST_BOOKMARK_ENDPOINT,
@@ -22,7 +22,9 @@ class BlogApi {
     const options = {
       method: 'GET',
       headers: headers,
-      seconds : 60*60*24
+      seconds : 60*60*24,
+      retries: 5,
+      retryDelay: 1000
     };
     
     return cachedFetch(FETCH_INTERESTS_ENDPOINT,options).then(r => {
@@ -61,7 +63,9 @@ class BlogApi {
     const options = {
       method: 'GET',
       headers: headers,
-      seconds : 60*60*24
+      seconds : 60*60*24,
+      retries: 3,
+      retryDelay: 1000
     };
     
     return cachedFetch(POPULAR_POSTS_ENDPOINT,options).then(r => {
@@ -79,7 +83,9 @@ class BlogApi {
     const options = {
       method: 'GET',
       headers: headers,
-      seconds : 60*60*24
+      seconds : 60*60*24,
+      retries: 3,
+      retryDelay: 1000
     };
     
     return cachedFetch(EDITORIAL_POSTS_ENDPOINT,options).then(r => {
@@ -100,7 +106,9 @@ class BlogApi {
 
     const request = new Request(url,{
       method: 'GET',
-      headers: headers
+      headers: headers,
+      retries: 3,
+      retryDelay: 1000
     });
 
     return fetch(request).then(response => {
@@ -137,7 +145,9 @@ class BlogApi {
     const options = {
       method: 'GET',
       headers: headers,
-      seconds : 60*60*24
+      seconds : 60*60*24,
+      retries: 5,
+      retryDelay: 1000
     };
     
     return cachedFetch(SLOT_POSTS_ENDPOINT,options).then(r => {
