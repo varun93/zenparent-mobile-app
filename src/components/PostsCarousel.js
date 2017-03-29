@@ -41,6 +41,11 @@ const styles = {
 
 export default class PostsCarousel extends Component{ 
 
+	constructor(props,context){
+		super(props,context);
+	}
+
+
 	renderCarouselItem(post){
 		const navigationKey = generateNavigationKey(post.id);
 		return (
@@ -67,7 +72,7 @@ export default class PostsCarousel extends Component{
 		return(
 			<div>
 				<p style={{position:'absolute',top : `${position}px`,left : '5px',fontWeight:'bold',color : 'rgb(255, 84, 124)'}}>{this.props.title}</p>	
-				<Carousel style={{top : `${position+30}px`,height : '150px'}} ref="carousel" direction="horizontal" itemWidth="48%" initialIndex="0" autoScroll overscrollable fullscreen swipeable>
+				<Carousel style={{top : `${position+30}px`,height : '150px'}} ref="carousel" direction="horizontal" itemWidth="48%" initialIndex="0" autoScroll autoRefresh overscrollable fullscreen swipeable>
 					{this.props.posts.map(this.renderCarouselItem.bind(this))}
 				</Carousel>
 			</div>

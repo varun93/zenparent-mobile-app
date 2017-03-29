@@ -1,9 +1,7 @@
 import React,{Component} from 'react';
 import {Carousel,CarouselItem} from 'react-onsenui';
 import {fetchInterests} from '../actions/blogActions';
-import {connect} from 'react-redux';
 import {generateNavigationKey} from '../utils';
-import ArchiveScreen from '../screens/ArchiveScreen';
 import CarouselLoader from '../templates/CarouselLoader';
 import UserInterestsSelector from '../screens/UserInterestsSelector';
 
@@ -54,11 +52,8 @@ const styles = {
 	 }
 };
 
-class InterestsCarousel extends Component{ 
+export default class InterestsCarousel extends Component{ 
 
-	componentDidMount(){
-		this.props.fetchInterests();
-	}
 
 	renderCarouselItem(interest){
 		if(interest.term == 'last'){
@@ -103,12 +98,10 @@ class InterestsCarousel extends Component{
 				)
 		}
 
-
-
 		return(
 			<div>
 				<p style={{position:'absolute',top : `${position}px`,left : '5px',fontWeight:'bold',color : 'rgb(255, 84, 124)'}}>Your Interests</p>
-				<Carousel style={{top : `${position+30}px`,height : '90px' }} ref="carousel" direction="horizontal" itemWidth="32%" initialIndex="0" autoScroll overscrollable fullscreen swipeable>
+				<Carousel style={{top : `${position+30}px`,height : '90px' }} ref="carousel" direction="horizontal" itemWidth="32%" initialIndex="0" autoScroll overscrollable  autoRefresh fullscreen swipeable>
 					{terms.filter((interest) => interest.isSelected).concat({term:'last'}).map(this.renderCarouselItem.bind(this))}
 				</Carousel>
 			</div>
@@ -117,14 +110,3 @@ class InterestsCarousel extends Component{
 
 }
 
-const mapDispactorToProps = (dispatch) => { 
-	return {
-		fetchInterests : () => dispatch(fetchInterests())
-}};
-
-const mapStateToProps = (state,ownProps) => {
-	return {
-		interests : state.blog.interests
-}};
-
-export default connect(mapStateToProps,mapDispactorToProps)(InterestsCarousel);

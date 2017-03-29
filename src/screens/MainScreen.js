@@ -66,7 +66,7 @@ class MainScreen extends Component {
             tab: <Tab key={0} className="tab home-tab" label='You' icon='' />
           },
           {
-            content: <Community  key='community' user={this.props.user} navigator={this.props.navigator} title='Community' />,
+            content: <Community  key='community' active={this.state.index == 1} user={this.props.user} navigator={this.props.navigator} title='Community' />,
             tab: <Tab key={1} className="tab community-tab" label='Community' icon='' />
           },
           {

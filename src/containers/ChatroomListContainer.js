@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import {ProgressCircular} from 'react-onsenui';
 import {connect} from 'react-redux';
 import ChatroomsList from '../components/ChatroomsList';
 import {fetchChatrooms,joinChatroom,leaveChatroom} from '../actions/chatActions';
@@ -7,25 +8,39 @@ import {getChatrooms} from '../utils';
 
 class ChatroomListContainer extends Component {
 
-	componentDidMount(){
-		this.props.fetchChatrooms();
+	constructor(props,context){
+		super(props,context);
+		this.state = {
+			loaded : false
+		};
 	}
 
-	componentDidReceiveProps(nextProps){
-		if(nextProps.updated){
+	
+	componentWillReceiveProps(nextProps){
+
+		const loaded = this.state.loaded;
+		const active = nextProps.active;
+
+		if(!loaded && active){
 			this.props.fetchChatrooms();
+			this.setState({loaded : true});
 		}
+
 	}
 
 	render(){
 
 		  let {loading,navigator,joinedGroups,expertGroups,recommendedGroups,joinChatroom} = this.props;
 
-		  return (
+		  if(loading){
+		  	return (<ProgressCircular style={{position: "absolute",top: "45%",left: "45%"}}  inderterminate />)	
+		  }
+		  
+		 return (
 		  	<div>
-				<ChatroomsList title="Joined Groups" type={JOINED_GROUPS} navigator={navigator} groups={joinedGroups} />
-				<ChatroomsList title="Recommended Groups" joinChatroom={joinChatroom} type={RECOMMENDED_GROUPS} navigator={navigator} groups={recommendedGroups} />
-				<ChatroomsList title="Expert Chat" type={EXPERT_CHAT} navigator={navigator} groups={expertGroups} />
+				<ChatroomsList title="Joined Groups" loading={loading} type={JOINED_GROUPS} navigator={navigator} groups={joinedGroups} />
+				<ChatroomsList title="Recommended Groups" loading={loading} joinChatroom={joinChatroom} type={RECOMMENDED_GROUPS} navigator={navigator} groups={recommendedGroups} />
+				<ChatroomsList title="Expert Chat" type={EXPERT_CHAT} loading={loading} navigator={navigator} groups={expertGroups} />
 			</div>
 		 )
 	}

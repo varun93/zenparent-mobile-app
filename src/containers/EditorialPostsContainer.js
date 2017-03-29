@@ -15,10 +15,6 @@ class EditorialPostsContainer extends Component{
 		};
 	}
 
-	// componentDidMount(){
-	// 	// this.props.fetchEditorialPosts(EDITORIAL_POSTS);
-	// }
-
 	componentWillReceiveProps(nextProps){
 
 		const loaded = this.state.loaded;

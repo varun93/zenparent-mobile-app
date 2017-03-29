@@ -9,7 +9,13 @@ require('../styles/chatroom-listing.css');
 export default class ChatroomList extends Component{
 
 	constructor(props,context){
+		
 		super(props,context);
+		
+		this.state = {
+			loaded :false
+		};
+	
 	}
 
 	renderGroupItem(group){
@@ -34,13 +40,21 @@ export default class ChatroomList extends Component{
 
 		let {groups} = this.props;
 
+		if(groups.length){
+
 		return (
 			<List className="chatroom-listing" 
 		 		style={{borderBottom: "none"}}  
 		 		dataSource={groups} 
 				renderRow={this.renderGroupItem.bind(this)}  
 		 		renderHeader={this.renderHeader.bind(this)}  />
-			)	
+			)
+
+		
+		}
+
+		return null;
+			
 	
 	}
 

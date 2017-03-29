@@ -7,6 +7,8 @@ if(environment == 'production'){
 	BASE_URL = 'https://zenparent.in/api';
 }
 
+BASE_URL = 'https://zenparent.in/api';
+
 export const assetsBase = () => {
 if (environment == 'production'){
 	return 'assets/';

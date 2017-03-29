@@ -15,7 +15,7 @@ export default class Community extends Component{
 	render(){
 		return (
 			<Page key='community'>
-			   <ChatroomListContainer navigator={this.props.navigator} update={this.state.update} />
+			   <ChatroomListContainer active={this.props.active} navigator={this.props.navigator} update={this.state.update} />
 			</Page>
 			)
 	}
