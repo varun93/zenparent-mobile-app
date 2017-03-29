@@ -273,7 +273,7 @@ export default class UserProfile extends Component{
               this.state.editMode ?  
               <p>
                 <button onClick={this.updateProfileInfo.bind(this)} className="save-info">
-                {loading ? <Icon style={{color: 'white'}} size={28} spin icon='md-spinner'/> : `Save`}
+                {loading ? <Icon style={{color: 'white'}} size={24} spin icon='md-spinner'/> : `Save`}
                 </button>
               </p> :
               ''
