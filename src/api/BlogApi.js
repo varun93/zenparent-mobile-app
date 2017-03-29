@@ -64,7 +64,7 @@ class BlogApi {
       method: 'GET',
       headers: headers,
       seconds : 60*60*24,
-      retries: 3,
+      retries: 5,
       retryDelay: 1000
     };
     
@@ -84,7 +84,7 @@ class BlogApi {
       method: 'GET',
       headers: headers,
       seconds : 60*60*24,
-      retries: 3,
+      retries: 5,
       retryDelay: 1000
     };
     
@@ -107,7 +107,7 @@ class BlogApi {
     const request = new Request(url,{
       method: 'GET',
       headers: headers,
-      retries: 3,
+      retries: 5,
       retryDelay: 1000
     });
 
