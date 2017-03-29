@@ -297,9 +297,6 @@ export function forgotPasswordFailure(){
 
 // -------------- logout related actions --------------
 export function logout() {
-    delete window.localStorage.state;
-    delete window.localStorage.jwt;
-
     try{
       UserAnalytics(USER_LOGOUT);  
     }
@@ -309,6 +306,10 @@ export function logout() {
    
     // cache removed 
     removeCache(USER_LOGOUT);
+
+    delete window.localStorage.state;
+    delete window.localStorage.jwt;
+
 
     return {
         type: LOGOUT_USER

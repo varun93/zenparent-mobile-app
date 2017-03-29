@@ -48,13 +48,13 @@ export const removeCache = (action) => {
         break;
     
       case USER_LOGOUT : 
+        urls.push(BOOKMARKED_POSTS_ENDPOINT);
         urls.push(FETCH_INTERESTS_ENDPOINT);
         urls.push(SLOT_POSTS_ENDPOINT);
         urls.push(LIST_CHAT_GROUPS_ENDPOINT);
         break;
 
-
-     }
+    }
 
   urls.forEach((url) => {
       let cacheKey = generateCacheKey(url);
