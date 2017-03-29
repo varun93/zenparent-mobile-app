@@ -7,10 +7,19 @@ class InterestsCarouselContainer extends Component{
 
 	constructor(props,context){
 		super(props,context);
+		this.state = {retry : 0};
 	}
 
 	componentDidMount(){
 		this.props.fetchInterests();
+	}
+
+
+	componentWillReceiveProps(nextProps){
+		if(nextProps.interests.error && this.state.retry < 3){
+			this.props.fetchInterests();
+			this.setState({retry : this.state.retry + 1});
+		}
 	}
 
 	render(){

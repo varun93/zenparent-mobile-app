@@ -17,7 +17,9 @@ const updateUserInfo = (user,state) => {
 };
 
 const updateUserInfoWithToken = (user,token,status,state) => {
-    return Object.assign({},state,{authenticated : true,status : status,userInfo : user,loading : false,error : false,token: token});
+    if (user){
+        return Object.assign({},state,{authenticated : true,status : status,userInfo : user,loading : false,error : false,token: token});
+    }
 };
 
 const updateUserInterests = (interests,state) => {

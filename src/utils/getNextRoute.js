@@ -11,7 +11,7 @@ const getNextRoute = (user) => {
 	const status = user.status;
 	const authenticated = user.authenticated;
 
-	if(authenticated){
+	if(authenticated && user.userInfo){
 		
 		const userInfo = user.userInfo;
 		const stageOfParenting = userInfo.stage_of_parenting;

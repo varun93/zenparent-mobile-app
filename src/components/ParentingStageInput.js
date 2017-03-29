@@ -45,7 +45,7 @@ export default class ParentingStageInput extends Component{
 		if(!authenticated || this.props.user.status == nextProps.user.status){
 			return;
 		}
-		if(this.props.user.userInfo.stage_of_parenting && this.props.user.userInfo.stage_of_parenting.length > 0){
+		if(this.props.user.userInfo && this.props.user.userInfo.stage_of_parenting && this.props.user.userInfo.stage_of_parenting.length > 0){
 			return;
 		}
 
