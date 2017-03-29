@@ -1,4 +1,4 @@
-import fetch from 'fetch-retry';
+import fetch from 'isomorphic-fetch';
 import {prepareFormData} from '../utils'
 import {SIGNUP_ENDPOINT,LOGIN_ENDPOINT,TOKEN_SIGNIN_ENDPOINT,
   EMAIL_SIGNIN_ENDPOINT,UPDATE_USER_PROFILE_ENDPOINT,
