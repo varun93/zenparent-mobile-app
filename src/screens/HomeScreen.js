@@ -22,11 +22,6 @@ export default class Homescreen extends Component{
 
 	}
 
-	componentDidUpdate(){
-		if(!this.props.user.authenticated){
-			this.props.navigator.resetPage({component : AuthScreen,key : generateNavigationKey('auth-screen')});
-    	}
-    }
 
 	componentWillReceiveProps(nextProps){
 
@@ -35,6 +30,11 @@ export default class Homescreen extends Component{
 			const currentUserInfo = this.props.user.userInfo;
 			this.setState({update : hasUserInfoChanged(currentUserInfo,nextUserInfo)});
 		}
+		
+		if(!nextProps.user.authenticated){
+			this.props.navigator.resetPage({component : AuthScreen,key : generateNavigationKey('auth-screen')});
+		}
+
 		
 	}
 		
