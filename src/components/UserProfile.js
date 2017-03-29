@@ -58,7 +58,6 @@ export default class UserProfile extends Component{
     if(hasUserInfoChanged(this.props.user.userInfo,nextProps.user.userInfo)){
       this.props.syncFeed();
     }
-
     // change the image here
 
   }
@@ -136,8 +135,6 @@ export default class UserProfile extends Component{
       return;
     }
     
-    //change to edit mode
-    this.setState({editMode : !this.state.editMode});
     //remove any user profile related info
     removeCache(PROFILE_UPDATE);
     // finally make the request
@@ -146,10 +143,8 @@ export default class UserProfile extends Component{
   }
 
   logout(){
-    
     this.props.logout(); 
     this.props.navigator.resetPage({component : AuthScreen,key : generateNavigationKey('auth-screen')});
-    
   }
 
   _onStageOfParentingChanged(e){

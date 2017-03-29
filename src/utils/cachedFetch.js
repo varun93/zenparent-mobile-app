@@ -37,6 +37,7 @@ export const removeCache = (action) => {
 
       case PROFILE_UPDATE : 
         urls.push(LIST_CHAT_GROUPS_ENDPOINT);
+        urls.push(FETCH_INTERESTS_ENDPOINT);
         urls.push(SLOT_POSTS_ENDPOINT);
         break;
   
@@ -58,8 +59,18 @@ export const removeCache = (action) => {
 
   urls.forEach((url) => {
       let cacheKey = generateCacheKey(url);
-      window.localStorage.removeItem(cacheKey)
-      window.localStorage.removeItem(cacheKey + ':ts')
+      if(cacheKey in localStorage){
+        
+        try{
+           localStorage.removeItem(cacheKey);
+           localStorage.removeItem(cacheKey + ':ts');
+        }
+        catch(e){
+          //handle the error
+        }
+         
+      }
+     
    });
    
  

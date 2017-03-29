@@ -54,6 +54,7 @@ export default class PostsList extends Component{
 	
 
 	_renderWaypoint() {
+		
 	 if(!this.props.loading && this.props.active){
 	 	 return (<Waypoint onEnter={this._loadMoreItems.bind(this)} /> );
 	 }

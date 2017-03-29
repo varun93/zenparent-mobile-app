@@ -1,6 +1,6 @@
 @font-face {
-    /*font-family: TimesNewRoman;*/
-    src: url('/assets/Times-New-Roman.tff');
+    font-family: TimesNewRoman;
+    src: url('assets/Times-New-Roman.ttf');
 }
 
 body,body p,body div{

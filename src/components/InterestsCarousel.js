@@ -5,6 +5,7 @@ import ArchiveScreen from '../screens/ArchiveScreen';
 import {generateNavigationKey} from '../utils';
 import CarouselLoader from '../templates/CarouselLoader';
 import UserInterestsSelector from '../screens/UserInterestsSelector';
+import {v4} from 'node-uuid';
 
 const styles = {
 
@@ -71,7 +72,7 @@ export default class InterestsCarousel extends Component{
 		}
 
 		return (
-			<CarouselItem style={styles.carouselItem} onClick={() => this.props.navigator.pushPage({component : ArchiveScreen,term : interest.term,key : generateNavigationKey(interest.term)})}  key={interest.term}>
+			<CarouselItem style={styles.carouselItem} onClick={() => this.props.navigator.pushPage({component : ArchiveScreen,term : interest.term,key : v4()})} key={v4()}>
 	      		<div style={{position : "relative"}}>
 		      		<div className="image">
 		        		<img style={styles.featuredImage} src={interest.image} />
