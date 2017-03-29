@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {Carousel,CarouselItem} from 'react-onsenui';
 import {fetchInterests} from '../actions/blogActions';
+import ArchiveScreen from '../screens/ArchiveScreen';
 import {generateNavigationKey} from '../utils';
 import CarouselLoader from '../templates/CarouselLoader';
 import UserInterestsSelector from '../screens/UserInterestsSelector';
