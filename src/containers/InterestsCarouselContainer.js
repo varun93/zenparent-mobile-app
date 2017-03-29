@@ -5,6 +5,10 @@ import {fetchInterests} from '../actions/blogActions';
 
 class InterestsCarouselContainer extends Component{
 
+	constructor(props,context){
+		super(props,context);
+	}
+
 	componentDidMount(){
 		this.props.fetchInterests();
 	}

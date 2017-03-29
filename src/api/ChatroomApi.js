@@ -37,7 +37,7 @@ class ChatroomApi {
       headers: headers,
       seconds : 60*60*24,
       retries: 5,
-      retryDelay: 1000
+      retryDelay: 2000
     };
     
     return cachedFetch(LIST_CHAT_GROUPS_ENDPOINT,options).then(r => {

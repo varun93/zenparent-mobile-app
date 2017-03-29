@@ -24,7 +24,7 @@ class BlogApi {
       headers: headers,
       seconds : 60*60*24,
       retries: 5,
-      retryDelay: 1000
+      retryDelay: 2000
     };
     
     return cachedFetch(FETCH_INTERESTS_ENDPOINT,options).then(r => {
@@ -65,7 +65,7 @@ class BlogApi {
       headers: headers,
       seconds : 60*60*24,
       retries: 5,
-      retryDelay: 1000
+      retryDelay: 2000
     };
     
     return cachedFetch(POPULAR_POSTS_ENDPOINT,options).then(r => {
@@ -85,7 +85,7 @@ class BlogApi {
       headers: headers,
       seconds : 60*60*24,
       retries: 5,
-      retryDelay: 1000
+      retryDelay: 2000
     };
     
     return cachedFetch(EDITORIAL_POSTS_ENDPOINT,options).then(r => {
@@ -108,7 +108,7 @@ class BlogApi {
       method: 'GET',
       headers: headers,
       retries: 5,
-      retryDelay: 1000
+      retryDelay: 2000
     });
 
     return fetch(request).then(response => {
@@ -147,7 +147,7 @@ class BlogApi {
       headers: headers,
       seconds : 60*60*24,
       retries: 5,
-      retryDelay: 1000
+      retryDelay: 2000
     };
     
     return cachedFetch(SLOT_POSTS_ENDPOINT,options).then(r => {
