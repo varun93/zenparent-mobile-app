@@ -7,12 +7,12 @@ class PostsArchiveContainer extends Component{
 
 	render(){
 		  let options = {};
-		  let {navigator,loading,exhausted,term,toggleLike,toggleBookmark,fetchArchivePosts,contextualPosts,posts} = this.props;
+		  let {navigator,loading,exhausted,term,title,toggleLike,toggleBookmark,fetchArchivePosts,contextualPosts,posts} = this.props;
 		  options['term'] = term;
 		  options['key'] = ARCHIVE_POSTS;
 
 		  return (
-			<PostsList active={true} loading={loading} exhausted={exhausted} toggleLike={toggleLike} toggleBookmark={toggleBookmark} options={options} navigator={navigator} posts={posts} contextualPosts={contextualPosts} fetchArchivePosts={fetchArchivePosts} />
+			<PostsList active={true} loading={loading} title={title} exhausted={exhausted} toggleLike={toggleLike} toggleBookmark={toggleBookmark} options={options} navigator={navigator} posts={posts} contextualPosts={contextualPosts} fetchArchivePosts={fetchArchivePosts} />
 		 )			
 	}
 

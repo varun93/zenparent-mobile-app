@@ -8,9 +8,9 @@ export default class ArchiveScreen extends Component{
 	render(){
 		let {toggleLike,toggleBookmark,navigator,term} = this.props;
 		return (
-			<Page>
+			<Page className="archiveScreen">
 				<Toolbar title={term} navigator={this.props.navigator} />
-				<PostsArchiveContainer term={term} navigator={navigator}/>
+				<PostsArchiveContainer title={term} term={term} navigator={navigator}/>
 			</Page>
 			)
 	}	

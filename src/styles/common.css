@@ -232,6 +232,14 @@ ons-tab.user-profile-tab.active .ons-icon{
 
 
 .text-input--underbar{
-	    border-bottom: 1px solid #eee !important;
+	border-bottom: 1px solid #eee !important;
+}
+
+.archiveScreen .toolbar{
+	position: sticky !important;
+	position: -webkit-sticky !important;
+    position: -moz-sticky !important;
+  	position: -ms-sticky !important;
+  	position: -o-sticky !important;
 }
 

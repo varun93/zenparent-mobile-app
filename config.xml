@@ -91,7 +91,7 @@
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.579056634272-4fu49kha3i961ajn1ht0s4f55dd33ljq" />
     </plugin>
     <engine name="android" spec="~6.1.2" />
-    <!-- <hook src="scripts/build.sh" type="before_prepare" /> -->
+    <hook src="scripts/build.sh" type="before_prepare" />
 </widget>
 
 <!-- http://stackoverflow.com/questions/24061063/how-can-i-deploy-create-ipa-iphone-app-using-cordova-build-ios-release
