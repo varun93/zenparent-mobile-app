@@ -39,19 +39,19 @@ const styles = {
     display : "inline-block"
   },
   shareIconImage : {
-    width : "24px",
-    height : "24px"
+    width : "28px",
+    height : "28px"
   },
   footer : {
-    left : "0px",
+    // left : "0px",
     padding:"0px 10px",
     background:"white",
     color:"#8675A1",
     fontWeight:"bold",
     width:"100%",
     textAlign:"center",
-    position:"fixed",
-    bottom:"0px",
+    // position:"fixed",
+    // bottom:"0px",
     borderTop : "1px solid gray"
   }
 
@@ -84,47 +84,53 @@ const SinglePost = ({post,toggleLike,toggleBookmark,navigator}) => {
   };
 
   return (
+
+    <div>
 		
-		 <div style={styles.pageContent} className="single-post page-content">
-              
-            <Row style={styles.postTitle}>
-              {post.title}
-            </Row>
-              
-            <Row style={styles.authorBlock} className="author-tab">
-                <Col width="10%" verticalAlign="center">
-                    <img src="https://res.cloudinary.com/dooujtlec/image/upload/v1483939473/zen-140x140_nfbynw.jpg" style={{borderRadius:"50%",height:"40px",width:"40px"}} />                    
-                </Col>
-                <Col style={styles.postAuthor} verticalAlign="center">
-                  {post.author}
-                </Col>
-            </Row>
-              
-            <p style={styles.featuredImage}>
-              <img style={{maxWidth:"100%"}} src={post.attachment_url} />
-            </p>
+    		 <div style={styles.pageContent} className="single-post page-content">
+                  
+                <Row style={styles.postTitle}>
+                  {post.title}
+                </Row>
+                  
+                <Row style={styles.authorBlock} className="author-tab">
+                    <Col width="10%" verticalAlign="center">
+                        <img src="https://res.cloudinary.com/dooujtlec/image/upload/v1483939473/zen-140x140_nfbynw.jpg" style={{borderRadius:"50%",height:"40px",width:"40px"}} />                    
+                    </Col>
+                    <Col style={styles.postAuthor} verticalAlign="center">
+                      {post.author}
+                    </Col>
+                </Row>
+                  
+                <p style={styles.featuredImage}>
+                  <img style={{maxWidth:"100%"}} src={post.attachment_url} />
+                </p>
 
-            <div style={styles.postContent} className="article-content"  dangerouslySetInnerHTML={{__html: post.postContent}} />
-            
-            <TagCloudSinglePost className="tagCloud" tags={post.tags} navigator={navigator} />
-		 
-		        <div className="relatedPosts">
-		          {post.relatedPosts && post.relatedPosts.length && <RelatedPostsContainer toggleLike={toggleLike} toggleBookmark={toggleBookmark}  relatedPosts={post.relatedPosts} navigator={navigator} /> }
-		        </div>
+                <div style={styles.postContent} className="article-content"  dangerouslySetInnerHTML={{__html: post.postContent}} />
+                
+                <TagCloudSinglePost className="tagCloud" tags={post.tags} navigator={navigator} />
+    		 
+    		        <div className="relatedPosts">
+    		          {post.relatedPosts && post.relatedPosts.length && <RelatedPostsContainer toggleLike={toggleLike} toggleBookmark={toggleBookmark}  relatedPosts={post.relatedPosts} navigator={navigator} /> }
+    		        </div>
 
-		        <BottomToolbar style={styles.footer} className="page-footer">
-              <div onClick={() => toggleLike(post.id)}  className="articleLike">
-                  {post.liked ? <img src={`${prefix}like-active.svg`}/> : <img src={`${prefix}like-default.svg`} />}
-              </div>
-              <div onClick={() => toggleBookmark(post.id)} style={{margin : "0 25%"}} className="articleBookmark">
-                 {post.bookmarked ? <img src={`${prefix}bookmark-active.svg`} /> : <img src={`${prefix}bookmark-default.svg`} />}
-              </div>
-              <div style={styles.shareIcon} onClick={() => sharePost()}>
-                <img style={styles.shareIconImage} src={`${prefix}share-icon.svg`} />
-              </div>
-            </BottomToolbar>
+    		</div>
 
-		</div>
+         <div style={styles.footer} className="page-footer">
+                  <div onClick={() => toggleLike(post.id)}  className="articleLike">
+                      {post.liked ? <img src={`${prefix}like-active.svg`}/> : <img src={`${prefix}like-default.svg`} />}
+                  </div>
+                  <div onClick={() => toggleBookmark(post.id)} style={{margin : "0 25%"}} className="articleBookmark">
+                     {post.bookmarked ? <img src={`${prefix}bookmark-active.svg`} /> : <img src={`${prefix}bookmark-default.svg`} />}
+                  </div>
+                  <div style={styles.shareIcon} onClick={() => sharePost()}>
+                    <img style={styles.shareIconImage} src={`${prefix}share-icon.svg`} />
+                  </div>
+         </div>
+
+     </div>
+
+
 	)
 };
 

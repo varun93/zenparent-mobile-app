@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.zenparent.mobileapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.zenparent.mobileapp" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Zenparent</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -91,5 +91,10 @@
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.579056634272-4fu49kha3i961ajn1ht0s4f55dd33ljq" />
     </plugin>
     <engine name="android" spec="~6.1.2" />
-    <hook src="scripts/build.sh" type="before_prepare" />
+    <!-- <hook src="scripts/build.sh" type="before_prepare" /> -->
 </widget>
+
+<!-- http://stackoverflow.com/questions/24061063/how-can-i-deploy-create-ipa-iphone-app-using-cordova-build-ios-release
+security find-identity -v -p codesigning
+F029BFD930E81E0358A6F12030588BFB401892CD
+ -->

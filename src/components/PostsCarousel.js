@@ -3,7 +3,6 @@ import  {Carousel,CarouselItem} from 'react-onsenui';
 import SinglePost from '../screens/SinglePost';
 import {generateNavigationKey} from '../utils';
 
-
 const styles = {
 
 	carouselItem  : {
@@ -39,6 +38,11 @@ const styles = {
 	 	}
 };
 
+
+
+const screenWidth =  window.innerWidth;
+
+
 export default class PostsCarousel extends Component{ 
 
 	constructor(props,context){
@@ -72,7 +76,7 @@ export default class PostsCarousel extends Component{
 		return(
 			<div>
 				<p style={{position:'absolute',top : `${position}px`,left : '5px',fontWeight:'bold',color : 'rgb(255, 84, 124)'}}>{this.props.title}</p>	
-				<Carousel style={{top : `${position+30}px`,height : '150px'}} ref="carousel" direction="horizontal" itemWidth="48%" initialIndex="0" autoScroll autoRefresh overscrollable fullscreen swipeable>
+				<Carousel style={{top : `${position+30}px`,height : '150px'}} ref="carousel" direction="horizontal" itemWidth={window.innerWidth > 450 ? `200px` : `48%`} initialIndex="0" autoScroll autoRefresh overscrollable fullscreen swipeable>
 					{this.props.posts.map(this.renderCarouselItem.bind(this))}
 				</Carousel>
 			</div>

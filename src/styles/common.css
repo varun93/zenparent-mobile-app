@@ -74,6 +74,10 @@ ons-carousel{
 	margin-bottom: 10px !important;
 }
 
+.list-item:last-child{
+	margin-bottom: 0px !important;
+}
+
 .list-item__center{
 	padding: 0px !important;
 }
@@ -208,7 +212,26 @@ ons-tab.user-profile-tab.active .ons-icon{
 }
 
 /*  Fix top bar and bottom bar */
-ons-toolbar,ons-bottom-toolbar{
+.page-footer {
 	position: fixed !important; 
+	font-weight: 400;
+    font-size: 17px;
+    display: table;
+    table-layout: fixed;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    white-space: nowrap;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+    width: 100%;
+}
+
+
+.text-input--underbar{
+	    border-bottom: 1px solid #eee !important;
 }
 

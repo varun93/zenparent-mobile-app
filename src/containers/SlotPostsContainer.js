@@ -2,20 +2,33 @@ import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import PostsListWrapper from '../templates/PostsListWrapper';
 import {fetchSlotPosts,toggleLike,toggleBookmark,HOMEPAGE_SLOT_POSTS} from '../actions/blogActions';
-import {getPosts,hompepageTitle} from '../utils';
+import {getPosts,hompepageTitle,isFieldEmpty} from '../utils';
 import CarouselLoader from '../templates/CarouselLoader';
 import PostsCarousel from '../components/PostsCarousel';
 
 class SlotPostsContainer extends Component{
 
+	constructor(props,context){
+		super(props,context);
+		this.state = {retry : 0};
+	}
+
 	componentDidMount(){
 		this.props.fetchSlotPosts(HOMEPAGE_SLOT_POSTS);
 	}
+
 
 	componentWillReceiveProps(nextProps){
 		if(this.props.update == false && nextProps.update == true){
 			this.props.fetchSlotPosts(HOMEPAGE_SLOT_POSTS);
 		}
+
+		if((nextProps.slotPosts.error || isFieldEmpty(nextProps.slotPosts.posts) || nextProps.slotPosts.length == 0) && this.state.retry < 3){
+			this.props.fetchSlotPosts(HOMEPAGE_SLOT_POSTS);
+			this.setState({retry : this.state.retry + 1});
+		}
+	
+
 	}
 
 	render(){

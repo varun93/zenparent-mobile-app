@@ -13,6 +13,7 @@ export default class App extends Component {
      
      super(context,props);
 
+     document.addEventListener('deviceready', this.onDeviceReady, false);
      // document.addEventListener('onCleverTapInAppNotificationDismissed', this.onCleverTapInAppNotificationDismissed, false);
      // deeplink handler
      document.addEventListener('onDeepLink', this.onDeepLink, false);

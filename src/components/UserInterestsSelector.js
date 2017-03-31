@@ -85,7 +85,7 @@ export default class UserInterestsSelector extends Component {
 		   	<Dialog
           		isOpen={this.state.dialogShown}
           		isCancelable={true}
-          		onCancel={this.hideDialog}>
+          		onCancel={this.hideDialog.bind(this)}>
           	  <div style={{textAlign: 'center', margin: '20px'}}>
 	            <p style={{opacity: 0.5,color:'red'}}>Please select atleast three interests</p>
 	            <p>
@@ -97,11 +97,16 @@ export default class UserInterestsSelector extends Component {
 		   	 <div className="message" style={{fontWeight : "bold",textAlign : "center"}}> 
 		   	 	Help us personalize your feed!
 		   	 </div>
+			 
+			 {interests.loading ?  
+			<ProgressCircular style={{position: "absolute",top: "45%",left: "45%"}}  inderterminate />
+			 	:
 			 <div style={{overflowY : "scroll",height : "100vh"}} className="selectionPanel">
 			 {terms.map(function(interest){
 			 		return this.renderInterest.call(this,interest)
 			 },this)}
-			 </div>
+			 </div>}
+			 
 			 <div className="continueButton">
 			 	<button onClick={this._submitTags.bind(this)}>
 			 	  {loading ? <Icon style={{color: 'white'}} size={28} spin icon='md-spinner'/> :  `Continue` } 

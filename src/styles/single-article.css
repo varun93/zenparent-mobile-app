@@ -30,3 +30,16 @@
 .page-content .list{
 	border-bottom: none;
 }
+
+
+.single-post{
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 90vh;
+  margin-top: 50px;
+}
+
+.page-footer .articleLike img,.page-footer .articleBookmark img{
+	height: 32px;
+	width : 32px;
+}
