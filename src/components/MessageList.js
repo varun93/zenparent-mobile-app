@@ -108,6 +108,7 @@ export default class MessageList extends Component {
 
     return (
       <div>
+        {messageSending ? <ProgressCircular indeterminate style={{position : "fixed",top : "40%",left :"45%"}} /> : ''}
         {chatroom.messages.loading ? <ProgressCircular indeterminate style={{position : "fixed",top : "50px",left :"45%"}} /> : ''}
         <ul onScroll={onScroll.bind(this)} className="collection" ref="messageList">
          {chatroom.messages.list.map(function(message) {  return (<ChatMessageItem key={message.id} item={message} currentUser={currentUser} navigator={navigator} />) },this)}
