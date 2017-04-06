@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import UserProfile from '../components/UserProfile';
-import {updateUserProfile,logout} from '../actions/userActions';
+import {updateUserProfile,logout,uploadUserProfilePic} from '../actions/userActions';
 import {syncFeed} from '../actions/blogActions'; 
 import {connect} from 'react-redux';
 
@@ -15,7 +15,8 @@ const mapStateToProps = (state,ownProps) => {
 const mapDispactorToProps = (dispatch) => { 
 	return {
 		updateUserProfile : (date,stageOfParenting,displayName) => dispatch(updateUserProfile(date,stageOfParenting,displayName)),
-		syncFeed : () => (dispatch(syncFeed())),
+		uploadUserProfilePic : (imageUri) => dispatch(uploadUserProfilePic(imageUri)),
+ 		syncFeed : () => (dispatch(syncFeed())),
 		logout : () => dispatch(logout())
 }};
 

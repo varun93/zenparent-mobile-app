@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.zenparent.mobileapp" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.zenparent.mobileapp" version="1.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Zenparent</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -84,7 +84,6 @@
     </plugin>
     <plugin name="cordova-plugin-x-socialsharing" spec="~5.1.6" />
     <plugin name="cordova-plugin-file-transfer" spec="~1.6.2" />
-    <plugin name="cordova-plugin-camera" spec="~2.4.0" />
     <plugin name="cordova-plugin-google-analytics" spec="~1.7.5" />
     <engine name="browser" spec="~4.1.0" />
     <plugin name="cordova-plugin-googleplus" spec="https://github.com/EddyVerbruggen/cordova-plugin-googleplus">
@@ -93,8 +92,3 @@
     <engine name="android" spec="~6.1.2" />
     <hook src="scripts/build.sh" type="before_prepare" />
 </widget>
-
-<!-- http://stackoverflow.com/questions/24061063/how-can-i-deploy-create-ipa-iphone-app-using-cordova-build-ios-release
-security find-identity -v -p codesigning
-F029BFD930E81E0358A6F12030588BFB401892CD
- -->

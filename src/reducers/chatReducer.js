@@ -70,19 +70,7 @@ const errorFetchingChatrooms = (state) => {
 
 //chatroom-messages related reducers 
 const uniquify = (messages) => {
-	let dict = {};
-
-	for(let key in messages) {
-		let message = messages[key];
-		 if(message && !(message.id in dict)){
-			dict[message.id] = message;
-		} 
-	}
-	
-	return Object.keys(dict).map(function(id){
-		return dict[id];
-	});
-	
+	return messages.filter((message, index, self) => self.findIndex((m) => {return m.id === message.id}) === index);
 };
 
 const requestChatroomMessages = (chatroomId,state) => {
@@ -92,8 +80,9 @@ const requestChatroomMessages = (chatroomId,state) => {
 const updateChatroomMessages = (messages,chatroomId,state) => {
   let chatRoomMessages = state.chatRooms.byId[chatroomId].messages.list || []; 
   const exhausted = messages.length < 25 ? true : false;
-  messages = chatRoomMessages.concat(messages)
+  messages = chatRoomMessages.concat(messages);
   messages = uniquify(messages);
+  messages.sort((a,b) => {return (b.time < a.time) ? 1 : (b.time > a.time) ? -1 : 0});
   return Object.assign({},state,{chatRooms : { byId : Object.assign({},state.chatRooms.byId,{[chatroomId] :  Object.assign({},state.chatRooms.byId[chatroomId],{ messages : Object.assign({},state.chatRooms.byId[chatroomId].messages,{list : messages,loading : false,error : false,exhausted : exhausted})})}) }});
 };
 
@@ -172,10 +161,14 @@ let chatReducer = function(chat = INITIAL_STATE, action) {
 	case LEAVE_CHATROOM : 
 		return leaveChatroom(action.chatroomId,chat); 
 
-	case NEW_MESSAGE : 
-		return updateChatroomMessages(action.message,action.chatroomId,chat);
-
 	//new message 
+	case NEW_MESSAGE : 
+		const chatroomId = action.chatroomId;
+		const message = action.message;
+	    const chatRoomMessages = chat.chatRooms.byId[chatroomId].messages.list || []; 
+		return Object.assign({},chat,{chatRooms : { byId : Object.assign({},chat.chatRooms.byId,{[chatroomId] :  Object.assign({},chat.chatRooms.byId[chatroomId],{ messages : Object.assign({},chat.chatRooms.byId[chatroomId].messages,{list : chatRoomMessages.concat(message)})})}) }});
+
+	
 	case SEND_MESSAGE_SUCCESS : 
 		return sendMessageSuccess(action.chatroomId,chat);
 	case SEND_MESSAGE_REQUEST : 

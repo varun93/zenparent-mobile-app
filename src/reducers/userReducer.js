@@ -3,6 +3,7 @@ SIGNUP_USER_REQUEST,SIGNUP_USER_SUCCESS,SIGNUP_USER_FAILURE,
 TOKEN_SIGNIN_USER_REQUEST,TOKEN_SIGNIN_USER_SUCCESS,TOKEN_SIGNIN_USER_FAILURE,
 FORGOT_PASSWORD_REQUEST,FORGOT_PASSWORD_SUCCESS,FORGOT_PASSWORD_FAILURE,
 APP_INIT_REQUEST,APP_INIT_REQUEST_SUCCESS,APP_INIT_REQUEST_FAILURE,
+UPLOAD_USER_PROFILE_PIC_REQUEST,UPLOAD_USER_PROFILE_PIC_SUCCESS,UPLOAD_USER_PROFILE_PIC_FAILURE,
 CHECK_USER_STATUS_REQUEST,USER_STATUS_RECIEVED,ERROR_FETCHING_USER_STATUS,
 UPDATE_USER_INFO_REQUEST,UPDATE_USER_INFO_SUCCESS,UPDATE_USER_INFO_FAILURE,
 UPDATE_USER_INTERESTS_REQUEST,UPDATE_USER_INTERESTS_FAILURE,UPDATE_USER_INTERESTS_SUCCESS,
@@ -81,16 +82,21 @@ let userReducer = (user = INITIAL_STATE, action) => {
     return Object.assign({},user,{authenticated : false,status : 'token-signin-error' ,userInfo: null, error: action.message, loading: false});
 
 
-    //token signin related reducers
+    //update user interests
     case UPDATE_USER_INTERESTS_REQUEST :
     return Object.assign({},user,{status : 'logged-in',loading: true,error:null}); 
-   
     case UPDATE_USER_INTERESTS_SUCCESS:
     return updateUserInterests(action.interests,user);
-   
     case UPDATE_USER_INTERESTS_FAILURE :
     return Object.assign({},user,{status : 'logged-in',error:action.message,loading: false});
 
+    //update user profile pic
+    case UPLOAD_USER_PROFILE_PIC_REQUEST : 
+    return Object.assign({},user,{loading : true});
+    case UPLOAD_USER_PROFILE_PIC_SUCCESS : 
+    return Object.assign({},user,{userInfo : Object.assign({},user.userInfo,{user_avatar : action.imagePath})},{loading : false,status : 'profile-image-updated'});
+    case UPLOAD_USER_PROFILE_PIC_FAILURE :
+    return Object.assign({},user,{loading : false, error : true});
 
     //token signin related reducers
     case UPDATE_USER_INFO_REQUEST :

@@ -1,10 +1,10 @@
 @font-face {
-    font-family: TimesNewRoman;
-    src: url('assets/Times-New-Roman.ttf');
+    /*font-family: TimesNewRoman;*/
+    /*src: url('assets/Times-New-Roman.ttf');*/
 }
 
 body,body p,body div{
-	font-family: TimesNewRoman,-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
 }
 
 .back-button__icon:before {
@@ -176,6 +176,7 @@ ons-tab.user-profile-tab.active .ons-icon{
 /* Tabbar Android */
 .tabbar--material {
     background-color: #fff;
+    box-shadow: none !important;
  }
 
 .tabbar--material .tabbar__icon + .tabbar__label,.tabbar--material ons-tab .tabbar__icon{

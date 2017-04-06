@@ -37,7 +37,7 @@ export default class UserProfile extends Component{
 
   constructor(props,context){
     super(props,context);
-  
+
     this.state = {
       editMode : 0,
       showDateField : platform.isIOS() ? 1 : 0,
@@ -61,8 +61,7 @@ export default class UserProfile extends Component{
     if(hasUserInfoChanged(this.props.user.userInfo,nextProps.user.userInfo)){
       this.props.syncFeed();
     }
-    // change the image here
-
+   
   }
 
   toggleEdit(){
@@ -85,37 +84,9 @@ export default class UserProfile extends Component{
   }
 
 
-    uploadPhoto(imageURI) {
- 
-       // document.getElementById("profileImage").src = imageURI;
-
-       //
-       var options = new FileUploadOptions();
-       options.fileKey = "user_avatar";
-       options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
-       options.mimeType = "image/jpeg";
-       
-       // post params
-       var params = new Object();
-       params.action = "add";
-
-       // add authorization header
-       var headers = {'authorization': `Bearer ${localStorage.jwt}`};
-
-       // set headers
-       options.headers = headers;
-      // set params
-       options.params = params;
-       options.chunkedMode = false;
-                                                                                                                           
-       var ft = new FileTransfer();
-       ft.upload(imageURI, "https://zenparent.in/api/uploadProfilePic", function(result){
-          console.log(JSON.stringify(result));
-       }, function(error){
-          console.log(JSON.stringify(error));
-       }, options);
- 
- }
+  uploadPhoto(imageURI) {
+       this.props.uploadUserProfilePic(imageURI);
+   }
 
   hideDialog(){
     this.setState({dialogShown: false});
@@ -124,15 +95,16 @@ export default class UserProfile extends Component{
   
   getImage() {
 
-     let classContext = this;
-
-      navigator.camera.getPicture(classContext.uploadPhoto, function(message) {
-      alert('get picture failed');
-     },{
-      quality: 100,
-      destinationType: navigator.camera.DestinationType.FILE_URI,
+    let classContext = this;
+    
+    navigator.camera.getPicture(classContext.uploadPhoto.bind(classContext), function(message) {
+      alert('Get Picture failed');
+     } ,{
+      quality : 50,
+      destinationType : navigator.camera.DestinationType.DATA_URL,
       sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
     });
+  
   }
 
   validateDate(stageOfParenting,date){

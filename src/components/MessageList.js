@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
 import {ProgressCircular} from 'react-onsenui';
 import Pusher from 'pusher-js';
+import {platform} from 'onsenui';
 import {PUSHER_APP_KEY} from '../constants';
 import Waypoint from 'react-waypoint';
 import ChatMessageItem from '../templates/ChatMessageItem';
@@ -40,9 +41,10 @@ export default class MessageList extends Component {
  }
 
 
-  componentWillUpdate(nextProps) {
+  componentWillReceiveProps(nextProps) {
 
-    this.historyChanged = nextProps.chatroom.messages.list.length !== this.props.chatroom.messages.list.length;
+    const messageDelta = nextProps.chatroom.messages.list.length - this.props.chatroom.messages.list.length; 
+    this.historyChanged = messageDelta > 1 ? true : false;
 
     if (this.historyChanged) {
       const { messageList } = this.refs;
@@ -60,7 +62,7 @@ export default class MessageList extends Component {
   componentDidUpdate(){
    
     if (this.historyChanged) {
-      if (this.scrollAtBottom) {
+      if(this.scrollAtBottom) {
         this.scrollToBottom();
       }
       if (this.topMessage) {
@@ -72,11 +74,12 @@ export default class MessageList extends Component {
 
 
   scrollToBottom(){
-    const { messageList } = this.refs;
-    const scrollHeight = messageList.scrollHeight;
-    const height = messageList.clientHeight;
-    const maxScrollTop = scrollHeight - height;
-    ReactDOM.findDOMNode(messageList).scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
+
+        const { messageList } = this.refs;
+        const scrollHeight = messageList.scrollHeight;
+        const height = messageList.clientHeight;
+        const maxScrollTop = scrollHeight - height;
+        ReactDOM.findDOMNode(messageList).scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
   }
 
   onScroll(){
@@ -105,7 +108,6 @@ export default class MessageList extends Component {
 
     return (
       <div>
-        {messageSending ? <ProgressCircular indeterminate style={{position : "fixed",top : "40%",left :"45%"}} /> : ''}
         {chatroom.messages.loading ? <ProgressCircular indeterminate style={{position : "fixed",top : "50px",left :"45%"}} /> : ''}
         <ul onScroll={onScroll.bind(this)} className="collection" ref="messageList">
          {chatroom.messages.list.map(function(message) {  return (<ChatMessageItem key={message.id} item={message} currentUser={currentUser} navigator={navigator} />) },this)}

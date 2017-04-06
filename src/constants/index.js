@@ -39,6 +39,7 @@ export const LOGIN_ENDPOINT = BASE_URL + '/login';
 export const TOKEN_SIGNIN_ENDPOINT = BASE_URL + '/tokensignin';
 export const EMAIL_SIGNIN_ENDPOINT = BASE_URL + '/emailSignin';
 export const UPDATE_USER_PROFILE_ENDPOINT = BASE_URL +'/updateProfile';
+export const UPLOAD_USER_PROFILE_PIC_ENDPOINT = BASE_URL +'/uploadProfilePic';
 export const UPDATE_USER_INTERESTS_ENDPOINT = BASE_URL + '/updateUserInterests';
 export const APP_INIT_ENDPOINT = BASE_URL + '/appInit';
 export const FORGOT_PASSWORD_ENDPOINT = BASE_URL + '/forgotPassword' 

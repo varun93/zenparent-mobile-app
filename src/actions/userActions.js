@@ -33,6 +33,13 @@ export const APP_INIT_REQUEST = 'APP_INIT_REQUEST';
 export const APP_INIT_REQUEST_SUCCESS = 'APP_INIT_REQUEST_SUCCESS';
 export const APP_INIT_REQUEST_FAILURE = 'APP_INIT_REQUEST_FAILURE';
 
+
+// user profile update actions
+export const UPLOAD_USER_PROFILE_PIC_REQUEST = 'UPLOAD_USER_PROFILE_PIC_REQUEST';
+export const UPLOAD_USER_PROFILE_PIC_SUCCESS = 'UPLOAD_USER_PROFILE_PIC_SUCCESS';
+export const UPLOAD_USER_PROFILE_PIC_FAILURE = 'UPLOAD_USER_PROFILE_PIC_FAILURE';
+
+
 // user profile update actions
 export const UPDATE_USER_INFO_REQUEST = 'UPDATE_USER_INFO_REQUEST';
 export const UPDATE_USER_INFO_SUCCESS = 'UPDATE_USER_INFO_SUCCESS';
@@ -211,6 +218,28 @@ export function updateUserProfileFailure(){
   }
 };
 
+
+// --- update user profile pic
+export function updateUserProfilePicRequest(){
+  return {
+    type : UPLOAD_USER_PROFILE_PIC_REQUEST
+  }
+};
+
+export function updateUserProfilePicSuccess(imagePath){
+  return {
+    type : UPLOAD_USER_PROFILE_PIC_SUCCESS,
+    imagePath 
+  }
+};
+
+export function updateUserProfilePicFailure(){
+  return {
+    type : UPLOAD_USER_PROFILE_PIC_FAILURE
+  }
+};
+
+
 //---------------------------
 export function requestUserStatus(){
   return {
@@ -378,6 +407,30 @@ export function checkUserStatus(userEmail){
   
   };
 
+};
+
+
+export function uploadUserProfilePic(imageUri){
+      
+
+      return (dispatch,state) => {
+          
+          dispatch(updateUserProfilePicRequest());
+
+          UserApi.uploadUserProfilePic(imageUri).then(function(response){
+              let status = response.data.status;
+              let filePath = response.data.path;
+              if(!!status){
+                dispatch(updateUserProfilePicSuccess(filePath));  
+              }
+              else{
+                dispatch(updateUserProfilePicFailure());  
+              }
+                
+            }).catch((err) => {
+              dispatch(updateUserProfilePicFailure());
+        });
+    }
 };
 
 

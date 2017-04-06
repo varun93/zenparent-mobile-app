@@ -2,7 +2,7 @@ import fetch from 'isomorphic-fetch';
 import {prepareFormData} from '../utils'
 import {SIGNUP_ENDPOINT,LOGIN_ENDPOINT,TOKEN_SIGNIN_ENDPOINT,
   EMAIL_SIGNIN_ENDPOINT,UPDATE_USER_PROFILE_ENDPOINT,
-  UPDATE_USER_INTERESTS_ENDPOINT,APP_INIT_ENDPOINT,FORGOT_PASSWORD_ENDPOINT} from '../constants'
+  UPDATE_USER_INTERESTS_ENDPOINT,APP_INIT_ENDPOINT,FORGOT_PASSWORD_ENDPOINT,UPLOAD_USER_PROFILE_PIC_ENDPOINT} from '../constants'
 
 class UserApi {
   
@@ -137,6 +137,25 @@ class UserApi {
       method: 'POST',
       headers: headers,
       body: prepareFormData({date : date,stage_of_parenting : stageOfParenting, display_name : displayName})
+    });
+
+    return fetch(request).then(response => {
+      return response.json();
+    }).catch(error => {
+      return error;
+    });
+
+  }
+
+  static uploadUserProfilePic(imageUri) {
+
+
+    const headers = this.requestHeaders();
+
+    const request = new Request(UPLOAD_USER_PROFILE_PIC_ENDPOINT, {
+      method: 'POST',
+      headers: headers,
+      body: prepareFormData({image_uri : imageUri})
     });
 
     return fetch(request).then(response => {
