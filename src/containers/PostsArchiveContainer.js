@@ -55,10 +55,9 @@ const mapStateToProps = (state,ownProps) => {
 	};
 };
 
-const mapDispactorToProps = (dispatch) => {
+const mapDispactorToProps = (dispatch,ownProps) => {
+
 	return {
-		toggleBookmark : (id) => dispatch(toggleBookmark(id)),
-		toggleLike : (id) => dispatch(toggleLike(id)),  
 		fetchArchivePosts : (key,term,offset) => dispatch(fetchArchivePosts(key,term,offset))
 	};
 };

@@ -91,4 +91,12 @@
     </plugin>
     <engine name="android" spec="~6.1.2" />
     <hook src="scripts/build.sh" type="before_prepare" />
+    <plugin name="branch-cordova-sdk" spec="~2.5.14" />
+	<branch-config>
+		<branch-key value="key_live_ijwCj531qk2z0y7cVgUlYapdtzfAWQfP" />
+		<uri-scheme value="zenparent" />
+		<link-domain value="w85k.app.link" />
+		<ios-team-release value="52RW4YVRC3" />
+	</branch-config>
+
 </widget>

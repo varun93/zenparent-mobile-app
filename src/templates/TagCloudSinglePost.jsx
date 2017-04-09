@@ -1,5 +1,6 @@
 import React from 'react';
 import ArchiveScreen from '../screens/ArchiveScreen';
+import {v4} from 'node-uuid';
 import {generateNavigationKey} from '../utils';
 
 const styles = {
@@ -29,13 +30,13 @@ const styles = {
   }
 };
 
-const TagCloudSinglePost = ({tags,title,navigator}) => {
+const TagCloudSinglePost = ({tags=[],title='',toggleLike,toggleBookmark,navigator}) => {
 
 	return (
     <div style={styles.parent} className="tagCloud">
       
       {tags.map(function(tag){
-        return (<li key={tag} onClick={() => navigator.pushPage({component : ArchiveScreen,term : tag,key : generateNavigationKey(tag)})  } style={styles.item}>{tag}</li> ) 
+        return (<li key={v4()} onClick={() => navigator.pushPage({component : ArchiveScreen,term : tag,toggleLike,toggleBookmark,key : generateNavigationKey(tag)})  } style={styles.item}>{tag}</li> ) 
       })}
   		
   	</div>

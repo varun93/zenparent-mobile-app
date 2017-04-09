@@ -3,7 +3,7 @@ import {ProgressCircular} from 'react-onsenui';
 import {connect} from 'react-redux';
 import BlogApi from '../api/BlogApi';
 import SinglePost from '../components/SinglePost';
-import {fetchSinglePost,toggleLike,toggleBookmark} from '../actions/blogActions';
+import {fetchSinglePost,toggleLikeRequest,toggleBookmarkRequest} from '../actions/blogActions';
 import {getPost} from '../utils';
 
 class SinglePostContainer extends Component {
@@ -13,7 +13,7 @@ class SinglePostContainer extends Component {
 	}
 
 	componentDidMount(){
-		this.props.fetchSinglePost(this.props.postId);
+		this.props.fetchSinglePost(this.props.postId,this.props.fields);
 		this.recordUserReadingHistory.call(this);
 	}
 
@@ -30,15 +30,19 @@ class SinglePostContainer extends Component {
 	
 	render(){
 
-		if(this.props.activePost.loading){
+		const {activePost,error,toggleLike,toggleBookmark,navigator,postId,posts} = this.props;
+
+		if(activePost.loading){
 			return (<ProgressCircular style={{top: "45%", position : "fixed",left: "45%"}} indeterminate/>);
 		}
-		if(this.props.error){
+		if(error){
 			return (<p>Error Occurred ... </p>);
 		}
 
+		console.log(postId);
+
 		return (
-			<SinglePost toggleLike={this.props.toggleLike} toggleBookmark={this.props.toggleBookmark}  navigator={this.props.navigator} post={getPost(this.props.postId,this.props.posts)} />
+			<SinglePost toggleLike={toggleLike} toggleBookmark={toggleBookmark}  navigator={navigator} post={getPost(postId,posts)} />
 		)			
 	}
 
@@ -46,16 +50,15 @@ class SinglePostContainer extends Component {
 
 const mapDispactorToProps = (dispatch) => { 
 	return {
-		fetchSinglePost : (id) => dispatch(fetchSinglePost(id)),
-		toggleLike : (id) => dispatch(toggleLike(id)),
-		toggleBookmark : (id) => dispatch(toggleBookmark(id))
+		toggleLike : (id) => dispatch(toggleLikeRequest(id)),
+		toggleBookmark : (id) => dispatch(toggleBookmarkRequest(id)),
+		fetchSinglePost : (id,fields) => dispatch(fetchSinglePost(id,fields))
 }};
 
 const mapStateToProps = (state,ownProps) => {
 	return {
 		posts : state.blog.posts.byId,
-		activePost : state.blog.activePost,
-		postId : ownProps.post.id
+		activePost : state.blog.activePost
 }};
 
 export default connect(mapStateToProps,mapDispactorToProps)(SinglePostContainer)

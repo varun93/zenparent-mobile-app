@@ -12,13 +12,8 @@ export default class App extends Component {
    constructor(context,props){
      
      super(context,props);
+     document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
 
-     document.addEventListener('deviceready', this.onDeviceReady, false);
-     // document.addEventListener('onCleverTapInAppNotificationDismissed', this.onCleverTapInAppNotificationDismissed, false);
-     // deeplink handler
-     document.addEventListener('onDeepLink', this.onDeepLink, false);
-     //push notification handler
-     document.addEventListener('onPushNotification', this.onPushNotification, false);
   }
 
 
@@ -29,6 +24,7 @@ export default class App extends Component {
 
   onDeviceReady(){
 
+    // ga tracking code
     try{
       window.ga.startTrackerWithId(GA_TRACKING_CODE);
     }
@@ -36,25 +32,8 @@ export default class App extends Component {
       console.log(e);//handle errors
     }
     
- }
+  }
 
-  onCleverTapInAppNotificationDismissed(e){
-        console.log(e.extras);
-        console.log(e.actionExtras);
-  }
-    
-    // deep link handling
-    onDeepLink(e) {
-        // console.log("In deeplink");
-        // console.log(JSON.stringify(e.deeplink));
-    }
-    
-    // push notification payload handling
-    onPushNotification(e) {
-        // console.log("In Push Notifcation Screen");
-        // console.log(JSON.stringify(e.notification));
-  }
-  
   //replace this with props
   renderPage(route, navigator) {
     const props = route.props || {};
@@ -65,6 +44,8 @@ export default class App extends Component {
     if('term' in route) props.term = route.term;
     if('user' in route) props.user = route.user;
     if('post' in route) props.post = route.post;
+    if('postId' in route) props.postId = route.postId;
+    if('fields' in route) props.fields = route.fields;
     if('chatroomId' in route) props.chatroomId = route.chatroomId;
     if('key' in route) props.key = route.key || route.component.toString();
     return React.createElement(route.component, props);
@@ -77,14 +58,13 @@ export default class App extends Component {
     if(window.localStorage.jwt){
   
       let user = loadState();
-   
+ 
       if(user && user.authenticated){
         let route = getNextRoute(user);
-        console.log(route);
         component = route.component;
         key = 'nextRoute';
       }
-      else{
+      else {
         component = MainScreen;
         key = 'main-screen';  
       }

@@ -33,8 +33,7 @@ export default class UserInterestsSelector extends Component {
 
 		if(nextProps.updateStatus == 'interests-updated'){
 			let component = MainScreen;
-			let navigationKey = generateNavigationKey('main-screen-reset');
-			nextProps.navigator.pushPage({component : MainScreen,key : navigationKey});
+			nextProps.navigator.pushPage({component : MainScreen,key : v4()});
 		}
 		
 		if(nextProps.interests.error){

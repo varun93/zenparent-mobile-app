@@ -89,7 +89,7 @@ const ArticleCard = ({post,toggleLike,toggleBookmark,navigator}) => {
 	const navigationKey = generateNavigationKey(post.id);
 
   const articleClick = () => {
-     navigator.pushPage({component: SinglePost,post,key:`single-post-${navigationKey}`}) 
+     navigator.pushPage({component: SinglePost,postId : post.id,key:`single-post-${navigationKey}`}) 
   };
 
 

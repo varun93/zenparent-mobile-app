@@ -108,7 +108,7 @@ const SinglePost = ({post,toggleLike,toggleBookmark,navigator}) => {
 
                 <div style={styles.postContent} className="article-content"  dangerouslySetInnerHTML={{__html: post.postContent}} />
                 
-                <TagCloudSinglePost className="tagCloud" tags={post.tags} navigator={navigator} />
+                <TagCloudSinglePost toggleLike={toggleLike} toggleBookmark={toggleBookmark} className="tagCloud" tags={post.tags} navigator={navigator} />
     		 
     		        <div className="relatedPosts">
     		          {post.relatedPosts && post.relatedPosts.length && <RelatedPostsContainer toggleLike={toggleLike} toggleBookmark={toggleBookmark}  relatedPosts={post.relatedPosts} navigator={navigator} /> }

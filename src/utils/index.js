@@ -20,7 +20,7 @@ export const prepareFormData = (params) => {
 
 // ----- business logic to fetch the post(s) ----------------
 export const getPost = (postId, posts) => {
-  return posts[postId];
+  return posts[postId] || {};
 };
 
 

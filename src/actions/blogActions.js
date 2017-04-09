@@ -223,7 +223,7 @@ export function requestSinglePost(postId){
 };
 
 
-export function receivedSinglePost(postId,postContent,relatedPosts,state){
+export function receivedSinglePost(postId,post,state){
 
 	// record screen viewed event
 	try {
@@ -238,8 +238,7 @@ export function receivedSinglePost(postId,postContent,relatedPosts,state){
 	return {
 		type : RECEIVED_SINGLE_POST,
 		postId,
-		postContent,
-		relatedPosts
+		post
 	};
 };
 
@@ -256,7 +255,7 @@ export function errorReceivingSinglePost(postId){
 
 //Like
 export function toggleLike(postId){
-
+	
 	return {
 		type : TOGGLE_LIKE,
 		postId
@@ -442,15 +441,14 @@ export function toggleBookmarkRequest(id){
 };
 
 
-export function fetchSinglePost(id){
+export function fetchSinglePost(id,fields){
 
 	return (dispatch,getState) => {
 		dispatch(requestSinglePost(id));
 
-		BlogApi.fetchSinglePost(id).then(function(response){
-  				let postContent = response.data.postContent;
-  				let relatedPosts = response.data.relatedPosts;
-  				dispatch(receivedSinglePost(id,postContent,relatedPosts,getState()));
+		BlogApi.fetchSinglePost(id,fields).then(function(response){
+  				const post = response.data;
+  				dispatch(receivedSinglePost(id,post,getState()));
   	
   			}).catch((err) => {
       		dispatch(errorReceivingSinglePost(id));

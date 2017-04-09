@@ -7,10 +7,13 @@ export default class SinglePost extends Component{
 
 
 	render(){
+
+		const {navigator,postId,fields} = this.props;
+	
 		return (
-			<Page key={this.props.post.id}>
-				<Toolbar title='' navigator={this.props.navigator} />
-				<SinglePostContainer post={this.props.post} navigator={this.props.navigator} />
+			<Page key={postId}>
+				<Toolbar title='' navigator={navigator} />
+				<SinglePostContainer fields={fields} postId={postId} navigator={navigator} />
 			</Page>
 			)
 	}

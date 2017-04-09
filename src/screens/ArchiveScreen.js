@@ -10,7 +10,7 @@ export default class ArchiveScreen extends Component{
 		return (
 			<Page className="archiveScreen">
 				<Toolbar title={term} navigator={this.props.navigator} />
-				<PostsArchiveContainer title={term} term={term} navigator={navigator}/>
+				<PostsArchiveContainer toggleLike={toggleLike} toggleBookmark={toggleBookmark} title={term} term={term} navigator={navigator}/>
 			</Page>
 			)
 	}	

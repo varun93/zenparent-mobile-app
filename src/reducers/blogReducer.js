@@ -102,7 +102,6 @@ const errorFetchingPosts = (key,state) => {
 	return Object.assign({},state,{[key] : Object.assign({},state[key],{loading : false,error :true})});
 };
 
-
 //request single post
 const requestSinglePost = (postId,state) => {
 	return Object.assign({},state,{activePost : Object.assign({},state.activePost, {post : null,loading : true, error : false})});
@@ -110,20 +109,21 @@ const requestSinglePost = (postId,state) => {
 
 
 // Update the reference, and then update the master list
-const setActivePost = (postId,postContent,relatedPosts,state) => {
+const setActivePost = (postId,post,state) => {
 
+	let relatedPosts = post.relatedPosts;
 	let mergedPosts = mergePosts(relatedPosts,state);
+	const existingPost = state.posts.byId[postId];
 
-	relatedPosts = relatedPosts.map(function(post){
-		return post.id;
-	});
-
-	//update the reference
+	relatedPosts = relatedPosts.map(post => post.id);
+	const newPost = Object.assign({},existingPost,Object.assign({},post,{relatedPosts}));
+ 	
+ 	//update the reference
 	let activePost = Object.assign({},state.activePost,{post : postId,loading : false, error : false,loaded : true});
 
 	state = Object.assign({},state,{posts : { byId : mergedPosts }});
 	
-	return Object.assign({},state,{posts : {byId: Object.assign({},state.posts.byId,{[postId] :  Object.assign({},state.posts.byId[postId],{ postContent : postContent,relatedPosts : relatedPosts })})}},{activePost : activePost});
+	return Object.assign({},state,{posts : {byId: Object.assign({},state.posts.byId,{[postId] :  newPost })}},{activePost : activePost});
 
 };
 
@@ -241,7 +241,7 @@ let blogReducer = (blog=INITIAL_STATE,action) => {
 
 		//action type of single post
 		case RECEIVED_SINGLE_POST : 
-			return setActivePost(action.postId,action.postContent,action.relatedPosts,blog);
+			return setActivePost(action.postId,action.post,blog);
 		case REQUEST_SINGLE_POST : 	
 			return requestSinglePost(action.postId,blog);
 		case ERROR_FETCHING_SINGLE_POST : 

@@ -2,7 +2,6 @@ import React,{Component} from 'react';
 import {Carousel,CarouselItem} from 'react-onsenui';
 import {fetchInterests} from '../actions/blogActions';
 import ArchiveScreen from '../screens/ArchiveScreen';
-import {generateNavigationKey} from '../utils';
 import CarouselLoader from '../templates/CarouselLoader';
 import UserInterestsSelector from '../screens/UserInterestsSelector';
 import {v4} from 'node-uuid';
@@ -59,9 +58,9 @@ export default class InterestsCarousel extends Component{
 
 	renderCarouselItem(interest){
 		if(interest.term == 'last'){
-			let navigationKey = generateNavigationKey('user-interests-selector-screen');
+
 			return(
-				<CarouselItem key={interest.term} onClick={() => this.props.navigator.resetPage({component : UserInterestsSelector, key : navigationKey}) }>
+				<CarouselItem key={v4()} onClick={() => this.props.navigator.resetPage({component : UserInterestsSelector, key : v4()}) }>
 					<div style={styles.addMore}>
 						<ons-icon size='32px' style={styles.addMoreIcon} icon="ion-ios-plus-outline">
 						</ons-icon>
@@ -72,7 +71,7 @@ export default class InterestsCarousel extends Component{
 		}
 
 		return (
-			<CarouselItem style={styles.carouselItem} onClick={() => this.props.navigator.pushPage({component : ArchiveScreen,term : interest.term,key : v4()})} key={v4()}>
+			<CarouselItem style={styles.carouselItem} onClick={() => this.props.navigator.pushPage({component : ArchiveScreen,toggleLike : this.props.toggleLike,toggleBookmark : this.props.toggleBookmark,term : interest.term,key : v4()})} key={v4()}>
 	      		<div style={{position : "relative"}}>
 		      		<div className="image">
 		        		<img style={styles.featuredImage} src={interest.image} />

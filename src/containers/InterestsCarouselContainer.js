@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import InterestsCarousel from '../components/InterestsCarousel';
-import {fetchInterests} from '../actions/blogActions';
+import {fetchInterests,toggleLikeRequest,toggleBookmarkRequest} from '../actions/blogActions';
 
 class InterestsCarouselContainer extends Component{
 
@@ -24,10 +24,10 @@ class InterestsCarouselContainer extends Component{
 
 	render(){
 
-		const {interests,navigator,position} = this.props;
+		const {interests,navigator,position,toggleLike,toggleBookmark} = this.props;
 		
 		return (
-			<InterestsCarousel position={position} interests={interests} navigator={navigator} />
+			<InterestsCarousel toggleLike={toggleLike} toggleBookmark={toggleBookmark} position={position} interests={interests} navigator={navigator} />
 		)
 		
 	}
@@ -36,7 +36,9 @@ class InterestsCarouselContainer extends Component{
 
 const mapDispactorToProps = (dispatch) => { 
 	return {
-		fetchInterests : () => dispatch(fetchInterests())
+		fetchInterests : () => dispatch(fetchInterests()),
+		toggleLike : (id) => dispatch(toggleLikeRequest(id)),
+		toggleBookmark : (id) => dispatch(toggleBookmarkRequest(id))
 }};
 
 const mapStateToProps = (state,ownProps) => {

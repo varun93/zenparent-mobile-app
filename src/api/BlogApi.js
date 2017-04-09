@@ -98,10 +98,10 @@ class BlogApi {
 
 
   //verified
-  static fetchSinglePost(id) {
+  static fetchSinglePost(id,fields=[]) {
     
     const headers = this.requestHeaders();
-    const params = {post_id : id};
+    const params = {post_id : id,fields};
     const url = getRequestUrl(SINGLE_POST_ENDPOINT,params);
 
     const request = new Request(url,{
