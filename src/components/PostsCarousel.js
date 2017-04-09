@@ -53,7 +53,7 @@ export default class PostsCarousel extends Component{
 	renderCarouselItem(post){
 		const navigationKey = generateNavigationKey(post.id);
 		return (
-			<CarouselItem style={styles.carouselItem} onClick={() => this.props.navigator.pushPage({component: SinglePost,toggleLike:this.props.toggleLike,toggleBookmark : this.props.toggleBookmark,key:`single-post-${navigationKey}`,post})} key={post.id}>
+			<CarouselItem style={styles.carouselItem} onClick={() => this.props.navigator.pushPage({component: SinglePost,toggleLike:this.props.toggleLike,toggleBookmark : this.props.toggleBookmark,key:`single-post-${navigationKey}`,postId : post.id })} key={post.id}>
 	      		<div style={{position : "relative"}}>
 		      		<div className="image">
 		      			<img style={styles.featuredImage} src={post.attachment_url} />

@@ -123,10 +123,10 @@ const cachedFetch = (url, options) => {
      
         response.clone().json().then(content => {
           const status = content.success;
+          content = JSON.stringify(content);
           
-          if(status == true){
-            content = JSON.stringify(content);
-
+          if(status == true && content){
+           
             try{
               localStorage.setItem(cacheKey, content);
               localStorage.setItem(cacheKey+':ts', Date.now());
