@@ -23,7 +23,7 @@ class SlotPostsContainer extends Component{
 			this.props.fetchSlotPosts(HOMEPAGE_SLOT_POSTS);
 		}
 
-		if((nextProps.slotPosts.error || isFieldEmpty(nextProps.slotPosts.posts) || nextProps.slotPosts.length == 0) && this.state.retry < 3){
+		if(!nextProps.slotPosts.loading && (nextProps.slotPosts.error || isFieldEmpty(nextProps.slotPosts.posts) || nextProps.slotPosts.length == 0) && this.state.retry < 3){
 			this.props.fetchSlotPosts(HOMEPAGE_SLOT_POSTS);
 			this.setState({retry : this.state.retry + 1});
 		}

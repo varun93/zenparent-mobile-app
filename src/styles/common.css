@@ -1,8 +1,3 @@
-@font-face {
-    /*font-family: TimesNewRoman;*/
-    /*src: url('assets/Times-New-Roman.ttf');*/
-}
-
 body,body p,body div{
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
 }
