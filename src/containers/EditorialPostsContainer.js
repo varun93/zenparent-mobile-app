@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import PostsCarousel from '../components/PostsCarousel';
 import CarouselLoader from '../templates/CarouselLoader';
 import {getPosts} from '../utils';
-import {toggleLike,toggleBookmark,fetchEditorialPosts,EDITORIAL_POSTS} from '../actions/blogActions';
+import {toggleLikeRequest,toggleBookmarkRequest,fetchEditorialPosts,EDITORIAL_POSTS} from '../actions/blogActions';
 
 class EditorialPostsContainer extends Component{
 
@@ -52,8 +52,8 @@ class EditorialPostsContainer extends Component{
 const mapDispactorToProps = (dispatch,ownProps) => { 
 	return {
 		fetchEditorialPosts : (key) => dispatch(fetchEditorialPosts(key)),
-		toggleLike : (id) => dispatch(toggleLike(id)),
-		toggleBookmark : (id) => dispatch(toggleBookmark(id))
+		toggleLike : (id) => dispatch(toggleLikeRequest(id)),
+		toggleBookmark : (id) => dispatch(toggleBookmarkRequest(id))
 }};
 
 const mapStateToProps = (state) => {

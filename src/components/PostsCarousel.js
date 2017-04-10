@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import  {Carousel,CarouselItem} from 'react-onsenui';
 import SinglePost from '../screens/SinglePost';
-import {generateNavigationKey} from '../utils';
+import {v4} from 'node-uuid';
 
 const styles = {
 
@@ -47,16 +47,32 @@ export default class PostsCarousel extends Component{
 
 	constructor(props,context){
 		super(props,context);
+	
+		this.numberOfItemsInViewport = (screenWidth > 450) ?  Math.ceil(screenWidth/200) : 3;
+
+		this.state = {
+			lazyLoaded : []
+		};
+		
+	}
+
+	componentDidMount(){
+		this.lazyLoadImages.call(this,0,this.numberOfItemsInViewport);
 	}
 
 
-	renderCarouselItem(post){
-		const navigationKey = generateNavigationKey(post.id);
+	renderCarouselItem(post,index){
+		
+
 		return (
-			<CarouselItem style={styles.carouselItem} onClick={() => this.props.navigator.pushPage({component: SinglePost,toggleLike:this.props.toggleLike,toggleBookmark : this.props.toggleBookmark,key:`single-post-${navigationKey}`,postId : post.id })} key={post.id}>
+			<CarouselItem  style={styles.carouselItem} onClick={() => this.props.navigator.pushPage({component: SinglePost,toggleLike:this.props.toggleLike,toggleBookmark : this.props.toggleBookmark,key:v4(),postId : post.id })} key={v4()}>
 	      		<div style={{position : "relative"}}>
 		      		<div className="image">
-		      			<img style={styles.featuredImage} src={post.attachment_url} />
+		      			{
+		      				this.state.lazyLoaded.indexOf(index) !== -1 ?
+		      				<img style={styles.featuredImage} src={post.attachment_url} /> :
+		      				<img style={styles.featuredImage} data-src={post.attachment_url} /> 
+		  	  			}
 		  	  		</div>
 		  	  		<div style={styles.overlay}>
 		  	  		</div>
@@ -68,19 +84,43 @@ export default class PostsCarousel extends Component{
 		)
 	}
 
+	lazyLoadImages(startIndex,endIndex){
+
+		let lazyLoaded = this.state.lazyLoaded;
+
+		for(let i=startIndex;i<=endIndex;i++){
+			if(lazyLoaded.indexOf(i) === -1){
+				lazyLoaded = lazyLoaded.concat(i);	
+			}
+																
+		}
+
+		this.setState({lazyLoaded : lazyLoaded});
+
+	}
+
+
+	postChange(e){
+		const activeIndex = e.activeIndex;
+		const itemsInViewport = this.numberOfItemsInViewport;
+		const startIndex = activeIndex;
+		const posts = this.props.posts;
+		let endIndex = itemsInViewport + activeIndex;
+		endIndex = endIndex > posts.length - 1 ? posts.length - 1 : endIndex;
+		this.lazyLoadImages.call(this,startIndex,endIndex);	
+	}
+
 	render(){
 
-		let position = this.props.position || 0;
-		position = parseInt(position);
-
+		let position = parseInt(this.props.position) || 0;
+	
 		return(
 			<div>
 				<p style={{position:'absolute',top : `${position}px`,left : '5px',fontWeight:'bold',color : 'rgb(255, 84, 124)'}}>{this.props.title}</p>	
-				<Carousel style={{top : `${position+30}px`,height : '150px'}} ref="carousel" direction="horizontal" itemWidth={window.innerWidth > 450 ? `200px` : `48%`} initialIndex="0" autoScroll autoRefresh overscrollable fullscreen swipeable>
+				<Carousel style={{top : `${position+30}px`,height : '150px'}} ref="carousel" direction="horizontal" itemWidth={screenWidth > 450 ? `200px` : `48%`} initialIndex="0" animationOptions={{duration: 0.9, delay: 0.1, timing: 'ease-in'}} onPostChange={this.postChange.bind(this)} autoScroll autoRefresh overscrollable fullscreen swipeable>
 					{this.props.posts.map(this.renderCarouselItem.bind(this))}
 				</Carousel>
 			</div>
 		)
 	}
 }
-

@@ -43,15 +43,13 @@ const styles = {
     height : "28px"
   },
   footer : {
-    // left : "0px",
+    left : "0px",
     padding:"0px 10px",
     background:"white",
     color:"#8675A1",
     fontWeight:"bold",
     width:"100%",
     textAlign:"center",
-    // position:"fixed",
-    // bottom:"0px",
     borderTop : "1px solid gray"
   }
 

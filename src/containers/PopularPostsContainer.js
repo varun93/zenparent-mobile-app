@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import PostsCarousel from '../components/PostsCarousel';
 import {getPosts} from '../utils';
 import CarouselLoader from '../templates/CarouselLoader';
-import {toggleLike,toggleBookmark,fetchPopularPosts,POPULAR_POSTS} from '../actions/blogActions';
+import {toggleLikeRequest,toggleBookmarkRequest,fetchPopularPosts,POPULAR_POSTS} from '../actions/blogActions';
 
 class PopularPostsContainer extends Component{
 
@@ -56,8 +56,8 @@ class PopularPostsContainer extends Component{
 const mapDispactorToProps = (dispatch,ownProps) => { 
 	return {
 		fetchPopularPosts : (key) => dispatch(fetchPopularPosts(key)),
-		toggleLike : (id) => dispatch(toggleLike(id)),
-		toggleBookmark : (id) => dispatch(toggleBookmark(id))
+		toggleLike : (id) => dispatch(toggleLikeRequest(id)),
+		toggleBookmark : (id) => dispatch(toggleBookmarkRequest(id))
 }};
 
 const mapStateToProps = (state) => {

@@ -53,10 +53,28 @@ const styles = {
 	 }
 };
 
+const screenWidth =  window.innerWidth;
+
 export default class InterestsCarousel extends Component{ 
 
 
-	renderCarouselItem(interest){
+	constructor(props,context){
+
+		super(props,context);
+
+		this.numberOfItemsInViewport = (screenWidth > 450) ?  Math.ceil(screenWidth/120) : 3;
+
+		this.state = {
+			lazyLoaded : []
+		};
+	}
+
+	componentDidMount(){
+		this.lazyLoadImages.call(this,0,this.numberOfItemsInViewport);
+	}
+
+
+	renderCarouselItem(interest,index){
 		if(interest.term == 'last'){
 
 			return(
@@ -74,7 +92,11 @@ export default class InterestsCarousel extends Component{
 			<CarouselItem style={styles.carouselItem} onClick={() => this.props.navigator.pushPage({component : ArchiveScreen,toggleLike : this.props.toggleLike,toggleBookmark : this.props.toggleBookmark,term : interest.term,key : v4()})} key={v4()}>
 	      		<div style={{position : "relative"}}>
 		      		<div className="image">
-		        		<img style={styles.featuredImage} src={interest.image} />
+		        		{
+		      				this.state.lazyLoaded.indexOf(index) !== -1 ?
+		      				<img style={styles.featuredImage} src={interest.image} /> :
+		      				<img style={styles.featuredImage} data-src={interest.image} /> 
+		  	  			}
 		  	  		</div>
 		  	  		<div style={styles.overlay}>
 		  	  		</div>
@@ -85,6 +107,36 @@ export default class InterestsCarousel extends Component{
   			</CarouselItem>
 		)
 	}
+
+
+	lazyLoadImages(startIndex,endIndex){
+
+		let lazyLoaded = this.state.lazyLoaded;
+
+		for(let i=startIndex;i<=endIndex;i++){
+			if(lazyLoaded.indexOf(i) === -1){
+				lazyLoaded = lazyLoaded.concat(i);	
+			}
+																
+		}
+
+		this.setState({lazyLoaded : lazyLoaded});
+
+	}
+
+
+	postChange(e){
+		
+		const activeIndex = e.activeIndex;
+		const itemsInViewport = this.numberOfItemsInViewport;
+		const startIndex = activeIndex;
+		const interests = this.props.interests.terms.filter(interest => interest.isSelected);
+		let endIndex = itemsInViewport + activeIndex;
+		endIndex = endIndex > interests.length - 1 ? interests.length - 1 : endIndex;
+		this.lazyLoadImages.call(this,startIndex,endIndex);	
+		
+	}
+
 
 	render(){
 
@@ -102,7 +154,7 @@ export default class InterestsCarousel extends Component{
 		return(
 			<div>
 				<p style={{position:'absolute',top : `${position}px`,left : '5px',fontWeight:'bold',color : 'rgb(255, 84, 124)'}}>Your Interests</p>
-				<Carousel style={{top : `${position+30}px`,height : '90px' }} ref="carousel" direction="horizontal" itemWidth={window.innerWidth > 450 ? `120px` : `32%`} initialIndex="0" autoScroll overscrollable  autoRefresh fullscreen swipeable>
+				<Carousel style={{top : `${position+30}px`,height : '90px' }} ref="carousel" direction="horizontal" onPostChange={this.postChange.bind(this)} itemWidth={screenWidth > 450 ? `120px` : `32%`} initialIndex="0" autoScroll overscrollable  autoRefresh fullscreen swipeable>
 					{terms.filter((interest) => interest.isSelected).concat({term:'last'}).map(this.renderCarouselItem.bind(this))}
 				</Carousel>
 			</div>
