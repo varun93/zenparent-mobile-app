@@ -5,10 +5,16 @@ import Chatroom from '../screens/Chatroom';
 import {assetsBase} from '../constants';
 
 
-const ExpertChatListItem = ({item,navigator}) => {
+const ExpertChatListItem = ({item,navigator,resetUnreadMessages}) => {
+
+   const openChatroom = () => {
+    //reduce counter
+    resetUnreadMessages(item.post_id);
+    navigator.pushPage({component: Chatroom,key : generateNavigationKey(item.post_id), chatroomId : item.post_id});
+  };
 
   return (
-          <div className="card" onClick={(event) => {navigator.pushPage({component: Chatroom,key : generateNavigationKey(item.post_id),chatroomId : item.post_id}) }}>
+          <div className="card"  onClick={(e) => openChatroom()}>
           <Row>
             
             <Col width="10%">

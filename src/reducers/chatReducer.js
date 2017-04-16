@@ -1,5 +1,5 @@
 import {NEW_MESSAGE, SEND_MESSAGE_SUCCESS, SEND_MESSAGE_REQUEST,RECEIVED_CHATROOM_MESSAGES,REQUEST_CHATROOM_MESSAGES,ERROR_FETCHING_CHATROOM_MESSAGES,
-REQUEST_CHATROOMS,RECEIVED_CHATROOMS,ERROR_FETCHING_CHATROOMS,JOIN_CHATROOM,LEAVE_CHATROOM,SET_ACTIVE_CHATROOM} from 
+REQUEST_CHATROOMS,RECEIVED_CHATROOMS,ERROR_FETCHING_CHATROOMS,JOIN_CHATROOM,LEAVE_CHATROOM,SET_ACTIVE_CHATROOM,RESET_UNREAD_MESSAGES} from 
 '../actions/chatActions';	
 //the loading false and error is mainly for the messages, chatroom will be an integer
 const INITIAL_STATE =  {
@@ -131,9 +131,12 @@ const leaveChatroom = (chatroomId,state) => {
  		joinedGroups : joinedGroups,
 		recommendedGroups : recommendedGroups
 	});
-}
+};
 
 
+const resetUnreadMesages = (chatroomId,state) => {
+	return Object.assign({},state,{chatRooms : {byId : Object.assign({},state.chatRooms.byId,{[chatroomId] : Object.assign({},state.chatRooms.byId[chatroomId],{unread_messages_count : 0})})}});
+};
 
 let chatReducer = function(chat = INITIAL_STATE, action) {
   switch (action.type) {
@@ -173,6 +176,9 @@ let chatReducer = function(chat = INITIAL_STATE, action) {
 		return sendMessageSuccess(action.chatroomId,chat);
 	case SEND_MESSAGE_REQUEST : 
 		return sendMessageRequest(action.chatroomId,chat);
+
+	case RESET_UNREAD_MESSAGES : 
+		return resetUnreadMesages(action.chatroomId,chat);
 
 	//default 
 	default : return chat;

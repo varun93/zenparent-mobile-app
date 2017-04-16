@@ -79,7 +79,8 @@ export default class Homescreen extends Component{
 		if(this.props.user.authenticated){
 			const nextUserInfo = nextProps.user.userInfo;
 			const currentUserInfo = this.props.user.userInfo;
-			this.setState({update : hasUserInfoChanged(currentUserInfo,nextUserInfo)});
+			const userInfoChanged = hasUserInfoChanged(currentUserInfo,nextUserInfo); 
+			this.setState({update : userInfoChanged});
 		}
 		
 	}

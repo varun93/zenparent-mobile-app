@@ -1,7 +1,7 @@
 import fetch from 'fetch-retry';
 import {GROUP_JOIN_UNJOIN,PROFILE_UPDATE,LIKED_BOOKMARKED,UPDATE_USER_INTERESTS,
 SLOT_POSTS_ENDPOINT,EDITORIAL_POSTS_ENDPOINT,POPULAR_POSTS_ENDPOINT,
-BOOKMARKED_POSTS_ENDPOINT,FETCH_INTERESTS_ENDPOINT,LIST_CHAT_GROUPS_ENDPOINT,USER_LOGOUT} from '../constants';
+BOOKMARKED_POSTS_ENDPOINT,FETCH_INTERESTS_ENDPOINT,LIST_CHAT_GROUPS_ENDPOINT,USER_LOGOUT,CHATROOM_OPENED} from '../constants';
 
 const generateCacheKey = (s) => {
   let hash = 0;
@@ -28,6 +28,8 @@ export const removeCache = (action) => {
     switch(action){
   
       case GROUP_JOIN_UNJOIN : 
+    
+      case CHATROOM_OPENED :
         urls.push(LIST_CHAT_GROUPS_ENDPOINT);
         break;
       
@@ -119,7 +121,7 @@ const cachedFetch = (url, options) => {
   return fetch(url, options).then(response => {
     // let's only store in cache if the content-type is
     // JSON or something non-binary
-    if (response.status === 200) {
+    if (response.status === 200 && options.method == 'GET') {
      
         response.clone().json().then(content => {
           const status = content.success;
@@ -132,7 +134,7 @@ const cachedFetch = (url, options) => {
               localStorage.setItem(cacheKey+':ts', Date.now());
             }
             catch(e){
-              console.log(e);
+              // console.log(e);
             }
 
               

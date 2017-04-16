@@ -18,8 +18,18 @@ class SlotPostsContainer extends Component{
 	}
 
 
+	//either the user info must have changed or the posts must have changed
+	shouldComponentUpdate(nextProps,nextState){
+		const hasUserInfoChanged = nextProps.update;
+		const nextPosts = nextProps.slotPosts.posts;
+		const currentPosts = this.props.slotPosts.posts;
+		const hasPostsChanged = (nextPosts && nextPosts.length &&  nextPosts.length !== currentPosts.length) ? true : false;
+		return hasPostsChanged || hasUserInfoChanged;
+
+	}
+
 	componentWillReceiveProps(nextProps){
-		if(this.props.update == false && nextProps.update == true){
+		if(nextProps.update == true){
 			this.props.fetchSlotPosts(HOMEPAGE_SLOT_POSTS);
 		}
 

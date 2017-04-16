@@ -5,6 +5,8 @@ import {isFieldEmpty,validateDate} from '../utils';
 import Toolbar from '../templates/Toolbar';
 import UserInterestsSelector from '../screens/UserInterestsSelector';
 import getNextRoute from '../utils/getNextRoute';
+import {BlogAnalytics} from '../utils/Analytics';
+import {SCREEN_VIEWED} from '../constants';
 
 export default class SignupScreen extends Component{
 
@@ -17,6 +19,17 @@ export default class SignupScreen extends Component{
       		date : ''
 	    };
 
+	}
+
+	componentDidMount(){
+		// record screen viewed event
+		try {
+		  	BlogAnalytics(SCREEN_VIEWED,null,'SignupScreen'); // generates an exception
+		}
+		catch (e) {
+		   	// statements to handle any exceptions
+		  console.log(e); // pass exception object to error handler
+		}	
 	}
 	
 	componentWillReceiveProps(nextProps) {

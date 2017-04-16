@@ -4,6 +4,9 @@ import Toolbar from '../templates/Toolbar';
 import CustomInput from './CustomInput';
 import {isFieldEmpty,generateNavigationKey,validateDate} from '../utils';
 import getNextRoute from '../utils/getNextRoute';
+import {BlogAnalytics} from '../utils/Analytics';
+import {SCREEN_VIEWED} from '../constants';
+
 
 export default class ParentingStageInput extends Component{
 
@@ -17,6 +20,19 @@ export default class ParentingStageInput extends Component{
 
 	}
 
+
+	componentDidMount(){
+		// record screen viewed event
+		try {
+		  	BlogAnalytics(SCREEN_VIEWED,null,'ParentingStageInputScreen'); // generates an exception
+		}
+		catch (e) {
+		   	// statements to handle any exceptions
+		  console.log(e); // pass exception object to error handler
+		}	
+	}
+	
+		
 	_handleDateChange(e){
 		let date = e.target.value;
 		this.setState({date});

@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import {ProgressCircular} from 'react-onsenui';
 import {connect} from 'react-redux';
 import ChatroomsList from '../components/ChatroomsList';
-import {fetchChatrooms,joinChatroom,leaveChatroom} from '../actions/chatActions';
+import {fetchChatrooms,joinChatroom,leaveChatroom,resetUnreadMessages} from '../actions/chatActions';
 import {EXPERT_CHAT,JOINED_GROUPS,RECOMMENDED_GROUPS} from '../constants';
 import {getChatrooms} from '../utils';
 
@@ -30,7 +30,7 @@ class ChatroomListContainer extends Component {
 
 	render(){
 
-		  let {loading,navigator,joinedGroups,expertGroups,recommendedGroups,joinChatroom} = this.props;
+		  let {loading,navigator,joinedGroups,expertGroups,resetUnreadMessages,recommendedGroups,joinChatroom} = this.props;
 
 		  if(loading){
 		  	return (<ProgressCircular style={{position: "absolute",top: "45%",left: "45%"}}  inderterminate />)	
@@ -38,9 +38,9 @@ class ChatroomListContainer extends Component {
 		  
 		 return (
 		  	<div>
-				<ChatroomsList title="Joined Groups" loading={loading} type={JOINED_GROUPS} navigator={navigator} groups={joinedGroups} />
+				<ChatroomsList title="Joined Groups"  resetUnreadMessages={resetUnreadMessages} loading={loading} type={JOINED_GROUPS} navigator={navigator} groups={joinedGroups} />
 				<ChatroomsList title="Recommended Groups" loading={loading} joinChatroom={joinChatroom} type={RECOMMENDED_GROUPS} navigator={navigator} groups={recommendedGroups} />
-				<ChatroomsList title="Expert Chat" type={EXPERT_CHAT} loading={loading} navigator={navigator} groups={expertGroups} />
+				<ChatroomsList title="Expert Chat" resetUnreadMessages={resetUnreadMessages} type={EXPERT_CHAT} loading={loading} navigator={navigator} groups={expertGroups} />
 			</div>
 		 )
 	}
@@ -50,7 +50,8 @@ const mapDispactorToProps = (dispatch) => {
 	return {
 		fetchChatrooms : () => dispatch(fetchChatrooms()),
 		joinChatroom : (id) => dispatch(joinChatroom(id)),
-		leaveChatroom : (id) => dispatch(leaveChatroom(id))
+		leaveChatroom : (id) => dispatch(leaveChatroom(id)),
+		resetUnreadMessages : (id) => dispatch(resetUnreadMessages(id))
 }};
 
 const mapStateToProps = (state) => {

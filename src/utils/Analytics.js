@@ -97,7 +97,8 @@ export const UserAnalytics = (event,user) => {
 				user_activated : user.is_user_activated,
 				interests : user.interests.join(' | '),
 				'MSG-email' : true,
-				'MSG-push' :  true  
+				'MSG-push' :  true,
+				AppVersion : 1.05  
 			};	
 			// set profile info
 			// console.log(cleverTapUserObj);
@@ -112,6 +113,7 @@ export const UserAnalytics = (event,user) => {
 				break;
 			case USER_LOGIN : 
 				// console.log("User Login");
+				CleverTap.onUserLogin({"Identity" : user.id});
 				CleverTap.recordEventWithName("Login");
 				break;
 			case USER_PROFILE_SYNC: 

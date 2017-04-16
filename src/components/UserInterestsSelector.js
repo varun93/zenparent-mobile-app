@@ -5,6 +5,10 @@ import MainScreen from '../screens/MainScreen';
 import {generateNavigationKey} from '../utils';
 import {platform} from 'onsenui';
 import {v4} from 'node-uuid';
+import {BlogAnalytics} from '../utils/Analytics';
+import {SCREEN_VIEWED} from '../constants';
+
+
 require('../styles/interests.css');
 
 export default class UserInterestsSelector extends Component {
@@ -18,6 +22,20 @@ export default class UserInterestsSelector extends Component {
 
 	componentWillMount(){
 		this.props.fetchInterests();
+	}
+
+	componentDidMount(){
+
+		// record screen viewed event
+		try {
+	  	 BlogAnalytics(SCREEN_VIEWED,null,'UserInterestsSelectorScreen'); // generates an exception
+		}
+		catch (e) {
+	   	// statements to handle any exceptions
+	   	console.log(e); // pass exception object to error handler
+		}
+		
+
 	}
 
 	hideDialog() {

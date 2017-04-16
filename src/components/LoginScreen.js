@@ -7,6 +7,9 @@ import getNextRoute from '../utils/getNextRoute';
 import UserInterestsSelector from '../screens/UserInterestsSelector';
 import MainScreen from '../screens/MainScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
+import {BlogAnalytics} from '../utils/Analytics';
+import {SCREEN_VIEWED} from '../constants';
+
 
 const styles = {
 
@@ -27,6 +30,17 @@ export default class LoginScreen extends Component{
 			userPassword: ''	
 	    };
 
+	}
+
+	componentDidMount(){
+		// record screen viewed event
+		try {
+		  	BlogAnalytics(SCREEN_VIEWED,null,'LoginScreen'); // generates an exception
+		}
+		catch (e) {
+		   	// statements to handle any exceptions
+		  console.log(e); // pass exception object to error handler
+		}	
 	}
 
 	handlePasswordChange(e){

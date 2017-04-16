@@ -1,7 +1,7 @@
 import ChatroomApi from '../api/ChatroomApi';
 import {ChatroomAnalytics} from '../utils/Analytics';
 import {removeCache} from '../utils/cachedFetch';
-import {GROUP_JOIN_UNJOIN,CHATROOM_VISITED,JOINED_CHATROOM,LEFT_CHATROOM,MESSAGE_SENT} from '../constants';
+import {GROUP_JOIN_UNJOIN,CHATROOM_VISITED,JOINED_CHATROOM,LEFT_CHATROOM,MESSAGE_SENT,CHATROOM_OPENED} from '../constants';
 
 //send new message
 export const NEW_MESSAGE = 'NEW_MESSAGE';
@@ -27,7 +27,22 @@ export const REQUEST_CHATROOMS = 'REQUEST_CHATROOMS';
 export const RECEIVED_CHATROOMS = 'RECEIVED_CHATROOMS';
 export const ERROR_FETCHING_CHATROOMS = 'ERROR_FETCHING_CHATROOMS';
 
+//reset counter
+export const RESET_UNREAD_MESSAGES = 'RESET_UNREAD_MESSAGES';
 
+
+export function resetUnreadMessages(chatroomId){
+
+	// remove cache
+	removeCache(CHATROOM_OPENED);
+
+	//clear in the local storage too
+	return {
+		type : RESET_UNREAD_MESSAGES,
+		chatroomId
+	}
+
+};
 
 export function setActiveChatRoom(chatroomId){
 	return {

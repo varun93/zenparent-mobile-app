@@ -7,6 +7,8 @@ if(environment == 'production'){
 	BASE_URL = 'https://zenparent.in/api';
 }
 
+BASE_URL = 'https://zenparent.in/api';
+
 export const assetsBase = () => {
 if (environment == 'production'){
 	return 'assets/';
@@ -45,7 +47,7 @@ export const APP_INIT_ENDPOINT = BASE_URL + '/appInit';
 export const FORGOT_PASSWORD_ENDPOINT = BASE_URL + '/forgotPassword' 
 // =================== end of user endpoints ================
 
-// posts endpoint
+// ================= posts endpoint =========================
 export const SINGLE_POST_ENDPOINT =  BASE_URL + '/singlePost';
 export const POSTS_ENDPOINT = BASE_URL + '/articles';
 export const TERM_ARCHIVES_ENDPOINT = BASE_URL + '/archive';
@@ -61,11 +63,16 @@ export const AUTHOR_POSTS_ENDPOINT = BASE_URL + '/authorPosts';
 export const RECORD_USER_READING_HISTORY = BASE_URL + '/recordUserReadingHistory'; 
 
  
+// ================= coupons endpoint ==============================
+export const COUPON_PAYMENT_ENDPOINT = BASE_URL + '/couponPayment';
+
+
 //--- constants for a few actions ------
 export const GROUP_JOIN_UNJOIN = 'GROUP_JOIN_UNJOIN';
 export const PROFILE_UPDATE = 'PROFILE_UPDATE';
 export const LIKED_BOOKMARKED = 'LIKED_BOOKMARKED';
 export const UPDATE_USER_INTERESTS = 'UPDATE_USER_INTERESTS';
+
 
 
 // --- few generic constants
@@ -95,6 +102,7 @@ export const USER_LOGIN = 'USER_LOGIN';
 export const USER_PROFILE_SYNC = 'USER_PROFILE_SYNC';
 export const USER_PROFILE_UPDATED = 'USER_PROFILE_UPDATED';
 export const USER_INTERESTS_UPDATED = 'USER_INTERESTS_UPDATED';
+export const CHATROOM_OPENED = 'CHATROOM_OPENED';
 export const USER_LOGOUT = 'USER_LOGOUT';
 
 // GA TRACKING CODE

@@ -20,8 +20,8 @@ export default class ChatroomList extends Component{
 
 	renderGroupItem(group){
 		if(this.props.type == RECOMMENDED_GROUPS) return (<RecommendedGroupListItem key={group.post_id} item={group} navigator={this.props.navigator} joinChatroom={this.props.joinChatroom} /> );
-		if(this.props.type == JOINED_GROUPS) return (<JoinedGroupListItem key={group.post_id} setActiveChatRoom={this.props.setActiveChatRoom} item={group} navigator={this.props.navigator} /> );
-		if(this.props.type == EXPERT_CHAT) return (<ExpertChatListItem setActiveChatRoom={this.props.setActiveChatRoom} key={group.post_id} item={group} navigator={this.props.navigator} /> );
+		if(this.props.type == JOINED_GROUPS) return (<JoinedGroupListItem key={group.post_id} resetUnreadMessages={this.props.resetUnreadMessages} item={group} navigator={this.props.navigator} /> );
+		if(this.props.type == EXPERT_CHAT) return (<ExpertChatListItem key={group.post_id} resetUnreadMessages={this.props.resetUnreadMessages} item={group} navigator={this.props.navigator} /> );
 		return (<div>Others</div>)
 	}
 
