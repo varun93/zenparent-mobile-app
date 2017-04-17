@@ -1,6 +1,9 @@
 import {NEW_MESSAGE, SEND_MESSAGE_SUCCESS, SEND_MESSAGE_REQUEST,RECEIVED_CHATROOM_MESSAGES,REQUEST_CHATROOM_MESSAGES,ERROR_FETCHING_CHATROOM_MESSAGES,
 REQUEST_CHATROOMS,RECEIVED_CHATROOMS,ERROR_FETCHING_CHATROOMS,JOIN_CHATROOM,LEAVE_CHATROOM,SET_ACTIVE_CHATROOM,RESET_UNREAD_MESSAGES} from 
 '../actions/chatActions';	
+
+require("jspolyfill-array.prototype.findIndex");
+
 //the loading false and error is mainly for the messages, chatroom will be an integer
 const INITIAL_STATE =  {
 	chatRooms: {

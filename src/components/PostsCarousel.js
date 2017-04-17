@@ -117,7 +117,7 @@ export default class PostsCarousel extends Component{
 		return(
 			<div>
 				<p style={{position:'absolute',top : `${position}px`,left : '5px',fontWeight:'bold',color : 'rgb(255, 84, 124)'}}>{this.props.title}</p>	
-				<Carousel style={{top : `${position+30}px`,height : '150px'}} ref="carousel" direction="horizontal" itemWidth={screenWidth > 450 ? `200px` : `48%`} initialIndex="0" animationOptions={{duration: 0.9, delay: 0.1, timing: 'ease-in'}} onPostChange={this.postChange.bind(this)} autoScroll autoRefresh overscrollable fullscreen swipeable>
+				<Carousel style={{top : `${position+30}px`,height : '150px'}} ref="carousel" direction="horizontal" itemWidth={screenWidth > 450 ? `200px` : `48%`} initialIndex="0" onPostChange={this.postChange.bind(this)} autoScroll autoRefresh overscrollable fullscreen swipeable>
 					{this.props.posts.map(this.renderCarouselItem.bind(this))}
 				</Carousel>
 			</div>
