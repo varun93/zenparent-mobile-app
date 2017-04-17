@@ -19,7 +19,7 @@ class SlotPostsContainer extends Component{
 
 
 	componentWillReceiveProps(nextProps){
-		if(nextProps.update == true){
+		if(this.props.update == false &&  nextProps.update == true){
 			this.props.fetchSlotPosts(HOMEPAGE_SLOT_POSTS);
 		}
 
