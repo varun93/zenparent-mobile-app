@@ -434,13 +434,13 @@ export function uploadUserProfilePic(imageUri){
 };
 
 
-export function updateUserProfile(date,stageOfParenting,displayName){
+export function updateUserProfile(date,stageOfParenting,displayName,languagePreference){
     
       return (dispatch,state) => {
           
           dispatch(updateUserProfileRequest());
 
-          UserApi.updateUserProfile(date,stageOfParenting,displayName).then(function(response){
+          UserApi.updateUserProfile(date,stageOfParenting,displayName,languagePreference).then(function(response){
               let user = response.data.user;
               dispatch(updateUserProfileSuccess(user));  
             

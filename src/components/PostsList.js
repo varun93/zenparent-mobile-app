@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ProgressCircular} from 'react-onsenui';
 import Waypoint from 'react-waypoint';
 import PostsListWrapper from '../templates/PostsListWrapper';
-import {getPosts} from '../utils';
+import {getPosts,hasUserInfoChanged} from '../utils';
 import {USER_FEED_TIME,USER_FEED_RELEVANCE,BOOKMARKED_POSTS,ARCHIVE_POSTS} from '../actions/blogActions';
 
 
@@ -18,16 +18,20 @@ export default class PostsList extends Component{
 	    };
 	}
 
-	componentDidMount(){
-		 // this._loadMoreItems.call(this);
-	}
 
 	componentWillReceiveProps(nextProps){
 
-		if(this.props.update == false && nextProps.update == true){
-			this.setState({offset:0,loaded : false});
-			this._loadMoreItems.call(this);
+
+		if(this.props.user && this.props.user.authenticated){
+			const nextUserInfo = nextProps.user.userInfo;
+			const currentUserInfo = this.props.user.userInfo;
+			const userInfoChanged = hasUserInfoChanged(currentUserInfo,nextUserInfo); 
+			if(userInfoChanged){
+				this.setState({offset:0});
+				this._loadMoreItems.call(this);
+			}
 		}
+	
 	}
 
 
@@ -36,14 +40,15 @@ export default class PostsList extends Component{
 		let offset = this.state.offset;
 		let {options} =  this.props;
 		let key = options.key;
+		let languagePreference = 'Hindi';
 
 		if(key == USER_FEED_TIME || key == USER_FEED_RELEVANCE){
 			let filter = key == USER_FEED_RELEVANCE ? 'relevance' : 'time';
-			this.props.fetchPosts(key,filter,offset);
+			this.props.fetchPosts(key,filter,offset,languagePreference);
 		}
 		else if(key == ARCHIVE_POSTS){
 			let term = options.term;
-			this.props.fetchArchivePosts(key,term,offset);
+			this.props.fetchArchivePosts(key,term,offset,languagePreference);
 		}
 		else if(key == BOOKMARKED_POSTS){
 			this.props.fetchBookmarkedPosts(key,offset);

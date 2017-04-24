@@ -14,7 +14,7 @@ const mapStateToProps = (state,ownProps) => {
 
 const mapDispactorToProps = (dispatch) => { 
 	return {
-		updateUserProfile : (date,stageOfParenting,displayName) => dispatch(updateUserProfile(date,stageOfParenting,displayName)),
+		updateUserProfile : (date,stageOfParenting,displayName,languagePreference) => dispatch(updateUserProfile(date,stageOfParenting,displayName,languagePreference)),
 		uploadUserProfilePic : (imageUri) => dispatch(uploadUserProfilePic(imageUri)),
  		syncFeed : () => (dispatch(syncFeed())),
 		logout : () => dispatch(logout())

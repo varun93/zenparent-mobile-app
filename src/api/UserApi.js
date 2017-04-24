@@ -129,14 +129,14 @@ class UserApi {
   }
 
   // tested
-  static updateUserProfile(date,stageOfParenting,displayName) {
+  static updateUserProfile(date,stageOfParenting,displayName,languagePreference) {
 
     const headers = this.requestHeaders();
 
     const request = new Request(UPDATE_USER_PROFILE_ENDPOINT, {
       method: 'POST',
       headers: headers,
-      body: prepareFormData({date : date,stage_of_parenting : stageOfParenting, display_name : displayName})
+      body: prepareFormData({date : date,stage_of_parenting : stageOfParenting, display_name : displayName,language_preference : languagePreference})
     });
 
     return fetch(request).then(response => {

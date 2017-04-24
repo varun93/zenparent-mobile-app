@@ -82,12 +82,12 @@ export default class ParentingStageInput extends Component{
 
 					<span style={{color:"#8675A1",fontSize:"13px"}}>Due Date/Your Child's Birthday</span>
 		            <CustomInput
-			             type="date"
+			             type = "date"
 			             onChange = {this._handleDateChange.bind(this)}
 			             disabled = {false}
 			             validate = {validateDate}
-			             emptyMessage="Date is invalid"
-			             errorMessage="Date is invalid"
+			             emptyMessage = "Date is invalid"
+			             errorMessage = "Date is invalid"
 		          	/>
 
 			        <button className={`loginBtn emailBtn `} onClick={this._onClick.bind(this)}>

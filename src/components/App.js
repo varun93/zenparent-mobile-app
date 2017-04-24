@@ -3,7 +3,6 @@ import {Navigator} from 'react-onsenui';
 import {generateNavigationKey} from '../utils';
 import MainScreen from '../screens/MainScreen';
 import AuthScreen from '../screens/AuthScreen';
-import CouponPayment from '../screens/CouponPayment';
 import {loadState} from '../utils/localStorage';
 import getNextRoute from '../utils/getNextRoute';
 import {APP_VERSION,GA_TRACKING_CODE} from '../constants';
@@ -16,7 +15,9 @@ export default class App extends Component {
      document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
 
   }
-   componentDidMount(){
+
+
+  componentWillMount(){
      // check the status
      this.props.appInit(APP_VERSION);
   }
@@ -28,7 +29,7 @@ export default class App extends Component {
       window.ga.startTrackerWithId(GA_TRACKING_CODE);
     }
     catch(e){
-      // console.log(e);//handle errors
+      console.log(e);//handle errors
     }
     
   }
@@ -70,7 +71,6 @@ export default class App extends Component {
       
     }
     
-    // component = CouponPayment;
     key = generateNavigationKey(key);
 
     return (

@@ -207,6 +207,34 @@ ons-tab.user-profile-tab.active .ons-icon{
 	background-color: #fff !important;
 }
 
+/* Swich language preference */
+
+.switch{
+	width :  35% !important;
+	height : 25px; 
+}
+
+
+:checked + .switch__toggle {
+    box-shadow: inset 0 0 0 2px #8675A1 !important;
+    background-color: #8675A1 !important;
+}
+
+.switch__toggle{
+	background-color : #8675A1 !important;
+	box-shadow : inset 0 0 0 2px #8675A1 !important;
+}
+
+:checked + .switch__toggle > .switch__handle {
+    left: calc(100% - 22px);
+}
+
+
+.switch__handle{
+	height: 22px;
+	width:  22px;
+}
+
 /*  Fix top bar and bottom bar */
 .page-footer {
 	position: fixed !important; 

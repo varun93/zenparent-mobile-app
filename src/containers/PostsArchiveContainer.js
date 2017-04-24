@@ -58,7 +58,7 @@ const mapStateToProps = (state,ownProps) => {
 const mapDispactorToProps = (dispatch,ownProps) => {
 
 	return {
-		fetchArchivePosts : (key,term,offset) => dispatch(fetchArchivePosts(key,term,offset))
+		fetchArchivePosts : (key,term,offset,languagePreference) => dispatch(fetchArchivePosts(key,term,offset,languagePreference))
 	};
 };
 

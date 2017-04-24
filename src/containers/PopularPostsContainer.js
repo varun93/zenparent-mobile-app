@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import PostsCarousel from '../components/PostsCarousel';
-import {getPosts} from '../utils';
+import {getPosts,getUserLanguage,hasUserInfoChanged} from '../utils';
 import CarouselLoader from '../templates/CarouselLoader';
 import {toggleLikeRequest,toggleBookmarkRequest,fetchPopularPosts,POPULAR_POSTS} from '../actions/blogActions';
 
@@ -15,18 +15,18 @@ class PopularPostsContainer extends Component{
 	}
 
 
-	// componentDidMount(){
-	// 	// this.props.fetchPopularPosts(POPULAR_POSTS);
-	// }
-
 	componentWillReceiveProps(nextProps){
 
 		const loaded = this.state.loaded;
 		const active = nextProps.active;
+		const nextUserInfo =  nextProps.user.userInfo;
+		const currentUserInfo = this.props.user.userInfo;
+		const userInfoChanged = hasUserInfoChanged(currentUserInfo,nextUserInfo); 
 
-		if(!loaded && active){
-			 this.props.fetchPopularPosts(POPULAR_POSTS);
-			 this.setState({loaded : true});
+		if(userInfoChanged || (!loaded && active)){
+			const languagePreference = getUserLanguage(nextUserInfo);
+			this.props.fetchPopularPosts(POPULAR_POSTS,languagePreference);
+			this.setState({loaded : true});
 		}
 
 	}
@@ -55,7 +55,7 @@ class PopularPostsContainer extends Component{
 
 const mapDispactorToProps = (dispatch,ownProps) => { 
 	return {
-		fetchPopularPosts : (key) => dispatch(fetchPopularPosts(key)),
+		fetchPopularPosts : (key,languagePreference) => dispatch(fetchPopularPosts(key,languagePreference)),
 		toggleLike : (id) => dispatch(toggleLikeRequest(id)),
 		toggleBookmark : (id) => dispatch(toggleBookmarkRequest(id))
 }};

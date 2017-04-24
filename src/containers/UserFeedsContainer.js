@@ -6,15 +6,14 @@ import {fetchPosts,toggleLikeRequest,toggleBookmarkRequest} from '../actions/blo
 class UserFeedsContainer extends Component {
 
 	
-
 	render(){
 		  
 		  let options = {};
-		  let {navigator,loading,title,active,error,exhausted,toggleLike,toggleBookmark,fetchPosts,contextualPosts,posts,section} = this.props;
+		  let {navigator,user,loading,title,active,error,exhausted,toggleLike,toggleBookmark,fetchPosts,contextualPosts,posts,section} = this.props;
 		  options['key'] = section;
 		 
 		  return (
-			<PostsList active={active} title={title} error={error} exhausted={exhausted} loading={loading} update={this.props.update} position={this.props.position} toggleLike={toggleLike} toggleBookmark={toggleBookmark} options={options} navigator={navigator} posts={posts} contextualPosts={contextualPosts} fetchPosts={fetchPosts} />
+			<PostsList user={user} active={active} title={title} error={error} exhausted={exhausted} loading={loading} update={this.props.update} position={this.props.position} toggleLike={toggleLike} toggleBookmark={toggleBookmark} options={options} navigator={navigator} posts={posts} contextualPosts={contextualPosts} fetchPosts={fetchPosts} />
 		 )			
 	}
 
@@ -22,7 +21,7 @@ class UserFeedsContainer extends Component {
 
 const mapDispactorToProps = (dispatch) => { 
 	return {
-		 fetchPosts : (key,filter,offset) => dispatch(fetchPosts(key,filter,offset)),
+		 fetchPosts : (key,filter,offset,languagePreference) => dispatch(fetchPosts(key,filter,offset,languagePreference)),
 		 toggleLike : (id) => dispatch(toggleLikeRequest(id)),
 		 toggleBookmark : (id) => dispatch(toggleBookmarkRequest(id))
 }};

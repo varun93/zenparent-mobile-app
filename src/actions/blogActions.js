@@ -456,12 +456,12 @@ export function fetchSinglePost(id,fields){
 	}
 };
 
-//posts for user feed
-export function fetchPosts(key,filter,offset){
+//posts for user feed, language dependant 
+export function fetchPosts(key,filter,offset,languagePreference){
 	
 	return (dispatch,state) => {
 		dispatch(requestPosts(key));
-		BlogApi.fetchPosts(filter,offset).then(function(response){
+		BlogApi.fetchPosts(filter,offset,languagePreference).then(function(response){
   				let posts = response.data.posts;
   				dispatch(receivedPosts(key,posts));
      	}).catch((err) => {
@@ -470,12 +470,13 @@ export function fetchPosts(key,filter,offset){
 	}
 };
 
-export function fetchArchivePosts(key,term,offset){
+//language dependant 
+export function fetchArchivePosts(key,term,offset,languagePreference){
 
 	return (dispatch,state) => {
 		dispatch(requestArchivePosts(term));
 
-		BlogApi.archivePosts(term,offset).then(function(response){
+		BlogApi.archivePosts(term,offset,languagePreference).then(function(response){
   				let posts = response.data.posts;
   				dispatch(receivedArchivePosts(posts,term));
      	}).catch((err) => {
@@ -485,14 +486,14 @@ export function fetchArchivePosts(key,term,offset){
 
 }
 
-//personalized posts
-export function fetchSlotPosts(key){
+//personalized posts, language dependant
+export function fetchSlotPosts(key,languagePreference){
 	
 	return (dispatch,state) => {
 		dispatch(requestPosts(key));
 
-		BlogApi.slotPosts().then(function(response){
-  			let posts = response.data.posts;
+		BlogApi.slotPosts(languagePreference).then(function(response){
+			let posts = response.data.posts;
   			dispatch(receivedPosts(key,posts));
      	}).catch((err) => {
       		dispatch(errorReceivingPosts(key));
@@ -515,11 +516,11 @@ export function fetchBookmarkedPosts(key,offset){
 };
 
 
-//popular posts
-export function fetchPopularPosts(key){
+//popular posts, language dependant
+export function fetchPopularPosts(key,languagePreference){
 	return (dispatch,state) => {
 		dispatch(requestPosts(key));
-		BlogApi.popularPosts().then(function(response){
+		BlogApi.popularPosts(languagePreference).then(function(response){
   				let posts = response.data.posts;
   				dispatch(receivedPosts(key,posts));
      	}).catch((err) => {
@@ -528,7 +529,7 @@ export function fetchPopularPosts(key){
 	}
 };
 
-//editorial posts
+//editorial posts, language dependant
 export function fetchEditorialPosts(key){
 	
 	return (dispatch,state) => {

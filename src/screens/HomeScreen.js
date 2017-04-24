@@ -74,24 +74,17 @@ export default class Homescreen extends Component{
 
 	}
 
-	componentWillReceiveProps(nextProps){
-
-		if(this.props.user.authenticated){
-			const nextUserInfo = nextProps.user.userInfo;
-			const currentUserInfo = this.props.user.userInfo;
-			const userInfoChanged = hasUserInfoChanged(currentUserInfo,nextUserInfo); 
-			this.setState({update : userInfoChanged});
-		}
-		
-	}
-		
+	
 	render(){
+
+		const {navigator,active,user} = this.props;
+
 		return (
 			<Page key='homescreen'>
-				 <ProgressInfo user={this.props.user.userInfo} />
-				 <SlotPostsContainer position='88' update={this.state.update} navigator={this.props.navigator} />
-				 <InterestsCarouselContainer position='295' navigator={this.props.navigator} />
-				 <UserFeedsContainer active={this.props.active} title='Stories Just for You' update={this.state.update} position='370' section={USER_FEED_RELEVANCE} navigator={this.props.navigator} />
+				 <ProgressInfo user={user.userInfo} />
+				 <SlotPostsContainer position='88' user={user} navigator={navigator} />
+				 <InterestsCarouselContainer position='295' user={user} navigator={navigator} />
+				 <UserFeedsContainer active={active} title='Stories Just for You' position='370' section={USER_FEED_RELEVANCE} user={user} navigator={navigator} />
 			</Page>
 			)
 	}

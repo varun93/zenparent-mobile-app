@@ -97,22 +97,23 @@ export const hompepageTitle = (user) => {
 
 	let title = '';
 
-	if(isFieldEmpty(user)){
+	if(isFieldEmpty(user) || isFieldEmpty(user.userInfo)){
 		return title;
 	}
 
-	const stageOfParenting = user.stage_of_parenting;
+	const userInfo = user.userInfo;
+	const stageOfParenting = userInfo.stage_of_parenting;
 	
 	if(stageOfParenting == 'parent'){
-		const months = user.kids_age_in_months;
-		const years = user.kids_age_in_years;
-		const weeks = user.kids_age_in_weeks;
-
-		title =  (months == 0) ? `Your Child : Week ${weeks}` : (months < 24) ? `Your Child : Month ${months}` : `Your Child : Years ${years}`;	
+		const months = userInfo.kids_age_in_months;
+		const years = userInfo.kids_age_in_years;
+		const weeks = userInfo.kids_age_in_weeks;
+		title = (months == 0) ? `Your Child : Week ${weeks}` : (months < 24) ? `Your Child : Month ${months}` : `Your Child : Years ${years}`;	
 	}
 
 	if(stageOfParenting == 'pregnant'){
-		title = `Your Pregnancy : Week ${user.week_number}`;
+		const weekNumber = userInfo.week_number;
+		title = `Your Pregnancy : Week ${weekNumber}`;
 	}
 
 	return title;
@@ -148,6 +149,14 @@ export const convertDateToWords = (date) => {
 };
 
 
+// --- 
+
+export const getUserLanguage = (user) => {
+
+	const userLanguage = (user ? (user.language_preference ? user.language_preference : 'English') : 'English');
+	return userLanguage;
+}
+
 
 //--- has user info changed
 
@@ -159,14 +168,22 @@ export const hasUserInfoChanged = (currentUserInfo,nextUserInfo) => {
 	const nextStageOfParenting  = nextUserInfo.stage_of_parenting;
 	const currentUserInterests  = currentUserInfo.interests;
 	const nextUserInterests = nextUserInfo.interests;
+	const currentLanguagePreference = currentUserInfo.language_preference;
+	const nextLanguagePreference = nextUserInfo.language_preference;
+
+
+	if(currentStageOfParenting !== nextStageOfParenting){
+		return true;
+	}
+
+	if(currentLanguagePreference !== nextLanguagePreference){
+		return true;
+	}
 	
 	const interestsSame = (!isFieldEmpty(currentUserInterests) && !isFieldEmpty(nextUserInterests)) && (currentUserInterests.length == nextUserInterests.length) && currentUserInterests.every(function(element, index) {
     	return element === nextUserInterests[index]; 
 	});
 		
-	if(currentStageOfParenting !== nextStageOfParenting){
-		return true;
-	}
 
 	const dateKey = currentStageOfParenting == 'parent' ? 'dob' : 'due_date';
 

@@ -37,9 +37,9 @@ class BlogApi {
   }
 
   //verified
-  static fetchPosts(filter,offset) {
+  static fetchPosts(filter,offset,languagePreference) {
     const headers = this.requestHeaders();
-    const params = {filter,offset};
+    const params = {filter,offset,language_preference : languagePreference};
     const url = getRequestUrl(POSTS_ENDPOINT,params);
 
     const request = new Request(url, {
@@ -56,9 +56,11 @@ class BlogApi {
 
 
   //verified
-  static popularPosts() {
+  static popularPosts(languagePreference) {
 
     const headers = this.requestHeaders();
+    const params = {language_preference : languagePreference};
+    const url = getRequestUrl(POPULAR_POSTS_ENDPOINT,params);
 
     const options = {
       method: 'GET',
@@ -68,7 +70,7 @@ class BlogApi {
       retryDelay: 2000
     };
     
-    return cachedFetch(POPULAR_POSTS_ENDPOINT,options).then(r => {
+    return cachedFetch(url,options).then(r => {
       return r.json()
     }).catch(error => {
       return error
@@ -119,10 +121,10 @@ class BlogApi {
   }
 
   // verified, cache the term+url
-  static archivePosts(term,offset){
+  static archivePosts(term,offset,languagePreference){
 
     const headers = this.requestHeaders();
-    const params = {term : term,offset : offset};
+    const params = {term : term,offset : offset,language_preference : languagePreference};
     const url = getRequestUrl(TERM_ARCHIVES_ENDPOINT,params);
     
     const request = new Request(url, {
@@ -138,9 +140,12 @@ class BlogApi {
 
   }
 
-  static slotPosts(){
+  static slotPosts(languagePreference=''){
+
 
     const headers = this.requestHeaders();
+    const params = {language_preference : languagePreference};
+    const url = getRequestUrl(SLOT_POSTS_ENDPOINT,params);
 
     const options = {
       method: 'GET',
@@ -150,7 +155,7 @@ class BlogApi {
       retryDelay: 2000
     };
     
-    return cachedFetch(SLOT_POSTS_ENDPOINT,options).then(r => {
+    return cachedFetch(url,options).then(r => {
       return r.json()
     }).catch(error => {
       return error

@@ -75,9 +75,9 @@
     background-size: cover;
     display: inline-block;
     background-repeat: no-repeat;
-    width: 15px;
-    height: 15px;
-    content: '';
+    width : 15px;
+    height : 15px;
+    content : '';
     margin-left: 5px;
 }
 
@@ -96,4 +96,8 @@
     border: none;
     font-size: 16px;
 
+}
+
+.language-preference-row{
+    padding: 10px 0px !important;
 }

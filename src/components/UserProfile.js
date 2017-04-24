@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Page,Toolbar,BackButton,Input,Icon,Dialog,Button} from 'react-onsenui';
+import {Page,Toolbar,BackButton,Input,Icon,Dialog,Button,Switch,Row,Col} from 'react-onsenui';
 import {platform} from 'onsenui';
 import BookmarkedPostsContainer from '../containers/BookmarkedPostsContainer';
 import AuthScreen from '../screens/AuthScreen';
@@ -24,6 +24,9 @@ const styles = {
     textAlign:"right",
     color:"rgb(132,116,159)"
   },
+  logoutSection : {
+    textAlign  : "right"
+  },
   stageOfParentingSelect : {
     padding: "10px 0px 10px",
     width: "100%",
@@ -43,6 +46,7 @@ export default class UserProfile extends Component{
       showDateField : platform.isIOS() ? 1 : 0,
       profileImage : '',
       displayName : '',
+      languagePreference : 'English',
       stageOfParenting : '',
       date : '',
       dialogShown : false,
@@ -70,6 +74,7 @@ export default class UserProfile extends Component{
 
     let stageOfParenting = userInfo.stage_of_parenting;
     let displayName = userInfo.first_name;
+    let languagePreference = userInfo.language_preference;
     let date = null;
     let profileImage = userInfo.user_avatar;
 
@@ -80,7 +85,7 @@ export default class UserProfile extends Component{
       date = userInfo.due_date;
     } 
 
-    this.setState({editMode : !this.state.editMode,displayName : displayName,stageOfParenting : stageOfParenting,date : date,profileImage : profileImage});
+    this.setState({editMode : !this.state.editMode,displayName : displayName,stageOfParenting : stageOfParenting,date : date,profileImage : profileImage,languagePreference : languagePreference});
   }
 
 
@@ -118,7 +123,7 @@ export default class UserProfile extends Component{
 
   updateProfileInfo(){
 
-    let {date,stageOfParenting,displayName} = this.state;
+    let {date,stageOfParenting,displayName,languagePreference} = this.state;
     let errorMessage = '';
     let valid = true;
 
@@ -144,7 +149,7 @@ export default class UserProfile extends Component{
         //remove any user profile related info
         removeCache(PROFILE_UPDATE);
         // finally make the request
-        this.props.updateUserProfile(date,stageOfParenting,displayName);    
+        this.props.updateUserProfile(date,stageOfParenting,displayName,languagePreference);    
     }
   
   }
@@ -166,6 +171,11 @@ export default class UserProfile extends Component{
     this.setState({date : e.target.value}); 
   }
 
+  _onLanguageChange(){
+    const languagePreference = this.state.languagePreference == "English" ? "Hindi" : "English";
+    this.setState({languagePreference});
+  }
+
   render(){
 
     const {user} = this.props;
@@ -175,13 +185,14 @@ export default class UserProfile extends Component{
 
     let stageOfParenting = editMode ? this.state.stageOfParenting : (authenticated ? user.userInfo.stage_of_parenting : '');
     let displayName = editMode ? this.state.displayName : (authenticated ? user.userInfo.first_name : '');
+    let languagePreference = editMode ? this.state.languagePreference : (authenticated ? user.userInfo.language_preference : '');
     let date = editMode ? this.state.date : (authenticated ? (stageOfParenting == 'parent' ? user.userInfo.dob : user.userInfo.due_date) : '');
     let profileImage = (authenticated ? user.userInfo.user_avatar ? user.userInfo.user_avatar : 'https://lorempixel.com/100/100/people/' : '');
-   
+
 
     return (
-    <Page className="user-profile">
 
+    <Page className="user-profile">
 
       <Dialog
               isOpen={this.state.dialogShown}
@@ -198,8 +209,8 @@ export default class UserProfile extends Component{
 
       <div className="profile-info">
 
-        <div className="logout-section" onClick={this.logout.bind(this)}>
-          <p style={styles.logoutButton}>LOGOUT</p>
+        <div style={styles.logoutSection} className="logout-section">
+          <span onClick={this.logout.bind(this)} style={styles.logoutButton}>LOGOUT</span>
         </div>
         
         <div className="profile-image-wrap">
@@ -245,6 +256,25 @@ export default class UserProfile extends Component{
                 </p>
 
               }
+            </div>
+
+            <div className="language-preference">
+             <p className="field-label">Language Preference</p>
+             {   
+               !editMode ? 
+                <p>{languagePreference}</p> : 
+                <Row className="language-preference-row">
+                    <Col style={{textAlign : "left"}}>
+                    {languagePreference}
+                    </Col>
+                    <Col style={{textAlign : "right"}}>
+                      <Switch
+                      checked = {languagePreference == "Hindi" ? true : false}
+                      onChange={this._onLanguageChange.bind(this)}
+                       />
+                    </Col>
+                  </Row>
+                }
             </div>
 
             <div className="parenting-stage">
