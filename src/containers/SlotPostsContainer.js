@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import PostsListWrapper from '../templates/PostsListWrapper';
 import {fetchSlotPosts,toggleLike,toggleBookmark,HOMEPAGE_SLOT_POSTS} from '../actions/blogActions';
-import {getPosts,hompepageTitle,isFieldEmpty,getUserLanguage,hasUserInfoChanged} from '../utils';
+import {getPosts,hompepageTitle,isFieldEmpty,hasUserInfoChanged} from '../utils';
 import CarouselLoader from '../templates/CarouselLoader';
 import PostsCarousel from '../components/PostsCarousel';
 
@@ -11,37 +11,36 @@ class SlotPostsContainer extends Component{
 	constructor(props,context){
 		super(props,context);
 		this.state = {retry : 0};
+		this.requestSlotPosts.bind(this);
 	}
 
 	componentDidMount(){
-		this.props.fetchSlotPosts(HOMEPAGE_SLOT_POSTS);
+		this.requestSlotPosts();	
 	}
 
 
-	requestSlotPosts(key,language){
-		this.props.fetchSlotPosts(key,language);
+	requestSlotPosts(){
+		this.props.fetchSlotPosts(HOMEPAGE_SLOT_POSTS);
 	}
 
 	//loading
 	componentWillReceiveProps(nextProps){
 
-		if(this.props.slotPosts.loading || this.props.user.loading) {
-			return;
-		}
-
-		const languagePreference = getUserLanguage(nextProps.user.userInfo);
-
 		if(this.props.user && this.props.user.authenticated){
 			const nextUserInfo = nextProps.user.userInfo;
 			const currentUserInfo = this.props.user.userInfo;
 			const userInfoChanged = hasUserInfoChanged(currentUserInfo,nextUserInfo); 
-			if(userInfoChanged){
-				this.requestSlotPosts(HOMEPAGE_SLOT_POSTS,languagePreference);	
-			}
+			if(userInfoChanged) this.requestSlotPosts();	
+			
 		}
 
+		if(this.props.slotPosts.loading || this.props.user.loading) {
+			return;
+		}
+
+
 		if((nextProps.slotPosts.error || isFieldEmpty(nextProps.slotPosts.posts) || nextProps.slotPosts.length == 0) && this.state.retry < 3){
-			this.requestSlotPosts(HOMEPAGE_SLOT_POSTS,languagePreference);
+			this.requestSlotPosts();
 			this.setState({retry : this.state.retry + 1});
 		}
 	

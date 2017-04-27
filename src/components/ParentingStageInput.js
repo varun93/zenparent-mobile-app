@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import {Page,Input,ProgressCircular,Icon} from 'react-onsenui';
+import LanguageSelect from  '../templates/LanguageSelect';
 import Toolbar from '../templates/Toolbar';
 import CustomInput from './CustomInput';
 import {isFieldEmpty,generateNavigationKey,validateDate} from '../utils';
@@ -8,14 +9,15 @@ import {BlogAnalytics} from '../utils/Analytics';
 import {SCREEN_VIEWED} from '../constants';
 
 
-export default class ParentingStageInput extends Component{
+export default class ParentingStageInput extends Component {
 
 	constructor(props,context){
 	
 		super(props,context);
 
 		this.state = {
-			date: ''	
+			date: '',
+			languagePreference : 'English'	
 	    };
 
 	}
@@ -34,21 +36,24 @@ export default class ParentingStageInput extends Component{
 	
 		
 	_handleDateChange(e){
-		let date = e.target.value;
+		const date = e.target.value;
 		this.setState({date});
 	}
 
+	_onLanguageChange(e){
+		const languagePreference = e.target.value;
+		this.setState({languagePreference});
+  	}
+
 	_onClick(e){
 
-		let date = this.state.date || '';
+		const {date,languagePreference} = this.state;
 		
-		if(!isFieldEmpty(date)){
-      		this.props.updateUserProfile(date,'','');
-    	}
-		else{
+		if(isFieldEmpty(date) || isFieldEmpty(languagePreference)){
 			return;
-		}
-		
+    	}
+	
+		this.props.updateUserProfile(date,'','',languagePreference);		
 	}
 
 	//get Next Route
@@ -74,6 +79,7 @@ export default class ParentingStageInput extends Component{
 		const {user} = this.props;
 		const error = user.error || '';
 		const loading = user.loading;
+		const {languagePreference} = this.state;
 
 		return (
 			<Page key="parenting-stage-input-screen" className="parenting-stage-input-screen">
@@ -90,7 +96,11 @@ export default class ParentingStageInput extends Component{
 			             errorMessage = "Date is invalid"
 		          	/>
 
-			        <button className={`loginBtn emailBtn `} onClick={this._onClick.bind(this)}>
+		          	<span style={{color:"#8675A1",fontSize:"13px"}}>Language Preference</span>
+		          	<LanguageSelect languagePreference={languagePreference} onLanguageChange={this._onLanguageChange.bind(this)} />
+
+		        
+			        <button className={`loginBtn emailBtn`} onClick={this._onClick.bind(this)}>
 			            {loading ? <Icon style={{color: 'white'}} size={28} spin icon='md-spinner'/> :  `Continue` } 
 			        </button>
 	

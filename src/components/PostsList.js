@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ProgressCircular} from 'react-onsenui';
 import Waypoint from 'react-waypoint';
 import PostsListWrapper from '../templates/PostsListWrapper';
-import {getPosts,hasUserInfoChanged} from '../utils';
+import {getPosts,hasUserInfoChanged,getUserLanguage} from '../utils';
 import {USER_FEED_TIME,USER_FEED_RELEVANCE,BOOKMARKED_POSTS,ARCHIVE_POSTS} from '../actions/blogActions';
 
 
@@ -38,17 +38,16 @@ export default class PostsList extends Component{
 	_loadMoreItems(){
 
 		let offset = this.state.offset;
-		let {options} =  this.props;
+		let {options,user} =  this.props;
 		let key = options.key;
-		let languagePreference = 'Hindi';
-
+		
 		if(key == USER_FEED_TIME || key == USER_FEED_RELEVANCE){
 			let filter = key == USER_FEED_RELEVANCE ? 'relevance' : 'time';
-			this.props.fetchPosts(key,filter,offset,languagePreference);
+			this.props.fetchPosts(key,filter,offset);
 		}
 		else if(key == ARCHIVE_POSTS){
 			let term = options.term;
-			this.props.fetchArchivePosts(key,term,offset,languagePreference);
+			this.props.fetchArchivePosts(key,term,offset);
 		}
 		else if(key == BOOKMARKED_POSTS){
 			this.props.fetchBookmarkedPosts(key,offset);

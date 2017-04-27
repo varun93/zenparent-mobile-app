@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+import fetch from 'fetch-retry';
 import {prepareFormData} from '../utils'
 import {SIGNUP_ENDPOINT,LOGIN_ENDPOINT,TOKEN_SIGNIN_ENDPOINT,
   EMAIL_SIGNIN_ENDPOINT,UPDATE_USER_PROFILE_ENDPOINT,
@@ -17,6 +17,8 @@ class UserApi {
     const request = new Request(APP_INIT_ENDPOINT, {
       method: 'POST',
       headers: headers,
+      retries: 5,
+      retryDelay: 2000,
       body: prepareFormData({app_version})
     });
 
@@ -33,6 +35,8 @@ class UserApi {
 
     const request = new Request(EMAIL_SIGNIN_ENDPOINT, {
       method: 'POST',
+      retries: 5,
+      retryDelay: 500,
       body: prepareFormData({user_email : userEmail})
     });
 
@@ -48,6 +52,8 @@ class UserApi {
 
     const request = new Request(LOGIN_ENDPOINT, {
       method: 'POST',
+      retries: 5,
+      retryDelay: 500,
       body: prepareFormData({user_email : userEmail, user_password : userPassword})
     });
 
@@ -60,11 +66,13 @@ class UserApi {
   } 
 
   //
-  static signup(userEmail,userPassword,date) {
+  static signup(userEmail,userPassword,date,languagePreference) {
   
     const request = new Request(SIGNUP_ENDPOINT, {
       method: 'POST',
-      body: prepareFormData({user_email : userEmail, user_password : userPassword,date : date})
+      retries: 5,
+      retryDelay: 500,
+      body: prepareFormData({user_email : userEmail, user_password : userPassword,date : date, language_preference : languagePreference})
     });
 
     return fetch(request).then(response => {
@@ -83,6 +91,8 @@ class UserApi {
     const request = new Request(TOKEN_SIGNIN_ENDPOINT, {
       method: 'POST',
       headers: headers, 
+      retries: 5,
+      retryDelay: 500,
       body: prepareFormData({token:token,user_email : userEmail,display_name : displayName,image_url : imageUrl,social_unique_id : socialUniqueId,login_by : loginBy})
     });
 
@@ -101,6 +111,8 @@ class UserApi {
     const request = new Request(UPDATE_USER_INTERESTS_ENDPOINT, {
       method: 'POST',
       headers: headers,
+      retries: 5,
+      retryDelay: 500,
       body: prepareFormData({interests : interests})
     });
 
@@ -129,13 +141,15 @@ class UserApi {
   }
 
   // tested
-  static updateUserProfile(date,stageOfParenting,displayName,languagePreference) {
+  static updateUserProfile(date='',stageOfParenting='',displayName='',languagePreference='') {
 
     const headers = this.requestHeaders();
 
     const request = new Request(UPDATE_USER_PROFILE_ENDPOINT, {
       method: 'POST',
       headers: headers,
+      retries: 5,
+      retryDelay: 500,
       body: prepareFormData({date : date,stage_of_parenting : stageOfParenting, display_name : displayName,language_preference : languagePreference})
     });
 

@@ -4,7 +4,7 @@ import {hasUserInfoChanged} from '../utils';
 import {v4} from 'node-uuid';
 import getNextRoute from '../utils/getNextRoute'; 
 import AuthScreen from '../screens/AuthScreen';
-import ProgressInfo from '../templates/ProgressInfo';
+import MenuBar from '../components/MenuBar';
 import SlotPostsContainer from '../containers/SlotPostsContainer';
 import UserFeedsContainer from '../containers/UserFeedsContainer';
 import InterestsCarouselContainer from '../containers/InterestsCarouselContainer';
@@ -26,6 +26,7 @@ export default class Homescreen extends Component{
 
 		document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
 		document.addEventListener('deviceresume', this.onDeviceReady.bind(this), false);
+		document.addEventListener('onDeepLink', this.onDeepLink.bind(this), false);
 		document.addEventListener('onPushNotification', this.onPushNotification.bind(this), false);
 
 	}
@@ -46,6 +47,16 @@ export default class Homescreen extends Component{
        	
     }
 
+    onDeepLink(e){
+    	const deeplink = e.deeplink;
+     	const postId = deeplink.substr(deeplink.lastIndexOf('/')+1);
+
+     	if(postId.match(/\d+/)){
+     		this.navigateToPost.call(this,postId);	
+     	}
+
+    }
+
 	onDeviceReady(){
 		
 		try{
@@ -53,12 +64,15 @@ export default class Homescreen extends Component{
 	        const classContext = this;
 	      
 	        Branch.initSession(function(data) {
-	     
-	        const postId = data.p;
-	     	
-			classContext.navigateToPost.call(classContext,postId);
-		    
-		});   
+
+	        	//this for maintaining backward compatibilty
+	    		const postId = data.p;
+
+	    		if(postId){
+	    			classContext.navigateToPost.call(classContext,postId);
+	    		}
+	    		
+	    	});   
 
 	    }
 	    catch(e){
@@ -81,7 +95,7 @@ export default class Homescreen extends Component{
 
 		return (
 			<Page key='homescreen'>
-				 <ProgressInfo user={user.userInfo} />
+				 <MenuBar user={user} />
 				 <SlotPostsContainer position='88' user={user} navigator={navigator} />
 				 <InterestsCarouselContainer position='295' user={user} navigator={navigator} />
 				 <UserFeedsContainer active={active} title='Stories Just for You' position='370' section={USER_FEED_RELEVANCE} user={user} navigator={navigator} />

@@ -37,9 +37,9 @@ class BlogApi {
   }
 
   //verified
-  static fetchPosts(filter,offset,languagePreference) {
+  static fetchPosts(filter,offset) {
     const headers = this.requestHeaders();
-    const params = {filter,offset,language_preference : languagePreference};
+    const params = {filter,offset};
     const url = getRequestUrl(POSTS_ENDPOINT,params);
 
     const request = new Request(url, {
@@ -56,12 +56,10 @@ class BlogApi {
 
 
   //verified
-  static popularPosts(languagePreference) {
+  static popularPosts() {
 
     const headers = this.requestHeaders();
-    const params = {language_preference : languagePreference};
-    const url = getRequestUrl(POPULAR_POSTS_ENDPOINT,params);
-
+  
     const options = {
       method: 'GET',
       headers: headers,
@@ -70,7 +68,7 @@ class BlogApi {
       retryDelay: 2000
     };
     
-    return cachedFetch(url,options).then(r => {
+    return cachedFetch(POPULAR_POSTS_ENDPOINT,options).then(r => {
       return r.json()
     }).catch(error => {
       return error
@@ -121,10 +119,10 @@ class BlogApi {
   }
 
   // verified, cache the term+url
-  static archivePosts(term,offset,languagePreference){
+  static archivePosts(term,offset){
 
     const headers = this.requestHeaders();
-    const params = {term : term,offset : offset,language_preference : languagePreference};
+    const params = {term : term,offset : offset};
     const url = getRequestUrl(TERM_ARCHIVES_ENDPOINT,params);
     
     const request = new Request(url, {
@@ -140,12 +138,9 @@ class BlogApi {
 
   }
 
-  static slotPosts(languagePreference=''){
-
+  static slotPosts(){
 
     const headers = this.requestHeaders();
-    const params = {language_preference : languagePreference};
-    const url = getRequestUrl(SLOT_POSTS_ENDPOINT,params);
 
     const options = {
       method: 'GET',
@@ -155,7 +150,7 @@ class BlogApi {
       retryDelay: 2000
     };
     
-    return cachedFetch(url,options).then(r => {
+    return cachedFetch(SLOT_POSTS_ENDPOINT,options).then(r => {
       return r.json()
     }).catch(error => {
       return error

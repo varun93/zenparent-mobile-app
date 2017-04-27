@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
-import {Page,Toolbar,BackButton,Input,Icon,Dialog,Button,Switch,Row,Col} from 'react-onsenui';
+import {Page,Toolbar,BackButton,Input,Icon,Dialog,Button} from 'react-onsenui';
+import LanguageSelect from '../templates/LanguageSelect';
 import {platform} from 'onsenui';
 import BookmarkedPostsContainer from '../containers/BookmarkedPostsContainer';
 import AuthScreen from '../screens/AuthScreen';
@@ -171,10 +172,11 @@ export default class UserProfile extends Component{
     this.setState({date : e.target.value}); 
   }
 
-  _onLanguageChange(){
-    const languagePreference = this.state.languagePreference == "English" ? "Hindi" : "English";
+  _onLanguageChange(e){
+    const languagePreference = e.target.value;
     this.setState({languagePreference});
-  }
+    }
+
 
   render(){
 
@@ -263,17 +265,7 @@ export default class UserProfile extends Component{
              {   
                !editMode ? 
                 <p>{languagePreference}</p> : 
-                <Row className="language-preference-row">
-                    <Col style={{textAlign : "left"}}>
-                    {languagePreference}
-                    </Col>
-                    <Col style={{textAlign : "right"}}>
-                      <Switch
-                      checked = {languagePreference == "Hindi" ? true : false}
-                      onChange={this._onLanguageChange.bind(this)}
-                       />
-                    </Col>
-                  </Row>
+                <LanguageSelect languagePreference={languagePreference} onLanguageChange={this._onLanguageChange.bind(this)} />
                 }
             </div>
 

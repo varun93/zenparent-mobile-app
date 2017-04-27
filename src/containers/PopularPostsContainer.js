@@ -24,8 +24,7 @@ class PopularPostsContainer extends Component{
 		const userInfoChanged = hasUserInfoChanged(currentUserInfo,nextUserInfo); 
 
 		if(userInfoChanged || (!loaded && active)){
-			const languagePreference = getUserLanguage(nextUserInfo);
-			this.props.fetchPopularPosts(POPULAR_POSTS,languagePreference);
+			this.props.fetchPopularPosts(POPULAR_POSTS);
 			this.setState({loaded : true});
 		}
 
@@ -55,7 +54,7 @@ class PopularPostsContainer extends Component{
 
 const mapDispactorToProps = (dispatch,ownProps) => { 
 	return {
-		fetchPopularPosts : (key,languagePreference) => dispatch(fetchPopularPosts(key,languagePreference)),
+		fetchPopularPosts : (key) => dispatch(fetchPopularPosts(key)),
 		toggleLike : (id) => dispatch(toggleLikeRequest(id)),
 		toggleBookmark : (id) => dispatch(toggleBookmarkRequest(id))
 }};

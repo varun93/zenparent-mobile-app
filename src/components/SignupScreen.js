@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {Page,Input,ProgressCircular,Icon} from 'react-onsenui';
 import CustomInput from './CustomInput';
+import LanguageSelect from  '../templates/LanguageSelect';
 import {isFieldEmpty,validateDate} from '../utils';
 import Toolbar from '../templates/Toolbar';
 import UserInterestsSelector from '../screens/UserInterestsSelector';
@@ -16,7 +17,8 @@ export default class SignupScreen extends Component{
 
 		this.state = {
       		userPassword: '',
-      		date : ''
+      		date : '',
+      		languagePreference : 'English'
 	    };
 
 	}
@@ -48,13 +50,18 @@ export default class SignupScreen extends Component{
 	}
 
 	_handlePasswordChange(e){
-		let userPassword = e.target.value;
+		const userPassword = e.target.value;
     	this.setState({userPassword});
 	}
 
 	_handleDateChange(e){
-		let date = e.target.value;
+		const date = e.target.value;
 		this.setState({date});
+	}
+
+	_onLanguageChange(e){
+		const languagePreference = e.target.value;
+		this.setState({languagePreference});
 	}
 
 	validatePassword(value){
@@ -63,12 +70,11 @@ export default class SignupScreen extends Component{
 
     _onClick(e){
 
-		let userEmail = this.props.user.userInfo.user_email;
-		let userPassword = this.state.userPassword;
-		let date = this.state.date || '';
-		
+		const userEmail = this.props.user.userInfo.user_email;
+		const {date,userPassword,languagePreference} = this.state;
+	
 		if(this.validatePassword(userPassword) && validateDate(date)){
-      		this.props.signup(userEmail,userPassword,date);
+      		this.props.signup(userEmail,userPassword,date,languagePreference);
     	}
 		else{
 			return;
@@ -80,8 +86,8 @@ export default class SignupScreen extends Component{
 	render(){
 
 		let {user,navigator} = this.props;
-		let {userPassword,date} = this.state;
-		const userEmail = this.props.user.userInfo.user_email || '';
+		let {userPassword,date,languagePreference} = this.state;
+		const userEmail = this.props.user.userInfo.user_email;
 		const loading = this.props.user.loading;
 
 		return (
@@ -108,13 +114,17 @@ export default class SignupScreen extends Component{
 
             		<span style={{color:"#8675A1",fontSize:"13px"}}>Due Date/Your Child's Birthday</span>
 		            <CustomInput
-			             type="date"
+			             type = "date"
 			             onChange = {this._handleDateChange.bind(this)}
 			             disabled = {false}
 			             validate = {validateDate}
 			             emptyMessage="Date is Invalid"
 			             errorMessage="Date is Invalid"
 		          	/>
+
+		          	<span style={{color:"#8675A1",fontSize:"13px"}}>Language Preference</span>
+		          	<LanguageSelect languagePreference={languagePreference} onLanguageChange={this._onLanguageChange.bind(this)} />
+
 
 			        <button className={`loginBtn emailBtn`} onClick={this._onClick.bind(this)}>
 			            {loading ? <Icon style={{color: 'white'}} size={28} spin icon='md-spinner'/> :  `Signup` } 

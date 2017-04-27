@@ -7,12 +7,12 @@ class PostsArchiveContainer extends Component{
 
 	render(){
 		  let options = {};
-		  let {navigator,loading,exhausted,term,title,toggleLike,toggleBookmark,fetchArchivePosts,contextualPosts,posts} = this.props;
+		  let {navigator,loading,user,exhausted,term,title,toggleLike,toggleBookmark,fetchArchivePosts,contextualPosts,posts} = this.props;
 		  options['term'] = term;
 		  options['key'] = ARCHIVE_POSTS;
 
 		  return (
-			<PostsList active={true} loading={loading} title={title} exhausted={exhausted} toggleLike={toggleLike} toggleBookmark={toggleBookmark} options={options} navigator={navigator} posts={posts} contextualPosts={contextualPosts} fetchArchivePosts={fetchArchivePosts} />
+			<PostsList active={true} user={user} loading={loading} title={title} exhausted={exhausted} toggleLike={toggleLike} toggleBookmark={toggleBookmark} options={options} navigator={navigator} posts={posts} contextualPosts={contextualPosts} fetchArchivePosts={fetchArchivePosts} />
 		 )			
 	}
 
@@ -48,6 +48,7 @@ const isLoading = (term,state) => {
 
 const mapStateToProps = (state,ownProps) => {
 	return {
+		user : state.user,
 		posts : state.blog.posts.byId,
 		contextualPosts : getArchivePosts(ownProps.term,state),
 		loading : isLoading(ownProps.term,state),

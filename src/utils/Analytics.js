@@ -1,6 +1,6 @@
 const environment = process.env.NODE_ENV;
 
-import {POST_LIKED,POST_BOOKMARKED,SCREEN_VIEWED,POST_SHARED,
+import {POST_LIKED,POST_BOOKMARKED,SCREEN_VIEWED,POST_SHARED,LANGUAGE_TOGGLED,
 	CHATROOM_VISITED,JOINED_CHATROOM,LEFT_CHATROOM,MESSAGE_SENT,
 	USER_SIGNUP,USER_LOGIN,USER_PROFILE_SYNC,USER_PROFILE_UPDATED,USER_INTERESTS_UPDATED,USER_LOGOUT} from '../constants';
 
@@ -107,6 +107,11 @@ export const UserAnalytics = (event,user) => {
 
 
        	switch(event){
+
+       		case LANGUAGE_TOGGLED : 
+       			CleverTap.recordEventWithName("Language Toggled");
+       			break;
+
 			case USER_SIGNUP : 
 				// console.log("Signup Completed");
 			 	CleverTap.recordEventWithName("Signup Completed");

@@ -8,12 +8,13 @@ if(environment == 'production'){
 }
 
 export const assetsBase = () => {
-if (environment == 'production'){
-	return 'assets/';
-}
-else{
-	return '/assets/';
- }
+
+	if (environment == 'production'){
+		return 'assets/';
+	}
+	else{
+		return '/assets/';
+	}
 
 };
 
@@ -91,6 +92,7 @@ export const POST_LIKED = 'POST_LIKED';
 export const POST_BOOKMARKED = 'POST_BOOKMARKED';
 export const SCREEN_VIEWED = 'SCREEN_VIEWED';
 export const POST_SHARED = 'POST_SHARED';
+export const LANGUAGE_TOGGLED = 'LANGUAGE_TOGGLED';
 export const CHATROOM_VISITED = 'CHATROOM_VISITED';
 export const JOINED_CHATROOM = 'JOINED_CHATROOM';
 export const LEFT_CHATROOM = 'LEFT_CHATROOM';

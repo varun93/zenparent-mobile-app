@@ -57,7 +57,13 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 //------------------------ login related actions -------------------------
 export function loginUserSuccess(user,token) {
   
-  window.localStorage.setItem('jwt', token);
+  try{
+    window.localStorage.setItem('jwt', token);  
+  }
+  catch(e){
+    //handle the exception if any
+  }
+  
   
   try {
      UserAnalytics(USER_LOGIN,user); // generates an exception
@@ -78,8 +84,13 @@ export function loginUserSuccess(user,token) {
 
 export function loginUserFailure(message) {
   
-  window.localStorage.removeItem('jwt');
-  
+  try{
+    window.localStorage.removeItem('jwt');
+  }
+  catch(e){
+    // handle the exception if any
+  }  
+
   return {
     type: LOGIN_USER_FAILURE,
     message
@@ -95,9 +106,10 @@ export function loginUserRequest() {
 //------------------------ signup related actions -------------------------
 
 export function signupUserSuccess(user,token) {
-  window.localStorage.setItem('jwt', token);//this is impotn
-    
+  
+
   try {
+     window.localStorage.setItem('jwt', token);//this is impotn
      UserAnalytics(USER_SIGNUP,user); // generates an exception
   }
   catch (e) {
@@ -113,7 +125,15 @@ export function signupUserSuccess(user,token) {
 };
 
 export function signupUserFailure(message) {
-  window.localStorage.removeItem('jwt');
+  
+  try{
+     window.localStorage.removeItem('jwt');//this is impotn
+  }
+  catch(e){
+    //handle the exception
+  }
+ 
+
   return {
     type: SIGNUP_USER_FAILURE,
     message
@@ -130,7 +150,14 @@ export function signupUserRequest() {
 //------------------------ token signin related actions -------------------------
 
 export function tokenSigninUserSuccess(user,token) {
-  window.localStorage.setItem('jwt', token);//this is impotn
+
+  try{
+     window.localStorage.setItem('jwt', token);//this is impotn
+  }
+  catch(e){
+    //handle the exception
+  }
+ 
   return {
     type: TOKEN_SIGNIN_USER_SUCCESS,
     user,
@@ -139,10 +166,18 @@ export function tokenSigninUserSuccess(user,token) {
 };
 
 export function tokenSigninUserFailure(error) {
-  window.localStorage.removeItem('jwt');
+
+  try{
+    window.localStorage.removeItem('jwt');  
+  }
+  catch(e){
+    // handle the exception 
+  }
+  
+
   return {
     type: TOKEN_SIGNIN_USER_FAILURE,
-    message
+    error
   }
 };
 
@@ -493,13 +528,13 @@ export function tokenSignin(accessToken,socialUniqueId,userEmail,displayName,ima
       }
 };
 
-export function signup(userEmail, userPassword, date) {
+export function signup(userEmail, userPassword, date, languagePreference) {
     
       return (dispatch,state) => {
           
           dispatch(signupUserRequest());
 
-          UserApi.signup(userEmail,userPassword,date).then(function(response){
+          UserApi.signup(userEmail,userPassword,date,languagePreference).then(function(response){
             
               let success = response.success;
               let user = response.data.user;

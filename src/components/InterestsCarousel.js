@@ -41,7 +41,6 @@ const styles = {
 	  },
 	  addMore : {
 	  	position : 'relative',
-	  	background : '#eeeeee',
 	  	height : '90px',
 	  	marginLeft: '10px',
         marginTop: '35px'
@@ -74,20 +73,20 @@ export default class InterestsCarousel extends Component{
 	}
 
 
-	renderCarouselItem(interest,index){
-		if(interest.term == 'last'){
+	renderInitialItem(){
 
-			return(
-				<CarouselItem key={v4()} onClick={() => this.props.navigator.resetPage({component : UserInterestsSelector, key : v4()}) }>
+		return(
+				<CarouselItem style={{backgroundColor : "#8675A1",color : "white"}} key={v4()} onClick={() => this.props.navigator.resetPage({component : UserInterestsSelector, key : v4()}) }>
 					<div style={styles.addMore}>
 						<ons-icon size='32px' style={styles.addMoreIcon} icon="ion-ios-plus-outline">
 						</ons-icon>
 					</div>
 				</CarouselItem>	
 			)
-		
-		}
+	}
 
+	renderCarouselItem(interest,index){
+		
 		return (
 			<CarouselItem style={styles.carouselItem} onClick={() => this.props.navigator.pushPage({component : ArchiveScreen,toggleLike : this.props.toggleLike,toggleBookmark : this.props.toggleBookmark,term : interest.term,key : v4()})} key={v4()}>
 	      		<div style={{position : "relative"}}>
@@ -155,7 +154,8 @@ export default class InterestsCarousel extends Component{
 			<div>
 				<p style={{position:'absolute',top : `${position}px`,left : '5px',fontWeight:'bold',color : 'rgb(255, 84, 124)'}}>Your Interests</p>
 				<Carousel style={{top : `${position+30}px`,height : '90px' }} ref="carousel" direction="horizontal" onPostChange={this.postChange.bind(this)} itemWidth={screenWidth > 450 ? `120px` : `32%`} initialIndex="0" autoScroll overscrollable  autoRefresh fullscreen swipeable>
-					{terms.filter((interest) => interest.isSelected).concat({term:'last'}).map(this.renderCarouselItem.bind(this))}
+					{this.renderInitialItem.call(this)}
+					{terms.filter((interest) => interest.isSelected).map(this.renderCarouselItem.bind(this))}
 				</Carousel>
 			</div>
 		)

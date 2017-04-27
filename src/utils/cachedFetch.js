@@ -3,9 +3,12 @@ import {GROUP_JOIN_UNJOIN,PROFILE_UPDATE,LIKED_BOOKMARKED,UPDATE_USER_INTERESTS,
 SLOT_POSTS_ENDPOINT,EDITORIAL_POSTS_ENDPOINT,POPULAR_POSTS_ENDPOINT,
 BOOKMARKED_POSTS_ENDPOINT,FETCH_INTERESTS_ENDPOINT,LIST_CHAT_GROUPS_ENDPOINT,USER_LOGOUT,CHATROOM_OPENED} from '../constants';
 
+// remove url parameters
 const generateCacheKey = (s) => {
+
   let hash = 0;
   if (s.length == 0) return hash;
+
   for (let i = 0; i < s.length; i++) {
     let char = s.charCodeAt(i);
     hash = ((hash<<5)-hash)+char;
@@ -17,6 +20,7 @@ const generateCacheKey = (s) => {
 /**
   => Update user interests => Get Interests Endpoint
   => Update user profile   =>  Slot posts
+  => This has to take into consideration 
   => On Likes and Bookmarks => remove editorials,popular posts,slot posts,bookmarked posts
   =>   
 **/
@@ -41,6 +45,7 @@ export const removeCache = (action) => {
         urls.push(LIST_CHAT_GROUPS_ENDPOINT);
         urls.push(FETCH_INTERESTS_ENDPOINT);
         urls.push(SLOT_POSTS_ENDPOINT);
+        urls.push(POPULAR_POSTS_ENDPOINT);
         break;
   
       case LIKED_BOOKMARKED : 
@@ -55,6 +60,7 @@ export const removeCache = (action) => {
         urls.push(FETCH_INTERESTS_ENDPOINT);
         urls.push(SLOT_POSTS_ENDPOINT);
         urls.push(LIST_CHAT_GROUPS_ENDPOINT);
+        urls.push(POPULAR_POSTS_ENDPOINT);
         break;
 
     }
@@ -75,8 +81,6 @@ export const removeCache = (action) => {
      
    });
    
- 
-
 };
 
 //include headers

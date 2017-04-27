@@ -21,7 +21,7 @@ class UserFeedsContainer extends Component {
 
 const mapDispactorToProps = (dispatch) => { 
 	return {
-		 fetchPosts : (key,filter,offset,languagePreference) => dispatch(fetchPosts(key,filter,offset,languagePreference)),
+		 fetchPosts : (key,filter,offset) => dispatch(fetchPosts(key,filter,offset)),
 		 toggleLike : (id) => dispatch(toggleLikeRequest(id)),
 		 toggleBookmark : (id) => dispatch(toggleBookmarkRequest(id))
 }};

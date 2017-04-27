@@ -14,6 +14,7 @@ const persistedState =  loadState() || {forgotPassword : {status : '',message : 
 const INITIAL_STATE = persistedState;
 
 const updateUserInfo = (user,state) => {
+    user = user ? user : state.userInfo;
     return Object.assign({},state,{authenticated : true,status :'user-profile-updated',userInfo : user,loading : false,error : false});
 };
 

@@ -15,7 +15,7 @@ const mapStateToProps = (state,ownProps) => {
 
 const mapDispactorToProps = (dispatch) => { 
 	return {
-		 signup : (userEmail,userPassword,date) => dispatch(signup(userEmail,userPassword,date))
+		signup : (userEmail,userPassword,date,languagePreference) => dispatch(signup(userEmail,userPassword,date,languagePreference))
 }};
 
 export default connect(mapStateToProps,mapDispactorToProps)(SignupScreen)

@@ -70,9 +70,9 @@ export default class App extends Component {
       }
       
     }
-    
+   
     key = generateNavigationKey(key);
-
+    
     return (
         <Navigator initialRoute={{component,key}} renderPage={this.renderPage.bind(this)} />
       );
