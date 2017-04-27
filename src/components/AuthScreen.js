@@ -44,16 +44,11 @@ export default class AuthScreen extends Component{
 	componentWillReceiveProps(nextProps) {
 
 		let component = null;
-		let {user} = nextProps;
-		let currentUser = this.props.user; 
+		let user = nextProps.user;
 		let allowedStatus = ['registered','new-user','token-signin-success'];
 		let status = user.status;
 		
-		if(currentUser == null || currentUser == undefined){
-			return;
-		}
-
-		if((allowedStatus.indexOf(status) === -1) ||  (currentUser.authenticated) || (currentUser.status == status)){
+		if(allowedStatus.indexOf(status) === -1 || this.props.user.authenticated || (this.props.user.status == status)){
 			return;
 		}
 
@@ -137,13 +132,11 @@ export default class AuthScreen extends Component{
             var loginBy = 'facebook';
           
             if(userEmail){
-                classContext.props.tokenSignin(accessToken,userID,userEmail,displayName,imageUrl,loginBy); 
+                 classContext.props.tokenSignin(accessToken,userID,userEmail,displayName,imageUrl,loginBy); 
             }
             
 
         }, function onError (error) {
-          console.log(JSON.stringify(error));
-          alert(JSON.stringify(error));
           console.error("Failed: ", error);
         }
     );
