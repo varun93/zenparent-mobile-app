@@ -26,6 +26,10 @@ class SlotPostsContainer extends Component{
 	//loading
 	componentWillReceiveProps(nextProps){
 
+		if(this.props.slotPosts.loading || this.props.user.loading) {
+			return;
+		}
+
 		if(this.props.user && this.props.user.authenticated){
 			const nextUserInfo = nextProps.user.userInfo;
 			const currentUserInfo = this.props.user.userInfo;
@@ -34,12 +38,8 @@ class SlotPostsContainer extends Component{
 			
 		}
 
-		if(this.props.slotPosts.loading || this.props.user.loading) {
-			return;
-		}
-
-
-		if((nextProps.slotPosts.error || isFieldEmpty(nextProps.slotPosts.posts) || nextProps.slotPosts.length == 0) && this.state.retry < 3){
+	
+    	if((nextProps.slotPosts.error || isFieldEmpty(nextProps.slotPosts.posts) || nextProps.slotPosts.length == 0) && this.state.retry < 3){
 			this.requestSlotPosts();
 			this.setState({retry : this.state.retry + 1});
 		}
