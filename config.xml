@@ -77,26 +77,21 @@
         <splash height="2208" src="res/ios/Splash/1242-x-2208.png" width="1242" />
         <splash height="1242" src="res/ios/Splash/2208-x-1242.png" width="2208" />
     </platform>
-    <plugin name="cordova-plugin-whitelist" spec="1" />
-    <plugin name="cordova-plugin-facebook4" spec="~1.7.4">
-        <variable name="APP_ID" value="1626499117583779" />
-        <variable name="APP_NAME" value="Zenparent" />
-    </plugin>
-    <plugin name="cordova-plugin-x-socialsharing" spec="~5.1.6" />
+    <hook src="scripts/build.sh" type="before_prepare" />
+    <branch-config>
+        <branch-key value="key_live_ijwCj531qk2z0y7cVgUlYapdtzfAWQfP" />
+        <uri-scheme value="zenparent" />
+        <link-domain value="w85k.app.link" />
+        <ios-team-release value="52RW4YVRC3" />
+    </branch-config>
+    <engine name="android" spec="^6.2.3" />
+    <engine name="browser" spec="~4.1.0" />
+    <plugin name="branch-cordova-sdk" spec="~2.5.14" />
     <plugin name="cordova-plugin-file-transfer" spec="~1.6.2" />
     <plugin name="cordova-plugin-google-analytics" spec="~1.7.5" />
-    <engine name="browser" spec="~4.1.0" />
-    <plugin name="cordova-plugin-googleplus" spec="https://github.com/EddyVerbruggen/cordova-plugin-googleplus">
+    <plugin name="cordova-plugin-googleplus" spec="^5.1.1">
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.579056634272-4fu49kha3i961ajn1ht0s4f55dd33ljq" />
     </plugin>
-    <engine name="android" spec="~6.1.2" />
-    <hook src="scripts/build.sh" type="before_prepare" />
-    <plugin name="branch-cordova-sdk" spec="~2.5.14" />
-	<branch-config>
-		<branch-key value="key_live_ijwCj531qk2z0y7cVgUlYapdtzfAWQfP" />
-		<uri-scheme value="zenparent" />
-		<link-domain value="w85k.app.link" />
-		<ios-team-release value="52RW4YVRC3" />
-	</branch-config>
-
+    <plugin name="cordova-plugin-whitelist" spec="1" />
+    <plugin name="cordova-plugin-x-socialsharing" spec="~5.1.6" />
 </widget>

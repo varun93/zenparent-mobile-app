@@ -1,64 +1,88 @@
 {
-  "name": "zenparent-mobile-app",
-  "version": "1.0.0",
-  "description": "Zenparent App",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "webpack --config webpack.config.js && webpack-dev-server --content-base www/ --inline --hot --port 8000 --history-api-fallback",
-    "build": "webpack --config webpack.config.prod.js",
-    "deploy": "npm run build && git commit www -m \"Deploy\" && git subtree push --prefix www origin gh-pages",
-    "lint": "eslint ."
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/argelius/react-onsenui-redux-weather.git"
-  },
-  "author": "Varun Hegde <1hvarun@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": ""
-  },
-  "homepage": "",
-  "devDependencies": {
-    "autoprefixer": "^6.5.1",
-    "babel-core": "^6.18.0",
-    "babel-loader": "^6.2.5",
-    "babel-polyfill": "^6.23.0",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-react": "^6.16.0",
-    "babel-preset-stage-2": "^6.18.0",
-    "classnames": "^2.2.5",
-    "css-loader": "^0.26.0",
-    "es6-promise": "^4.0.5",
-    "eslint-config-rallycoding": "^3.2.0",
-    "extract-text-webpack-plugin": "^1.0.1",
-    "fetch-retry": "^1.0.3",
-    "file-loader": "^0.9.0",
-    "isomorphic-fetch": "^2.2.1",
-    "json-loader": "^0.5.4",
-    "jspolyfill-array.prototype.findIndex": "^0.1.0",
-    "onsenui": "^2.0.4",
-    "optimize-css-assets-webpack-plugin": "^1.3.0",
-    "postcss-loader": "^1.0.0",
-    "pusher-js": "^4.0.0",
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2",
-    "react-hot-loader": "^3.0.0-beta.6",
-    "react-lazy-load": "^3.0.11",
-    "react-onsenui": "^1.0.4",
-    "react-redux": "^5.0.3",
-    "react-waypoint": "^5.0.0",
-    "redux": "^3.6.0",
-    "redux-logger": "^2.8.1",
-    "redux-thunk": "^2.2.0",
-    "style-loader": "^0.13.1",
-    "url-loader": "^0.5.7",
-    "webpack": "^1.13.2",
-    "webpack-dev-server": "^1.16.2"
-  },
-  "dependencies": {
-    "es6-object-assign": "^1.1.0",
-    "lodash": "^4.17.4",
-    "node-uuid": "^1.4.8"
-  }
+    "name": "zenparent-mobile-app",
+    "version": "1.0.0",
+    "description": "Zenparent App",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "webpack --config webpack.config.js && webpack-dev-server --content-base www/ --inline --hot --port 8000 --history-api-fallback",
+        "build": "webpack --config webpack.config.prod.js",
+        "deploy": "npm run build && git commit www -m \"Deploy\" && git subtree push --prefix www origin gh-pages",
+        "lint": "eslint ."
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/argelius/react-onsenui-redux-weather.git"
+    },
+    "author": "Varun Hegde <1hvarun@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": ""
+    },
+    "homepage": "",
+    "devDependencies": {
+        "autoprefixer": "^6.5.1",
+        "babel-core": "^6.18.0",
+        "babel-loader": "^6.2.5",
+        "babel-polyfill": "^6.23.0",
+        "babel-preset-es2015": "^6.18.0",
+        "babel-preset-react": "^6.16.0",
+        "babel-preset-stage-2": "^6.18.0",
+        "classnames": "^2.2.5",
+        "css-loader": "^0.26.0",
+        "es6-promise": "^4.0.5",
+        "eslint-config-rallycoding": "^3.2.0",
+        "extract-text-webpack-plugin": "^1.0.1",
+        "fetch-retry": "^1.0.3",
+        "file-loader": "^0.9.0",
+        "isomorphic-fetch": "^2.2.1",
+        "json-loader": "^0.5.4",
+        "jspolyfill-array.prototype.findIndex": "^0.1.0",
+        "onsenui": "^2.0.4",
+        "optimize-css-assets-webpack-plugin": "^1.3.0",
+        "postcss-loader": "^1.0.0",
+        "pusher-js": "^4.0.0",
+        "react": "^15.3.2",
+        "react-dom": "^15.3.2",
+        "react-hot-loader": "^3.0.0-beta.6",
+        "react-lazy-load": "^3.0.11",
+        "react-onsenui": "^1.0.4",
+        "react-redux": "^5.0.3",
+        "react-waypoint": "^5.0.0",
+        "redux": "^3.6.0",
+        "redux-logger": "^2.8.1",
+        "redux-thunk": "^2.2.0",
+        "style-loader": "^0.13.1",
+        "url-loader": "^0.5.7",
+        "webpack": "^1.13.2",
+        "webpack-dev-server": "^1.16.2"
+    },
+    "dependencies": {
+        "branch-cordova-sdk": "~2.5.14",
+        "cordova-android": "^6.2.3",
+        "cordova-browser": "~4.1.0",
+        "cordova-plugin-file-transfer": "~1.6.2",
+        "cordova-plugin-google-analytics": "~1.7.5",
+        "cordova-plugin-googleplus": "^5.1.1",
+        "cordova-plugin-whitelist": "1",
+        "cordova-plugin-x-socialsharing": "~5.1.6",
+        "es6-object-assign": "^1.1.0",
+        "lodash": "^4.17.4",
+        "node-uuid": "^1.4.8"
+    },
+    "cordova": {
+        "platforms": [
+            "android",
+            "browser"
+        ],
+        "plugins": {
+            "branch-cordova-sdk": {},
+            "cordova-plugin-file-transfer": {},
+            "cordova-plugin-google-analytics": {},
+            "cordova-plugin-whitelist": {},
+            "cordova-plugin-x-socialsharing": {},
+            "cordova-plugin-googleplus": {
+                "REVERSED_CLIENT_ID": "com.googleusercontent.apps.579056634272-4fu49kha3i961ajn1ht0s4f55dd33ljq"
+            }
+        }
+    }
 }
