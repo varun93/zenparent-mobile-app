@@ -1,13 +1,14 @@
-import {LOGIN_USER_REQUEST,LOGIN_USER_SUCCESS,LOGIN_USER_FAILURE,
+//action creator constants
+import {FORGOT_PASSWORD_REQUEST,FORGOT_PASSWORD_SUCCESS,FORGOT_PASSWORD_FAILURE,
+LOGIN_USER_REQUEST,LOGIN_USER_SUCCESS,LOGIN_USER_FAILURE,
 SIGNUP_USER_REQUEST,SIGNUP_USER_SUCCESS,SIGNUP_USER_FAILURE,
 TOKEN_SIGNIN_USER_REQUEST,TOKEN_SIGNIN_USER_SUCCESS,TOKEN_SIGNIN_USER_FAILURE,
-FORGOT_PASSWORD_REQUEST,FORGOT_PASSWORD_SUCCESS,FORGOT_PASSWORD_FAILURE,
+USER_STATUS_REQUEST,USER_STATUS_RECIEVED,ERROR_FETCHING_USER_STATUS,
 APP_INIT_REQUEST,APP_INIT_REQUEST_SUCCESS,APP_INIT_REQUEST_FAILURE,
-UPLOAD_USER_PROFILE_PIC_REQUEST,UPLOAD_USER_PROFILE_PIC_SUCCESS,UPLOAD_USER_PROFILE_PIC_FAILURE,
-CHECK_USER_STATUS_REQUEST,USER_STATUS_RECIEVED,ERROR_FETCHING_USER_STATUS,
 UPDATE_USER_INFO_REQUEST,UPDATE_USER_INFO_SUCCESS,UPDATE_USER_INFO_FAILURE,
-UPDATE_USER_INTERESTS_REQUEST,UPDATE_USER_INTERESTS_FAILURE,UPDATE_USER_INTERESTS_SUCCESS,
-LOGOUT_USER} from '../actions/userActions';
+UPLOAD_USER_PROFILE_PIC_REQUEST,UPLOAD_USER_PROFILE_PIC_SUCCESS,UPLOAD_USER_PROFILE_PIC_FAILURE,
+LOGOUT_USER} from '../constants';
+
 import {loadState} from '../utils/localStorage';
 
 const persistedState =  loadState() || {forgotPassword : {status : '',message : ''},forceUpdate : false,authenticated : false,userInfo : null,loading : false,error : false};
@@ -24,10 +25,6 @@ const updateUserInfoWithToken = (user,token,status,state) => {
     }
 };
 
-const updateUserInterests = (interests,state) => {
-    let userInfo = Object.assign({},state.userInfo,{interests : interests});
-    return Object.assign({},state,{ userInfo :  userInfo},{status : 'interests-updated',loading : false});
-};
 
 let userReducer = (user = INITIAL_STATE, action) => {
  
@@ -40,7 +37,7 @@ let userReducer = (user = INITIAL_STATE, action) => {
     case APP_INIT_REQUEST_FAILURE : 
     return Object.assign({},user,{forceUpdate : false,authenticated : false,userInfo : null,loading : false,error : true});
 
-    case CHECK_USER_STATUS_REQUEST : 
+    case USER_STATUS_REQUEST : 
     return Object.assign({},user,{authenticated : false,userInfo : null,error : false,loading : true});
     case USER_STATUS_RECIEVED :    
     return Object.assign({},user,{loading:false,error : false, status : action.userStatus,authenticated : false,userInfo : Object.assign({},user.userInfo,{user_email : action.userEmail})});
@@ -81,15 +78,6 @@ let userReducer = (user = INITIAL_STATE, action) => {
    
     case TOKEN_SIGNIN_USER_FAILURE :
     return Object.assign({},user,{authenticated : false,status : 'token-signin-error' ,userInfo: null, error: action.message, loading: false});
-
-
-    //update user interests
-    case UPDATE_USER_INTERESTS_REQUEST :
-    return Object.assign({},user,{status : 'logged-in',loading: true,error:null}); 
-    case UPDATE_USER_INTERESTS_SUCCESS:
-    return updateUserInterests(action.interests,user);
-    case UPDATE_USER_INTERESTS_FAILURE :
-    return Object.assign({},user,{status : 'logged-in',error:action.message,loading: false});
 
     //update user profile pic
     case UPLOAD_USER_PROFILE_PIC_REQUEST : 

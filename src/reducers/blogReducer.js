@@ -5,7 +5,6 @@ TOGGLE_LIKE,POST_LIKE_SUCCESS,POST_LIKE_FAILURE,
 REQUEST_POPULAR_POSTS,RECEIVED_POPULAR_POSTS,ERROR_FETCHING_POPULAR_POSTS,
 REQUEST_EDITORIAL_POSTS,RECEIVED_EDITORIAL_POSTS,ERROR_FETCHING_EDITORIAL_POSTS,
 POST_BOOKMARK_SUCCESS,TOGGLE_BOOKMARK,POST_BOOKMARK_FAILURE,
-REQUEST_INTERESTS,RECEIVED_INTERESTS,ERROR_FETCHING_INTERESTS,TOGGLE_INTEREST,
 REQUEST_BOOKMARKED_POSTS,RECEIVED_BOOKMARKED_POSTS,ERROR_FETCHING_BOOKMARKED_POSTS,
 REQUEST_ARCHIVE_POSTS,RECEIVED_ARCHIVE_POSTS,ERROR_FETCHING_ARCHIVE_POSTS,
 REQUEST_HOMEPAGE_SLOT_POSTS,RECEIVED_HOMEPAGE_SLOT_POSTS,ERROR_FETCHING_HOMEPAGE_SLOT_POSTS,
@@ -16,7 +15,6 @@ const INITIAL_STATE = {
 	'posts' : {
 		'byId': {}
 	},
-	'interests' : { 'terms' : [],'loading' : false, 'error' : false},
 	'activePost' : {'post': null,'loading':false,'error':false},
 	[ARCHIVE_POSTS] : {},
 	[BOOKMARKED_POSTS] : {'posts' : [],'loading' : false,'error' : false,exhausted : false},
@@ -145,20 +143,6 @@ const toggleLike = (postId,state) => {
 };
 
 
-//toggleInterest
-const toggleInterests = (term,state) => {
-
-	let interests =  state.interests.terms.map(function(interest){
-
-	if(interest.term === term){
-		return Object.assign({},interest,{isSelected : !interest.isSelected});
-	}
-		return interest;
-	});
-
-	return Object.assign({},state, {interests : Object.assign({},state.interests,{terms : interests,loading : false, error : false})});
-
-};
 
 //
 const updateBookmarkedList = (postId,operation,state) => {
@@ -246,22 +230,10 @@ let blogReducer = (blog=INITIAL_STATE,action) => {
 			return requestSinglePost(action.postId,blog);
 		case ERROR_FETCHING_SINGLE_POST : 
 			return errorFetchingSinglePost(action.postId,blog);
-		
-
-		//interests
-		case REQUEST_INTERESTS : 
-			return Object.assign({},blog,{interests : Object.assign({},blog.interests,{loading : true, error : false})});
-		case RECEIVED_INTERESTS : 
-			return Object.assign({},blog, {interests : Object.assign({},blog.interests,{terms : action.interests,loading : false, error : false})});
-		case ERROR_FETCHING_INTERESTS :
-			return Object.assign({},blog, {interests : Object.assign({},blog.interests,{terms : [],loading : false, error : true})});
 
 		case UPDATE_BOOKMARKED_LIST : 
 			return updateBookmarkedList(action.postId,action.operation,blog);
-		//toggle interest
-		case TOGGLE_INTEREST : 
-			return toggleInterests(action.term,blog);
-
+		
 		case TOGGLE_LIKE : 
 			return toggleLike(action.postId,blog);
 

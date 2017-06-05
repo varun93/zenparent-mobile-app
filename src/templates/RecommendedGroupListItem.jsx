@@ -7,7 +7,7 @@ import Chatroom from '../screens/Chatroom';
 const RecommendedGroupListItem = ({item,navigator,joinChatroom}) => {
 
     return (
-        <div className="card" onClick={(event) => { joinChatroom(item.post_id); navigator.pushPage({component: Chatroom,key : generateNavigationKey(item.post_id),chatroomId : item.post_id}); }}>
+        <div className="card" onClick={(event) => { joinChatroom(item.post_id); navigator.pushPage({component: Chatroom,props : {chatroomId : item.post_id}}); }}>
           <Row>
             
             <Col verticalAlign="center" width="10%">

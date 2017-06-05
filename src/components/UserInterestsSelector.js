@@ -49,11 +49,6 @@ export default class UserInterestsSelector extends Component {
 			return;
 		}
 
-		if(nextProps.updateStatus == 'interests-updated'){
-			let component = MainScreen;
-			nextProps.navigator.pushPage({component : MainScreen,key : v4()});
-		}
-		
 		if(nextProps.interests.error){
 			this.props.fetchInterests();
 		}
@@ -73,7 +68,7 @@ export default class UserInterestsSelector extends Component {
 			this.props.syncFeed();
 			
 			//submit the posts
-			this.props.updateUserInterests(userInterests);
+			this.props.updateUserInterests(userInterests,this.props.navigator);
 		}
 		else{
 			this.setState({dialogShown: true});

@@ -33,7 +33,7 @@ export default class Homescreen extends Component{
 
 
 	navigateToPost(postId){
-		this.props.navigator.pushPage({component : SinglePost,fields : 'all',postId,key :  v4()});
+		this.props.navigator.pushPage({component : SinglePost,props:{fields : 'all',postId}});
 	}
 
 	// push notification payload handling
@@ -80,15 +80,6 @@ export default class Homescreen extends Component{
 	    }
 	}
 
-	componentDidUpdate(){
-
-		if(!this.props.user.authenticated){
-			this.props.navigator.resetPage({component : AuthScreen,key : v4()});
-		}
-
-	}
-
-	
 	render(){
 
 		const {navigator,active,user} = this.props;

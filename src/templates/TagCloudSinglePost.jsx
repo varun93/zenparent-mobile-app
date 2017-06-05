@@ -34,7 +34,7 @@ const TagCloudSinglePost = ({tags=[],title='',toggleLike,toggleBookmark,navigato
     <div style={styles.parent} className="tagCloud">
       
       {tags.map(function(tag){
-        return (<li key={v4()} onClick={() => navigator.pushPage({component : ArchiveScreen,term : tag,toggleLike,toggleBookmark,key : generateNavigationKey(tag)})  } style={styles.item}>{tag}</li> ) 
+        return (<li key={v4()} onClick={() => navigator.pushPage({component : ArchiveScreen,props:{term : tag,toggleLike,toggleBookmark}}) } style={styles.item}>{tag}</li> ) 
       })}
   		
   	</div>

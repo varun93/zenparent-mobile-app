@@ -65,7 +65,7 @@ export default class PostsCarousel extends Component{
 		
 
 		return (
-			<CarouselItem  style={styles.carouselItem} onClick={() => this.props.navigator.pushPage({component: SinglePost,toggleLike:this.props.toggleLike,toggleBookmark : this.props.toggleBookmark,key:v4(),postId : post.id })} key={v4()}>
+			<CarouselItem  style={styles.carouselItem} onClick={() => this.props.navigator.pushPage({component: SinglePost,props : {toggleLike:this.props.toggleLike,toggleBookmark : this.props.toggleBookmark,key:v4(),postId : post.id} })} key={v4()}>
 	      		<div style={{position : "relative"}}>
 		      		<div className="image">
 		      			{

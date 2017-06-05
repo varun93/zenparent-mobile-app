@@ -16,7 +16,7 @@ const mapStateToProps = (state,ownProps) => {
 
 const mapDispactorToProps = (dispatch) => { 
 	return {
-		 login : (userEmail,userPassword) => dispatch(login(userEmail,userPassword))
+		 login : (userEmail,userPassword,navigator) => dispatch(login(userEmail,userPassword,navigator))
 }};
 
 export default connect(mapStateToProps,mapDispactorToProps)(LoginScreen)

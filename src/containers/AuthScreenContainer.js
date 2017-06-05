@@ -14,8 +14,8 @@ const mapStateToProps = (state,ownProps) => {
 
 const mapDispactorToProps = (dispatch) => { 
 	return {
-		 checkUserStatus : (userEmail) => dispatch(checkUserStatus(userEmail)),
-		 tokenSignin : (accessToken,socialUniqueId,userEmail,displayName,imageUrl,loginBy) => dispatch(tokenSignin(accessToken,socialUniqueId,userEmail,displayName,imageUrl,loginBy))
+		checkUserStatus : (userEmail,navigator) => dispatch(checkUserStatus(userEmail,navigator)),
+		tokenSignin : (accessToken,socialUniqueId,userEmail,displayName,imageUrl,loginBy,navigator) => dispatch(tokenSignin(accessToken,socialUniqueId,userEmail,displayName,imageUrl,loginBy,navigator))
 }};
 
 export default connect(mapStateToProps,mapDispactorToProps)(AuthScreen)

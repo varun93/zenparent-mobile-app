@@ -5,6 +5,7 @@ import SinglePost from '../screens/SinglePost';
 import TagCloudArticleCard from '../templates/TagCloudArticleCard';
 import {generateNavigationKey} from '../utils';
 import LazyLoad from 'react-lazy-load';
+import {v4} from 'node-uuid';
 import {assetsBase} from '../constants';
 
 const prefix = assetsBase();
@@ -89,7 +90,8 @@ const ArticleCard = ({post,toggleLike,toggleBookmark,navigator}) => {
 	const navigationKey = generateNavigationKey(post.id);
 
   const articleClick = () => {
-     navigator.pushPage({component: SinglePost,postId : post.id,key:`single-post-${navigationKey}`}) 
+      const props = {postId : post.id};
+      navigator.pushPage({component: SinglePost,props}); 
   };
 
 

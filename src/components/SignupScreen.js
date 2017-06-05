@@ -34,20 +34,6 @@ export default class SignupScreen extends Component{
 		}	
 	}
 	
-	componentWillReceiveProps(nextProps) {
-
-		const user = nextProps.user;
-		const authenticated = user.authenticated;
-		const status = nextProps.user.status;
-		const allowedStatus = ['signup-success'];
-
-		if(!authenticated || allowedStatus.indexOf(status) === -1 || nextProps.user.status == this.props.user.status){
-			return;
-		}
-		
-		let route = getNextRoute(user);
-		nextProps.navigator.pushPage(route);
-	}
 
 	_handlePasswordChange(e){
 		const userPassword = e.target.value;

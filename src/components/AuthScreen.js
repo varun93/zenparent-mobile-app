@@ -4,7 +4,6 @@ import {Page,Button,ProgressCircular} from 'react-onsenui';
 import Toolbar from '../templates/Toolbar';
 //the screens
 import {validateEmail} from '../utils';
-import getNextRoute from '../utils/getNextRoute';
 import MainScreen from '../screens/MainScreen';
 import CustomInput from './CustomInput';
 import LoginScreen from '../screens/LoginScreen';
@@ -41,28 +40,13 @@ export default class AuthScreen extends Component{
 		};
 	}
 
-	componentWillReceiveProps(nextProps) {
-
-		let component = null;
-		let user = nextProps.user;
-		let allowedStatus = ['registered','new-user','token-signin-success'];
-		let status = user.status;
-		
-		if(allowedStatus.indexOf(status) === -1 || this.props.user.authenticated || (this.props.user.status == status)){
-			return;
-		}
-
-		let route = getNextRoute(user);
-		nextProps.navigator.pushPage(route);
-	}
-
-
 
 	_checkUserStatus(){
 		let userEmail = this.state.userEmail;
-		
+		const navigator = this.props.navigator;
+
 		if(validateEmail(this.state.userEmail)){
-      		this.props.checkUserStatus(userEmail);
+      		this.props.checkUserStatus(userEmail,navigator);
     	}
 		else{
 			return;
@@ -84,6 +68,7 @@ export default class AuthScreen extends Component{
 	handleGoogleLogin(){
     
        var classContext = this;
+       const {navigator} = this.props;
     
        window.plugins.googleplus.login(
           {
@@ -101,12 +86,12 @@ export default class AuthScreen extends Component{
              var loginBy = 'google';
      
              if(userEmail){
-                classContext.props.tokenSignin(token,userID,userEmail,displayName,imageUrl,loginBy); 
+                classContext.props.tokenSignin(token,userID,userEmail,displayName,imageUrl,loginBy,navigator); 
              }
          
           },
           function (msg) {
-            alert("Someting went wrong");
+          	alert("Someting went wrong");
           }
       );
 
@@ -115,6 +100,7 @@ export default class AuthScreen extends Component{
   handleFacebookLogin(){
    	
    	var classContext = this;
+   	const {navigator} = this.props; 
 
     var fbLoginSuccess = function (userData)
     {
@@ -132,7 +118,7 @@ export default class AuthScreen extends Component{
             var loginBy = 'facebook';
           
             if(userEmail){
-                 classContext.props.tokenSignin(accessToken,userID,userEmail,displayName,imageUrl,loginBy); 
+                 classContext.props.tokenSignin(accessToken,userID,userEmail,displayName,imageUrl,loginBy,navigator); 
             }
             
 
@@ -144,7 +130,8 @@ export default class AuthScreen extends Component{
 
     facebookConnectPlugin.login(["public_profile"],
         fbLoginSuccess,
-         function (error) { alert("Something went wrong"); 
+         function (error) { 
+			alert("Something went wrong"); 
         }
          );
 
@@ -159,7 +146,7 @@ export default class AuthScreen extends Component{
 
 			   {loading ? 
 			   	<div style={styles.loaderWrapper}> 
-				  		<ProgressCircular  indeterminate />
+				  		<ProgressCircular indeterminate />
 				   		<div style={styles.loaderText}>Loading ...</div>
 				</div> 
 			       :

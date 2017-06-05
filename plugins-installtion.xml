@@ -1,0 +1,12 @@
+<!-- 
+cordova plugin add cordova-plugin-googleplus --save --variable REVERSED_CLIENT_ID=com.googleusercontent.apps.579056634272-gc3asrv8lqsvs93fsa5ri4m4fg92fijn
+  -->
+
+
+
+
+
+cordova plugin add branch-cordova-sdk --variable BRANCH_KEY=key_live_ijwCj531qk2z0y7cVgUlYapdtzfAWQfP --variable URI_SCHEME=zenparent
+
+
+cordova plugin add cordova-plugin-facebook4@1.7.4 --save --variable APP_ID="1626499117583779" --variable APP_NAME="Zenparent"

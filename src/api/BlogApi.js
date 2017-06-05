@@ -4,7 +4,7 @@ import cachedFetch from '../utils/cachedFetch';
 import {SINGLE_POST_ENDPOINT,POSTS_ENDPOINT,TERM_ARCHIVES_ENDPOINT,POST_BOOKMARK_ENDPOINT,
 POST_LIKE_ENDPOINT,POST_UNLIKE_ENDPOINT,POST_UNBOOKMARK_ENDPOINT,
 BOOKMARKED_POSTS_ENDPOINT,SLOT_POSTS_ENDPOINT,
-AUTHOR_POSTS_ENDPOINT,FETCH_INTERESTS_ENDPOINT,POPULAR_POSTS_ENDPOINT,
+AUTHOR_POSTS_ENDPOINT,POPULAR_POSTS_ENDPOINT,
 EDITORIAL_POSTS_ENDPOINT,RECORD_USER_READING_HISTORY} from '../constants'
 
 
@@ -14,27 +14,6 @@ class BlogApi {
     return {'AUTHORIZATION': `Bearer ${localStorage.jwt}`}
   }
 
-
-  static fetchInterests() {
-   
-    const headers = this.requestHeaders();
-    
-    const options = {
-      method: 'GET',
-      headers: headers,
-      seconds : 60*60*24,
-      retries: 5,
-      retryDelay: 2000
-    };
-    
-    return cachedFetch(FETCH_INTERESTS_ENDPOINT,options).then(r => {
-      return r.json()
-    }).catch(error => {
-      return error
-    });
-      
-
-  }
 
   //verified
   static fetchPosts(filter,offset) {

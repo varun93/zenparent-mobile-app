@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import InterestsCarousel from '../components/InterestsCarousel';
-import {fetchInterests,toggleLikeRequest,toggleBookmarkRequest} from '../actions/blogActions';
+import {toggleLikeRequest,toggleBookmarkRequest} from '../actions/blogActions';
+import {fetchInterests} from '../actions/userInterestsActions';
 
 class InterestsCarouselContainer extends Component{
 
@@ -13,7 +14,6 @@ class InterestsCarouselContainer extends Component{
 	componentDidMount(){
 		this.props.fetchInterests();
 	}
-
 
 	componentWillReceiveProps(nextProps){
 		if(nextProps.interests.error && this.state.retry < 3){
@@ -43,7 +43,7 @@ const mapDispactorToProps = (dispatch) => {
 
 const mapStateToProps = (state,ownProps) => {
 	return {
-		interests : state.blog.interests
+		interests : state.userInterests.interests
 }};
 
 export default connect(mapStateToProps,mapDispactorToProps)(InterestsCarouselContainer);

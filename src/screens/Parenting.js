@@ -17,9 +17,11 @@ export default class ParentingScreen extends Component{
       <Page key='parenting-screen'>
          <EditorialPostsContainer active={this.props.active} position='10' navigator={this.props.navigator} />
          <PopularPostsContainer user={user} active={this.props.active} position='210'  navigator={this.props.navigator} />
-         <InterestsCarouselContainer user={user} position='425' navigator={this.props.navigator} />
-         <UserFeedsContainer user={user} active={this.props.active} title='Latest Stories of Your Interest' position='545' section={USER_FEED_TIME} navigator={this.props.navigator} />
+        <UserFeedsContainer user={user} active={this.props.active} title='Latest Stories of Your Interest' position='545' section={USER_FEED_TIME} navigator={this.props.navigator} />
       </Page>
       )
   }
 }
+
+
+ // <InterestsCarouselContainer user={user} position='425' navigator={this.props.navigator} />

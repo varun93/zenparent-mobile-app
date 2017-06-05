@@ -223,6 +223,7 @@ export function requestSinglePost(postId){
 };
 
 
+// pass a navigator here 
 export function receivedSinglePost(postId,post,state){
 
 	// record screen viewed event
@@ -330,34 +331,6 @@ export function updateBookmarkedList(postId,operation) {
 	}	
 };
 
-//------------------------ Interests ---------------------
-
-export function requestInterests(){
-	return {
-		type : REQUEST_INTERESTS
-	};
-};
-
-export function fetchInterestsSuccess(interests){
-	return {
-		type : RECEIVED_INTERESTS,
-		interests
-	};
-};
-
-export function fetchInterestsFailure(){
-	return {
-		type : ERROR_FETCHING_INTERESTS
-	};
-};
-
-export function toggleInterest(term){
-	return {
-		type : TOGGLE_INTEREST,
-		term
-	}
-}
-
 export function syncFeed(){
 	return {
 		type : SYNC_FEED
@@ -365,27 +338,6 @@ export function syncFeed(){
 };
 
 // --------------------------- redux thunk -----------------------------------
-export function fetchInterests(){
-
-	return (dispatch,getState) => {
-
-		// return if already requested
-		const state = getState();
-		if(state.blog.interests.loading){
-			return;
-		}
-
-		dispatch(requestInterests());
-		BlogApi.fetchInterests().then((response) => {
-			let interests = response.data.interests;
-			dispatch(fetchInterestsSuccess(interests));
-		}).catch((error) => {
-			// fetchInterests();
-			dispatch(fetchInterestsFailure());
-		});
-
-	};
-};
 
 export function toggleLikeRequest(id){
 

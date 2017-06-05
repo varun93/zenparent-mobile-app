@@ -28,7 +28,7 @@ ons-carousel{
 }
 
 .card{
-
+	margin : 0px !important;
 	background : #fff;
     position: relative;
     width : 100%;

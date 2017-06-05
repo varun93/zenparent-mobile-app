@@ -10,7 +10,7 @@ const ExpertChatListItem = ({item,navigator,resetUnreadMessages}) => {
    const openChatroom = () => {
     //reduce counter
     resetUnreadMessages(item.post_id);
-    navigator.pushPage({component: Chatroom,key : generateNavigationKey(item.post_id), chatroomId : item.post_id});
+    navigator.pushPage({component: Chatroom, props : {chatroomId : item.post_id}});
   };
 
   return (

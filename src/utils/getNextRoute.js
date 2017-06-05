@@ -3,53 +3,34 @@ import UserInterestsSelector from '../screens/UserInterestsSelector';
 import ParentingStageInput from '../screens/ParentingStageInputScreen';
 import SignupScreen from '../screens/SignupScreen';
 import LoginScreen from '../screens/LoginScreen';
-import {generateNavigationKey} from './index';
+import {v4} from 'node-uuid';
 
-const getNextRoute = (user) => {
 
-	let component = null,key = '';
-	const status = user.status;
-	const authenticated = user.authenticated;
+const getNextRoute = (userInfo) => {
 
-	if(authenticated && user.userInfo){
+	if(userInfo){
 		
-		const userInfo = user.userInfo;
 		const stageOfParenting = userInfo.stage_of_parenting;
 		const interests = userInfo.interests;
 		const profileComplete  = stageOfParenting && interests.length; 
+		let component = null;
 
 		if(profileComplete){
 			component = MainScreen;
-			key = 'main-screen';
 		}
 		else{
 			if(!stageOfParenting.length){
 				component = ParentingStageInput;
-				key = 'parenting-stage-input';
 			}
 			else if(!interests.length){
 				component = UserInterestsSelector;
-				key = 'user-interests-selector-screen';
 			}
 		}
+		let props = {};
+		props['key'] =  v4();
+		return Object.assign({},{component},{props});
 	}
-	else{
-
-		if(status == 'registered'){
-			component = LoginScreen;
-			key = 'login-screen';
-		}
-		if(status == 'new-user'){
-			component = SignupScreen;
-			key = 'signup-screen';
-		}
-
-	}
-
-	let props = {};
-	props['key'] =  generateNavigationKey(key);
-	return Object.assign({},{component},{props});
+	
 };
-
 
 export default getNextRoute;

@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import {Page,Input,ProgressCircular,Icon} from 'react-onsenui';
+import {v4} from 'node-uuid';
 import Toolbar from '../templates/Toolbar';
 import CustomInput from './CustomInput';
 import {isFieldEmpty,generateNavigationKey} from '../utils';
@@ -54,11 +55,12 @@ export default class LoginScreen extends Component{
 
 	_onClick(e){
 
-		let userEmail = this.props.user.userInfo.user_email;
-		let userPassword = this.state.userPassword;
+		const {user,navigator} = this.props;
+		let userEmail = user.userInfo.user_email;
+		let {userPassword} = this.state;
 		
 		if(this.validatePassword(userPassword)){
-      		this.props.login(userEmail,userPassword);
+      		this.props.login(userEmail,userPassword,navigator);
     	}
 		else{
 			return;
@@ -66,22 +68,6 @@ export default class LoginScreen extends Component{
 		
 	}
 
-
-	componentWillReceiveProps(nextProps) {
-
-		const user = nextProps.user;
-		const status = user.status;
-		const authenticated = user.authenticated;
-		const allowedStatus = ['login-success'];
-
-		if(!authenticated || allowedStatus.indexOf(status) === -1  || this.props.user.status == status){
-			return;
-		}
-
-		let route = getNextRoute(user);
-		nextProps.navigator.pushPage(route);
-
-	}
 
 	render(){
 		
@@ -124,7 +110,7 @@ export default class LoginScreen extends Component{
 		             errorMessage="Password is required"
 		          />
 
-            		<p onClick={() => this.props.navigator.pushPage({component : ForgotPasswordScreen,key : generateNavigationKey('forgot-password') })} style={{color:"rgb(132,116,159)",float : "right",fontSize:"12px",fontWeight:"500"}}>
+            		<p onClick={() => this.props.navigator.pushPage({component : ForgotPasswordScreen,props : {key : v4()} })} style={{color:"rgb(132,116,159)",float : "right",fontSize:"12px",fontWeight:"500"}}>
 						Forgot Password?
 					</p>
 

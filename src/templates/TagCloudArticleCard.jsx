@@ -17,7 +17,7 @@ const TagCloudArticleCard = ({tags,toggleLike,toggleBookmark,title,navigator}) =
   return (
     <div className="tagCloudArticleCard">
       {tags.filter((tag) => isNaN(tag)).map(function(tag,index,tags){
-          return <span  onClick={() => navigator.pushPage({component : ArchiveScreen,toggleLike,toggleBookmark,term : tag,key : generateNavigationKey(tag)})} key={index} style={{fontSize : "13px"}}>
+          return <span  onClick={() => navigator.pushPage({component : ArchiveScreen,props:{toggleLike,toggleBookmark,term : tag}})} key={index} style={{fontSize : "13px"}}>
           {tag}{index < tags.length -1 ? <span> | </span>  : ''}
           </span>
       })}

@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
 import {Carousel,CarouselItem} from 'react-onsenui';
-import {fetchInterests} from '../actions/blogActions';
 import ArchiveScreen from '../screens/ArchiveScreen';
 import CarouselLoader from '../templates/CarouselLoader';
 import UserInterestsSelector from '../screens/UserInterestsSelector';
@@ -88,7 +87,7 @@ export default class InterestsCarousel extends Component{
 	renderCarouselItem(interest,index){
 		
 		return (
-			<CarouselItem style={styles.carouselItem} onClick={() => this.props.navigator.pushPage({component : ArchiveScreen,toggleLike : this.props.toggleLike,toggleBookmark : this.props.toggleBookmark,term : interest.term,key : v4()})} key={v4()}>
+			<CarouselItem style={styles.carouselItem} onClick={() => this.props.navigator.pushPage({component : ArchiveScreen,props : {toggleLike : this.props.toggleLike,toggleBookmark : this.props.toggleBookmark,term : interest.term,key : v4()}})} key={v4()}>
 	      		<div style={{position : "relative"}}>
 		      		<div className="image">
 		        		{

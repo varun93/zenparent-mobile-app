@@ -1,61 +1,25 @@
 import UserApi from '../api/UserApi';
 import {removeCache} from '../utils/cachedFetch';
 import {UserAnalytics} from '../utils/Analytics';
-import {PROFILE_UPDATE,UPDATE_USER_INTERESTS,
-USER_SIGNUP,USER_LOGIN,USER_PROFILE_SYNC,USER_PROFILE_UPDATED,USER_INTERESTS_UPDATED,USER_LOGOUT} from '../constants';
 
-export const FORGOT_PASSWORD_REQUEST = 'FORGOT_PASSWORD_REQUEST';
-export const FORGOT_PASSWORD_SUCCESS = 'FORGOT_PASSWORD_SUCCESS';
-export const FORGOT_PASSWORD_FAILURE = 'FORGOT_PASSWORD_FAILURE';
+//analytics contants
+import {PROFILE_UPDATE,USER_SIGNUP,USER_LOGIN,USER_PROFILE_SYNC,USER_PROFILE_UPDATED,USER_INTERESTS_UPDATED,USER_LOGOUT} from '../constants';
 
-// login actions
-export const LOGIN_USER_REQUEST = 'LOGIN_USER_REQUEST';
-export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
-export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
+//action creator constants
+import {FORGOT_PASSWORD_REQUEST,FORGOT_PASSWORD_SUCCESS,FORGOT_PASSWORD_FAILURE,
+LOGIN_USER_REQUEST,LOGIN_USER_SUCCESS,LOGIN_USER_FAILURE,
+SIGNUP_USER_REQUEST,SIGNUP_USER_SUCCESS,SIGNUP_USER_FAILURE,
+TOKEN_SIGNIN_USER_REQUEST,TOKEN_SIGNIN_USER_SUCCESS,TOKEN_SIGNIN_USER_FAILURE,
+USER_STATUS_REQUEST,USER_STATUS_RECIEVED,ERROR_FETCHING_USER_STATUS,
+APP_INIT_REQUEST,APP_INIT_REQUEST_SUCCESS,APP_INIT_REQUEST_FAILURE,
+UPDATE_USER_INFO_REQUEST,UPDATE_USER_INFO_SUCCESS,UPDATE_USER_INFO_FAILURE,
+UPLOAD_USER_PROFILE_PIC_REQUEST,UPLOAD_USER_PROFILE_PIC_SUCCESS,UPLOAD_USER_PROFILE_PIC_FAILURE,
+LOGOUT_USER} from '../constants';
 
-// signup signup actions
-export const SIGNUP_USER_REQUEST = 'SIGNUP_USER_REQUEST';
-export const SIGNUP_USER_SUCCESS = 'SIGNUP_USER_SUCCESS';
-export const SIGNUP_USER_FAILURE = 'SIGNUP_USER_FAILURE';
-
-// token signin actions
-export const TOKEN_SIGNIN_USER_REQUEST = 'TOKEN_SIGNIN_USER_REQUEST';
-export const TOKEN_SIGNIN_USER_SUCCESS = 'TOKEN_SIGNIN_USER_SUCCESS';
-export const TOKEN_SIGNIN_USER_FAILURE = 'TOKEN_SIGNIN_USER_FAILURE';
-
-//user status check
-export const USER_STATUS_REQUEST = 'CHECK_USER_STATUS_REQUEST';
-export const USER_STATUS_RECIEVED = 'USER_STATUS_RECIEVED';
-export const ERROR_FETCHING_USER_STATUS = 'ERROR_FETCHING_USER_STATUS';
-
-
-export const APP_INIT_REQUEST = 'APP_INIT_REQUEST';
-export const APP_INIT_REQUEST_SUCCESS = 'APP_INIT_REQUEST_SUCCESS';
-export const APP_INIT_REQUEST_FAILURE = 'APP_INIT_REQUEST_FAILURE';
-
-
-// user profile update actions
-export const UPLOAD_USER_PROFILE_PIC_REQUEST = 'UPLOAD_USER_PROFILE_PIC_REQUEST';
-export const UPLOAD_USER_PROFILE_PIC_SUCCESS = 'UPLOAD_USER_PROFILE_PIC_SUCCESS';
-export const UPLOAD_USER_PROFILE_PIC_FAILURE = 'UPLOAD_USER_PROFILE_PIC_FAILURE';
-
-
-// user profile update actions
-export const UPDATE_USER_INFO_REQUEST = 'UPDATE_USER_INFO_REQUEST';
-export const UPDATE_USER_INFO_SUCCESS = 'UPDATE_USER_INFO_SUCCESS';
-export const UPDATE_USER_INFO_FAILURE = 'UPDATE_USER_INFO_FAILURE';
-
-// update user interests 
-export const UPDATE_USER_INTERESTS_REQUEST = 'UPDATE_USER_INTERESTS_REQUEST';
-export const UPDATE_USER_INTERESTS_SUCCESS = 'UPDATE_USER_INTERESTS_SUCCESS';
-export const UPDATE_USER_INTERESTS_FAILURE = 'UPDATE_USER_INTERESTS_FAILURE';
-
-// user logout actions
-export const LOGOUT_USER = 'LOGOUT_USER';
 
 
 //------------------------ login related actions -------------------------
-export function loginUserSuccess(user,token) {
+export function loginUserSuccess(user,token,navigator) {
   
   try{
     window.localStorage.setItem('jwt', token);  
@@ -77,7 +41,8 @@ export function loginUserSuccess(user,token) {
   return {
     type: LOGIN_USER_SUCCESS,
     user,
-    token
+    token,
+    navigator
   }
 
 };
@@ -105,7 +70,7 @@ export function loginUserRequest() {
 
 //------------------------ signup related actions -------------------------
 
-export function signupUserSuccess(user,token) {
+export function signupUserSuccess(user,token,navigator) {
   
 
   try {
@@ -120,7 +85,8 @@ export function signupUserSuccess(user,token) {
   return {
     type: SIGNUP_USER_SUCCESS,
     user,
-    token
+    token,
+    navigator
   }
 };
 
@@ -149,7 +115,7 @@ export function signupUserRequest() {
 
 //------------------------ token signin related actions -------------------------
 
-export function tokenSigninUserSuccess(user,token) {
+export function tokenSigninUserSuccess(user,token,navigator) {
 
   try{
      window.localStorage.setItem('jwt', token);//this is impotn
@@ -161,7 +127,8 @@ export function tokenSigninUserSuccess(user,token) {
   return {
     type: TOKEN_SIGNIN_USER_SUCCESS,
     user,
-    token
+    token,
+    navigator
   }
 };
 
@@ -187,38 +154,6 @@ export function tokenSigninUserRequest() {
   }
 };
 
-
-//--------------- User Interests Actions -----------------------------
-export function updateUserInterestsSuccess(interests){
- 
-
-   try{
-      UserAnalytics(USER_INTERESTS_UPDATED);  
-    }
-    catch(e){
-      console.log(e);
-    }
-
-  return {
-    type : UPDATE_USER_INTERESTS_SUCCESS,
-    interests
-  }
-};
-
-export function updateUserInterestsRequest(){
-  
-  removeCache(UPDATE_USER_INTERESTS);
-
-  return {
-    type : UPDATE_USER_INTERESTS_REQUEST
-  }
-};
-
-export function updateUserInterestsFailure(){
-  return {
-    type : UPDATE_USER_INTERESTS_FAILURE
-  }
-};
 
 
 //--------------- User Info Update Actions -----------------------------
@@ -282,12 +217,13 @@ export function requestUserStatus(){
   }
 };
 
-export function receivedUserStatus(userStatus,userEmail){
+export function receivedUserStatus(userStatus,userEmail,navigator){
 
   return {
     type : USER_STATUS_RECIEVED,
     userStatus,
-    userEmail
+    userEmail,
+    navigator
   };
 
 };
@@ -403,7 +339,7 @@ export function appInit(appVersion){
 };
 
 
-export function forgotPassword(userEmail){
+export function forgotPassword(userEmail,navigator){
 
   return (dispatch,state) => {
     dispatch(forgotPasswordRequest());
@@ -412,7 +348,7 @@ export function forgotPassword(userEmail){
 
       let status = response.data.status;
       let message = response.data.message;
-      dispatch(forgotPasswordSucess(status,message));
+      dispatch(forgotPasswordSucess(status,message,navigator));
     
     }).catch((err) => {
       dispatch(forgotPasswordFailure())
@@ -423,7 +359,7 @@ export function forgotPassword(userEmail){
 };
 
 
-export function checkUserStatus(userEmail){
+export function checkUserStatus(userEmail,navigator){
 
   return (dispatch,state) => {
     dispatch(requestUserStatus());
@@ -435,7 +371,7 @@ export function checkUserStatus(userEmail){
       if(isRegistered){
         userStatus = 'registered';
       }
-      dispatch(receivedUserStatus(userStatus,userEmail));
+      dispatch(receivedUserStatus(userStatus,userEmail,navigator));
     }).catch((err) => {
       dispatch(errorFetchingUserStatus())
     });
@@ -485,24 +421,7 @@ export function updateUserProfile(date,stageOfParenting,displayName,languagePref
       }
 };
 
-export function updateUserInterests(interests) {
-    
-      return (dispatch,state) => {
-          
-          dispatch(updateUserInterestsRequest());
-
-          UserApi.updateUserInterests(interests).then(function(response){
-              
-              let interests = response.data.interests;
-              dispatch(updateUserInterestsSuccess(interests));  
-            
-            }).catch((err) => {
-                dispatch(updateUserInterestsFailure()); 
-              });
-      }
-};
-
-export function tokenSignin(accessToken,socialUniqueId,userEmail,displayName,imageUrl,loginBy) {
+export function tokenSignin(accessToken,socialUniqueId,userEmail,displayName,imageUrl,loginBy,navigator) {
     
       return (dispatch,state) => {
           
@@ -528,7 +447,7 @@ export function tokenSignin(accessToken,socialUniqueId,userEmail,displayName,ima
       }
 };
 
-export function signup(userEmail, userPassword, date, languagePreference) {
+export function signup(userEmail, userPassword, date, languagePreference,navigator) {
     
       return (dispatch,state) => {
           
@@ -541,7 +460,7 @@ export function signup(userEmail, userPassword, date, languagePreference) {
               let token = response.data.token;
             
               if(success){
-                dispatch(signupUserSuccess(user,token));  
+                dispatch(signupUserSuccess(user,token,navigator));  
               }
               else{
                 let message = response.data.message;
@@ -555,7 +474,7 @@ export function signup(userEmail, userPassword, date, languagePreference) {
       }
 };
 
-export function login(userEmail, userPassword) {
+export function login(userEmail, userPassword,navigator) {
     
       return (dispatch,state) => {
           
@@ -567,7 +486,7 @@ export function login(userEmail, userPassword) {
               let user = response.data.user;
               let token = response.data.token;
               if(success){
-                dispatch(loginUserSuccess(user,token));  
+                dispatch(loginUserSuccess(user,token,navigator));  
               }
               else{
                 let message = response.data.message;
