@@ -1,9 +1,5 @@
 import UserApi from '../api/UserApi';
 import {removeCache} from '../utils/cachedFetch';
-import {UserAnalytics} from '../utils/Analytics';
-
-//analytics contants
-import {PROFILE_UPDATE,USER_SIGNUP,USER_LOGIN,USER_PROFILE_SYNC,USER_PROFILE_UPDATED,USER_INTERESTS_UPDATED,USER_LOGOUT} from '../constants';
 
 //action creator constants
 import {FORGOT_PASSWORD_REQUEST,FORGOT_PASSWORD_SUCCESS,FORGOT_PASSWORD_FAILURE,
@@ -28,15 +24,6 @@ export function loginUserSuccess(user,token,navigator) {
     //handle the exception if any
   }
   
-  
-  try {
-     UserAnalytics(USER_LOGIN,user); // generates an exception
-  }
-  catch (e) {
-    // statements to handle any exceptions
-    console.log(e); // pass exception object to error handler
-  }
-
 
   return {
     type: LOGIN_USER_SUCCESS,
@@ -72,16 +59,6 @@ export function loginUserRequest() {
 
 export function signupUserSuccess(user,token,navigator) {
   
-
-  try {
-     window.localStorage.setItem('jwt', token);//this is impotn
-     UserAnalytics(USER_SIGNUP,user); // generates an exception
-  }
-  catch (e) {
-    // statements to handle any exceptions
-    console.log(e); // pass exception object to error handler
-  }
-
   return {
     type: SIGNUP_USER_SUCCESS,
     user,
@@ -157,19 +134,12 @@ export function tokenSigninUserRequest() {
 
 
 //--------------- User Info Update Actions -----------------------------
-export function updateUserProfileSuccess(user){
+export function updateUserProfileSuccess(user,navigator){
   
-  try {
-     UserAnalytics(USER_PROFILE_UPDATED,user); // generates an exception
-  }
-  catch (e) {
-    // statements to handle any exceptions
-    console.log(e); // pass exception object to error handler
-  }
-
   return {
     type : UPDATE_USER_INFO_SUCCESS,
-    user
+    user,
+    navigator
   }
 };
 
@@ -248,13 +218,6 @@ export function appInitRequestSuccess(forceUpdate,appVersionNumber,user){
 
   if('id' in user && user.id) authenticated = true;
 
-  try {
-      UserAnalytics(USER_PROFILE_SYNC,user); // generates an exception
-    }
-    catch (e) {
-      console.log(e); // pass exception object to error handler
-    }
-
   return {
     type : APP_INIT_REQUEST_SUCCESS,
     forceUpdate,
@@ -297,13 +260,7 @@ export function forgotPasswordFailure(){
 
 // -------------- logout related actions --------------
 export function logout() {
-    try{
-      UserAnalytics(USER_LOGOUT);  
-    }
-    catch(e){
-      console.log(e);
-    }
-   
+  
     // cache removed 
     removeCache(USER_LOGOUT);
 
@@ -339,7 +296,7 @@ export function appInit(appVersion){
 };
 
 
-export function forgotPassword(userEmail,navigator){
+export function forgotPassword(userEmail){
 
   return (dispatch,state) => {
     dispatch(forgotPasswordRequest());
@@ -348,7 +305,7 @@ export function forgotPassword(userEmail,navigator){
 
       let status = response.data.status;
       let message = response.data.message;
-      dispatch(forgotPasswordSucess(status,message,navigator));
+      dispatch(forgotPasswordSucess(status,message));
     
     }).catch((err) => {
       dispatch(forgotPasswordFailure())
@@ -405,7 +362,7 @@ export function uploadUserProfilePic(imageUri){
 };
 
 
-export function updateUserProfile(date,stageOfParenting,displayName,languagePreference){
+export function updateUserProfile(date,stageOfParenting,displayName,languagePreference,navigator){
     
       return (dispatch,state) => {
           
@@ -413,7 +370,7 @@ export function updateUserProfile(date,stageOfParenting,displayName,languagePref
 
           UserApi.updateUserProfile(date,stageOfParenting,displayName,languagePreference).then(function(response){
               let user = response.data.user;
-              dispatch(updateUserProfileSuccess(user));  
+              dispatch(updateUserProfileSuccess(user,navigator));  
             
             }).catch((err) => {
                 dispatch(updateUserProfileFailure()); 

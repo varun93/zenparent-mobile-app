@@ -35,7 +35,6 @@ export default class UserInterestsSelector extends Component {
 	   	console.log(e); // pass exception object to error handler
 		}
 		
-
 	}
 
 	hideDialog() {

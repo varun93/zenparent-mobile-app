@@ -16,12 +16,12 @@ const INITIAL_STATE = persistedState;
 
 const updateUserInfo = (user,state) => {
     user = user ? user : state.userInfo;
-    return Object.assign({},state,{authenticated : true,status :'user-profile-updated',userInfo : user,loading : false,error : false});
+    return Object.assign({},state,{authenticated : true,userInfo : user,loading : false,error : false});
 };
 
-const updateUserInfoWithToken = (user,token,status,state) => {
+const updateUserInfoWithToken = (user,token,state) => {
     if (user){
-        return Object.assign({},state,{authenticated : true,status : status,userInfo : user,loading : false,error : false,token: token});
+        return Object.assign({},state,{authenticated : true,userInfo : user,loading : false,error : false,token: token});
     }
 };
 
@@ -31,11 +31,14 @@ let userReducer = (user = INITIAL_STATE, action) => {
   switch (action.type) {
    
     case APP_INIT_REQUEST : 
-    return Object.assign({},user,{loading : true});
+    return user;
+    // return Object.assign({},user,{loading : true});
     case APP_INIT_REQUEST_SUCCESS : 
-    return updateUserInfoWithToken(action.user,action.token,'logged-in',user);
+    return user;
+    // return updateUserInfoWithToken(action.user,action.token,user);
     case APP_INIT_REQUEST_FAILURE : 
-    return Object.assign({},user,{forceUpdate : false,authenticated : false,userInfo : null,loading : false,error : true});
+    return user;
+    // return Object.assign({},user,{loading : false});
 
     case USER_STATUS_REQUEST : 
     return Object.assign({},user,{authenticated : false,userInfo : null,error : false,loading : true});
@@ -48,36 +51,36 @@ let userReducer = (user = INITIAL_STATE, action) => {
     case SIGNUP_USER_REQUEST :
     return Object.assign({},user,{authenticated : false,error : false,loading : true});
     case SIGNUP_USER_SUCCESS :
-    return updateUserInfoWithToken(action.user,action.token,'signup-success',user);
+    return updateUserInfoWithToken(action.user,action.token,user);
     case SIGNUP_USER_FAILURE :
-    return Object.assign({},user,{authenticated : false,status:'signup-error',error: action.message, loading: false});
+    return Object.assign({},user,{authenticated : false,error: action.message, loading: false});
 
 
     //login related reducers
     case LOGIN_USER_REQUEST :
     return Object.assign({},user,{authenticated : false,error : false,loading : true});
     case LOGIN_USER_SUCCESS:
-    return updateUserInfoWithToken(action.user,action.token,'login-success',user);
+    return updateUserInfoWithToken(action.user,action.token,user);
     case LOGIN_USER_FAILURE :
-    return Object.assign({},user,{authenticated : false,status:'login-error',error: action.message, loading: false});
+    return Object.assign({},user,{authenticated : false,error: action.message, loading: false});
 
     //forgot password reducers
     case FORGOT_PASSWORD_REQUEST :
-    return Object.assign({},user,{authenticated : false,status : 'forgot-password-request',error : false,loading : true});
+    return Object.assign({},user,{authenticated : false,error : false,loading : true});
     case FORGOT_PASSWORD_SUCCESS : 
-    return Object.assign({},user,{loading:false,status : 'forgot-password-success'},{forgotPassword : Object.assign({},{status : action.status,message : action.message})});
+    return Object.assign({},user,{loading:false},{forgotPassword : Object.assign({},{status : action.status,message : action.message})});
     case FORGOT_PASSWORD_FAILURE : 
-    return Object.assign({},user,{authenticated : false,status : 'forgot-password-failure',error : true,loading : false});
+    return Object.assign({},user,{authenticated : false,error : true,loading : false});
 
     //token signin related reducers
     case TOKEN_SIGNIN_USER_REQUEST :
     return Object.assign({},user,{user : null,error : null,loading : true});
    
     case TOKEN_SIGNIN_USER_SUCCESS:
-    return updateUserInfoWithToken(action.user,action.token,'token-signin-success',user);
+    return updateUserInfoWithToken(action.user,action.token,user);
    
     case TOKEN_SIGNIN_USER_FAILURE :
-    return Object.assign({},user,{authenticated : false,status : 'token-signin-error' ,userInfo: null, error: action.message, loading: false});
+    return Object.assign({},user,{authenticated : false,userInfo: null, error: action.message, loading: false});
 
     //update user profile pic
     case UPLOAD_USER_PROFILE_PIC_REQUEST : 

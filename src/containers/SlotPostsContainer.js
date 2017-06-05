@@ -1,10 +1,11 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import PostsListWrapper from '../templates/PostsListWrapper';
-import {fetchSlotPosts,toggleLike,toggleBookmark,HOMEPAGE_SLOT_POSTS} from '../actions/blogActions';
+import {fetchSlotPosts,toggleLike,toggleBookmark} from '../actions/blogActions';
 import {getPosts,hompepageTitle,isFieldEmpty,hasUserInfoChanged} from '../utils';
 import CarouselLoader from '../templates/CarouselLoader';
 import PostsCarousel from '../components/PostsCarousel';
+import {HOMEPAGE_SLOT_POSTS} from '../constants';
 
 class SlotPostsContainer extends Component{
 
@@ -65,7 +66,6 @@ class SlotPostsContainer extends Component{
 
 		
 	}
-
 
 }
 

@@ -48,31 +48,15 @@ export default class ParentingStageInput extends Component {
 	_onClick(e){
 
 		const {date,languagePreference} = this.state;
-		
+		const {navigator} = this.props;
+
 		if(isFieldEmpty(date) || isFieldEmpty(languagePreference)){
 			return;
     	}
 	
-		this.props.updateUserProfile(date,'','',languagePreference);		
+		this.props.updateUserProfile(date,'','',languagePreference,navigator);		
 	}
 
-	//get Next Route
-	componentWillReceiveProps(nextProps) {
-
-		const user = nextProps.user;
-		const authenticated = user.authenticated;
-		const allowedStatus = ['user-profile-updated'];
-
-		if(!authenticated || this.props.user.status == nextProps.user.status){
-			return;
-		}
-		if(this.props.user.userInfo && this.props.user.userInfo.stage_of_parenting && this.props.user.userInfo.stage_of_parenting.length > 0){
-			return;
-		}
-
-		let route = getNextRoute(user);
-		nextProps.navigator.pushPage(route);
-	}
 
 	render(){
 		

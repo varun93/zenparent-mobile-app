@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import PostsList from '../components/PostsList';
-import {fetchBookmarkedPosts,toggleLikeRequest,toggleBookmarkRequest,BOOKMARKED_POSTS} from '../actions/blogActions';
+import {fetchBookmarkedPosts,toggleLikeRequest,toggleBookmarkRequest} from '../actions/blogActions';
+import {BOOKMARKED_POSTS} from '../constants';
 
 class BookmarkedPostsContainer extends Component{
 

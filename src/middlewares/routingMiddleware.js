@@ -14,23 +14,19 @@ const routingMiddleware = store => next => action => {
 
   	let component = null;
 
- 	switch(action.type){
+   	switch(action.type){
 
-  		case LOGIN_USER_SUCCESS :
+      case SIGNUP_USER_SUCCESS  :
+      case UPDATE_USER_INFO_SUCCESS:
+      case LOGIN_USER_SUCCESS :
   			const user = action.user;
-  			console.log(action);
   			const route = getNextRoute(user);
-  			console.log(route);
   			component = route.component;
   			break; 
-  		case SIGNUP_USER_SUCCESS  :
-	  		break;
-  		case UPDATE_USER_INFO_SUCCESS:
-  			break;
-  		case USER_STATUS_RECIEVED :
+    	case USER_STATUS_RECIEVED :
   			const userStatus = action.userStatus;
   			component = (userStatus == 'new-user') ? SignupScreen : LoginScreen;
-  			break;
+        break;
   		case UPDATE_USER_INTERESTS_SUCCESS : 
   			component = MainScreen;
   			break;

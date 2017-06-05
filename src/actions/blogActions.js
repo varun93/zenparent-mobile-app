@@ -1,84 +1,18 @@
 import BlogApi from '../api/BlogApi';
-import {BlogAnalytics} from '../utils/Analytics';
-import {POST_LIKED,POST_BOOKMARKED,SCREEN_VIEWED,POST_SHARED} from '../constants';
+//constants
+import {REQUEST_USER_FEED_TIME,RECEIVED_USER_FEED_TIME,ERROR_FETCHING_USER_FEED_TIME,
+REQUEST_USER_FEED_RELEVANCE,RECEIVED_USER_FEED_RELEVANCE,ERROR_FETCHING_USER_FEED_RELEVANCE,
+RECEIVED_SINGLE_POST,REQUEST_SINGLE_POST,ERROR_FETCHING_SINGLE_POST,
+TOGGLE_LIKE,POST_LIKE_SUCCESS,POST_LIKE_FAILURE,
+REQUEST_POPULAR_POSTS,RECEIVED_POPULAR_POSTS,ERROR_FETCHING_POPULAR_POSTS,
+REQUEST_EDITORIAL_POSTS,RECEIVED_EDITORIAL_POSTS,ERROR_FETCHING_EDITORIAL_POSTS,
+POST_BOOKMARK_SUCCESS,TOGGLE_BOOKMARK,POST_BOOKMARK_FAILURE,
+REQUEST_BOOKMARKED_POSTS,RECEIVED_BOOKMARKED_POSTS,ERROR_FETCHING_BOOKMARKED_POSTS,
+REQUEST_ARCHIVE_POSTS,RECEIVED_ARCHIVE_POSTS,ERROR_FETCHING_ARCHIVE_POSTS,
+REQUEST_HOMEPAGE_SLOT_POSTS,RECEIVED_HOMEPAGE_SLOT_POSTS,ERROR_FETCHING_HOMEPAGE_SLOT_POSTS,
+USER_FEED_RELEVANCE,USER_FEED_TIME,HOMEPAGE_SLOT_POSTS,BOOKMARKED_POSTS,
+ARCHIVE_POSTS,POPULAR_POSTS,EDITORIAL_POSTS,UPDATE_BOOKMARKED_LIST,SYNC_FEED} from '../constants';
 
-
-// fetch homepage posts
-export const REQUEST_USER_FEED_RELEVANCE = 'REQUEST_USER_FEED_RELEVANCE';
-export const RECEIVED_USER_FEED_RELEVANCE = 'RECEIVED_USER_FEED_RELEVANCE';
-export const ERROR_FETCHING_USER_FEED_RELEVANCE =  'ERROR_FETCHING_USER_FEED_RELEVANCE';
-
-// fetch homepage posts
-export const REQUEST_USER_FEED_TIME = 'REQUEST_USER_FEED_TIME';
-export const RECEIVED_USER_FEED_TIME = 'RECEIVED_USER_FEED_TIME';
-export const ERROR_FETCHING_USER_FEED_TIME =  'ERROR_FETCHING_USER_FEED_TIME';
-
-// fetch popular posts
-export const REQUEST_POPULAR_POSTS = 'REQUEST_POPULAR_POSTS';
-export const RECEIVED_POPULAR_POSTS = 'RECEIVED_POPULAR_POSTS';
-export const ERROR_FETCHING_POPULAR_POSTS =  'ERROR_FETCHING_POPULAR_POSTS';
-
-
-// fetch editorial posts
-export const REQUEST_EDITORIAL_POSTS = 'REQUEST_EDITORIAL_POSTS';
-export const RECEIVED_EDITORIAL_POSTS = 'RECEIVED_EDITORIAL_POSTS';
-export const ERROR_FETCHING_EDITORIAL_POSTS =  'ERROR_FETCHING_EDITORIAL_POSTS';
-
-
-//fetch single post
-export const RECEIVED_SINGLE_POST = 'RECEIVED_SINGLE_POST';
-export const REQUEST_SINGLE_POST = 'REQUEST_SINGLE_POST';
-export const ERROR_FETCHING_SINGLE_POST = 'ERROR_FETCHING_SINGLE_POST';
-
-//post like requests
-export const TOGGLE_LIKE = 'TOGGLE_LIKE';
-export const POST_LIKE_SUCCESS = 'POST_LIKE_SUCCESS';
-export const POST_LIKE_FAILURE = 'POST_LIKE_FAILURE';
-
-
-//post bookmark requests
-export const TOGGLE_BOOKMARK = 'TOGGLE_BOOKMARK';
-export const POST_BOOKMARK_SUCCESS = 'POST_BOOKMARK_SUCCESS';
-export const POST_BOOKMARK_FAILURE = 'POST_BOOKMARK_FAILURE';
-
-//fetch interests
-export const REQUEST_INTERESTS = 'REQUEST_INTERESTS';
-export const RECEIVED_INTERESTS = 'RECEIVED_INTERESTS';
-export const ERROR_FETCHING_INTERESTS = 'ERROR_FETCHING_INTERESTS';
-export const TOGGLE_INTEREST = 'TOGGLE_INTEREST';
-
-//archives
-export const REQUEST_ARCHIVE_POSTS = 'REQUEST_ARCHIVE_POSTS';
-export const RECEIVED_ARCHIVE_POSTS = 'RECEIVED_ARCHIVE_POSTS';
-export const ERROR_FETCHING_ARCHIVE_POSTS =  'ERROR_FETCHING_ARCHIVE_POSTS';
-
-//bookmarked posts
-export const REQUEST_BOOKMARKED_POSTS = 'REQUEST_BOOKMARKED_POSTS';
-export const RECEIVED_BOOKMARKED_POSTS = 'RECEIVED_BOOKMARKED_POSTS';
-export const ERROR_FETCHING_BOOKMARKED_POSTS =  'ERROR_FETCHING_BOOKMARKED_POSTS';
-
-
-// fetch homepage posts
-export const REQUEST_HOMEPAGE_SLOT_POSTS = 'REQUEST_HOMEPAGE_SLOT_POSTS';
-export const RECEIVED_HOMEPAGE_SLOT_POSTS = 'RECEIVED_HOMEPAGE_SLOT_POSTS';
-export const ERROR_FETCHING_HOMEPAGE_SLOT_POSTS =  'ERROR_FETCHING_HOMEPAGE_SLOT_POSTS ';
-
-//TODO : add both bookmarked and unbookmarked
-export const UPDATE_BOOKMARKED_LIST = 'UPDATE_BOOKMARKED_LIST';
-
-//
-export const RECORD_USER_READING_HISTORY = 'RECORD_USER_READING_HISTORY'; 
-
-//sync the user feeds upon profile update
-export const SYNC_FEED = 'SYNC_FEED';
-
-export const BOOKMARKED_POSTS = 'bookmarkedPosts';
-export const ARCHIVE_POSTS = 'archivePosts';
-export const USER_FEED_RELEVANCE = 'userFeedRelevance';
-export const USER_FEED_TIME = 'userFeedTime';
-export const HOMEPAGE_SLOT_POSTS = 'homepageSlotPosts';
-export const POPULAR_POSTS = 'popularPosts';
-export const EDITORIAL_POSTS = 'editorialPosts';
 
 // ----------------------- FETCH POSTS RELATED ACTIONS ------------------------
 export function requestPosts(key){
@@ -226,16 +160,6 @@ export function requestSinglePost(postId){
 // pass a navigator here 
 export function receivedSinglePost(postId,post,state){
 
-	// record screen viewed event
-	try {
-  	 BlogAnalytics(SCREEN_VIEWED,postId,state); // generates an exception
-	}
-	catch (e) {
-   	// statements to handle any exceptions
-   	console.log(e); // pass exception object to error handler
-	}
-	
-
 	return {
 		type : RECEIVED_SINGLE_POST,
 		postId,
@@ -266,14 +190,6 @@ export function toggleLike(postId){
 
 export function likePostSuccess(postId,state){
 	
-	// toggle treated as a +ve event, makes no difference to analytics as long it is measuring user engagement
-	try {
-  	 BlogAnalytics(POST_LIKED,postId,state); // generates an exception
-	}
-	catch (e) {
-   	// statements to handle any exceptions
-   	console.log(e); // pass exception object to error handler
-	}
 
 	//now create an action
 	return {
@@ -301,15 +217,6 @@ export function toggleBookmark(postId){
 
 export function bookmarkPostSuccess(postId,state){
 	
-	// toggle treated as a +ve event, makes no difference to analytics as long it is measuring user engagement
-	try {
-  	 BlogAnalytics(POST_BOOKMARKED,postId,state); // generates an exception
-	}
-	catch (e) {
-   	// statements to handle any exceptions
-   	console.log(e); // pass exception object to error handler
-	}
-
 	return {
 		type : POST_BOOKMARK_SUCCESS,
 		postId

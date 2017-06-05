@@ -71,14 +71,14 @@ export default class LoginScreen extends Component{
 
 	render(){
 		
-		const {user} = this.props;
+		const {user,navigator} = this.props;
 		const userEmail = user.userInfo ? user.userInfo.user_email : '';
 		const error = user.error || '';
 		const loading = user.loading;
 
 		return (
 			<Page key="login-screen" className="login-screen">
-				
+				<Toolbar navigator={navigator} />
 				<div className="login-container">
 
 					{

@@ -29,6 +29,7 @@ const getNextRoute = (userInfo) => {
 		let props = {};
 		props['key'] =  v4();
 		return Object.assign({},{component},{props});
+
 	}
 	
 };

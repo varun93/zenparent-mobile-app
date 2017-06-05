@@ -3,7 +3,7 @@ import {ProgressCircular} from 'react-onsenui';
 import Waypoint from 'react-waypoint';
 import PostsListWrapper from '../templates/PostsListWrapper';
 import {getPosts,hasUserInfoChanged,getUserLanguage} from '../utils';
-import {USER_FEED_TIME,USER_FEED_RELEVANCE,BOOKMARKED_POSTS,ARCHIVE_POSTS} from '../actions/blogActions';
+import {USER_FEED_TIME,USER_FEED_RELEVANCE,BOOKMARKED_POSTS,ARCHIVE_POSTS} from '../constants';
 
 
 export default class PostsList extends Component{

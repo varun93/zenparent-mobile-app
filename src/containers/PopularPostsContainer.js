@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 import PostsCarousel from '../components/PostsCarousel';
 import {getPosts,getUserLanguage,hasUserInfoChanged} from '../utils';
 import CarouselLoader from '../templates/CarouselLoader';
-import {toggleLikeRequest,toggleBookmarkRequest,fetchPopularPosts,POPULAR_POSTS} from '../actions/blogActions';
+import {toggleLikeRequest,toggleBookmarkRequest,fetchPopularPosts} from '../actions/blogActions';
+import {POPULAR_POSTS} from '../constants';
 
 class PopularPostsContainer extends Component{
 
@@ -12,6 +13,10 @@ class PopularPostsContainer extends Component{
 		this.state = {
 			loaded : false
 		};
+	}
+
+	componentDidMount(){
+		this.props.fetchPopularPosts(POPULAR_POSTS);	
 	}
 
 
@@ -24,8 +29,8 @@ class PopularPostsContainer extends Component{
 		const userInfoChanged = hasUserInfoChanged(currentUserInfo,nextUserInfo); 
 
 		if(userInfoChanged || (!loaded && active)){
-			this.props.fetchPopularPosts(POPULAR_POSTS);
-			this.setState({loaded : true});
+			// this.props.fetchPopularPosts(POPULAR_POSTS);
+			// this.setState({loaded : true});
 		}
 
 	}

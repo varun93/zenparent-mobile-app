@@ -1,34 +1,11 @@
 import ChatroomApi from '../api/ChatroomApi';
-import {ChatroomAnalytics} from '../utils/Analytics';
 import {removeCache} from '../utils/cachedFetch';
-import {GROUP_JOIN_UNJOIN,CHATROOM_VISITED,JOINED_CHATROOM,LEFT_CHATROOM,MESSAGE_SENT,CHATROOM_OPENED} from '../constants';
-
-//send new message
-export const NEW_MESSAGE = 'NEW_MESSAGE';
-// messages actions
-export const RECEIVED_CHATROOM_MESSAGES = 'RECEIVED_CHATROOM_MESSAGES';
-export const REQUEST_CHATROOM_MESSAGES = 'REQUEST_CHATROOM_MESSAGES';
-export const ERROR_FETCHING_CHATROOM_MESSAGES = 'ERROR_FETCHING_CHATROOM_MESSAGES';
-
-// join and leave chatroom
-export const JOIN_CHATROOM = 'JOIN_CHATROOM';
-export const LEAVE_CHATROOM = 'LEAVE_CHATROOM';
-
-//open chatroom
-export const SET_ACTIVE_CHATROOM = 'SET_ACTIVE_CHATROOM';
-
-//send message 
-export const SEND_MESSAGE_REQUEST = 'SEND_MESSAGE_REQUEST';
-export const SEND_MESSAGE_SUCCESS = 'SEND_MESSAGE_SUCCESS';
-export const SEND_MESSAGE_FAILURE = 'SEND_MESSAGE_FAILURE';
-
-// request chatrooms
-export const REQUEST_CHATROOMS = 'REQUEST_CHATROOMS';
-export const RECEIVED_CHATROOMS = 'RECEIVED_CHATROOMS';
-export const ERROR_FETCHING_CHATROOMS = 'ERROR_FETCHING_CHATROOMS';
-
-//reset counter
-export const RESET_UNREAD_MESSAGES = 'RESET_UNREAD_MESSAGES';
+import {NEW_MESSAGE, SEND_MESSAGE_SUCCESS, SEND_MESSAGE_REQUEST,RECEIVED_CHATROOM_MESSAGES,
+REQUEST_CHATROOM_MESSAGES,ERROR_FETCHING_CHATROOM_MESSAGES,
+REQUEST_CHATROOMS,RECEIVED_CHATROOMS,ERROR_FETCHING_CHATROOMS,JOIN_CHATROOM,
+LEAVE_CHATROOM,SET_ACTIVE_CHATROOM,RESET_UNREAD_MESSAGES,
+GROUP_JOIN_UNJOIN,CHATROOM_OPENED} from 
+'../constants';	
 
 
 export function resetUnreadMessages(chatroomId){
@@ -109,15 +86,7 @@ export function sendMessageRequest(chatroomId){
 
 export function sendMessageSuccess(chatroomId,state){
 	
-  	try {
-  	 ChatroomAnalytics(MESSAGE_SENT,chatroomId,state); // generates an exception
-	}
-	catch (e) {
-   	// statements to handle any exceptions
-   	console.log(e); // pass exception object to error handler
-	}
-	
-	return {
+  	return {
 		type : SEND_MESSAGE_SUCCESS,
 		chatroomId 
 	};
@@ -145,14 +114,6 @@ export function newMessage(chatroomId,message){
 // ----------------------- Join Group and leave group ------------------------
 export function joinChatroomSuccess(chatroomId,state){
 	
-	try {
-  	 ChatroomAnalytics(JOINED_CHATROOM,chatroomId,state); // generates an exception
-	}
-	catch (e) {
-   	// statements to handle any exceptions
-   	console.log(e); // pass exception object to error handler
-	}
-
 	return {
 		type : JOIN_CHATROOM,
 		chatroomId
@@ -160,14 +121,6 @@ export function joinChatroomSuccess(chatroomId,state){
 };
 
 export function leaveChatroomSuccess(chatroomId,state){
-	
-	try {
-  	 ChatroomAnalytics(LEFT_CHATROOM,chatroomId,state); // generates an exception
-	}
-	catch (e) {
-   	// statements to handle any exceptions
-   	console.log(e); // pass exception object to error handler
-	}
 
 	return {
 		type : LEAVE_CHATROOM,

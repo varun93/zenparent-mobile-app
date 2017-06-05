@@ -52,7 +52,8 @@ export default class App extends Component {
       let user = loadState();
  
       if(user && user.authenticated){
-        let route = getNextRoute(user.userInfo);
+        const userInfo = user.userInfo;
+        let route = getNextRoute(userInfo);
         component = route.component;
       }
       else {
@@ -60,7 +61,7 @@ export default class App extends Component {
       }
       
     }
-   
+    
     const key = v4();
     
     return (

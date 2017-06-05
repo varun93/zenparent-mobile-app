@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 import PostsCarousel from '../components/PostsCarousel';
 import CarouselLoader from '../templates/CarouselLoader';
 import {getPosts} from '../utils';
-import {toggleLikeRequest,toggleBookmarkRequest,fetchEditorialPosts,EDITORIAL_POSTS} from '../actions/blogActions';
+import {toggleLikeRequest,toggleBookmarkRequest,fetchEditorialPosts} from '../actions/blogActions';
+import {EDITORIAL_POSTS} from '../constants';
 
 class EditorialPostsContainer extends Component{
 
@@ -15,14 +16,18 @@ class EditorialPostsContainer extends Component{
 		};
 	}
 
+	componentDidMount(){
+		 this.props.fetchEditorialPosts(EDITORIAL_POSTS);
+	}
+
 	componentWillReceiveProps(nextProps){
 
 		const loaded = this.state.loaded;
 		const active = nextProps.active;
 
 		if(!loaded && active){
-			this.props.fetchEditorialPosts(EDITORIAL_POSTS);
-			this.setState({loaded : true});
+			// this.props.fetchEditorialPosts(EDITORIAL_POSTS);
+			// this.setState({loaded : true});
 		}
 
 	}

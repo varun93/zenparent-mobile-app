@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import PostsList from '../components/PostsList';
-import {fetchArchivePosts,toggleLike,toggleBookmark,ARCHIVE_POSTS} from '../actions/blogActions';
+import {fetchArchivePosts,toggleLike,toggleBookmark} from '../actions/blogActions';
+import {ARCHIVE_POSTS} from '../constants';
 
 class PostsArchiveContainer extends Component{
 

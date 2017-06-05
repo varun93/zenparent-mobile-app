@@ -58,9 +58,10 @@ export default class SignupScreen extends Component{
 
 		const userEmail = this.props.user.userInfo.user_email;
 		const {date,userPassword,languagePreference} = this.state;
+		const {navigator} = this.props;
 	
 		if(this.validatePassword(userPassword) && validateDate(date)){
-      		this.props.signup(userEmail,userPassword,date,languagePreference);
+      		this.props.signup(userEmail,userPassword,date,languagePreference,navigator);
     	}
 		else{
 			return;
@@ -73,11 +74,13 @@ export default class SignupScreen extends Component{
 
 		let {user,navigator} = this.props;
 		let {userPassword,date,languagePreference} = this.state;
-		const userEmail = this.props.user.userInfo.user_email;
-		const loading = this.props.user.loading;
+		const userInfo = user.userInfo;
+		const userEmail = userInfo ? userInfo.user_email : '';
+		const loading = user.loading;
 
 		return (
 			<Page key="signup-screen" className="signup-screen">
+				<Toolbar navigator={navigator} />
 				<div className="signup-container">
 
 					<p>

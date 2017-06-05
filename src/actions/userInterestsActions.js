@@ -1,5 +1,5 @@
 //fetch interests
-import UserInterestsApi from  '../api/UserInterestsApi';
+import UserInterestsApi from '../api/UserInterestsApi';
 import {removeCache} from '../utils/cachedFetch';
 import {UserAnalytics} from '../utils/Analytics';
 import {UPDATE_USER_INTERESTS,USER_INTERESTS_UPDATED} from '../constants';
@@ -38,14 +38,6 @@ export function toggleInterest(term){
 //--------------- User Interests Actions -----------------------------
 export function updateUserInterestsSuccess(interests,navigator){
  
-
-   try{
-      UserAnalytics(USER_INTERESTS_UPDATED);  
-    }
-    catch(e){
-      console.log(e);
-    }
-
   return {
     type : UPDATE_USER_INTERESTS_SUCCESS,
     interests,

@@ -10,7 +10,7 @@ import UserFeedsContainer from '../containers/UserFeedsContainer';
 import InterestsCarouselContainer from '../containers/InterestsCarouselContainer';
 import PopularPostsContainer from '../containers/PopularPostsContainer';
 import EditorialPostsContainer from '../containers/EditorialPostsContainer';
-import {USER_FEED_RELEVANCE} from '../actions/blogActions';
+import {USER_FEED_RELEVANCE} from '../constants';
 import SinglePost from '../screens/SinglePost';
 
 export default class Homescreen extends Component{
