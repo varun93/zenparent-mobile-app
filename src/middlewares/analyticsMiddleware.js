@@ -22,127 +22,55 @@ const analyticsMiddleware = store => next => action => {
 
   			// user related
   			case LOGIN_USER_SUCCESS:
-  				try {
-     				UserAnalytics(USER_LOGIN,user); // generates an exception
-				}
-				catch (e) {
-				    // statements to handle any exceptions
-				    console.log(e); // pass exception object to error handler
-  				}	
+  				UserAnalytics(USER_LOGIN,user); 
 				break;
 
   			case SIGNUP_USER_SUCCESS:
-  				  try {
-				     window.localStorage.setItem('jwt', token);//this is impotn
-				     UserAnalytics(USER_SIGNUP,user); // generates an exception
-				  }
-				  catch (e) {
-					// statements to handle any exceptions
-				    console.log(e); // pass exception object to error handler
-  				}	
+  				UserAnalytics(USER_SIGNUP,user); 
 				break;
 
   			case UPDATE_USER_INTERESTS_SUCCESS :
-  				try{
-			      UserAnalytics(USER_INTERESTS_UPDATED);  
-			    }
-			    catch(e){
-			      console.log(e);
-			    }
-				break;
+			    UserAnalytics(USER_INTERESTS_UPDATED);  
+			    break;
 
   			case UPDATE_USER_INFO_SUCCESS : 
-  				try{
-   		 				UserAnalytics(USER_PROFILE_UPDATED,user); // generates an exception
-				}
-				catch(e) {
-					// statements to handle any exceptions
-					console.log(e); // pass exception object to error handler
-  				}
+  				UserAnalytics(USER_PROFILE_UPDATED,user); 
 				break;
 
   			case LOGOUT_USER :
-  				try{
-      				UserAnalytics(USER_LOGOUT);  
-			    }
-			    catch(e){
-				   console.log(e);
-    			}	
-   				break;
+  				UserAnalytics(USER_LOGOUT);  
+				break;
 
 			case TOKEN_SIGNIN_USER_SUCCESS:
 	  			break;
 
 	  		case SCREEN_VIEWED : 
-
-				// record screen viewed event
-				try {
-					BlogAnalytics(SCREEN_VIEWED,postId,state); // generates an exception
-				}
-				catch (e) {
-					// statements to handle any exceptions
-					console.log(e); // pass exception object to error handler
-				}
-
+				BlogAnalytics(SCREEN_VIEWED,postId,state); 
 				break;
 
 	  		case POST_LIKED :
-	  			// toggle treated as a +ve event, makes no difference to analytics as long it is measuring user engagement
-				try {
-				  	 BlogAnalytics(POST_LIKED,postId,state); // generates an exception
-				}
-				catch (e) {
-				   	// statements to handle any exceptions
-					console.log(e); // pass exception object to error handler
-				}
-	  			break;
+	  			BlogAnalytics(POST_LIKED,postId,state); 
+				break;
 
 	  		case POST_BOOKMARKED : 
-	  			// toggle treated as a +ve event, makes no difference to analytics as long it is measuring user engagement
-				try {
-				  	BlogAnalytics(POST_BOOKMARKED,postId,state); // generates an exception
-				}
-				catch (e) {
-					// statements to handle any exceptions
-				   	console.log(e); // pass exception object to error handler
-				}
-	  			break;
+	  			BlogAnalytics(POST_BOOKMARKED,postId,state);
+				break;
 
 	  		case MESSAGE_SENT : 
-	  			//chatroom analytics
-				try {
-					ChatroomAnalytics(MESSAGE_SENT,chatroomId,state); // generates an exception
-				}
-				catch (e) {
-				   	// statements to handle any exceptions
-				console.log(e); // pass exception object to error handler
-				}
+	  			ChatroomAnalytics(MESSAGE_SENT,chatroomId,state); 
 				break;
 
 	  		case JOINED_CHATROOM : 
-	  			try {
-				  	 ChatroomAnalytics(JOINED_CHATROOM,chatroomId,state); // generates an exception
-				}
-				catch (e) {
-				   	// statements to handle any exceptions
-					console.log(e); // pass exception object to error handler
-				}
-				
+	  			ChatroomAnalytics(JOINED_CHATROOM,chatroomId,state); 
 				break;
 
 	  		case LEFT_CHATROOM :
-
-	  			try {
-				  	 ChatroomAnalytics(LEFT_CHATROOM,chatroomId,state); // generates an exception
-					}
-				catch (e) {
-					// statements to handle any exceptions
-				   	console.log(e); // pass exception object to error handler
-				}
-
-	  			break;
+				ChatroomAnalytics(LEFT_CHATROOM,chatroomId,state); 
+				break;
   		}
   	}
+
+  	next(action);
 };
 
 

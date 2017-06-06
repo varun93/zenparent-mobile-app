@@ -59,6 +59,13 @@ export function loginUserRequest() {
 
 export function signupUserSuccess(user,token,navigator) {
   
+  try{
+    window.localStorage.setItem('jwt', token);
+  }
+  catch(e){
+
+  }
+  
   return {
     type: SIGNUP_USER_SUCCESS,
     user,

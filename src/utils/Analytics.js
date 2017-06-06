@@ -5,85 +5,89 @@ import {POST_LIKED,POST_BOOKMARKED,SCREEN_VIEWED,POST_SHARED,LANGUAGE_TOGGLED,
 	USER_SIGNUP,USER_LOGIN,USER_PROFILE_SYNC,USER_PROFILE_UPDATED,USER_INTERESTS_UPDATED,USER_LOGOUT} from '../constants';
 
 
+const recordClevertapEvent = (eventName,eventData) => {
+	try{
+		CleverTap.recordEventWithNameAndProps(eventName, eventData);
+	}
+	catch(e){
+	// handle if needed 
+	}
+};
+
+
 export const BlogAnalytics = (event,postId,state) => {
 
-	
-	if(environment == 'production'){
-
-
-		if(CleverTap === undefined || CleverTap === null || window.ga === null || window.ga === undefined){
-			return;
-		}
+		// if(CleverTap === undefined || CleverTap === null || window.ga === null || window.ga === undefined){
+		// 	return;
+		// }
 
 		//substring to limit the number of characters
 		const title = (typeof state == 'object') ? state.blog.posts.byId[postId].title.substr(0,100) : state;
-	
+		let eventName = '',eventData = {};
+
 		switch(event){
 			case POST_LIKED : 
-				// console.log("Post Liked - Title : " + title);
-				CleverTap.recordEventWithNameAndProps("Post Liked", {"post":title});
+				eventName = 'Post Liked';
+				eventData = {"post":title};
 				break;
 			case POST_BOOKMARKED : 
-				// console.log("Post Bookmarked - Title : " + title);
-				CleverTap.recordEventWithNameAndProps("Post Bookmarked", {"post":title});
+				eventName = 'Post Bookmarked';
+				eventData = {"post":title};
 				break;
 			case SCREEN_VIEWED : 
-				// console.log("Screen Viewed - Title : " + title);
 				//ga tracking
-				window.ga.trackView(title);
-				// clevertap tracking
-				CleverTap.recordEventWithNameAndProps("Screen Viewed", {"post":title});
+				// window.ga.trackView(title);
+				eventName = 'Screen Viewed';
+				eventData = {"post":title};
 				break;
 			case POST_SHARED : 
-				 // console.log("Post Shared - Title : " + title);
-				CleverTap.recordEventWithNameAndProps("Post Shared", {"post":title});
+				eventName = 'Post Shared';
+				eventData = {"post":title};
 				break;
 		}
-	}
 
+		recordClevertapEvent(eventName,eventData);
 };
 
 // slightly inconsitent API, state can be obj or title
 export const ChatroomAnalytics = (event,chatroomId,state) => {
 
-	
-	if(environment == 'production'){
 
 		//substring to limit the number of characters
 		const title = (typeof state == 'object') ?  state.chat.chatRooms.byId[chatroomId].post_title : state;
-	
+		let eventName = '',eventData={};
+
 		switch(event){
 			case CHATROOM_VISITED : 
-				// console.log("Chatroom Visited " + title)
-				CleverTap.recordEventWithNameAndProps("Chatroom Visited", {"chatroom":title});
+				eventName = 'Chatroom Visited';
+				eventData = {"chatroom":title};
 				break;
 			case JOINED_CHATROOM : 
-				// console.log("Joined Chatroom " + title);
-				CleverTap.recordEventWithNameAndProps("Group Joined", {"chatroom":title});
+				eventName = 'Group Joined';
+				eventData = {"chatroom":title};
 				break;
 			case LEFT_CHATROOM : 
-				// console.log("Left Chatroom " + title);
-				CleverTap.recordEventWithNameAndProps("Group Left", {"chatroom":title});
+				eventName = 'Group Left';
+				eventData = {"chatroom":title};
 				break;
 			case MESSAGE_SENT : 
-				// console.log("Message Sent " + title);
-				CleverTap.recordEventWithNameAndProps("Message Sent", {"chatroom":title});
+				eventName = 'Message Sent';
+				eventData = {"chatroom":title};
 				break;
 		}
-	
-	}
+
+	recordClevertapEvent(eventName,eventData);		
 
 };
 
 // fire, event and change data
 export const UserAnalytics = (event,user) => {
-
 	
-	if(environment == 'production'){
+		// if(CleverTap === undefined || CleverTap === null){
+		// 	return;
+		// }
 
-		if(CleverTap === undefined || CleverTap === null){
-			return;
-		}
+		let eventName='',eventData={};
 
 		if(user){
 			const cleverTapUserObj =  {
@@ -97,48 +101,42 @@ export const UserAnalytics = (event,user) => {
 				user_activated : user.is_user_activated,
 				interests : user.interests.join(' | '),
 				'MSG-email' : true,
-				'MSG-push' :  true,
-				AppVersion : 1.05  
+				'MSG-push' :  true
 			};	
 			// set profile info
 			// console.log(cleverTapUserObj);
-			CleverTap.profileSet(cleverTapUserObj);
+			// CleverTap.profileSet(cleverTapUserObj);
 		}
 
 
        	switch(event){
 
        		case LANGUAGE_TOGGLED : 
-       			CleverTap.recordEventWithName("Language Toggled");
+       			eventName = 'Language Toggled';
        			break;
-
 			case USER_SIGNUP : 
-				// console.log("Signup Completed");
-			 	CleverTap.recordEventWithName("Signup Completed");
+				eventName = 'Signup Completed';
 				break;
 			case USER_LOGIN : 
-				// console.log("User Login");
-				CleverTap.onUserLogin({"Identity" : user.id});
-				CleverTap.recordEventWithName("Login");
+				console.log("User Login");
+				eventName = 'Login';
+				// CleverTap.onUserLogin({"Identity" : user.id});
 				break;
 			case USER_PROFILE_SYNC: 
-				CleverTap.recordEventWithName("User Profile Sync");
+				eventName = 'User Profile Sync';
 				break;
 			case USER_PROFILE_UPDATED : 
-				// console.log("User Profile Updated");
-				CleverTap.recordEventWithName("Profile Updated");
+				eventName = 'Profile Updated';
 				break;
 			case USER_INTERESTS_UPDATED:
-				// console.log("User Interests updated");
-				CleverTap.recordEventWithName("Interests Updated")
+				eventName = 'Interests Updated';
 				break;
 			case USER_LOGOUT :
-				// console.log("User Logout");
-				CleverTap.recordEventWithName("Logout");
+				eventName = 'Logout';
 				break;
 		}
-	
-	}
+		
+		recordClevertapEvent(eventName,eventData);
 
 };
 

@@ -16,9 +16,6 @@ class EditorialPostsContainer extends Component{
 		};
 	}
 
-	componentDidMount(){
-		 this.props.fetchEditorialPosts(EDITORIAL_POSTS);
-	}
 
 	componentWillReceiveProps(nextProps){
 
@@ -26,8 +23,8 @@ class EditorialPostsContainer extends Component{
 		const active = nextProps.active;
 
 		if(!loaded && active){
-			// this.props.fetchEditorialPosts(EDITORIAL_POSTS);
-			// this.setState({loaded : true});
+			this.props.fetchEditorialPosts(EDITORIAL_POSTS);
+			this.setState({loaded : true});
 		}
 
 	}

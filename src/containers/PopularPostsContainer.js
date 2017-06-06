@@ -15,10 +15,6 @@ class PopularPostsContainer extends Component{
 		};
 	}
 
-	componentDidMount(){
-		this.props.fetchPopularPosts(POPULAR_POSTS);	
-	}
-
 
 	componentWillReceiveProps(nextProps){
 
@@ -29,8 +25,8 @@ class PopularPostsContainer extends Component{
 		const userInfoChanged = hasUserInfoChanged(currentUserInfo,nextUserInfo); 
 
 		if(userInfoChanged || (!loaded && active)){
-			// this.props.fetchPopularPosts(POPULAR_POSTS);
-			// this.setState({loaded : true});
+			this.props.fetchPopularPosts(POPULAR_POSTS);
+			this.setState({loaded : true});
 		}
 
 	}

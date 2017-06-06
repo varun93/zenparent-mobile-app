@@ -6,16 +6,18 @@ import LoginScreen from '../screens/LoginScreen';
 
 //action creator constants
 import {FORGOT_PASSWORD_SUCCESS,LOGIN_USER_SUCCESS,SIGNUP_USER_SUCCESS,TOKEN_SIGNIN_USER_SUCCESS,UPDATE_USER_INTERESTS_SUCCESS,
-USER_STATUS_RECIEVED,APP_INIT_REQUEST_SUCCESS,UPDATE_USER_INFO_SUCCESS,LOGOUT_USER} from '../constants';
+USER_STATUS_RECIEVED,APP_INIT_REQUEST_SUCCESS,UPDATE_USER_INFO_SUCCESS,LOGOUT_USER,
+REQUEST_SINGLE_POST} from '../constants';
 
 const routingMiddleware = store => next => action => {
 
   if(action.hasOwnProperty('type')){
 
-  	let component = null;
+  	let component = null,props={};
 
    	switch(action.type){
 
+      // user actions related navigation
       case SIGNUP_USER_SUCCESS  :
       case UPDATE_USER_INFO_SUCCESS:
       case LOGIN_USER_SUCCESS :
@@ -33,13 +35,11 @@ const routingMiddleware = store => next => action => {
   		case LOGOUT_USER:
   			component = AuthScreen;
 	  		break;
+
   	}
 
   	const navigator = action.navigator;
-
-  	if(navigator && component) {
- 		navigator.pushPage({component})
- 	};
+    navigator && component && navigator.pushPage({component,props});
   
   }
 

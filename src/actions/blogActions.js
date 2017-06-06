@@ -149,7 +149,7 @@ export function errorFetchingArchivePosts(term){
 };	
 
 // ----------------------- FETCH SINGLE POST RELATED ACTIONS ------------------------
-export function requestSinglePost(postId){
+export function requestSinglePost(postId,navigator){
 	return {
 		type : REQUEST_SINGLE_POST,
 		postId
@@ -303,8 +303,7 @@ export function toggleBookmarkRequest(id){
 export function fetchSinglePost(id,fields){
 
 	return (dispatch,getState) => {
-		dispatch(requestSinglePost(id));
-
+	
 		BlogApi.fetchSinglePost(id,fields).then(function(response){
   				const post = response.data;
   				dispatch(receivedSinglePost(id,post,getState()));

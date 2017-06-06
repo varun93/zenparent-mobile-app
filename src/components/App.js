@@ -20,7 +20,7 @@ export default class App extends Component {
 
   componentWillMount(){
      // check the status
-     this.props.appInit(APP_VERSION);
+     // this.props.appInit(APP_VERSION);
   }
 
   onDeviceReady(){
@@ -39,7 +39,6 @@ export default class App extends Component {
   renderPage(route, navigator) {
     const props = route.props || {};
     props.navigator = navigator;
-    props.key = v4();
     return React.createElement(route.component, props);
   }
 

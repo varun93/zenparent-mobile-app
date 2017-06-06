@@ -3,7 +3,6 @@ import {ListItem,Row,Col} from 'react-onsenui';
 import {imageWidth,imageHeight} from '../utils/imageDimensions';
 import SinglePost from '../screens/SinglePost';
 import TagCloudArticleCard from '../templates/TagCloudArticleCard';
-import {generateNavigationKey} from '../utils';
 import LazyLoad from 'react-lazy-load';
 import {v4} from 'node-uuid';
 import {assetsBase} from '../constants';
@@ -85,13 +84,12 @@ articleBookmark : {
 
 };
 
+
 const ArticleCard = ({post,toggleLike,toggleBookmark,navigator}) => {
 
-	const navigationKey = generateNavigationKey(post.id);
-
   const articleClick = () => {
-      const props = {postId : post.id};
-      navigator.pushPage({component: SinglePost,props}); 
+    const props = {postId : action.postId};
+    navigator.pushPage({component : SinglePost,props});
   };
 
 
