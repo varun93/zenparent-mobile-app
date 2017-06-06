@@ -10,7 +10,7 @@ USER_STATUS_REQUEST,USER_STATUS_RECIEVED,ERROR_FETCHING_USER_STATUS,
 APP_INIT_REQUEST,APP_INIT_REQUEST_SUCCESS,APP_INIT_REQUEST_FAILURE,
 UPDATE_USER_INFO_REQUEST,UPDATE_USER_INFO_SUCCESS,UPDATE_USER_INFO_FAILURE,
 UPLOAD_USER_PROFILE_PIC_REQUEST,UPLOAD_USER_PROFILE_PIC_SUCCESS,UPLOAD_USER_PROFILE_PIC_FAILURE,
-LOGOUT_USER} from '../constants';
+LOGOUT_USER,PROFILE_UPDATE} from '../constants';
 
 
 
@@ -377,6 +377,7 @@ export function updateUserProfile(date,stageOfParenting,displayName,languagePref
 
           UserApi.updateUserProfile(date,stageOfParenting,displayName,languagePreference).then(function(response){
               let user = response.data.user;
+              console.log(user);
               dispatch(updateUserProfileSuccess(user,navigator));  
             
             }).catch((err) => {

@@ -22,11 +22,11 @@ const analyticsMiddleware = store => next => action => {
 
   			// user related
   			case LOGIN_USER_SUCCESS:
-  				UserAnalytics(USER_LOGIN,user); 
+  				UserAnalytics(USER_LOGIN,action.user); 
 				break;
 
   			case SIGNUP_USER_SUCCESS:
-  				UserAnalytics(USER_SIGNUP,user); 
+  				UserAnalytics(USER_SIGNUP,action.user); 
 				break;
 
   			case UPDATE_USER_INTERESTS_SUCCESS :
@@ -34,7 +34,7 @@ const analyticsMiddleware = store => next => action => {
 			    break;
 
   			case UPDATE_USER_INFO_SUCCESS : 
-  				UserAnalytics(USER_PROFILE_UPDATED,user); 
+  				UserAnalytics(USER_PROFILE_UPDATED,action.user); 
 				break;
 
   			case LOGOUT_USER :
@@ -44,28 +44,28 @@ const analyticsMiddleware = store => next => action => {
 			case TOKEN_SIGNIN_USER_SUCCESS:
 	  			break;
 
-	  		case SCREEN_VIEWED : 
-				BlogAnalytics(SCREEN_VIEWED,postId,state); 
+	  		case RECEIVED_SINGLE_POST : 
+				BlogAnalytics(SCREEN_VIEWED,action.postId,action.post.title); 
 				break;
 
-	  		case POST_LIKED :
-	  			BlogAnalytics(POST_LIKED,postId,state); 
+	  		case POST_LIKE_SUCCESS :
+	  			BlogAnalytics(POST_LIKED,action.postId,store.getState()); 
 				break;
 
-	  		case POST_BOOKMARKED : 
-	  			BlogAnalytics(POST_BOOKMARKED,postId,state);
+	  		case POST_BOOKMARKED_SUCCESS : 
+	  			BlogAnalytics(POST_BOOKMARKED,action.postId,store.getState());
 				break;
 
-	  		case MESSAGE_SENT : 
-	  			ChatroomAnalytics(MESSAGE_SENT,chatroomId,state); 
+	  		case SEND_MESSAGE_SUCCESS : 
+	  			ChatroomAnalytics(MESSAGE_SENT,action.chatroomId,store.getState()); 
 				break;
 
-	  		case JOINED_CHATROOM : 
-	  			ChatroomAnalytics(JOINED_CHATROOM,chatroomId,state); 
+	  		case JOIN_CHATROOM : 
+	  			ChatroomAnalytics(JOINED_CHATROOM,action.chatroomId,store.getState()); 
 				break;
 
-	  		case LEFT_CHATROOM :
-				ChatroomAnalytics(LEFT_CHATROOM,chatroomId,state); 
+	  		case LEAVE_CHATROOM :
+				ChatroomAnalytics(LEFT_CHATROOM,action.chatroomId,store.getState()); 
 				break;
   		}
   	}
@@ -80,6 +80,5 @@ const analyticsMiddleware = store => next => action => {
   //   catch (e) {
   //     console.log(e); // pass exception object to error handler
   //   }
-
 
 export default analyticsMiddleware;

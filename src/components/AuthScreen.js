@@ -91,6 +91,7 @@ export default class AuthScreen extends Component{
          
           },
           function (msg) {
+          	// put another analytics code here.
           	alert("Someting went wrong");
           }
       );
@@ -123,6 +124,8 @@ export default class AuthScreen extends Component{
             
 
         }, function onError (error) {
+
+          //put an analytics code here 
           console.error("Failed: ", error);
         }
     );

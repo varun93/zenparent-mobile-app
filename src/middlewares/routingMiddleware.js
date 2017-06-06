@@ -1,3 +1,4 @@
+import {v4} from 'node-uuid';
 import getNextRoute from '../utils/getNextRoute';
 import MainScreen from '../screens/MainScreen';
 import AuthScreen from '../screens/AuthScreen';
@@ -24,7 +25,7 @@ const routingMiddleware = store => next => action => {
   			const user = action.user;
   			const route = getNextRoute(user);
   			component = route.component;
-  			break; 
+        break; 
     	case USER_STATUS_RECIEVED :
   			const userStatus = action.userStatus;
   			component = (userStatus == 'new-user') ? SignupScreen : LoginScreen;
@@ -37,7 +38,7 @@ const routingMiddleware = store => next => action => {
 	  		break;
 
   	}
-
+    props['key'] = v4();
   	const navigator = action.navigator;
     navigator && component && navigator.pushPage({component,props});
   

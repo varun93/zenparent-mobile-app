@@ -88,7 +88,7 @@ articleBookmark : {
 const ArticleCard = ({post,toggleLike,toggleBookmark,navigator}) => {
 
   const articleClick = () => {
-    const props = {postId : action.postId};
+    const props = {postId : post.id};
     navigator.pushPage({component : SinglePost,props});
   };
 

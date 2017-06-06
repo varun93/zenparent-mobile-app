@@ -20,7 +20,7 @@ export default class App extends Component {
 
   componentWillMount(){
      // check the status
-     // this.props.appInit(APP_VERSION);
+     this.props.appInit(APP_VERSION);
   }
 
   onDeviceReady(){

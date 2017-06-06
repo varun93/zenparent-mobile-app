@@ -215,7 +215,7 @@ export function toggleBookmark(postId){
 	};
 };
 
-export function bookmarkPostSuccess(postId,state){
+export function bookmarkPostSuccess(postId){
 	
 	return {
 		type : POST_BOOKMARK_SUCCESS,
@@ -263,7 +263,7 @@ export function toggleLikeRequest(id){
 		}
 
 		request.then(function(response){
-			dispatch(likePostSuccess(id,getState()));
+			dispatch(likePostSuccess(id));
   		}).catch((err) => {
       		// dispatch(errorReceivingPost());
       	});
@@ -291,7 +291,7 @@ export function toggleBookmarkRequest(id){
 		dispatch(updateBookmarkedList(id,operation));
 
 		request.then((response) => {
-			dispatch(bookmarkPostSuccess(id,getState()));
+			dispatch(bookmarkPostSuccess(id));
 		}).catch((err) =>{
 			//handle the error appropriately
 		});
@@ -303,7 +303,9 @@ export function toggleBookmarkRequest(id){
 export function fetchSinglePost(id,fields){
 
 	return (dispatch,getState) => {
-	
+			
+		dispatch(requestSinglePost(id));
+
 		BlogApi.fetchSinglePost(id,fields).then(function(response){
   				const post = response.data;
   				dispatch(receivedSinglePost(id,post,getState()));

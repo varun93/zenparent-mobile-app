@@ -31,19 +31,19 @@ class SlotPostsContainer extends Component{
 			return;
 		}
 
-		// if(this.props.user && this.props.user.authenticated){
-		// 	const nextUserInfo = nextProps.user.userInfo;
-		// 	const currentUserInfo = this.props.user.userInfo;
-		// 	const userInfoChanged = hasUserInfoChanged(currentUserInfo,nextUserInfo); 
-		// 	if(userInfoChanged) this.requestSlotPosts();	
+		if(this.props.user && this.props.user.authenticated){
+			const nextUserInfo = nextProps.user.userInfo;
+			const currentUserInfo = this.props.user.userInfo;
+			const userInfoChanged = hasUserInfoChanged(currentUserInfo,nextUserInfo); 
+			if(userInfoChanged) this.requestSlotPosts();	
 			
-		// }
+		}
 
 	
-  //   	if((nextProps.slotPosts.error || isFieldEmpty(nextProps.slotPosts.posts) || nextProps.slotPosts.length == 0) && this.state.retry < 3){
-		// 	this.requestSlotPosts();
-		// 	this.setState({retry : this.state.retry + 1});
-		// }
+    	if((nextProps.slotPosts.error || isFieldEmpty(nextProps.slotPosts.posts) || nextProps.slotPosts.length == 0) && this.state.retry < 3){
+			this.requestSlotPosts();
+			this.setState({retry : this.state.retry + 1});
+		}
 	
 	}
 
