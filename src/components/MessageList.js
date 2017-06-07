@@ -5,6 +5,7 @@ import Pusher from 'pusher-js';
 import {platform} from 'onsenui';
 import {PUSHER_APP_KEY} from '../constants';
 import Waypoint from 'react-waypoint';
+import {v4} from 'node-uuid';
 import ChatMessageItem from '../templates/ChatMessageItem';
 require('../styles/message-list.css');
 
@@ -46,7 +47,7 @@ export default class MessageList extends Component {
     const messageDelta = nextProps.chatroom.messages.list.length - this.props.chatroom.messages.list.length; 
     this.historyChanged = messageDelta > 1 ? true : false;
 
-    if (this.historyChanged) {
+    if(this.historyChanged) {
       const { messageList } = this.refs;
       const scrollPos = messageList.scrollTop;
       const scrollBottom = (messageList.scrollHeight - messageList.clientHeight);
@@ -111,7 +112,7 @@ export default class MessageList extends Component {
         {messageSending ? <ProgressCircular indeterminate style={{position : "fixed",top : "40%",left :"45%"}} /> : ''}
         {chatroom.messages.loading ? <ProgressCircular indeterminate style={{position : "fixed",top : "50px",left :"45%"}} /> : ''}
         <ul onScroll={onScroll.bind(this)} className="collection" ref="messageList">
-         {chatroom.messages.list.map(function(message) {  return (<ChatMessageItem key={message.id} item={message} currentUser={currentUser} navigator={navigator} />) },this)}
+         {chatroom.messages.list.map(function(message) {  return (<ChatMessageItem key={v4()} item={message} currentUser={currentUser} navigator={navigator} />) },this)}
         </ul>
       </div>
     );

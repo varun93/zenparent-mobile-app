@@ -33,7 +33,7 @@ export default class Homescreen extends Component{
 
 
 	navigateToPost(postId){
-		this.props.navigator.pushPage({component : SinglePost,props:{fields : 'all',postId}});
+		this.props.navigator.pushPage({component : SinglePost,props:{key : v4(),fields : 'all',postId}});
 	}
 
 	// push notification payload handling
@@ -85,7 +85,7 @@ export default class Homescreen extends Component{
 		const {navigator,active,user} = this.props;
 
 		return (
-			<Page key='homescreen'>
+			<Page key={v4()}>
 				 <MenuBar user={user} />
 				 <SlotPostsContainer position='88' user={user} navigator={navigator} />
 				 <InterestsCarouselContainer position='295' user={user} navigator={navigator} />

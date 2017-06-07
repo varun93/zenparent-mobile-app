@@ -1,7 +1,6 @@
 import React,{Component} from 'react';
 import {Navigator} from 'react-onsenui';
 import {generateNavigationKey} from '../utils';
-import MainScreen from '../screens/MainScreen';
 import AuthScreen from '../screens/AuthScreen';
 import {loadState} from '../utils/localStorage';
 import getNextRoute from '../utils/getNextRoute';

@@ -38,7 +38,7 @@ const routingMiddleware = store => next => action => {
 	  		break;
 
   	}
-    props['key'] = v4();
+
   	const navigator = action.navigator;
     navigator && component && navigator.pushPage({component,props});
   

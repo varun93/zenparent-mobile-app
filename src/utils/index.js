@@ -191,3 +191,21 @@ export const hasUserInfoChanged = (currentUserInfo,nextUserInfo) => {
 
 };
 
+ 
+export const isItemEmpty = (content) => {
+  return (content == null || content == undefined || (typeof content === 'object' && Object.keys(content).length === 0) || (typeof content === 'string' && content.trim().length === 0));
+};
+
+// remove url parameters
+export const generateCacheKey = (s) => {
+
+  let hash = 0;
+  if (s.length == 0) return hash;
+
+  for (let i = 0; i < s.length; i++) {
+    let char = s.charCodeAt(i);
+    hash = ((hash<<5)-hash)+char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return hash;
+};

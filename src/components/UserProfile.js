@@ -4,7 +4,6 @@ import LanguageSelect from '../templates/LanguageSelect';
 import {platform} from 'onsenui';
 import BookmarkedPostsContainer from '../containers/BookmarkedPostsContainer';
 import AuthScreen from '../screens/AuthScreen';
-import {removeCache} from '../utils/cachedFetch';
 import {PROFILE_UPDATE} from '../constants';
 import {assetsBase} from '../constants';
 import {hasUserInfoChanged,convertDateToWords,isFieldEmpty,ucFirstLetter,generateNavigationKey} from '../utils';
@@ -147,8 +146,6 @@ export default class UserProfile extends Component{
       this.setState({errorMessage : errorMessage,dialogShown : true})
     }
     else{
-        //remove any user profile related info
-        removeCache(PROFILE_UPDATE);
         // finally make the request
         this.props.updateUserProfile(date,stageOfParenting,displayName,languagePreference);    
     }

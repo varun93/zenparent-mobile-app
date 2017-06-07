@@ -1,17 +1,12 @@
 import ChatroomApi from '../api/ChatroomApi';
-import {removeCache} from '../utils/cachedFetch';
 import {NEW_MESSAGE, SEND_MESSAGE_SUCCESS, SEND_MESSAGE_REQUEST,RECEIVED_CHATROOM_MESSAGES,
 REQUEST_CHATROOM_MESSAGES,ERROR_FETCHING_CHATROOM_MESSAGES,
 REQUEST_CHATROOMS,RECEIVED_CHATROOMS,ERROR_FETCHING_CHATROOMS,JOIN_CHATROOM,
-LEAVE_CHATROOM,SET_ACTIVE_CHATROOM,RESET_UNREAD_MESSAGES,
-GROUP_JOIN_UNJOIN,CHATROOM_OPENED} from 
+LEAVE_CHATROOM,SET_ACTIVE_CHATROOM,RESET_UNREAD_MESSAGES} from 
 '../constants';	
 
 
 export function resetUnreadMessages(chatroomId){
-
-	// remove cache
-	removeCache(CHATROOM_OPENED);
 
 	//clear in the local storage too
 	return {
@@ -150,9 +145,6 @@ export function joinChatroom(chatroomId){
 
 	return (dispatch,getState) => {
 			
-		//clear the cache
-		removeCache(GROUP_JOIN_UNJOIN);
-		
 		ChatroomApi.joinChatroom(chatroomId).then(function(response){
   			// console.log(response);
   			let chatroomId = response.data.group_id;
@@ -171,7 +163,6 @@ export function leaveChatroom(chatroomId){
 	return (dispatch,getState) => {
 
 		//clear the cache
-		removeCache(GROUP_JOIN_UNJOIN);
 		ChatroomApi.leaveChatroom(chatroomId).then(function(response){
   		
   			let chatroomId = response.data.group_id;

@@ -1,87 +1,6 @@
 import fetch from 'fetch-retry';
-import {GROUP_JOIN_UNJOIN,PROFILE_UPDATE,LIKED_BOOKMARKED,UPDATE_USER_INTERESTS,
-SLOT_POSTS_ENDPOINT,EDITORIAL_POSTS_ENDPOINT,POPULAR_POSTS_ENDPOINT,
-BOOKMARKED_POSTS_ENDPOINT,FETCH_INTERESTS_ENDPOINT,LIST_CHAT_GROUPS_ENDPOINT,USER_LOGOUT,CHATROOM_OPENED} from '../constants';
+import {generateCacheKey,isItemEmpty} from '../utils';
 
-// remove url parameters
-const generateCacheKey = (s) => {
-
-  let hash = 0;
-  if (s.length == 0) return hash;
-
-  for (let i = 0; i < s.length; i++) {
-    let char = s.charCodeAt(i);
-    hash = ((hash<<5)-hash)+char;
-    hash = hash & hash; // Convert to 32bit integer
-  }
-  return hash;
-};
-
-/**
-  => Update user interests => Get Interests Endpoint
-  => Update user profile   =>  Slot posts
-  => This has to take into consideration 
-  => On Likes and Bookmarks => remove editorials,popular posts,slot posts,bookmarked posts
-  =>   
-**/
-
-export const removeCache = (action) => {
-
-    let urls = [];
-
-    switch(action){
-  
-      case GROUP_JOIN_UNJOIN : 
-    
-      case CHATROOM_OPENED :
-        urls.push(LIST_CHAT_GROUPS_ENDPOINT);
-        break;
-      
-      case UPDATE_USER_INTERESTS : 
-        urls.push(FETCH_INTERESTS_ENDPOINT);
-        break
-
-      case PROFILE_UPDATE : 
-        urls.push(LIST_CHAT_GROUPS_ENDPOINT);
-        urls.push(FETCH_INTERESTS_ENDPOINT);
-        urls.push(SLOT_POSTS_ENDPOINT);
-        urls.push(POPULAR_POSTS_ENDPOINT);
-        break;
-  
-      case LIKED_BOOKMARKED : 
-        urls.push(BOOKMARKED_POSTS_ENDPOINT);
-        urls.push(POPULAR_POSTS_ENDPOINT);
-        urls.push(EDITORIAL_POSTS_ENDPOINT);
-        urls.push(SLOT_POSTS_ENDPOINT);
-        break;
-    
-      case USER_LOGOUT : 
-        urls.push(BOOKMARKED_POSTS_ENDPOINT);
-        urls.push(FETCH_INTERESTS_ENDPOINT);
-        urls.push(SLOT_POSTS_ENDPOINT);
-        urls.push(LIST_CHAT_GROUPS_ENDPOINT);
-        urls.push(POPULAR_POSTS_ENDPOINT);
-        break;
-
-    }
-
-  urls.forEach((url) => {
-      let cacheKey = generateCacheKey(url);
-      if(cacheKey in localStorage){
-        
-        try{
-           localStorage.removeItem(cacheKey);
-           localStorage.removeItem(cacheKey + ':ts');
-        }
-        catch(e){
-          //handle the error
-        }
-         
-      }
-     
-   });
-   
-};
 
 //include headers
 const cachedFetch = (url, options) => {
@@ -105,8 +24,10 @@ const cachedFetch = (url, options) => {
     cached = null;
   }
   
+ 
+  
   let whenCached = localStorage.getItem(cacheKey + ':ts')
-  if (cached !== null && whenCached !== null) {
+  if (!isItemEmpty(cached) && whenCached !== null) {
     // it was in sessionStorage! Yay!
     // Even though 'whenCached' is a string, this operation
     // works because the minus sign converts the
@@ -129,10 +50,11 @@ const cachedFetch = (url, options) => {
      
         response.clone().json().then(content => {
           const status = content.success;
-          content = JSON.stringify(content);
-          
-          if(status == true && content){
-           
+       
+          if(status == true && !isItemEmpty(content)){
+            
+            content = JSON.stringify(content);
+            
             try{
               localStorage.setItem(cacheKey, content);
               localStorage.setItem(cacheKey+':ts', Date.now());

@@ -18,10 +18,14 @@ body,body p,body div{
 	display: none;
 }
 
-.chatroom-listing .card:not(:last-child){
-	margin-bottom: 5px;
+.chatroom-listing .card{
+	padding-right: 0px !important;
+	border-radius: 0px !important;
 }
 
+.chatroom-listing .card:not(:last-child){
+	margin : 0px 0px 5px 0px !important;
+}
 
 ons-carousel{
 	overflow-y: hidden !important;

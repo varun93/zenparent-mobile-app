@@ -1,5 +1,4 @@
 import UserApi from '../api/UserApi';
-import {removeCache} from '../utils/cachedFetch';
 
 //action creator constants
 import {FORGOT_PASSWORD_REQUEST,FORGOT_PASSWORD_SUCCESS,FORGOT_PASSWORD_FAILURE,
@@ -10,7 +9,7 @@ USER_STATUS_REQUEST,USER_STATUS_RECIEVED,ERROR_FETCHING_USER_STATUS,
 APP_INIT_REQUEST,APP_INIT_REQUEST_SUCCESS,APP_INIT_REQUEST_FAILURE,
 UPDATE_USER_INFO_REQUEST,UPDATE_USER_INFO_SUCCESS,UPDATE_USER_INFO_FAILURE,
 UPLOAD_USER_PROFILE_PIC_REQUEST,UPLOAD_USER_PROFILE_PIC_SUCCESS,UPLOAD_USER_PROFILE_PIC_FAILURE,
-LOGOUT_USER,PROFILE_UPDATE} from '../constants';
+LOGOUT_USER,PROFILE_UPDATE,USER_LOGOUT} from '../constants';
 
 
 
@@ -82,8 +81,6 @@ export function signupUserFailure(message) {
   catch(e){
     //handle the exception
   }
- 
-
   return {
     type: SIGNUP_USER_FAILURE,
     message
@@ -151,8 +148,6 @@ export function updateUserProfileSuccess(user,navigator){
 };
 
 export function updateUserProfileRequest(){
-  
-  removeCache(PROFILE_UPDATE);
   
   return {
     type : UPDATE_USER_INFO_REQUEST
@@ -269,7 +264,6 @@ export function forgotPasswordFailure(){
 export function logout() {
   
     // cache removed 
-    removeCache(USER_LOGOUT);
 
     delete window.localStorage.state;
     delete window.localStorage.jwt;
@@ -370,16 +364,14 @@ export function uploadUserProfilePic(imageUri){
 
 
 export function updateUserProfile(date,stageOfParenting,displayName,languagePreference,navigator){
-    
-      return (dispatch,state) => {
+      
+    return (dispatch,state) => {
           
           dispatch(updateUserProfileRequest());
 
           UserApi.updateUserProfile(date,stageOfParenting,displayName,languagePreference).then(function(response){
               let user = response.data.user;
-              console.log(user);
               dispatch(updateUserProfileSuccess(user,navigator));  
-            
             }).catch((err) => {
                 dispatch(updateUserProfileFailure()); 
               });

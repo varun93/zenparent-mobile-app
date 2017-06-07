@@ -6,12 +6,14 @@ import {POST_LIKED,POST_BOOKMARKED,SCREEN_VIEWED,POST_SHARED,LANGUAGE_TOGGLED,
 
 
 const recordClevertapEvent = (eventName,eventData) => {
-	try{
-		CleverTap.recordEventWithNameAndProps(eventName, eventData);
-	}
-	catch(e){
-	// handle if needed 
-	}
+	// try{
+	// 	CleverTap.recordEventWithNameAndProps(eventName, eventData);
+	// }
+	// catch(e){
+	// // handle if needed 
+	// }
+
+	console.log(eventName,eventData);
 };
 
 

@@ -3,7 +3,7 @@ import {UserAnalytics,BlogAnalytics,ChatroomAnalytics} from '../utils/Analytics'
 import {LOGIN_USER_SUCCESS,SIGNUP_USER_SUCCESS,TOKEN_SIGNIN_USER_SUCCESS,UPDATE_USER_INTERESTS_SUCCESS,
 USER_STATUS_RECIEVED,UPDATE_USER_INFO_SUCCESS,LOGOUT_USER} from '../constants';
 //blog action creator contants
-import {RECEIVED_SINGLE_POST,POST_LIKE_SUCCESS,POST_BOOKMARKED_SUCCESS} from '../constants';
+import {RECEIVED_SINGLE_POST,POST_LIKE_SUCCESS,POST_BOOKMARK_SUCCESS} from '../constants';
 //chat action creator constants
 import {SEND_MESSAGE_SUCCESS,JOIN_CHATROOM,LEAVE_CHATROOM} from '../constants';
 // user analytics contants
@@ -45,14 +45,14 @@ const analyticsMiddleware = store => next => action => {
 	  			break;
 
 	  		case RECEIVED_SINGLE_POST : 
-				BlogAnalytics(SCREEN_VIEWED,action.postId,action.post.title); 
+				BlogAnalytics(SCREEN_VIEWED,action.postId,store.getState()); 
 				break;
 
 	  		case POST_LIKE_SUCCESS :
 	  			BlogAnalytics(POST_LIKED,action.postId,store.getState()); 
 				break;
 
-	  		case POST_BOOKMARKED_SUCCESS : 
+	  		case POST_BOOKMARK_SUCCESS : 
 	  			BlogAnalytics(POST_BOOKMARKED,action.postId,store.getState());
 				break;
 
@@ -72,13 +72,5 @@ const analyticsMiddleware = store => next => action => {
 
   	next(action);
 };
-
-
-// try {
-  //     UserAnalytics(USER_PROFILE_SYNC,user); // generates an exception
-  //   }
-  //   catch (e) {
-  //     console.log(e); // pass exception object to error handler
-  //   }
 
 export default analyticsMiddleware;

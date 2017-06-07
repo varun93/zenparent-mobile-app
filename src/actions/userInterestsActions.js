@@ -1,7 +1,5 @@
 //fetch interests
 import UserInterestsApi from '../api/UserInterestsApi';
-import {removeCache} from '../utils/cachedFetch';
-import {UserAnalytics} from '../utils/Analytics';
 import {UPDATE_USER_INTERESTS,USER_INTERESTS_UPDATED} from '../constants';
 import  {REQUEST_INTERESTS,RECEIVED_INTERESTS,ERROR_FETCHING_INTERESTS,TOGGLE_INTEREST,
 UPDATE_USER_INTERESTS_REQUEST,UPDATE_USER_INTERESTS_FAILURE,UPDATE_USER_INTERESTS_SUCCESS} from '../constants';
@@ -46,10 +44,8 @@ export function updateUserInterestsSuccess(interests,navigator){
 };
 
 export function updateUserInterestsRequest(){
-  
-  removeCache(UPDATE_USER_INTERESTS);
-
-  return {
+ 
+ return {
     type : UPDATE_USER_INTERESTS_REQUEST
   }
 };
