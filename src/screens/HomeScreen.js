@@ -85,7 +85,7 @@ export default class Homescreen extends Component{
 		const {navigator,active,user} = this.props;
 
 		return (
-			<Page key={v4()}>
+			<Page key='home-screen'>
 				 <MenuBar user={user} />
 				 <SlotPostsContainer position='88' user={user} navigator={navigator} />
 				 <InterestsCarouselContainer position='295' user={user} navigator={navigator} />
