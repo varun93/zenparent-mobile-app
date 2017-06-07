@@ -21,7 +21,6 @@ const toggleInterests = (term,state) => {
 let userInterestsReducer = (userInterests=INITIAL_STATE,action) => {
 	
 	switch(action.type) {
-
 		case REQUEST_INTERESTS : 
 			return Object.assign({},userInterests,{interests : Object.assign({},userInterests.interests,{loading : true, error : false})});
 		case RECEIVED_INTERESTS : 
@@ -30,7 +29,6 @@ let userInterestsReducer = (userInterests=INITIAL_STATE,action) => {
 			return Object.assign({},userInterests, {interests : Object.assign({},userInterests.interests,{terms : [],loading : false, error : true})});
 		case TOGGLE_INTEREST : 
 			return toggleInterests(action.term,userInterests);
-		
 		default : return userInterests;
 	}
 };

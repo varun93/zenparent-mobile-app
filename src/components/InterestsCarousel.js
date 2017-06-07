@@ -75,7 +75,7 @@ export default class InterestsCarousel extends Component{
 	renderInitialItem(){
 
 		return(
-				<CarouselItem style={{backgroundColor : "#8675A1",color : "white"}} key={v4()} onClick={() => this.props.navigator.pushPage({component : UserInterestsSelector}) }>
+				<CarouselItem style={{backgroundColor : "#8675A1",color : "white"}} key={v4()} onClick={() => this.props.navigator.pushPage({component : UserInterestsSelector, props : {key : v4()}}) }>
 					<ons-icon size='32px' style={styles.addMoreIcon} icon="ion-ios-plus-outline">
 					</ons-icon>
 				</CarouselItem>	

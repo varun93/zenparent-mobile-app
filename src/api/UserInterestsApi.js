@@ -6,7 +6,7 @@ import {FETCH_INTERESTS_ENDPOINT} from '../constants'
 class UserInterestsApi {
   
   static requestHeaders() {
-    return {'AUTHORIZATION': `Bearer ${localStorage.jwt}`}
+    return {'AUTHORIZATION': `Bearer ${window.localStorage.jwt}`}
   }
 
   static fetchInterests() {

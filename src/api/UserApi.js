@@ -7,7 +7,7 @@ import {SIGNUP_ENDPOINT,LOGIN_ENDPOINT,TOKEN_SIGNIN_ENDPOINT,
 class UserApi {
   
   static requestHeaders() {
-    return {'AUTHORIZATION': `Bearer ${localStorage.jwt}`}
+    return {'AUTHORIZATION': `Bearer ${window.localStorage.jwt}`}
   }
 
   static appInit(app_version){

@@ -18,7 +18,7 @@ const cachedFetch = (url, options) => {
   let cached = null;
 
   try{
-    cached = localStorage.getItem(cacheKey);  
+    cached = window.localStorage.getItem(cacheKey);  
   }
   catch(e){
     cached = null;
@@ -26,7 +26,7 @@ const cachedFetch = (url, options) => {
   
  
   
-  let whenCached = localStorage.getItem(cacheKey + ':ts')
+  let whenCached = window.localStorage.getItem(cacheKey + ':ts')
   if (!isItemEmpty(cached) && whenCached !== null) {
     // it was in sessionStorage! Yay!
     // Even though 'whenCached' is a string, this operation
@@ -56,8 +56,8 @@ const cachedFetch = (url, options) => {
             content = JSON.stringify(content);
             
             try{
-              localStorage.setItem(cacheKey, content);
-              localStorage.setItem(cacheKey+':ts', Date.now());
+              window.localStorage.setItem(cacheKey, content);
+              window.localStorage.setItem(cacheKey+':ts', Date.now());
             }
             catch(e){
               // console.log(e);

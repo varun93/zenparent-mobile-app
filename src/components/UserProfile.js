@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import {v4} from 'node-uuid';
 import {Page,Toolbar,BackButton,Input,Icon,Dialog,Button} from 'react-onsenui';
 import LanguageSelect from '../templates/LanguageSelect';
 import {platform} from 'onsenui';
@@ -142,7 +143,7 @@ export default class UserProfile extends Component{
 
   logout(){
     this.props.logout(); 
-    this.props.navigator.resetPage({component : AuthScreen});
+    this.props.navigator.resetPage({component : AuthScreen,props : {key : v4()}});
   }
 
   _onStageOfParentingChanged(e){

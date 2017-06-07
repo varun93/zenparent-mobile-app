@@ -7,7 +7,7 @@ JOIN_GROUP_ENDPOINT,LEAVE_GROUP_ENDPOINT,RECORD_CHATROOM_ACTIVITY} from '../cons
 class ChatroomApi {
 
   static requestHeaders() {
-    return {'AUTHORIZATION': `Bearer ${localStorage.jwt}`}
+    return {'AUTHORIZATION': `Bearer ${window.localStorage.jwt}`}
   }
 
   static listMessages(group_id,message_id,direction) {

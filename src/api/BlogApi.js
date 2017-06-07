@@ -11,7 +11,7 @@ EDITORIAL_POSTS_ENDPOINT,RECORD_USER_READING_HISTORY} from '../constants'
 class BlogApi {
 
   static requestHeaders() {
-    return {'AUTHORIZATION': `Bearer ${localStorage.jwt}`}
+    return {'AUTHORIZATION': `Bearer ${window.localStorage.jwt}`}
   }
 
 

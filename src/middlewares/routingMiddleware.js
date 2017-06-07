@@ -15,6 +15,7 @@ const routingMiddleware = store => next => action => {
   if(action.hasOwnProperty('type')){
 
   	let component = null,props={};
+    props['key'] = v4();
 
    	switch(action.type){
 
