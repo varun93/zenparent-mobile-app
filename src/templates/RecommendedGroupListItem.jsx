@@ -1,4 +1,5 @@
 import React from 'react';
+import {v4} from 'node-uuid';
 import {Row,Col,Button} from 'react-onsenui';
 import Chatroom from '../screens/Chatroom';
 
@@ -6,7 +7,7 @@ import Chatroom from '../screens/Chatroom';
 const RecommendedGroupListItem = ({item,navigator,joinChatroom}) => {
 
     return (
-        <div className="card" onClick={(event) => { joinChatroom(item.post_id); navigator.pushPage({component: Chatroom,props : {chatroomId : item.post_id}}); }}>
+        <div className="card" onClick={(event) => { joinChatroom(item.post_id); navigator.pushPage({component: Chatroom,props : {key : v4(),chatroomId : item.post_id}}); }} >
           <Row>
             
             <Col verticalAlign="center" width="10%">

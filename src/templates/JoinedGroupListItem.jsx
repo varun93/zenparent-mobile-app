@@ -1,4 +1,5 @@
 import React from 'react';
+import {v4} from 'node-uuid';
 import {ListItem,Row,Col,Button} from 'react-onsenui';
 import Chatroom from '../screens/Chatroom';
 
@@ -7,12 +8,12 @@ const JoinedGroupListItem = ({item,navigator,resetUnreadMessages}) => {
   const openChatroom = () => {
     //reduce counter
     resetUnreadMessages(item.post_id);
-    navigator.pushPage({component: Chatroom, props : {chatroomId : item.post_id}});
+    navigator.pushPage({component: Chatroom, props : {key:v4(),chatroomId : item.post_id}});
   };
 
   return (
 
-         <div className="card"  onClick={(e) => openChatroom()}>
+         <div className="card" onClick={(e) => openChatroom()}>
           <Row>
             
             <Col verticalAlign="center" width="10%">

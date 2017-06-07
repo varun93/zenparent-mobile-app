@@ -1,4 +1,5 @@
 import React from 'react';
+import {v4} from 'node-uuid';
 import {ListItem,Row,Col,Button} from 'react-onsenui';
 import Chatroom from '../screens/Chatroom';
 import {assetsBase} from '../constants';
@@ -9,7 +10,7 @@ const ExpertChatListItem = ({item,navigator,resetUnreadMessages}) => {
    const openChatroom = () => {
     //reduce counter
     resetUnreadMessages(item.post_id);
-    navigator.pushPage({component: Chatroom, props : {chatroomId : item.post_id}});
+    navigator.pushPage({component: Chatroom, props : {key : v4(),chatroomId : item.post_id}});
   };
 
   return (
