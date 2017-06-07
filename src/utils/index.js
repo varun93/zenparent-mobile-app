@@ -53,15 +53,6 @@ export const ucFirstLetter = (interest) => {
 };
 
 
-// ----- generate a random key for navigator --------
-export const generateNavigationKey = (id) => {
-
-	let key = Math.random();
-	key = Math.floor(key*100000);
-    key = key.toString();
-    return key + id;
-};
-
 // ----- validations -----------
 export const isFieldEmpty = (value) => {
       return (value === null || value === undefined || value.length === 0 || !value);
@@ -83,13 +74,31 @@ export const validateDate = (date) => {
 	let isValid = true;
 	let diffInDays = Math.abs(currentDate - date)/(1000*3600*24);
 
-
 	//this is for due date
 	if(date > currentDate){
 		isValid = diffInDays < 280 ?  true : false;
 	}
 	
 	return isValid;
+};
+
+
+export const validateCycleLength = (cycleLength) =>  {
+    return !(cycleLength == "" || cycleLength < 20 || cycleLength > 45);
+};
+ 
+export const validateLastMenstrualPeriod = (date) => {
+    var date = new Date(date);
+    var current_time = Date.now();
+    if (date.getTime() < current_time){
+          var timeDiff = current_time - date.getTime();
+          var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+          if(diffDays <= 45){
+              return true;
+           }
+	}
+    
+    return false;
 };
 
 //get homepage title

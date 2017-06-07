@@ -1,7 +1,6 @@
 import React from 'react';
 import {List} from 'react-onsenui';
 import ArchiveScreen from '../screens/ArchiveScreen';
-import {generateNavigationKey} from '../utils';
 
 
 const styles = {

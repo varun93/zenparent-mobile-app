@@ -19,12 +19,6 @@ const toggleInterests = (term,state) => {
 };
 
 
-const updateUserInterests = (interests,state) => {
-    let userInfo = Object.assign({},state.userInfo,{interests : interests});
-    return Object.assign({},state,{ userInfo :  userInfo},{status : 'interests-updated',loading : false});
-};
-
-
 let userInterestsReducer = (userInterests=INITIAL_STATE,action) => {
 	
 	switch(action.type) {
@@ -38,13 +32,6 @@ let userInterestsReducer = (userInterests=INITIAL_STATE,action) => {
 		case TOGGLE_INTEREST : 
 			return toggleInterests(action.term,userInterests);
 
-		//update user interests
-	    case UPDATE_USER_INTERESTS_REQUEST :
-	    	return Object.assign({},userInterests,{loading: true,error:null}); 
-	    case UPDATE_USER_INTERESTS_SUCCESS:
-	    	return updateUserInterests(action.interests,userInterests);
-	    case UPDATE_USER_INTERESTS_FAILURE :
-	    	return Object.assign({},userInterests,{error:action.message,loading: false});
 
 		default : return userInterests;
 	}

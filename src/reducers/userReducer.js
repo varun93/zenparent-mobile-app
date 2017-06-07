@@ -6,6 +6,7 @@ TOKEN_SIGNIN_USER_REQUEST,TOKEN_SIGNIN_USER_SUCCESS,TOKEN_SIGNIN_USER_FAILURE,
 USER_STATUS_REQUEST,USER_STATUS_RECIEVED,ERROR_FETCHING_USER_STATUS,
 APP_INIT_REQUEST,APP_INIT_REQUEST_SUCCESS,APP_INIT_REQUEST_FAILURE,
 UPDATE_USER_INFO_REQUEST,UPDATE_USER_INFO_SUCCESS,UPDATE_USER_INFO_FAILURE,
+UPDATE_USER_INTERESTS_REQUEST,UPDATE_USER_INTERESTS_SUCCESS,UPDATE_USER_INTERESTS_FAILURE,
 UPLOAD_USER_PROFILE_PIC_REQUEST,UPLOAD_USER_PROFILE_PIC_SUCCESS,UPLOAD_USER_PROFILE_PIC_FAILURE,
 LOGOUT_USER} from '../constants';
 
@@ -25,6 +26,10 @@ const updateUserInfoWithToken = (user,token,state) => {
     }
 };
 
+const updateUserInterests = (interests,state) => {
+    let userInfo = Object.assign({},state.userInfo,{interests : interests});
+    return Object.assign({},state,{ userInfo :  userInfo},{status : 'interests-updated',loading : false});
+};
 
 let userReducer = (user = INITIAL_STATE, action) => {
  
@@ -98,9 +103,17 @@ let userReducer = (user = INITIAL_STATE, action) => {
     case UPDATE_USER_INFO_FAILURE :
     return Object.assign({},user,{error:action.message, loading: false});
 
+    //update user interests
+    case UPDATE_USER_INTERESTS_REQUEST :
+        return Object.assign({},user,{loading: true,error:null}); 
+    case UPDATE_USER_INTERESTS_SUCCESS:
+        return updateUserInterests(action.interests,user);
+    case UPDATE_USER_INTERESTS_FAILURE :
+        return Object.assign({},user,{error:action.message,loading: false});
+
     //logout user 
     case LOGOUT_USER:
-    return {forceUpdate : false,authenticated : false,userInfo : null,loading : false,error : false};
+        return {forceUpdate : false,authenticated : false,userInfo : null,loading : false,error : false};
 
     default: return user;
  

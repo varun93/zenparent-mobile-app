@@ -3,7 +3,7 @@ import {Page,Input,ProgressCircular,Icon} from 'react-onsenui';
 import LanguageSelect from  '../templates/LanguageSelect';
 import Toolbar from '../templates/Toolbar';
 import CustomInput from './CustomInput';
-import {isFieldEmpty,generateNavigationKey,validateDate} from '../utils';
+import {isFieldEmpty,validateDate} from '../utils';
 import getNextRoute from '../utils/getNextRoute';
 import {BlogAnalytics} from '../utils/Analytics';
 import {SCREEN_VIEWED} from '../constants';

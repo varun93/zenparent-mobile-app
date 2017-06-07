@@ -121,6 +121,26 @@ class UserApi {
 
   }
 
+  static updateUserInterests(interests) {
+
+    const headers = this.requestHeaders();
+    const request = new Request(UPDATE_USER_INTERESTS_ENDPOINT, {
+      method: 'POST',
+      headers: headers,
+      retries: 5,
+      retryDelay: 500,
+      body: prepareFormData({interests : interests})
+    });
+
+    return fetch(request).then(response => {
+      return response.json();
+    }).catch(error => {
+      return error;
+    });
+
+  }
+
+
   // tested
   static updateUserProfile(date='',stageOfParenting='',displayName='',languagePreference='') {
 

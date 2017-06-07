@@ -1,7 +1,6 @@
 import React from 'react';
 import ArchiveScreen from '../screens/ArchiveScreen';
 import {v4} from 'node-uuid';
-import {generateNavigationKey} from '../utils';
 
 const styles = {
 

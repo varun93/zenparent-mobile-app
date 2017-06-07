@@ -2,7 +2,6 @@ import React,{Component} from 'react';
 import {Page,Dialog,Button,ProgressCircular,BottomToolbar,Icon} from 'react-onsenui';
 import {ucFirstLetter} from '../utils';
 import MainScreen from '../screens/MainScreen';
-import {generateNavigationKey} from '../utils';
 import {platform} from 'onsenui';
 import {v4} from 'node-uuid';
 import {BlogAnalytics} from '../utils/Analytics';
@@ -43,10 +42,6 @@ export default class UserInterestsSelector extends Component {
 
 
 	componentWillReceiveProps(nextProps){
-
-		if(this.props.updateStatus == nextProps.updateStatus){
-			return;
-		}
 
 		if(nextProps.interests.error){
 			this.props.fetchInterests();

@@ -46,8 +46,8 @@ const styles = {
 	 },
 	 addMoreIcon : {
 	 	position : 'absolute',
-	 	bottom   : '30px',
-	 	left : '40px' 
+	 	top   : '25%',
+	 	left : '40%' 
 	 }
 };
 
@@ -75,11 +75,9 @@ export default class InterestsCarousel extends Component{
 	renderInitialItem(){
 
 		return(
-				<CarouselItem style={{backgroundColor : "#8675A1",color : "white"}} key={v4()} onClick={() => this.props.navigator.resetPage({component : UserInterestsSelector, key : v4()}) }>
-					<div style={styles.addMore}>
-						<ons-icon size='32px' style={styles.addMoreIcon} icon="ion-ios-plus-outline">
-						</ons-icon>
-					</div>
+				<CarouselItem style={{backgroundColor : "#8675A1",color : "white"}} key={v4()} onClick={() => this.props.navigator.pushPage({component : UserInterestsSelector}) }>
+					<ons-icon size='32px' style={styles.addMoreIcon} icon="ion-ios-plus-outline">
+					</ons-icon>
 				</CarouselItem>	
 			)
 	}

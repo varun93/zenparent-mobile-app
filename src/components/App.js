@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
 import {Navigator} from 'react-onsenui';
-import {generateNavigationKey} from '../utils';
 import AuthScreen from '../screens/AuthScreen';
 import {loadState} from '../utils/localStorage';
 import getNextRoute from '../utils/getNextRoute';
@@ -63,7 +62,7 @@ export default class App extends Component {
     const key = v4();
     
     return (
-        <Navigator initialRoute={{component,key}} renderPage={this.renderPage.bind(this)} />
+        <Navigator initialRoute={{component,props : {key}}} renderPage={this.renderPage.bind(this)} />
       );
     }
 

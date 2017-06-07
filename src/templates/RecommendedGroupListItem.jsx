@@ -1,6 +1,5 @@
 import React from 'react';
 import {Row,Col,Button} from 'react-onsenui';
-import {generateNavigationKey} from '../utils';
 import Chatroom from '../screens/Chatroom';
 
 

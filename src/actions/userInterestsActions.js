@@ -33,30 +33,6 @@ export function toggleInterest(term){
 };
 
 
-//--------------- User Interests Actions -----------------------------
-export function updateUserInterestsSuccess(interests,navigator){
- 
-  return {
-    type : UPDATE_USER_INTERESTS_SUCCESS,
-    interests,
-    navigator
-  }
-};
-
-export function updateUserInterestsRequest(){
- 
- return {
-    type : UPDATE_USER_INTERESTS_REQUEST
-  }
-};
-
-export function updateUserInterestsFailure(){
-  return {
-    type : UPDATE_USER_INTERESTS_FAILURE
-  }
-};
-
-
 
 // --------------------------- redux thunk -----------------------------------
 export function fetchInterests(){
@@ -79,22 +55,4 @@ export function fetchInterests(){
 		});
 
 	};
-};
-
-
-export function updateUserInterests(interests,navigator) {
-    
-      return (dispatch,state) => {
-          
-          dispatch(updateUserInterestsRequest());
-
-          UserInterestsApi.updateUserInterests(interests).then(function(response){
-              
-              let interests = response.data.interests;
-              dispatch(updateUserInterestsSuccess(interests,navigator));  
-            
-            }).catch((err) => {
-                dispatch(updateUserInterestsFailure()); 
-              });
-      }
 };

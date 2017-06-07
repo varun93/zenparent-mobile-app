@@ -29,7 +29,6 @@ const getNextRoute = (userInfo) => {
 		let props = {};
 		return {component,props};
 	}
-	
 };
 
 export default getNextRoute;

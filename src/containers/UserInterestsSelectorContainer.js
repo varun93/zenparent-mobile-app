@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import UserInterestsSelector from '../components/UserInterestsSelector';
-import {updateUserInterests,toggleInterest,fetchInterests} from '../actions/userInterestsActions';
+import {updateUserInterests} from '../actions/userActions';
+import {fetchInterests,toggleInterest} from '../actions/userInterestsActions';
 import {connect} from 'react-redux';
 
 const mapDispactorToProps = (dispatch,ownProps) => { 
@@ -12,7 +13,6 @@ const mapDispactorToProps = (dispatch,ownProps) => {
 
 const mapStateToProps = (state,ownProps) => {
 	return {
-		updateStatus : state.user.status,
 		loading : state.user.loading,
 		interests : state.userInterests.interests,
 		navigator : ownProps.navigator

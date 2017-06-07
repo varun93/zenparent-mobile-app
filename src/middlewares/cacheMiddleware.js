@@ -21,8 +21,6 @@ const hasInterestsChanged = (store,action) => {
   const state = store.getState();
   const currentUserInterests = state.user.userInfo.interests;
   const nextUserInterests = action.interests;
-  console.log(currentUserInterests);
-  console.log(nextUserInterests);
   return hasUserInterestsChanged(currentUserInterests,nextUserInterests);
 
 };

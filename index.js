@@ -19,8 +19,6 @@ require('styles/common.css');
 
 let store = configureStore(initialState);
 
-// throttle the write to the local storage
-
 store.subscribe(throttle(() =>{
 	saveState(store.getState().user);
 },1000));

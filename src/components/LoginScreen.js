@@ -3,7 +3,7 @@ import {Page,Input,ProgressCircular,Icon} from 'react-onsenui';
 import {v4} from 'node-uuid';
 import Toolbar from '../templates/Toolbar';
 import CustomInput from './CustomInput';
-import {isFieldEmpty,generateNavigationKey} from '../utils';
+import {isFieldEmpty} from '../utils';
 import getNextRoute from '../utils/getNextRoute';
 import UserInterestsSelector from '../screens/UserInterestsSelector';
 import MainScreen from '../screens/MainScreen';

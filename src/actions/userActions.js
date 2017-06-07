@@ -8,6 +8,7 @@ TOKEN_SIGNIN_USER_REQUEST,TOKEN_SIGNIN_USER_SUCCESS,TOKEN_SIGNIN_USER_FAILURE,
 USER_STATUS_REQUEST,USER_STATUS_RECIEVED,ERROR_FETCHING_USER_STATUS,
 APP_INIT_REQUEST,APP_INIT_REQUEST_SUCCESS,APP_INIT_REQUEST_FAILURE,
 UPDATE_USER_INFO_REQUEST,UPDATE_USER_INFO_SUCCESS,UPDATE_USER_INFO_FAILURE,
+UPDATE_USER_INTERESTS_REQUEST,UPDATE_USER_INTERESTS_SUCCESS,UPDATE_USER_INTERESTS_FAILURE,
 UPLOAD_USER_PROFILE_PIC_REQUEST,UPLOAD_USER_PROFILE_PIC_SUCCESS,UPLOAD_USER_PROFILE_PIC_FAILURE,
 LOGOUT_USER,PROFILE_UPDATE,USER_LOGOUT} from '../constants';
 
@@ -135,6 +136,29 @@ export function tokenSigninUserRequest() {
   }
 };
 
+
+//--------------- User Interests Actions -----------------------------
+export function updateUserInterestsSuccess(interests,navigator){
+ 
+  return {
+    type : UPDATE_USER_INTERESTS_SUCCESS,
+    interests,
+    navigator
+  }
+};
+
+export function updateUserInterestsRequest(){
+ 
+ return {
+    type : UPDATE_USER_INTERESTS_REQUEST
+  }
+};
+
+export function updateUserInterestsFailure(){
+  return {
+    type : UPDATE_USER_INTERESTS_FAILURE
+  }
+};
 
 
 //--------------- User Info Update Actions -----------------------------
@@ -377,6 +401,26 @@ export function updateUserProfile(date,stageOfParenting,displayName,languagePref
               });
       }
 };
+
+
+
+export function updateUserInterests(interests,navigator) {
+    
+      return (dispatch,state) => {
+          
+          dispatch(updateUserInterestsRequest());
+
+          UserApi.updateUserInterests(interests).then(function(response){
+              
+              let interests = response.data.interests;
+              dispatch(updateUserInterestsSuccess(interests,navigator));  
+            
+            }).catch((err) => {
+                dispatch(updateUserInterestsFailure()); 
+              });
+      }
+};
+
 
 export function tokenSignin(accessToken,socialUniqueId,userEmail,displayName,imageUrl,loginBy,navigator) {
     

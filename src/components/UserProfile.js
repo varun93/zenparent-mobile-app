@@ -6,7 +6,7 @@ import BookmarkedPostsContainer from '../containers/BookmarkedPostsContainer';
 import AuthScreen from '../screens/AuthScreen';
 import {PROFILE_UPDATE} from '../constants';
 import {assetsBase} from '../constants';
-import {hasUserInfoChanged,convertDateToWords,isFieldEmpty,ucFirstLetter,generateNavigationKey} from '../utils';
+import {hasUserInfoChanged,convertDateToWords,isFieldEmpty,ucFirstLetter} from '../utils';
 require('../styles/user-profile.css');
 
 // move the rest to utils
@@ -142,7 +142,7 @@ export default class UserProfile extends Component{
 
   logout(){
     this.props.logout(); 
-    this.props.navigator.resetPage({component : AuthScreen,key : generateNavigationKey('auth-screen')});
+    this.props.navigator.resetPage({component : AuthScreen});
   }
 
   _onStageOfParentingChanged(e){

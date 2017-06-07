@@ -1,7 +1,7 @@
 import fetch from 'fetch-retry';
 import cachedFetch from '../utils/cachedFetch';
 import {prepareFormData} from '../utils'
-import {UPDATE_USER_INTERESTS_ENDPOINT,FETCH_INTERESTS_ENDPOINT} from '../constants'
+import {FETCH_INTERESTS_ENDPOINT} from '../constants'
 
 class UserInterestsApi {
   
@@ -30,24 +30,6 @@ class UserInterestsApi {
 
   }
 
-  static updateUserInterests(interests) {
-
-    const headers = this.requestHeaders();
-    const request = new Request(UPDATE_USER_INTERESTS_ENDPOINT, {
-      method: 'POST',
-      headers: headers,
-      retries: 5,
-      retryDelay: 500,
-      body: prepareFormData({interests : interests})
-    });
-
-    return fetch(request).then(response => {
-      return response.json();
-    }).catch(error => {
-      return error;
-    });
-
-  }
 
 }
 
