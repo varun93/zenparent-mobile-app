@@ -48,10 +48,10 @@ module.exports = {
 
   plugins: [
     new ExtractTextPlugin('[name].css'),
-    // new webpack.optimize.UglifyJsPlugin({
-    //         compress: { warnings: false },
-    //         minimize: true
-    //     }),
+    new webpack.optimize.UglifyJsPlugin({
+            compress: { warnings: false },
+            minimize: true
+        }),
     new OptimizeCssAssetsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {

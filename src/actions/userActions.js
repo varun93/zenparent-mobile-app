@@ -233,23 +233,11 @@ export function errorFetchingUserStatus(){
 
 // --------------- app init request ------------
 
-export function appInitRequest(){
-  return {
-    type : APP_INIT_REQUEST
-  };
-};
-
-export function appInitRequestSuccess(forceUpdate,appVersionNumber,user){
-  let authenticated = false;
-
-  if('id' in user && user.id) authenticated = true;
-
+export function appInitRequestSuccess(user){
+  
   return {
     type : APP_INIT_REQUEST_SUCCESS,
-    forceUpdate,
-    user,
-    authenticated,
-    appVersionNumber
+    user
   };
 
 };
@@ -303,17 +291,21 @@ export function logout() {
 export function appInit(appVersion){
 
   return (dispatch,state) => {
-    dispatch(appInitRequest());
-
+    
     UserApi.appInit(appVersion).then(function(response){
 
       let isTokenValid = response.data.isTokenValid;
       let user = response.data.user;
-      let forceUpdate = response.data.forceUpdate;
-      dispatch(appInitRequestSuccess(forceUpdate,isTokenValid,user));
-    
+     
+      if(isTokenValid){
+        dispatch(appInitRequestSuccess(user));
+      }
+      else{
+        dispatch(appInitRequestFailure());
+      }
+
     }).catch((err) => {
-      dispatch(appInitRequestFailure())
+      // ignore this 
     });
   
   };

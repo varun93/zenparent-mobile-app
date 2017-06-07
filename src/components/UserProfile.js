@@ -263,7 +263,6 @@ export default class UserProfile extends Component{
                 <select value={stageOfParenting}  onChange={this._onStageOfParentingChanged.bind(this)} style={styles.stageOfParentingSelect}>
                   <option value="parent">Parent</option>
                   <option value="pregnant">Pregnant</option>
-                  <option value="trying">Trying</option>
                  </select>
                </p>
               }
@@ -323,3 +322,5 @@ export default class UserProfile extends Component{
 
   }
 }
+
+// <option value="trying">Trying</option>

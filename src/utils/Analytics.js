@@ -126,9 +126,13 @@ export const UserAnalytics = (event,user) => {
 				eventName = 'Signup Completed';
 				break;
 			case USER_LOGIN : 
-				console.log("User Login");
 				eventName = 'Login';
-				// CleverTap.onUserLogin({"Identity" : user.id});
+				try{
+					CleverTap.onUserLogin({"Identity" : user.id});	
+				}
+				catch(e){
+					// 
+				}
 				break;
 			case USER_PROFILE_SYNC: 
 				eventName = 'User Profile Sync';

@@ -28,22 +28,17 @@ const updateUserInfoWithToken = (user,token,state) => {
 
 const updateUserInterests = (interests,state) => {
     let userInfo = Object.assign({},state.userInfo,{interests : interests});
-    return Object.assign({},state,{ userInfo :  userInfo},{status : 'interests-updated',loading : false});
+    return Object.assign({},state,{ userInfo :  userInfo},{loading : false});
 };
 
 let userReducer = (user = INITIAL_STATE, action) => {
  
   switch (action.type) {
    
-    case APP_INIT_REQUEST : 
-    return user;
-    // return Object.assign({},user,{loading : true});
     case APP_INIT_REQUEST_SUCCESS : 
-    return user;
-    // return updateUserInfoWithToken(action.user,action.token,user);
+    return Object.assign({},user,{authenticated : true, userInfo : Object.assign({},user.userInfo,action.user)});
     case APP_INIT_REQUEST_FAILURE : 
-    return user;
-    // return Object.assign({},user,{loading : false});
+    return Object.assign({},user,{authenticated : false});
 
     case USER_STATUS_REQUEST : 
     return Object.assign({},user,{authenticated : false,userInfo : null,error : false,loading : true});
