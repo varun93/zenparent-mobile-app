@@ -30,8 +30,7 @@ let userInterestsReducer = (userInterests=INITIAL_STATE,action) => {
 			return Object.assign({},userInterests, {interests : Object.assign({},userInterests.interests,{terms : [],loading : false, error : true})});
 		case TOGGLE_INTEREST : 
 			return toggleInterests(action.term,userInterests);
-
-
+		
 		default : return userInterests;
 	}
 };
