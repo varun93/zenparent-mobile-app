@@ -242,7 +242,8 @@ let blogReducer = (blog=INITIAL_STATE,action) => {
 		case SYNC_FEED : 
 			return Object.assign({},blog,{[USER_FEED_RELEVANCE] : Object.assign({},blog[USER_FEED_RELEVANCE],{posts:[]})},
 			{[USER_FEED_TIME] : Object.assign({},blog[USER_FEED_TIME],{posts:[]})},
-			{[HOMEPAGE_SLOT_POSTS] : Object.assign({},blog[HOMEPAGE_SLOT_POSTS],{posts:[]})}
+			{[HOMEPAGE_SLOT_POSTS] : Object.assign({},blog[HOMEPAGE_SLOT_POSTS],{posts:[]})},
+			{[POPULAR_POSTS] : Object.assign({},blog[POPULAR_POSTS],{posts:[]})}
 			);
 
 		// like post, TODO : as of now dont do anything

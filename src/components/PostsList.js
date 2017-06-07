@@ -19,22 +19,6 @@ export default class PostsList extends Component{
 	}
 
 
-	componentWillReceiveProps(nextProps){
-
-
-		if(this.props.user && this.props.user.authenticated){
-			const nextUserInfo = nextProps.user.userInfo;
-			const currentUserInfo = this.props.user.userInfo;
-			const userInfoChanged = hasUserInfoChanged(currentUserInfo,nextUserInfo); 
-			if(userInfoChanged){
-				this.setState({offset:0});
-				this._loadMoreItems.call(this);
-			}
-		}
-	
-	}
-
-
 	_loadMoreItems(){
 
 		let offset = this.state.offset;
@@ -42,7 +26,7 @@ export default class PostsList extends Component{
 		let key = options.key;
 		
 		if(key == USER_FEED_TIME || key == USER_FEED_RELEVANCE){
-			let filter = key == USER_FEED_RELEVANCE ? 'relevance' : 'time';
+			let filter = (key == USER_FEED_RELEVANCE) ? 'relevance' : 'time';
 			this.props.fetchPosts(key,filter,offset);
 		}
 		else if(key == ARCHIVE_POSTS){

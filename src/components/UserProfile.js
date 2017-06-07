@@ -56,18 +56,6 @@ export default class UserProfile extends Component{
   }
 
 
- componentWillReceiveProps(nextProps) {
-
-    if(!this.props.user.authenticated) {
-      return;
-    }
-
-    if(hasUserInfoChanged(this.props.user.userInfo,nextProps.user.userInfo)){
-      this.props.syncFeed();
-    }
-   
-  }
-
   toggleEdit(){
 
     let userInfo = this.props.user.userInfo;
@@ -275,6 +263,7 @@ export default class UserProfile extends Component{
                 <select value={stageOfParenting}  onChange={this._onStageOfParentingChanged.bind(this)} style={styles.stageOfParentingSelect}>
                   <option value="parent">Parent</option>
                   <option value="pregnant">Pregnant</option>
+                  <option value="trying">Trying</option>
                  </select>
                </p>
               }
@@ -282,7 +271,7 @@ export default class UserProfile extends Component{
 
             <div className="date">
               <p className="field-label">
-                {stageOfParenting == 'parent' ?  'Date of Birth' : 'Due Date'}
+                {stageOfParenting == 'parent' ?  'Date of Birth' : stageOfParenting == 'pregnant' ?  'Due Date' : 'Last Mentrual Period'}
               </p>
               {
                !this.state.editMode ?  

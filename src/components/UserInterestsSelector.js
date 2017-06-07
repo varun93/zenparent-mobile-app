@@ -63,9 +63,6 @@ export default class UserInterestsSelector extends Component {
 		});
 
 		if(userInterests.length > 2){
-			// sync the feeds
-			this.props.syncFeed();
-			
 			//submit the posts
 			this.props.updateUserInterests(userInterests,this.props.navigator);
 		}

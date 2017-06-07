@@ -5,23 +5,23 @@ import {POST_LIKED,POST_BOOKMARKED,SCREEN_VIEWED,POST_SHARED,LANGUAGE_TOGGLED,
 	USER_SIGNUP,USER_LOGIN,USER_PROFILE_SYNC,USER_PROFILE_UPDATED,USER_INTERESTS_UPDATED,USER_LOGOUT} from '../constants';
 
 
-const recordClevertapEvent = (eventName,eventData) => {
-	// try{
-	// 	CleverTap.recordEventWithNameAndProps(eventName, eventData);
-	// }
-	// catch(e){
-	// // handle if needed 
-	// }
+	
 
-	console.log(eventName,eventData);
+const recordClevertapEvent = (eventName,eventData) => {
+	
+
+	try{
+		CleverTap.recordEventWithNameAndProps(eventName, eventData);
+	}
+	catch(e){
+		console.log(eventName,eventData); 
+	}
+
+	
 };
 
 
 export const BlogAnalytics = (event,postId,state) => {
-
-		// if(CleverTap === undefined || CleverTap === null || window.ga === null || window.ga === undefined){
-		// 	return;
-		// }
 
 		//substring to limit the number of characters
 		const title = (typeof state == 'object') ? state.blog.posts.byId[postId].title.substr(0,100) : state;
@@ -38,7 +38,12 @@ export const BlogAnalytics = (event,postId,state) => {
 				break;
 			case SCREEN_VIEWED : 
 				//ga tracking
-				// window.ga.trackView(title);
+				try{
+					window.ga.trackView(title);	
+				}
+				catch(e){
+
+				}
 				eventName = 'Screen Viewed';
 				eventData = {"post":title};
 				break;
@@ -85,10 +90,6 @@ export const ChatroomAnalytics = (event,chatroomId,state) => {
 // fire, event and change data
 export const UserAnalytics = (event,user) => {
 	
-		// if(CleverTap === undefined || CleverTap === null){
-		// 	return;
-		// }
-
 		let eventName='',eventData={};
 
 		if(user){
@@ -106,8 +107,13 @@ export const UserAnalytics = (event,user) => {
 				'MSG-push' :  true
 			};	
 			// set profile info
-			// console.log(cleverTapUserObj);
-			// CleverTap.profileSet(cleverTapUserObj);
+			try{
+				CleverTap.profileSet(cleverTapUserObj);	
+			}
+			catch(e){
+
+			}
+			
 		}
 
 

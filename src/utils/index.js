@@ -158,6 +158,15 @@ export const getUserLanguage = (user) => {
 }
 
 
+export const hasUserInterestsChanged = (currentUserInterests,nextUserInterests) => {
+
+	return !((!isFieldEmpty(currentUserInterests) && !isFieldEmpty(nextUserInterests)) && (currentUserInterests.length == nextUserInterests.length) && currentUserInterests.every(function(element, index) {
+    	return element === nextUserInterests[index]; 
+	}));
+
+};
+
+
 //--- has user info changed
 
 export const hasUserInfoChanged = (currentUserInfo,nextUserInfo) => {
@@ -180,14 +189,11 @@ export const hasUserInfoChanged = (currentUserInfo,nextUserInfo) => {
 		return true;
 	}
 	
-	const interestsSame = (!isFieldEmpty(currentUserInterests) && !isFieldEmpty(nextUserInterests)) && (currentUserInterests.length == nextUserInterests.length) && currentUserInterests.every(function(element, index) {
-    	return element === nextUserInterests[index]; 
-	});
-		
+	const interestsChanged = hasUserInterestsChanged(currentUserInterests,nextUserInterests);
 
 	const dateKey = currentStageOfParenting == 'parent' ? 'dob' : 'due_date';
 
-	return (currentUserInfo[dateKey] !== nextUserInfo[dateKey]) || (!interestsSame);
+	return (currentUserInfo[dateKey] !== nextUserInfo[dateKey]) || interestsChanged;
 
 };
 
