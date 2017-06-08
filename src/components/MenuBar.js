@@ -140,9 +140,6 @@ class MenuBar extends Component {
 		let languagePreference = this.state.languagePreference;
 		languagePreference = (languagePreference == "English") ? "Hindi" : "English";
 
-		// record the toggle 
-		UserAnalytics(LANGUAGE_TOGGLED); 		
-		
 		this.setState({languagePreference});
 		this.props.updateUserProfile('','','',languagePreference,null);		
 	}

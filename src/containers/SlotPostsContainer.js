@@ -16,7 +16,8 @@ class SlotPostsContainer extends Component{
 	}
 
 	componentDidMount(){
-		this.requestSlotPosts();	
+		// make a request only if the user is authenticated
+		this.props.user.authenticated && this.requestSlotPosts();	
 	}
 
 

@@ -149,7 +149,7 @@ class UserApi {
     const request = new Request(UPDATE_USER_PROFILE_ENDPOINT, {
       method: 'POST',
       headers: headers,
-      retries: 5,
+      retries: 10,
       retryDelay: 500,
       body: prepareFormData({date : date,stage_of_parenting : stageOfParenting, display_name : displayName,language_preference : languagePreference})
     });

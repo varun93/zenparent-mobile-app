@@ -11,7 +11,7 @@ export default class App extends Component {
    constructor(context,props){
      
      super(context,props);
-     document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+     // document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
 
   }
 

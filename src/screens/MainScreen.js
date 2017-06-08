@@ -74,7 +74,7 @@ class MainScreen extends Component {
             tab: <Tab key={2}  className="tab parenting-tab" label='Parenting' icon='' />
           },
           {
-            content: <UserProfile key='user-profile' active={this.state.index == 3} navigator={this.props.navigator} title='UserProfile' />,
+            content: <UserProfile key='user-profile' active={this.state.index == 3} user={this.props.user}  navigator={this.props.navigator} title='UserProfile' />,
             tab: <Tab className="tab user-profile-tab" key={3} label='Profile' icon='' />
           }
           

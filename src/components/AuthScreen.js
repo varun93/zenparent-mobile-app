@@ -65,6 +65,15 @@ export default class AuthScreen extends Component{
 		this._checkUserStatus.call(this);
 	}
 
+	_recordTokenSigninFailure(error){
+	
+		if(typeof msg != 'string'){
+          	msg = JSON.stringify(msg);
+		}
+		
+		this.props.tokenSigninUserFailure(msg);
+	}
+
 	handleGoogleLogin(){
     
        var classContext = this;
@@ -90,9 +99,8 @@ export default class AuthScreen extends Component{
              }
          
           },
-          function (msg) {
-          	// put another analytics code here.
-          	alert("Someting went wrong");
+          function (error) {
+          		classContext._recordTokenSigninFailure.call(classContext,error);
           }
       );
 
@@ -124,21 +132,19 @@ export default class AuthScreen extends Component{
             
 
         }, function onError (error) {
-
-          //put an analytics code here 
-          console.error("Failed: ", error);
+        	classContext._recordTokenSigninFailure.call(classContext,'Unable to access userInfo');
         }
-    );
-  }
+     );
+    }
 
     facebookConnectPlugin.login(["public_profile"],
         fbLoginSuccess,
-         function (error) { 
-			alert("Something went wrong"); 
-        }
-         );
+          function (error) { 
+			classContext._recordTokenSigninFailure.call(classContext,error);
+          } 
+       );
 
-  }
+   }
 
 	render(){
 
@@ -188,10 +194,6 @@ export default class AuthScreen extends Component{
 			            <div>
 			                <button onClick={this.handleFacebookLogin.bind(this)} className="loginBtn--facebook loginBtn" style={{marginBottom:"5px"}}>
 			                  <span className="text-box">Continue with Facebook</span>
-			                </button>
-			                
-			                <button onClick={this.handleGoogleLogin.bind(this)} className="loginBtn--google loginBtn">
-			                  <span className="text-box">Continue with Google</span>
 			                </button>
 			            </div>
 			          </div>

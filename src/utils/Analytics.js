@@ -1,23 +1,17 @@
 const environment = process.env.NODE_ENV;
 
-import {POST_LIKED,POST_BOOKMARKED,SCREEN_VIEWED,POST_SHARED,LANGUAGE_TOGGLED,
+import {POST_LIKED,POST_BOOKMARKED,SCREEN_VIEWED,POST_SHARED,LANGUAGE_TOGGLED,TOKEN_SIGNIN_USER_SUCCESS,TOKEN_SIGNIN_USER_FAILURE,
 	CHATROOM_VISITED,JOINED_CHATROOM,LEFT_CHATROOM,MESSAGE_SENT,
 	USER_SIGNUP,USER_LOGIN,USER_PROFILE_SYNC,USER_PROFILE_UPDATED,USER_INTERESTS_UPDATED,USER_LOGOUT} from '../constants';
 
 
-	
-
 const recordClevertapEvent = (eventName,eventData) => {
-	
-
 	try{
 		CleverTap.recordEventWithNameAndProps(eventName, eventData);
 	}
 	catch(e){
 		console.log(eventName,eventData); 
 	}
-
-	
 };
 
 
@@ -88,7 +82,7 @@ export const ChatroomAnalytics = (event,chatroomId,state) => {
 };
 
 // fire, event and change data
-export const UserAnalytics = (event,user) => {
+export const UserAnalytics = (event,user,additionalData={}) => {
 	
 		let eventName='',eventData={};
 
@@ -134,9 +128,16 @@ export const UserAnalytics = (event,user) => {
 					// 
 				}
 				break;
-			case USER_PROFILE_SYNC: 
-				eventName = 'User Profile Sync';
+			case TOKEN_SIGNIN_USER_SUCCESS : 
+				eventName = 'Social Login';
+				eventData['status'] = 'success';
+				eventData['source'] = additionalData.source; 
 				break;
+			case TOKEN_SIGNIN_USER_FAILURE : 
+				eventName = 'Social Login';
+				eventData['status'] = 'failure';
+				eventData['source'] = additionalData.source; 
+				break;	
 			case USER_PROFILE_UPDATED : 
 				eventName = 'Profile Updated';
 				break;

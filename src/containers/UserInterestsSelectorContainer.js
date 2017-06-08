@@ -13,6 +13,7 @@ const mapDispactorToProps = (dispatch,ownProps) => {
 
 const mapStateToProps = (state,ownProps) => {
 	return {
+		userAuthenticated : state.user.authenticated,
 		loading : state.user.loading,
 		interests : state.userInterests.interests,
 		navigator : ownProps.navigator

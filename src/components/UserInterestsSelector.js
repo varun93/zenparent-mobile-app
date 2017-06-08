@@ -1,9 +1,10 @@
 import React,{Component} from 'react';
+import ScreenLoader from '../templates/ScreenLoader';
 import {Page,Dialog,Button,ProgressCircular,BottomToolbar,Icon} from 'react-onsenui';
 import {ucFirstLetter} from '../utils';
+import {v4} from 'node-uuid';
 import MainScreen from '../screens/MainScreen';
 import {platform} from 'onsenui';
-import {v4} from 'node-uuid';
 import {BlogAnalytics} from '../utils/Analytics';
 import {SCREEN_VIEWED} from '../constants';
 
@@ -19,11 +20,9 @@ export default class UserInterestsSelector extends Component {
 		}
 	}
 
-	componentWillMount(){
-		this.props.fetchInterests();
-	}
-
 	componentDidMount(){
+
+		this.props.userAuthenticated && this.props.fetchInterests();
 
 		// record screen viewed event
 		try {
@@ -43,10 +42,10 @@ export default class UserInterestsSelector extends Component {
 
 	componentWillReceiveProps(nextProps){
 
-		if(nextProps.interests.error){
+		if((!this.props.userAuthenticated && nextProps.userAuthenticated) || nextProps.interests.error){
 			this.props.fetchInterests();
 		}
-	
+
 	}
 
 	_submitTags(){	
@@ -101,8 +100,8 @@ export default class UserInterestsSelector extends Component {
 		   	 	Help us personalize your feed!
 		   	 </div>
 			 
-			 {interests.loading ?  
-			<ProgressCircular style={{position: "absolute",top: "45%",left: "45%"}}  inderterminate />
+			 {interests.loading  ?  
+				<ScreenLoader />
 			 	:
 			 <div style={{overflowY : "scroll",height : "100vh"}} className="selectionPanel">
 			 {terms.map(function(interest){

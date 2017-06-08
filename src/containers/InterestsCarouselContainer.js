@@ -12,7 +12,7 @@ class InterestsCarouselContainer extends Component{
 	}
 
 	componentDidMount(){
-		this.props.fetchInterests();
+		this.props.userAuthenticated && this.props.fetchInterests();
 	}
 
 	componentWillReceiveProps(nextProps){
@@ -43,6 +43,7 @@ const mapDispactorToProps = (dispatch) => {
 
 const mapStateToProps = (state,ownProps) => {
 	return {
+		userAuthenticated : state.user.authenticated,
 		interests : state.userInterests.interests
 }};
 

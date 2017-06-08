@@ -22,6 +22,7 @@ const routingMiddleware = store => next => action => {
       // user actions related navigation
       case SIGNUP_USER_SUCCESS  :
       case UPDATE_USER_INFO_SUCCESS:
+      case TOKEN_SIGNIN_USER_SUCCESS:
       case LOGIN_USER_SUCCESS :
   			const user = action.user;
   			const route = getNextRoute(user);

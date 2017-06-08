@@ -1,7 +1,7 @@
 import {UserAnalytics,BlogAnalytics,ChatroomAnalytics} from '../utils/Analytics';
 //action creator constants
-import {LOGIN_USER_SUCCESS,SIGNUP_USER_SUCCESS,TOKEN_SIGNIN_USER_SUCCESS,UPDATE_USER_INTERESTS_SUCCESS,
-USER_STATUS_RECIEVED,UPDATE_USER_INFO_SUCCESS,LOGOUT_USER} from '../constants';
+import {LOGIN_USER_SUCCESS,SIGNUP_USER_SUCCESS,UPDATE_USER_INTERESTS_SUCCESS,
+TOKEN_SIGNIN_USER_SUCCESS,TOKEN_SIGNIN_USER_FAILURE,USER_STATUS_RECIEVED,UPDATE_USER_INFO_SUCCESS,LOGOUT_USER} from '../constants';
 //blog action creator contants
 import {RECEIVED_SINGLE_POST,POST_LIKE_SUCCESS,POST_BOOKMARK_SUCCESS} from '../constants';
 //chat action creator constants
@@ -42,6 +42,11 @@ const analyticsMiddleware = store => next => action => {
 				break;
 
 			case TOKEN_SIGNIN_USER_SUCCESS:
+				UserAnalytics(TOKEN_SIGNIN_USER_SUCCESS,null,{'source' : action.loginBy});
+	  			break;
+
+	  		case TOKEN_SIGNIN_USER_FAILURE :
+	  			UserAnalytics(TOKEN_SIGNIN_USER_FAILURE,null,{'error' : action.error});
 	  			break;
 
 	  		case RECEIVED_SINGLE_POST : 

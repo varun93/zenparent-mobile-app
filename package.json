@@ -66,8 +66,6 @@
         "cordova-browser": "~4.1.0",
         "cordova-plugin-facebook4": "^1.7.4",
         "cordova-plugin-file-transfer": "~1.6.2",
-        "cordova-plugin-google-analytics": "~1.7.5",
-        "cordova-plugin-googleplus": "^5.1.1",
         "cordova-plugin-whitelist": "1",
         "cordova-plugin-x-socialsharing": "~5.1.6",
         "es6-object-assign": "^1.1.0",
@@ -75,6 +73,7 @@
         "fetch-retry": "^1.1.1",
         "lodash": "^4.17.4",
         "node-uuid": "^1.4.8",
+        "onsenui": "^2.3.2",
         "pusher-js": "^4.1.0",
         "react": "^15.5.4",
         "react-dom": "^15.5.4",
@@ -91,15 +90,11 @@
         "plugins": {
             "branch-cordova-sdk": {},
             "cordova-plugin-file-transfer": {},
-            "cordova-plugin-google-analytics": {},
             "cordova-plugin-whitelist": {},
             "cordova-plugin-x-socialsharing": {},
             "cordova-plugin-facebook4": {
                 "APP_ID": "1626499117583779",
                 "APP_NAME": "Zenparent"
-            },
-            "cordova-plugin-googleplus": {
-                "REVERSED_CLIENT_ID": "com.googleusercontent.apps.579056634272-gc3asrv8lqsvs93fsa5ri4m4fg92fijn"
             },
             "es6-promise-plugin": {}
         }

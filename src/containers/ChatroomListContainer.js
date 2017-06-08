@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {ProgressCircular} from 'react-onsenui';
+import ScreenLoader from '../templates/ScreenLoader';
 import {connect} from 'react-redux';
 import ChatroomsList from '../components/ChatroomsList';
 import {fetchChatrooms,joinChatroom,leaveChatroom,resetUnreadMessages} from '../actions/chatActions';
@@ -32,8 +32,9 @@ class ChatroomListContainer extends Component {
 
 		  let {loading,navigator,joinedGroups,expertGroups,resetUnreadMessages,recommendedGroups,joinChatroom} = this.props;
 
+		  
 		  if(loading){
-		  	return (<ProgressCircular style={{position: "absolute",top: "45%",left: "45%"}}  inderterminate />)	
+		  	return (<ScreenLoader />);
 		  }
 		  
 		 return (

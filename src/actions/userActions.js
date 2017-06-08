@@ -97,7 +97,7 @@ export function signupUserRequest() {
 
 //------------------------ token signin related actions -------------------------
 
-export function tokenSigninUserSuccess(user,token,navigator) {
+export function tokenSigninUserSuccess(user,token,loginBy,navigator) {
 
   try{
      window.localStorage.setItem('jwt', token);//this is impotn
@@ -110,6 +110,7 @@ export function tokenSigninUserSuccess(user,token,navigator) {
     type: TOKEN_SIGNIN_USER_SUCCESS,
     user,
     token,
+    loginBy,
     navigator
   }
 };
@@ -427,7 +428,7 @@ export function tokenSignin(accessToken,socialUniqueId,userEmail,displayName,ima
               let token = response.data.token;
             
               if(success){
-                dispatch(tokenSigninUserSuccess(user,token));  
+                dispatch(tokenSigninUserSuccess(user,token,loginBy,navigator));  
               }
               else{
                 let message = response.data.message;

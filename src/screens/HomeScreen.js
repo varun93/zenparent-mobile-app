@@ -51,7 +51,7 @@ export default class Homescreen extends Component{
     	const deeplink = e.deeplink;
      	const postId = deeplink.substr(deeplink.lastIndexOf('/')+1);
 
-     	if(postId.match(/\d+/)){
+     	if(postId && postId.match(/\d+/)){
      		this.navigateToPost.call(this,postId);	
      	}
 
@@ -68,7 +68,7 @@ export default class Homescreen extends Component{
 	        	//this for maintaining backward compatibilty
 	    		const postId = data.p;
 
-	    		if(postId){
+	    		if(postId && postId.match(/\d+/)){
 	    			classContext.navigateToPost.call(classContext,postId);
 	    		}
 	    		
@@ -83,14 +83,15 @@ export default class Homescreen extends Component{
 	render(){
 
 		const {navigator,active,user} = this.props;
-
+		const userAuthenticated = user.authenticated;
+		
 		return (
 			<Page key='home-screen'>
-				 <MenuBar user={user} />
-				 <SlotPostsContainer position='88' user={user} navigator={navigator} />
-				 <InterestsCarouselContainer position='295' user={user} navigator={navigator} />
-				 <UserFeedsContainer active={active} title='Stories Just for You' position='370' section={USER_FEED_RELEVANCE} user={user} navigator={navigator} />
+				  <MenuBar user={user} />
+				  {userAuthenticated && <SlotPostsContainer position='88' user={user} navigator={navigator} />}
+				  {userAuthenticated && <InterestsCarouselContainer position='295' user={user} navigator={navigator} />}
+				  {userAuthenticated && <UserFeedsContainer active={active} title='Stories Just for You' position='370' section={USER_FEED_RELEVANCE} user={user} navigator={navigator} />} 
 			</Page>
-			)
+		)
 	}
 }

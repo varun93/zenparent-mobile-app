@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {v4} from 'node-uuid';
-import {Page,Toolbar,BackButton,Input,Icon,Dialog,Button} from 'react-onsenui';
+import {Toolbar,BackButton,Input,Icon,Dialog,Button} from 'react-onsenui';
 import LanguageSelect from '../templates/LanguageSelect';
 import {platform} from 'onsenui';
 import BookmarkedPostsContainer from '../containers/BookmarkedPostsContainer';
@@ -180,7 +180,7 @@ export default class UserProfile extends Component{
 
     return (
 
-    <Page className="user-profile">
+    <div className="user-profile">
 
       <Dialog
               isOpen={this.state.dialogShown}
@@ -318,7 +318,7 @@ export default class UserProfile extends Component{
        <BookmarkedPostsContainer active={this.props.active} navigator={this.props.navigator} />
       </div>
 
-    </Page>
+    </div>
   )
 
   }
