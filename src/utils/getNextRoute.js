@@ -4,15 +4,16 @@ import ParentingStageInput from '../screens/ParentingStageInputScreen';
 import SignupScreen from '../screens/SignupScreen';
 import LoginScreen from '../screens/LoginScreen';
 import {v4} from 'node-uuid';
+import {isProfileComplete} from '../utils';
 
 
 const getNextRoute = (userInfo) => {
 
 	if(userInfo){
 		
+		const profileComplete = isProfileComplete(userInfo); 
 		const stageOfParenting = userInfo.stage_of_parenting;
 		const interests = userInfo.interests;
-		const profileComplete  = stageOfParenting && interests.length; 
 		let component = null;
 
 		if(profileComplete){

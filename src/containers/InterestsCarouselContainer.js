@@ -12,7 +12,7 @@ class InterestsCarouselContainer extends Component{
 	}
 
 	componentDidMount(){
-		this.props.userAuthenticated && this.props.fetchInterests();
+		this.props.fetchInterests();
 	}
 
 	componentWillReceiveProps(nextProps){

@@ -64,7 +64,6 @@ export default class Homescreen extends Component{
 	        const classContext = this;
 	      
 	        Branch.initSession(function(data) {
-
 	        	//this for maintaining backward compatibilty
 	    		const postId = data.p;
 

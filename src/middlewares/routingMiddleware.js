@@ -1,4 +1,5 @@
 import {v4} from 'node-uuid';
+import {isFieldEmpty} from '../utils';
 import getNextRoute from '../utils/getNextRoute';
 import MainScreen from '../screens/MainScreen';
 import AuthScreen from '../screens/AuthScreen';
@@ -33,7 +34,7 @@ const routingMiddleware = store => next => action => {
   			component = (userStatus == 'new-user') ? SignupScreen : LoginScreen;
         break;
   		case UPDATE_USER_INTERESTS_SUCCESS : 
-  			component = MainScreen;
+        component = MainScreen;
   			break;
   		case LOGOUT_USER:
   			component = AuthScreen;
@@ -42,7 +43,7 @@ const routingMiddleware = store => next => action => {
   	}
 
   	const navigator = action.navigator;
-    navigator && component && navigator.pushPage({component,props});
+    !isFieldEmpty(navigator) && component && (action.type === UPDATE_USER_INTERESTS_SUCCESS ? navigator.resetPage({component,props}) : navigator.pushPage({component,props}));
   
   }
 

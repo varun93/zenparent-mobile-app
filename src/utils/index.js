@@ -176,8 +176,14 @@ export const hasUserInterestsChanged = (currentUserInterests,nextUserInterests) 
 };
 
 
-//--- has user info changed
+export const isProfileComplete = (userInfo) => {
+  const stageOfParenting = userInfo.stage_of_parenting;
+  const interests = userInfo.interests;
+  return !(isFieldEmpty(stageOfParenting) || isItemEmpty(interests));
+};
 
+
+//--- has user info changed
 export const hasUserInfoChanged = (currentUserInfo,nextUserInfo) => {
 
 	if(isFieldEmpty(currentUserInfo) || isFieldEmpty(nextUserInfo)) return false;
@@ -206,7 +212,6 @@ export const hasUserInfoChanged = (currentUserInfo,nextUserInfo) => {
 
 };
 
- 
 export const isItemEmpty = (content) => {
   return (content == null || content == undefined || (typeof content === 'object' && Object.keys(content).length === 0) || (typeof content === 'string' && content.trim().length === 0));
 };

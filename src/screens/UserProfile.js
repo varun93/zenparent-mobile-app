@@ -7,12 +7,12 @@ export default class UserProfile extends Component{
   render(){
 
   	const {user} = this.props;
-
-    return (
-    	<Page>
+	return (
+    	<Page key='user-profile-screen'>
 	        <UserProfileContainer active={this.props.active} navigator={this.props.navigator} />
       	</Page>
-      )
+  	)
+  
   }
 
 }

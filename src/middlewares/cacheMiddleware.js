@@ -1,4 +1,4 @@
-import {generateCacheKey,isItemEmpty,hasUserInfoChanged,hasUserInterestsChanged} from '../utils';
+import {generateCacheKey,isItemEmpty,hasUserInfoChanged,hasUserInterestsChanged,isProfileComplete} from '../utils';
 import {fetchSlotPosts,fetchPosts,fetchPopularPosts,syncFeed} from '../actions/blogActions';
 // slot posts
 import {HOMEPAGE_SLOT_POSTS,USER_FEED_RELEVANCE,USER_FEED_TIME,POPULAR_POSTS} from '../constants';
@@ -13,20 +13,16 @@ const shouldUpdate = (store,action) => {
   const state = store.getState();
   const currentUserInfo = state.user.userInfo;
   const nextUserInfo = action.user;
-  return hasUserInfoChanged(currentUserInfo,nextUserInfo); 
+  return isProfileComplete(currentUserInfo) && hasUserInfoChanged(currentUserInfo,nextUserInfo); 
 } 
 
 const hasInterestsChanged = (store,action) => {
-  
   const state = store.getState();
-  const currentUserInterests = state.user.userInfo.interests;
+  const currentUserInfo = state.user.userInfo;
+  const currentUserInterests = currentUserInfo.interests;
   const nextUserInterests = action.interests;
-  return hasUserInterestsChanged(currentUserInterests,nextUserInterests);
-
+  return isProfileComplete(currentUserInfo) && hasUserInterestsChanged(currentUserInterests,nextUserInterests);
 };
-
-
-// sync feed should take keys
 
 export const cacheMiddleware = store => next => action => {
 
@@ -62,8 +58,6 @@ export const cacheMiddleware = store => next => action => {
         break;
 
       case UPDATE_USER_INTERESTS_SUCCESS : 
-      
-       
        if(hasInterestsChanged(store,action)) {
           // remove data from the old store
           store.dispatch(syncFeed());

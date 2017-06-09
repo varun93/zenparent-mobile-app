@@ -10,7 +10,7 @@ const INITIAL_STATE = {};
 
 const configureStore = (initialState = INITIAL_STATE) => {
 	if (process.env.NODE_ENV === 'production') {
-		return createStore(rootReducer,initialState,applyMiddleware(thunkMiddleware,routingMiddleware,cacheMiddleware,analyticsMiddleware));	
+		return createStore(rootReducer,initialState,applyMiddleware(thunkMiddleware,routingMiddleware,cacheMiddleware,analyticsMiddleware,logger()));	
 	} 
 	else {
 		return createStore(rootReducer,initialState,applyMiddleware(thunkMiddleware,routingMiddleware,cacheMiddleware,analyticsMiddleware,logger()));	
