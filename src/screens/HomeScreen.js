@@ -88,9 +88,9 @@ export default class Homescreen extends Component{
 		return (
 			<Page key='home-screen'>
 				  <MenuBar user={user} />
-				  {userAuthenticated && <SlotPostsContainer position='88' user={user} navigator={navigator} />}
-				  {userAuthenticated && <InterestsCarouselContainer position='295' user={user} navigator={navigator} />}
-				  {userAuthenticated && <UserFeedsContainer active={active} title='Stories Just for You' position='370' section={USER_FEED_RELEVANCE} user={user} navigator={navigator} />} 
+				  <SlotPostsContainer position='88' user={user} navigator={navigator} />
+				  <InterestsCarouselContainer position='295' user={user} navigator={navigator} />
+				  <UserFeedsContainer active={active} title='Stories Just for You' position='370' section={USER_FEED_RELEVANCE} user={user} navigator={navigator} /> 
 			</Page>
 		)
 	}

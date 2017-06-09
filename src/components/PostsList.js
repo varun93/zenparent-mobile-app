@@ -24,7 +24,11 @@ export default class PostsList extends Component{
 		let offset = this.state.offset;
 		let {options,user} =  this.props;
 		let key = options.key;
-		
+			
+		if(!user.authenticated){
+			return;
+		}	
+
 		if(key == USER_FEED_TIME || key == USER_FEED_RELEVANCE){
 			let filter = (key == USER_FEED_RELEVANCE) ? 'relevance' : 'time';
 			this.props.fetchPosts(key,filter,offset);

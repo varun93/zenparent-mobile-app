@@ -28,7 +28,7 @@ class SlotPostsContainer extends Component{
 	//loading
 	componentWillReceiveProps(nextProps){
 
-		if(this.props.slotPosts.loading || this.props.user.loading) {
+		if(!this.props.user.authenticated || this.props.slotPosts.loading || this.props.user.loading) {
 			return;
 		}
 

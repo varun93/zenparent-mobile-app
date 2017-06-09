@@ -19,7 +19,7 @@ export default class Community extends Component{
 
 		return (
 			<Page key='community'>
-			 {userAuthenticated && <ChatroomListContainer active={this.props.active} navigator={this.props.navigator} update={this.state.update} />} 
+			 <ChatroomListContainer active={this.props.active} navigator={this.props.navigator} update={this.state.update} />
 			</Page>
 			)
 	}
