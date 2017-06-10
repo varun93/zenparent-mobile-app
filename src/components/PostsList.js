@@ -18,6 +18,10 @@ export default class PostsList extends Component{
 	    };
 	}
 
+	componentDidMount(){
+		this._loadMoreItems.call(this);
+	}
+
 	_loadMoreItems(){
 
 		let offset = this.state.offset;
@@ -43,7 +47,7 @@ export default class PostsList extends Component{
 	_renderWaypoint() {
 		
 	 if(!this.props.loading && this.props.active){
-	 	 return (<Waypoint onEnter={this._loadMoreItems.bind(this)} /> );
+	 	 return (<Waypoint topOffset='50px' onEnter={this._loadMoreItems.bind(this)} /> );
 	 }
     }
 

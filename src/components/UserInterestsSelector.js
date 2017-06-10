@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import ScreenLoader from '../templates/ScreenLoader';
 import {Page,Dialog,Button,ProgressCircular,BottomToolbar,Icon} from 'react-onsenui';
 import {ucFirstLetter} from '../utils';
 import {v4} from 'node-uuid';
@@ -7,7 +6,6 @@ import MainScreen from '../screens/MainScreen';
 import {platform} from 'onsenui';
 import {BlogAnalytics} from '../utils/Analytics';
 import {SCREEN_VIEWED} from '../constants';
-
 
 require('../styles/interests.css');
 
@@ -22,7 +20,8 @@ export default class UserInterestsSelector extends Component {
 
 	componentDidMount(){
 
-		this.props.userAuthenticated && this.props.fetchInterests();
+		// make a post request
+		this.props.fetchInterests();
 
 		// record screen viewed event
 		try {
@@ -101,7 +100,7 @@ export default class UserInterestsSelector extends Component {
 		   	 </div>
 			 
 			 {interests.loading  ?  
-				<ScreenLoader />
+				<ProgressCircular className="loading" indeterminate/>
 			 	:
 			 <div style={{overflowY : "scroll",height : "100vh"}} className="selectionPanel">
 			 {terms.map(function(interest){

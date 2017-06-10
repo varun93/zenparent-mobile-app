@@ -16,7 +16,6 @@ class SlotPostsContainer extends Component{
 	}
 
 	componentDidMount(){
-		// make a request only if the user is authenticated
 		this.requestSlotPosts();	
 	}
 
@@ -30,6 +29,10 @@ class SlotPostsContainer extends Component{
 
 		if(this.props.slotPosts.loading || this.props.user.loading) {
 			return;
+		}
+
+		if(!this.props.user.authenticated && nextProps.user.authenticated){
+			this.requestSlotPosts();
 		}
 
     	if((nextProps.slotPosts.error || isFieldEmpty(nextProps.slotPosts.posts) || nextProps.slotPosts.length == 0) && this.state.retry < 3){

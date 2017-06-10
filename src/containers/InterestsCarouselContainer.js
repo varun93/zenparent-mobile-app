@@ -11,7 +11,7 @@ class InterestsCarouselContainer extends Component{
 		this.state = {retry : 0};
 	}
 
-	componentDidMount(){
+	componentWillMount(){
 		this.props.fetchInterests();
 	}
 
