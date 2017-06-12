@@ -15,7 +15,7 @@ export default class ParentingScreen extends Component{
     const userAuthenticated = user.authenticated;
 
     return (
-      <Page key='parenting-screen'>
+      <Page>
          <EditorialPostsContainer active={this.props.active} position='10' navigator={this.props.navigator} />
          <PopularPostsContainer user={user} active={this.props.active} position='210'  navigator={this.props.navigator} />
          <InterestsCarouselContainer user={user} position='425' navigator={this.props.navigator} />

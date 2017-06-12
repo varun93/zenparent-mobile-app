@@ -107,7 +107,7 @@ const ArticleCard = ({post,toggleLike,toggleBookmark,navigator}) => {
 
       <div style={styles.imageBlock} className="img-section">
         <LazyLoad height={imageHeight} offset={100}>
-          <img height={imageHeight} width={imageWidth}  style={styles.image} src={post.attachment_url} />
+          <img className="card-image" height={imageHeight} width={imageWidth}  style={styles.image} src={post.attachment_url} />
         </LazyLoad>
       </div>  
       
@@ -120,15 +120,13 @@ const ArticleCard = ({post,toggleLike,toggleBookmark,navigator}) => {
         </div>
         
       <div style={styles.articleLikesBookmarksSection} className="likes-bookmarks">
-
-           <div onClick={() => toggleBookmark(post.id)} style={styles.articleBookmark} className="articleBookmark">
+          <div onClick={() => toggleBookmark(post.id)} style={styles.articleBookmark} className="articleBookmark">
             {post.bookmarked ? <img src={`${prefix}bookmark-active.svg`} /> : <img src={`${prefix}bookmark-default.svg`} />}
           </div>
       
           <div onClick={() => toggleLike(post.id)}  style={styles.articleLike} className="articleLike">
             {post.liked ? <img src={`${prefix}like-active.svg`}/> : <img src={`${prefix}like-default.svg`} />}
           </div>
-          
       </div>
     
 

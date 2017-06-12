@@ -21,11 +21,14 @@ const requestChatrooms = (state) => {
 	return Object.assign({},state,{chatRooms:  Object.assign({},state.chatRooms, {loading : true, error : false})});
 };
 
-const mergeChatrooms = (chatrooms,state) => {
+const mergeChatrooms = (chatrooms={},state) => {
 
 	let chatRoomObj = {};
+	let recommendedGroups = chatrooms.recommended_groups || [];
+	let expertGroups = chatrooms.expert_groups || [];
+	let joinedGroups = chatrooms.joined_groups || [];
 
-	chatrooms.recommended_groups.concat(chatrooms.joined_groups).concat(chatrooms.expert_groups).forEach(function(chatroom){
+	recommendedGroups.concat(joinedGroups).concat(expertGroups).forEach(function(chatroom){
 		chatRoomObj[chatroom.post_id] = Object.assign({},chatroom,{messages : {list : [],loading : false, error : false}});
 	});
 
@@ -33,34 +36,33 @@ const mergeChatrooms = (chatrooms,state) => {
 };
 
 //chatroom related reducers, temporary fix by directly assigning the groups
-const populateChatrooms = (chatrooms,state) => {
+const populateChatrooms = (chatrooms={},state) => {
 
 	let mergedChatrooms = mergeChatrooms(chatrooms,state);
-	let recommendedGroups = [],joinedGroups = [], expertGroups = [];
+	let recommendedGroups = chatrooms.recommended_groups || [];
+	let expertChats = chatrooms.expert_groups || [];
+	let joinedGroups = chatrooms.joined_groups || [];
 
-	if(chatrooms){
+	recommendedGroups =  recommendedGroups.map(function(chatroom){
+		return parseInt(chatroom.post_id);
+	});
 
-		recommendedGroups =  chatrooms.recommended_groups.map(function(chatroom){
-			return parseInt(chatroom.post_id);
-		});
+	joinedGroups = joinedGroups.map(function(chatroom){
+		return parseInt(chatroom.post_id);
+	});
 
-		joinedGroups = chatrooms.joined_groups.map(function(chatroom){
-			return parseInt(chatroom.post_id);
-		});
+	expertChats = expertChats.map(function(chatroom){
+		return parseInt(chatroom.post_id);
+	});
 
-		expertGroups = chatrooms.expert_groups.map(function(chatroom){
-			return parseInt(chatroom.post_id);
-		});
-
-	}
-
+	
 	return Object.assign({},state,{ 
 		chatRooms : {
 			byId : mergedChatrooms,
 			loading : false,
 			error : null
 		}},
-		{expertChats : expertGroups},
+		{expertChats},
 		{joinedGroups},
 		{recommendedGroups}
 	);

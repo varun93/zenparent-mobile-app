@@ -39,7 +39,7 @@ class ChatroomListContainer extends Component {
 		  
 		 return (
 		  	<div>
-				<ChatroomsList title="Joined Groups"  resetUnreadMessages={resetUnreadMessages} type={JOINED_GROUPS} navigator={navigator} groups={joinedGroups} />
+				<ChatroomsList title="Joined Groups" resetUnreadMessages={resetUnreadMessages} type={JOINED_GROUPS} navigator={navigator} groups={joinedGroups} />
 				<ChatroomsList title="Recommended Groups" joinChatroom={joinChatroom} type={RECOMMENDED_GROUPS} navigator={navigator} groups={recommendedGroups} />
 				<ChatroomsList title="Expert Chat" resetUnreadMessages={resetUnreadMessages} type={EXPERT_CHAT} navigator={navigator} groups={expertGroups} />
 			</div>

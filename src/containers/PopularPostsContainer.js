@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import PostsCarousel from '../components/PostsCarousel';
-import {getPosts,getUserLanguage,hasUserInfoChanged} from '../utils';
+import {getPosts,isFieldEmpty} from '../utils';
 import CarouselLoader from '../templates/CarouselLoader';
 import {toggleLikeRequest,toggleBookmarkRequest,fetchPopularPosts} from '../actions/blogActions';
 import {POPULAR_POSTS} from '../constants';
@@ -11,7 +11,8 @@ class PopularPostsContainer extends Component{
 	constructor(props,context){
 		super(props,context);
 		this.state = {
-			loaded : false
+			loaded : false,
+			retry : 0
 		};
 	}
 
@@ -23,6 +24,11 @@ class PopularPostsContainer extends Component{
 		if(!loaded && active){
 			this.props.fetchPopularPosts(POPULAR_POSTS);
 			this.setState({loaded : true});
+		}
+
+		if(active && isFieldEmpty(nextProps.popularPosts.posts) && this.state.retry < 3){
+			this.props.fetchPopularPosts(POPULAR_POSTS);
+			this.setState({retry : this.state.retry + 1});
 		}
 
 	}

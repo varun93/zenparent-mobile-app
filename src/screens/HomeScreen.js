@@ -36,12 +36,22 @@ export default class Homescreen extends Component{
 		this.props.navigator.pushPage({component : SinglePost,props:{key : v4(),fields : 'all',postId}});
 	}
 
+	extractPostId(deeplink){
+		const re = /[=|\/](\d+)$/ 
+		if(re.test(deeplink)){
+			const parts = re.exec(deeplink);
+			return parseInt(parts[1]);
+		}
+		
+		return 0;
+	}
+
 	// push notification payload handling
     onPushNotification(e) {
        
-       	const postId = e.notification.p;
+       	const postId = parseInt(e.notification.p);
 
-       	if(postId){
+       	if(typeof postId == 'number'){
        		this.navigateToPost.call(this,postId);	
        	}
        	
@@ -49,9 +59,9 @@ export default class Homescreen extends Component{
 
     onDeepLink(e){
     	const deeplink = e.deeplink;
-     	const postId = deeplink.substr(deeplink.lastIndexOf('/')+1);
+     	const postId = this.extractPostId(deeplink);
 
-     	if(postId && postId.match(/\d+/)){
+     	if(postId){
      		this.navigateToPost.call(this,postId);	
      	}
 
@@ -62,12 +72,12 @@ export default class Homescreen extends Component{
 		try{
 	      
 	        const classContext = this;
-	      
+	 
 	        Branch.initSession(function(data) {
 	        	//this for maintaining backward compatibilty
 	    		const postId = data.p;
 
-	    		if(postId && postId.match(/\d+/)){
+	    		if(postId){
 	    			classContext.navigateToPost.call(classContext,postId);
 	    		}
 	    		

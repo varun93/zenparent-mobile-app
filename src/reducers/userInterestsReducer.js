@@ -22,7 +22,7 @@ let userInterestsReducer = (userInterests=INITIAL_STATE,action) => {
 	
 	switch(action.type) {
 		case REQUEST_INTERESTS : 
-			return Object.assign({},userInterests,{interests : Object.assign({},userInterests.interests,{loading : true, error : false})});
+			return Object.assign({},userInterests, {interests : Object.assign({},userInterests.interests,{loading : true, error : false})});
 		case RECEIVED_INTERESTS : 
 			return Object.assign({},userInterests, {interests : Object.assign({},userInterests.interests,{terms : action.interests,loading : false, error : false})});
 		case ERROR_FETCHING_INTERESTS :

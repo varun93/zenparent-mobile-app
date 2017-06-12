@@ -385,7 +385,14 @@ export function fetchBookmarkedPosts(key,offset){
 
 //popular posts, language dependant
 export function fetchPopularPosts(key){
-	return (dispatch,state) => {
+	return (dispatch,getState) => {
+
+		// return if already requested
+		const state = getState();
+		if(state.blog.popularPosts.loading){
+			return;
+		}
+
 		dispatch(requestPosts(key));
 		BlogApi.popularPosts().then(function(response){
   				let posts = response.data.posts;
@@ -399,7 +406,13 @@ export function fetchPopularPosts(key){
 //editorial posts, language dependant
 export function fetchEditorialPosts(key){
 	
-	return (dispatch,state) => {
+	return (dispatch,getState) => {
+		// return if already requested
+		const state = getState();
+		if(state.blog.editorialPosts.loading){
+			return;
+		}
+
 		dispatch(requestPosts(key));
 		BlogApi.editorialPosts().then(function(response){
   				let posts = response.data.posts;

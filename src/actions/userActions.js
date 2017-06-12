@@ -409,6 +409,7 @@ export function updateUserInterests(interests,navigator) {
               dispatch(updateUserInterestsSuccess(interests,navigator));  
             
             }).catch((err) => {
+                alert(JSON.stringify(err));
                 dispatch(updateUserInterestsFailure()); 
               });
       }

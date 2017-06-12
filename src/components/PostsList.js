@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ProgressCircular} from 'react-onsenui';
 import Waypoint from 'react-waypoint';
 import PostsListWrapper from '../templates/PostsListWrapper';
-import {getPosts,hasUserInfoChanged,getUserLanguage} from '../utils';
+import {getPosts} from '../utils';
 import {USER_FEED_TIME,USER_FEED_RELEVANCE,BOOKMARKED_POSTS,ARCHIVE_POSTS} from '../constants';
 
 
@@ -29,7 +29,7 @@ export default class PostsList extends Component{
 		let key = options.key;
 		
 		if(key == USER_FEED_TIME || key == USER_FEED_RELEVANCE){
-			let filter = key == USER_FEED_RELEVANCE ? 'relevance' : 'time';
+			let filter = (key == USER_FEED_RELEVANCE) ? 'relevance' : 'time';
 			this.props.fetchPosts(key,filter,offset);
 		}
 		else if(key == ARCHIVE_POSTS){
@@ -47,7 +47,7 @@ export default class PostsList extends Component{
 	_renderWaypoint() {
 		
 	 if(!this.props.loading && this.props.active){
-	 	 return (<Waypoint topOffset='50px' onEnter={this._loadMoreItems.bind(this)} /> );
+	 	 return (<Waypoint onEnter={this._loadMoreItems.bind(this)} /> );
 	 }
     }
 

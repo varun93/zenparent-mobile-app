@@ -48,22 +48,38 @@ export const cacheMiddleware = store => next => action => {
         break;
 
       case UPDATE_USER_INFO_SUCCESS :
-        if(shouldUpdate(store,action)) {
-          // remove data from the old store
-          store.dispatch(syncFeed());
-          store.dispatch(fetchSlotPosts(HOMEPAGE_SLOT_POSTS));
-          store.dispatch(fetchPopularPosts(POPULAR_POSTS));
-          store.dispatch(fetchPosts(USER_FEED_RELEVANCE,'relevance',0));
-        } 
+
+        try{
+
+          if(shouldUpdate(store,action)) {
+            // remove data from the old store
+            store.dispatch(syncFeed());
+            store.dispatch(fetchSlotPosts(HOMEPAGE_SLOT_POSTS));
+            store.dispatch(fetchPopularPosts(POPULAR_POSTS));
+            store.dispatch(fetchPosts(USER_FEED_RELEVANCE,'relevance',0));
+          } 
+
+        }
+        catch(e){
+          //handle error
+        }
         break;
 
       case UPDATE_USER_INTERESTS_SUCCESS : 
-       if(hasInterestsChanged(store,action)) {
-          // remove data from the old store
-          store.dispatch(syncFeed());
-          store.dispatch(fetchPosts(USER_FEED_RELEVANCE,'relevance',0));
-          store.dispatch(fetchPosts(USER_FEED_TIME,'time',0));
-        } 
+        
+        try{
+
+          if(hasInterestsChanged(store,action)) {
+            // remove data from the old store
+            store.dispatch(syncFeed());
+            store.dispatch(fetchPosts(USER_FEED_RELEVANCE,'relevance',0));
+            store.dispatch(fetchPosts(USER_FEED_TIME,'time',0));
+          } 
+
+        }
+        catch(e){
+          // handle error
+        }
         break;
          
       case USER_LOGOUT : 

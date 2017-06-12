@@ -306,4 +306,27 @@ ons-tab.user-profile-tab.active .ons-icon{
   	position: -ms-sticky !important;
   	position: -o-sticky !important;
 }
+/*Image Dimensions*/
+@media only screen and (max-width: 340px) {
+      .card-image  {
+    	max-width : 120px !important;
+    	max-height : 90px !important;
+    }
+}
+
+@media only screen and (max-width: 380px) {
+      .card-image  {
+    	max-width: 150px !important;
+    	max-height : 110px !important;
+    }
+}
+
+
+@media only screen and (max-width: 600px) {
+      .card-image  {
+    	max-width: 164px !important;
+    	max-height : 110px !important;
+    }
+}
+
 

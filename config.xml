@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.zenparent.mobileapp" version="1.0.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.zenparent.mobileapp" version="1.0.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Zenparent</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        An App for parents
     </description>
     <author email="1hvarun@gmail.com" href="http://cordova.io">
-        Apache Cordova Team
+        Varun Hegde
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -86,7 +86,10 @@
     </branch-config>
     <engine name="android" spec="^6.2.3" />
     <engine name="browser" spec="~4.1.0" />
-    <plugin name="branch-cordova-sdk" spec="~2.5.14" />
+    <plugin name="branch-cordova-sdk" spec="^2.6.0">
+        <variable name="BRANCH_KEY" value="key_live_ijwCj531qk2z0y7cVgUlYapdtzfAWQfP" />
+        <variable name="URI_SCHEME" value="zenparent" />
+    </plugin>
     <plugin name="cordova-plugin-facebook4" spec="^1.7.4">
         <variable name="APP_ID" value="1626499117583779" />
         <variable name="APP_NAME" value="Zenparent" />
