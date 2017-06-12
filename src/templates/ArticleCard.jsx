@@ -107,7 +107,7 @@ const ArticleCard = ({post,toggleLike,toggleBookmark,navigator}) => {
 
       <div style={styles.imageBlock} className="img-section">
         <LazyLoad height={imageHeight} offset={100}>
-          <img style={styles.image} src={post.attachment_url} />
+          <img height={imageHeight} width={imageWidth}  style={styles.image} src={post.attachment_url} />
         </LazyLoad>
       </div>  
       
