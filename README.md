@@ -8,5 +8,10 @@ I believe this project could be a useful template for those who are looking at:
 - React Redux templates.
 - Webpack configurations. 
 
+The was integrated with 
+- Google and FB social oauth plugins for login.
+- Clevertap and Google Analytics for tracking user app activity.
+- Branch for deep-linking.
+
 The app can be built with webpack, has a both dev and production config. You can easily replace it with create-react-app and things should work out fine.
 
