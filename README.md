@@ -1,12 +1,9 @@
 # zenparent-mobile-app
 Android and IOS Mobile app for accessing zenparent portal.
 
-This was a cross-platform mobile application developed in React way back in 2017 during my time at Zenparent. The business is 
-defunct as of 2019, so don't be surprised to see some harcoded API keys in the code(which is a bad practice in the first place).
-Although this was my first React project, I remember trying to incorportate as much best practices at the time. The mobile app 
-for both Android and IOS versions were stable at the time, the links have been taken down at this point in time.
+This was a cross-platform React based mobile application developed way back in 2017 during my time at Zenparent. The business is  defunct as of 2019, so don't be surprised to see some harcoded API keys in the code(which is a bad practice in the first place). Although this was my first React project, I remember trying to incorportate as many best practices at the time. The mobile app for both Android and IOS versions were stable at the time, the links have been taken down at this point in time.
 
-I believe this project could be extremely useful template for those who are looking at:
+I believe this project could be a useful template for those who are looking at:
 - Building cross platform React applications with Cordova.
 - React Redux templates.
 - Webpack configurations. 
